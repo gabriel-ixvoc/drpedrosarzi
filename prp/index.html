@@ -2795,7 +2795,7 @@ body.menu-open .hd-burger span:nth-child(3){transform:rotate(-45deg)}
     </div>
     <div class="ft-bot">
       <span>© <span id="yr"></span> Dr. Pedro Sarzi · CRM-SP 183.332 · TEOT 17744. Todos os direitos reservados.</span>
-      <span>Informações de caráter educativo — não substituem consulta médica. <b class="build">v9 · 11/09 14:12</b></span>
+      <span>Informações de caráter educativo — não substituem consulta médica. <b class="build">v9 · 11/09 14:21</b></span>
     </div>
   </div>
 </footer>
@@ -2809,8 +2809,8 @@ body.menu-open .hd-burger span:nth-child(3){transform:rotate(-45deg)}
 (function () {
 'use strict';
 
-const $  = (s, c) => (c || document).querySelector(s);
-const $$ = (s, c) => Array.from((c || document).querySelectorAll(s));
+const $  = (s, c) => { try { return (c || document).querySelector(s); } catch(e) { return null; } };
+const $$ = (s, c) => { try { return Array.from((c || document).querySelectorAll(s)); } catch(e) { return []; } };
 const lerp = (a, b, t) => a + (b - a) * t;
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
