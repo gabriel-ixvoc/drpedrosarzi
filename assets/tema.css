@@ -1,0 +1,61 @@
+/* ==========================================================================
+   Pedro Sarzi · camada "Clínica" (carregada por último em todas as páginas)
+   Paleta do manual (carvão, marfim, dourado). Vida pela fotografia, pela luz
+   e pela textura, não por cores novas. Aqui só o que vale para o site todo;
+   a composição de cada página fica em assets/pages/<página>.css.
+   Referência: docs/design.md, seção "Camada Clínica".
+   ========================================================================== */
+
+/* ---------- 1. Superfícies claras com textura de papel e linho ---------- */
+:root{--areia:#ECE5D6;--linho:var(--areia);--luz-quente:rgba(216,192,138,.11)}
+.cap--marfim{background:url("brand/papel.svg") 0 0/640px 640px,var(--marfim)}
+.cap--linho{background:url("brand/papel.svg") 120px 80px/640px 640px,url("brand/linho.svg") 0 0/320px 320px,var(--areia)}
+
+/* ---------- 2. Superfícies escuras com luz quente (como luz de janela) ---------- */
+/* Grão fino com trama de linho em dourado quase invisível (brand/carvao.svg):
+   o carvão deixa de ser chapado, como papel de algodão escuro. */
+.cap--carvao,.cap--grafite{
+  background:url("brand/carvao.svg") 0 0/320px 320px,radial-gradient(70% 60% at 90% -10%,var(--luz-quente),transparent 62%),var(--cor-fundo,var(--carvao));
+}
+.cap--grafite{--cor-fundo:var(--grafite)}
+.capa,.rodape{background:url("brand/carvao.svg") 0 0/320px 320px,var(--carvao)}
+
+/* ---------- 2b. Marca-d'água do monograma (no máximo uma por página) ----------
+   Grande, cortada pela borda, num vazio da composição. Posição e tamanho por
+   --marca-pos e --marca-tam (altura) em cada seção que usar .marca-dagua. */
+.marca-dagua{isolation:isolate}
+.marca-dagua::before{content:"";position:absolute;z-index:-1;inset:0;pointer-events:none;
+  background-color:var(--champanhe);opacity:var(--marca-opac,.055);
+  -webkit-mask:url("brand/monograma-champanhe.svg") var(--marca-pos,right -4% bottom -18%)/auto var(--marca-tam,min(96%,820px)) no-repeat;
+          mask:url("brand/monograma-champanhe.svg") var(--marca-pos,right -4% bottom -18%)/auto var(--marca-tam,min(96%,820px)) no-repeat}
+/* Computador: PRP, perguntas, na coluna vazia sob o título; /dr/, como ele atende,
+   no alto, ao lado do título (a seção é longa e o fim fica fora da vista). */
+@media (min-width:900px){
+  #faq.marca-dagua{--marca-pos:left -3% bottom -22%}
+  #consulta.marca-dagua{--marca-pos:right -3% top -60px;--marca-tam:760px}
+}
+@media (max-width:899px){.marca-dagua{--marca-pos:center bottom -64px;--marca-tam:min(62%,440px)}}
+
+/* ---------- 3. Tipografia com mais presença ---------- */
+.cap__titulo{font-size:clamp(2.25rem,3.6vw,3.25rem);line-height:1.04}
+.t-lead{font-size:clamp(1.1875rem,1.5vw,1.375rem)}
+.prosa{font-size:1.0625rem}
+
+/* ---------- 4. Fotos com tom quente, sem o preto e branco ---------- */
+.foto-duotone>img{filter:sepia(.28) saturate(.78) contrast(1.04)}
+.foto-duotone::before{background:rgba(216,192,138,.18);mix-blend-mode:soft-light}
+
+/* ---------- 5. PRP: plaquetas (ilustração conceitual) no capítulo escuro ---------- */
+.nao-e{isolation:isolate}
+.nao-e::after{content:"";position:absolute;z-index:-1;inset:0 0 0 auto;width:min(55%,760px);pointer-events:none;
+  background:url("platelets.webp") 60% 50%/cover no-repeat;opacity:.3;mix-blend-mode:screen;
+  -webkit-mask:linear-gradient(90deg,transparent,#000 60%);mask:linear-gradient(90deg,transparent,#000 60%)}
+
+/* ---------- 6. O médico (/dr/): retrato em cor ---------- */
+.medico__retrato{filter:saturate(.9) contrast(1.03)}
+
+@media (max-width:899px){.nao-e::after{width:100%;opacity:.16}}
+@media print{
+  .cap--marfim,.cap--linho{background:#fff}
+  .nao-e::after,.marca-dagua::before{display:none}
+}

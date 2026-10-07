@@ -1,0 +1,30 @@
+/* Acabamento da alternativa de perfil; preserva fio e relato de dr.js. */
+.medico__figura{isolation:isolate}
+.medico__retrato{filter:grayscale(.18) sepia(.08) contrast(1.04) brightness(.94)}
+.placa-reg,.fio__ficha{background-image:url("../brand/papel.svg");background-color:var(--marfim)}
+.fio__ficha{padding:clamp(24px,3vw,38px)}
+.fio__no{box-shadow:0 0 0 5px rgba(126,106,56,.08)}
+.fio__marco.on .fio__no{box-shadow:0 0 0 7px rgba(126,106,56,.13),0 8px 22px -18px var(--ouro-profundo)}
+.atende{isolation:isolate}
+.relato{column-gap:clamp(42px,5vw,84px)}
+.relato__cenas .relato__cena{filter:saturate(.82) contrast(1.035)}
+.relato__legenda{padding:12px 4px 2px;font-family:var(--serif);font-style:italic;font-size:1.05rem;color:var(--texto-escuro)}
+.relato__passo{position:relative}
+.relato__passo::before{content:"";position:absolute;left:-22px;top:50%;width:8px;height:8px;border:1px solid var(--champanhe);border-radius:50%;transform:translateY(-50%);opacity:.35;transition:opacity .3s,background-color .3s}
+.relato__passo.on::before{background:var(--champanhe);opacity:1}
+.atende__citacao{max-width:800px}
+@media(min-width:900px){
+  .relato__passo{padding-inline:14px}
+  .relato__passo::before{left:-18px}
+}
+@media(max-width:899px){
+  .relato__passos{gap:58px}
+  .relato__foto{max-width:min(100%,400px)}
+  .relato__foto .quadro__passe{aspect-ratio:4 / 4.6}
+  .relato__passo::before{display:none}
+}
+@media(max-width:359px){
+  .relato__foto .quadro__passe{aspect-ratio:1 / 1.12}
+  .fio__ficha{padding:20px 16px}
+}
+@media(prefers-reduced-motion:reduce){.fio__no,.relato__passo::before{transition:none}}

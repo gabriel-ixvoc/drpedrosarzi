@@ -1,0 +1,79 @@
+/* ==========================================================================
+   Link da bio (/links/). Coluna única desenhada a 390 px, máx. 480 px.
+   Base em assets/site.css; ganchos e páginas em docs/site.md.
+   ========================================================================== */
+
+/* Página curta e sem animação contínua: o controle fixo de rolagem/pausa
+   (criado pelo site.js) só cobriria conteúdo aqui. */
+.bio .motion-control{display:none}
+
+.bio__coluna{width:100%;max-width:calc(480px + var(--margem) * 2);margin-inline:auto;padding-inline:var(--margem)}
+
+/* A digital fica no <main> (largura total): é cortada só pelas bordas da
+   tela e se dissolve antes da lista, sem aresta reta. */
+.bio__pagina{--digital-tam:720px;--digital-x:-380px;--digital-y:-250px;--digital-opac:.075}
+
+/* ---------- Cabeça: monograma ---------- */
+.bio__cabeca{padding-block:32px;text-align:center}
+.bio__mono{height:84px;width:auto;margin-inline:auto;color:var(--champanhe)}
+.bio__nome{margin-top:24px;font-weight:300;font-size:2.75rem;line-height:1.05;letter-spacing:-.005em}
+.bio__sub{margin-top:8px;font-weight:300;font-size:1.0625rem;line-height:1.45;color:var(--texto-escuro)}
+.bio__id{margin-top:20px}
+/* coluna estreita: a linha de identificação sempre em duas partes, como no celular */
+.bio .id-medico>.id-medico__sep{display:none}
+.bio .id-medico>span{display:block;white-space:nowrap}
+
+/* Abertura: o monograma sobe como um traço; o resto só aparece. */
+@keyframes bio-mono{from{clip-path:inset(100% 0 0 0)}}
+.bio__mono.abre{animation:bio-mono 650ms var(--ease) both}
+
+/* ---------- Lista de links ---------- */
+.bio__lista li+li{border-bottom:1px solid var(--filete-escuro)}
+.bio__lista li:nth-child(2){margin-top:12px;border-top:1px solid var(--filete-escuro)}
+.bio__item{
+  display:grid;gap:4px;align-content:center;min-height:76px;padding:16px 20px;
+  transition:background-color var(--t-rapido) var(--ease);
+}
+.bio__titulo{font-family:var(--serif);font-weight:400;font-size:1.5rem;line-height:1.15;color:var(--marfim);text-wrap:balance;transition:color var(--t-rapido) var(--ease)}
+.bio__ajuda{font-size:.875rem;line-height:1.45;color:var(--texto-escuro);text-wrap:pretty}
+.bio__item:hover{background:var(--grafite)}
+.bio__item:hover .bio__titulo{color:var(--champanhe)}
+.bio__item:active{background:var(--grafite-2)}
+.bio__item:focus-visible{outline-offset:-2px}
+
+.bio__item--agendar{background:var(--champanhe);border-radius:var(--raio);min-height:84px}
+.bio__item--agendar .bio__titulo{font-weight:500;color:var(--carvao)}
+.bio__item--agendar .bio__ajuda{color:rgba(8,8,10,.74)}
+.bio__item--agendar:hover,.bio__item--agendar:active{background:var(--marfim)}
+.bio__item--agendar:hover .bio__titulo{color:var(--carvao)}
+.bio__item--agendar:focus-visible{outline-color:var(--marfim);outline-offset:3px}
+
+/* ---------- Rodapé ---------- */
+.bio__rodape{padding-block:36px max(44px,env(safe-area-inset-bottom));font-size:.875rem;line-height:1.55;color:var(--texto-escuro)}
+.bio__rodape .bio__coluna>*{padding-inline:20px}
+.bio__contato{display:grid;gap:0}
+.bio__link{display:inline-flex;align-items:center;min-height:44px;color:var(--marfim);text-decoration:underline;text-decoration-color:var(--champanhe);text-decoration-thickness:1px;text-underline-offset:.3em}
+.bio__link:hover{text-decoration-thickness:2px}
+/* Sutura separa o contato da identificação (sem goniômetro aqui: o sistema
+   reserva o ponteiro para a abertura do hero, o quiz e o controle fixo). */
+.bio__rodape hr.sutura{width:auto;padding:0;margin:28px 20px 24px}
+
+@media (min-width:600px){
+  .bio__pagina{--digital-tam:980px;--digital-x:calc(50% - 760px);--digital-y:-420px}
+  .bio__cabeca{padding-block:88px 48px}
+  .bio__mono{height:124px}
+  .bio__nome{font-size:3.25rem}
+  .bio__item{padding:18px 24px;min-height:88px}
+  .bio__titulo{font-size:1.625rem}
+  .bio__ajuda{font-size:.9375rem}
+  .bio__rodape .bio__coluna>*{padding-inline:24px}
+  .bio__rodape hr.sutura{margin-inline:24px}
+}
+
+/* ---------- Simetria: linhas e rodapé no mesmo eixo da cabeça ----------
+   A página é uma coluna estreita (celular e desktop), então tudo vai ao centro. */
+.bio__item{justify-items:center;text-align:center}
+.bio__ajuda{max-width:34ch}
+.bio__rodape{text-align:center}
+.bio__contato{justify-items:center}
+.bio__rodape hr.sutura{width:96px;margin:28px auto 24px}

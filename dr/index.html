@@ -3,2254 +3,503 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Conheça o Dr. Pedro Sarzi — Ortopedista e Cirurgião de Mão | Osasco, Barueri e Alphaville</title>
-<meta name="description" content="Conheça o Dr. Pedro Sarzi, ortopedista e cirurgião de mão com especialização em microcirurgia pela UNESP. CRM-SP 183.332 · Membro Titular SBOT. Atende em Osasco, Barueri e Alphaville.">
+<title>O médico: formação e atendimento | Dr. Pedro Sarzi</title>
+<meta name="description" content="Quem é o Dr. Pedro Sarzi: formação em ortopedia e em cirurgia da mão, como é a consulta e onde atende, na Clínica Fares, Centro de Osasco. CRM-SP 183.332, RQE 110447.">
 <meta name="theme-color" content="#08080A">
-<meta property="og:title" content="Conheça o Dr. Pedro Sarzi — Ortopedista e Cirurgião de Mão">
-<meta property="og:description" content="Formação, especializações e credenciais do Dr. Pedro Sarzi, especialista em cirurgia da mão e medicina regenerativa.">
-<meta property="og:type" content="website">
+<meta property="og:title" content="O médico: formação e atendimento | Dr. Pedro Sarzi">
+<meta property="og:description" content="Formação, forma de atendimento e endereço do Dr. Pedro Sarzi. Clínica Fares, Centro de Osasco/SP.">
+<meta property="og:type" content="profile">
+<meta property="og:url" content="https://www.drpedrosarzi.com.br/dr/">
+<meta property="og:image" content="https://www.drpedrosarzi.com.br/assets/brand/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Monograma PS em champanhe sobre fundo escuro, com o nome Dr. Pedro Sarzi e a linha de identificação médica.">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://www.drpedrosarzi.com.br/dr/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
-<style>
-/* ==========================================================================
-   Dr. Pedro Sarzi — Ortopedia e Cirurgia da Mão
-   Design System & Stylesheet
-   ========================================================================== */
-
-/* ---------- 1. TOKENS ---------- */
-:root{
-  /* Marca */
-  --gold:#AC9559;
-  --gold-lite:#D8C08A;
-  --gold-glow:#E8D4A4;
-  --gold-deep:#7E6A38;
-
-  /* Superfícies */
-  --ink:#08080A;
-  --ink-1:#0D0D10;
-  --ink-2:#131317;
-  --ink-3:#1B1B20;
-  --line:rgba(172,149,89,.16);
-  --line-soft:rgba(255,255,255,.07);
-
-  /* Claro */
-  --bone:#F4F1EA;
-  --bone-2:#EBE6DB;
-
-  /* Texto */
-  --tx:#F2EFE9;
-  --tx-dim:#9A968E;
-  --tx-mute:#6B6862;
-  --tx-dark:#14140F;
-
-  /* Métrica */
-  --gut:clamp(20px,5vw,64px);
-  --maxw:1280px;
-  --r:2px;
-  --ease:cubic-bezier(.22,1,.36,1);
-  --ease-io:cubic-bezier(.65,0,.35,1);
-
-  /* Tipografia fluida */
-  --fs-display:clamp(2.4rem,5.2vw,4.4rem);
-  --fs-h2:clamp(1.85rem,3.4vw,2.85rem);
-  --fs-h3:clamp(1.25rem,2vw,1.65rem);
-  --fs-body:clamp(.95rem,1.05vw,1.0625rem);
-  --fs-kicker:clamp(.66rem,.85vw,.75rem);
-}
-
-/* ---------- 2. RESET ---------- */
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}
-  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
-body{
-  font-family:'Ubuntu',system-ui,-apple-system,'Segoe UI',sans-serif;
-  background:var(--ink);color:var(--tx);
-  font-size:var(--fs-body);line-height:1.65;font-weight:400;
-  overflow-x:hidden;-webkit-font-smoothing:antialiased;
-  text-rendering:optimizeLegibility;
-}
-img,svg{display:block;max-width:100%}
-img{height:auto}
-a{color:inherit;text-decoration:none}
-button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
-ul{list-style:none}
-::selection{background:var(--gold);color:#0a0a0a}
-:focus-visible{outline:2px solid var(--gold-lite);outline-offset:3px}
-
-/* Scrollbar */
-::-webkit-scrollbar{width:10px}
-::-webkit-scrollbar-track{background:var(--ink)}
-::-webkit-scrollbar-thumb{background:#2a2a30;border-radius:0}
-::-webkit-scrollbar-thumb:hover{background:var(--gold-deep)}
-
-/* ---------- 3. UTILITÁRIOS ---------- */
-.wrap{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gut)}
-.section{position:relative;padding-block:clamp(64px,8vw,112px)}
-.center{text-align:center}
-
-.kicker{
-  display:inline-flex;align-items:center;gap:.7em;
-  font-size:var(--fs-kicker);font-weight:700;letter-spacing:.28em;
-  text-transform:uppercase;color:var(--gold);margin-bottom:1.4rem;
-}
-.kicker::before{
-  content:"";width:clamp(24px,4vw,46px);height:1px;
-  background:linear-gradient(90deg,transparent,var(--gold));
-}
-.center .kicker::after{
-  content:"";width:clamp(24px,4vw,46px);height:1px;
-  background:linear-gradient(90deg,var(--gold),transparent);
-}
-
-h1,h2,h3,h4{font-weight:500;line-height:1.08;letter-spacing:-.022em}
-.h2{font-size:var(--fs-h2);font-weight:400}
-.h2 strong{font-weight:700;color:var(--gold-lite)}
-.h2 em{font-style:normal;color:var(--gold)}
-.lede{color:var(--tx-dim);max-width:62ch;font-size:clamp(1rem,1.2vw,1.125rem)}
-.center .lede{margin-inline:auto}
-
-.rule{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);border:0}
-
-/* ---------- 4. BOTÕES ---------- */
-.btn{
-  --bg:var(--gold);--fg:#0B0B08;
-  position:relative;display:inline-flex;align-items:center;gap:.75em;
-  padding:1.05em 1.9em;border-radius:var(--r);
-  font-size:.8rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
-  background:var(--bg);color:var(--fg);overflow:hidden;isolation:isolate;
-  transition:color 0.5s var(--ease),transform 0.5s var(--ease),box-shadow 0.5s var(--ease);
-  will-change:transform;
-}
-.btn::after{
-  content:"";position:absolute;inset:0;z-index:-1;
-  background:linear-gradient(120deg,var(--gold-glow),var(--gold-lite));
-  transform:translateY(101%);transition:transform 0.55s var(--ease);
-}
-.btn:hover{transform:translateY(-2px);box-shadow:0 14px 40px -12px rgba(172,149,89,.55)}
-.btn:hover::after{transform:translateY(0)}
-.btn:active{transform:translateY(0)}
-.btn .ico{width:1.05em;height:1.05em;flex:none;transition:transform 0.5s var(--ease)}
-.btn:hover .ico{transform:translateX(3px)}
-
-.btn--ghost{
-  --bg:transparent;--fg:var(--tx);
-  box-shadow:inset 0 0 0 1px var(--line);
-}
-.btn--ghost:hover{--fg:#0B0B08;box-shadow:inset 0 0 0 1px var(--gold)}
-.btn--ghost::after{background:var(--gold)}
-.btn--light{--bg:var(--tx-dark);--fg:var(--bone)}
-.btn--light::after{background:var(--gold)}
-.btn--light:hover{--fg:#0B0B08}
-.btn--sm{padding:.85em 1.4em;font-size:.7rem}
-
-/* Link com sublinhado que cresce */
-.ulink{
-  display:inline-flex;align-items:center;gap:.55em;position:relative;
-  font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--gold);padding-bottom:.45em;
-}
-.ulink::after{
-  content:"";position:absolute;left:0;bottom:0;width:100%;height:1px;
-  background:currentColor;transform:scaleX(.28);transform-origin:left;
-  transition:transform 0.6s var(--ease);
-}
-.ulink:hover::after{transform:scaleX(1)}
-.ulink svg{width:1em;height:1em;transition:transform 0.45s var(--ease)}
-.ulink:hover svg{transform:translateX(4px)}
-
-/* ---------- 5. REVEAL / ANIMAÇÃO DE ENTRADA ----------
-   Só escondemos quando o JS está ativo; sem JS a página nasce visível. */
-.js [data-rv]{opacity:0;transition:opacity 1.5s var(--ease),transform 1.5s var(--ease)}
-[data-rv]{transition:opacity 1.5s var(--ease),transform 1.5s var(--ease)}
-[data-rv="up"]{transform:translateY(34px)}
-[data-rv="fade"]{transform:none}
-[data-rv="left"]{transform:translateX(-34px)}
-[data-rv="right"]{transform:translateX(34px)}
-[data-rv="zoom"]{transform:scale(.94)}
-[data-rv].in{opacity:1;transform:none}
-
-.js .stagger>*{opacity:0;transform:translateY(28px)}
-.stagger>*{transition:opacity 1.4s var(--ease),transform 1.4s var(--ease)}
-.stagger.in>*{opacity:1;transform:none}
-.stagger.in>*:nth-child(1){transition-delay:0.1s}
-.stagger.in>*:nth-child(2){transition-delay:0.3s}
-.stagger.in>*:nth-child(3){transition-delay:0.5s}
-.stagger.in>*:nth-child(4){transition-delay:0.7s}
-.stagger.in>*:nth-child(5){transition-delay:0.9s}
-.stagger.in>*:nth-child(6){transition-delay:1.1s}
-
-/* Texto que sobe linha a linha */
-.rise{display:block;overflow:hidden}
-.js .rise>span{transform:translateY(105%)}
-.rise>span{display:block;transition:transform 2.1s var(--ease)}
-.in .rise>span,.rise.in>span{transform:translateY(0)}
-.rise:nth-child(2)>span{transition-delay:0.18s}
-.rise:nth-child(3)>span{transition-delay:0.36s}
-
-/* ---------- 6. GRÃO + VINHETA GLOBAL ---------- */
-.grain{
-  position:fixed;inset:-120%;z-index:9998;pointer-events:none;opacity:.02;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  mix-blend-mode:overlay;   /* textura fixa: animar o grão causava cintilação */
-}
-  20%{transform:translate(-8%,3%)}30%{transform:translate(3%,-9%)}
-  40%{transform:translate(-2%,7%)}50%{transform:translate(-7%,4%)}
-  60%{transform:translate(6%,0)}70%{transform:translate(0,6%)}
-  80%{transform:translate(2%,10%)}90%{transform:translate(-5%,2%)}
-}
-
-/* ---------- 7. CURSOR CUSTOMIZADO ---------- */
-.cursor,.cursor-dot{
-  position:fixed;top:0;left:0;z-index:9999;pointer-events:none;
-  border-radius:50%;mix-blend-mode:difference;
-}
-.cursor{
-  width:34px;height:34px;margin:-17px 0 0 -17px;
-  border:1px solid rgba(216,192,138,.75);
-  transition:width 0.7s var(--ease),height 0.7s var(--ease),
-             margin 0.7s var(--ease),background 0.7s var(--ease),opacity 0.6s;
-}
-.cursor-dot{width:4px;height:4px;margin:-2px 0 0 -2px;background:var(--gold-lite)}
-body.cur-lg .cursor{width:76px;height:76px;margin:-38px 0 0 -38px;background:rgba(216,192,138,.14);border-color:transparent}
-body.cur-hide .cursor,body.cur-hide .cursor-dot{opacity:0}
-@media (hover:none),(pointer:coarse){.cursor,.cursor-dot{display:none}}
-
-/* ---------- 8. PRELOADER ---------- */
-.pre{
-  position:fixed;inset:0;z-index:10000;background:var(--ink);
-  display:grid;place-items:center;
-  transition:opacity 1.6s var(--ease),visibility 1.6s;
-}
-.pre.gone{opacity:0;visibility:hidden}
-.pre-in{display:grid;justify-items:center;gap:2rem;width:min(320px,70vw)}
-.pre-mark{width:74px;height:74px}
-.pre-mark path,.pre-mark circle{
-  fill:none;stroke:var(--gold);stroke-width:1.4;
-  stroke-dasharray:var(--len,300);stroke-dashoffset:var(--len,300);
-  animation:draw 4.8s var(--ease) forwards;
-}
-@keyframes draw{to{stroke-dashoffset:0}}
-.pre-bar{width:100%;height:1px;background:rgba(255,255,255,.09);overflow:hidden}
-.pre-bar i{display:block;height:100%;width:0;background:var(--gold);transition:width 0.5s linear}
-.pre-txt{
-  font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;
-  color:var(--tx-mute);display:flex;justify-content:space-between;width:100%;
-}
-
-/* ---------- 9. HEADER ---------- */
-.topbar{
-  border-bottom:1px solid var(--line-soft);background:var(--ink);
-  font-size:.72rem;color:var(--tx-mute);
-}
-.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;height:40px}
-.topbar ul{display:flex;align-items:center;gap:1.6rem}
-.topbar li{display:flex;align-items:center;gap:.5em;white-space:nowrap}
-.topbar svg{width:12px;height:12px;color:var(--gold);flex:none}
-.topbar a:hover{color:var(--gold-lite)}
-@media(max-width:860px){.topbar li:nth-child(2),.topbar li:nth-child(1){display:none}}
-
-.hdr{
-  position:sticky;top:0;z-index:900;
-  background:rgba(8,8,10,.72);backdrop-filter:blur(18px) saturate(140%);
-  -webkit-backdrop-filter:blur(18px) saturate(140%);
-  border-bottom:1px solid transparent;
-  transition:border-color 0.8s,background 0.8s,transform 1.1s var(--ease);
-}
-.hdr.stuck{border-bottom-color:var(--line-soft)}
-.hdr.hide{transform:translateY(-102%)}
-.hdr .wrap{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;height:clamp(66px,7vw,84px)}
-.brand{display:flex;align-items:center;gap:.85rem}
-.brand img{height:clamp(26px,3.4vw,34px);width:auto;transition:opacity 0.8s}
-.brand:hover img{opacity:.82}
-
-.nav{display:flex;align-items:center;gap:clamp(1rem,2.4vw,2.4rem)}
-.nav a{
-  position:relative;font-size:.78rem;font-weight:500;letter-spacing:.06em;
-  color:var(--tx-dim);padding-block:.5rem;transition:color 0.6s;
-}
-.nav a::after{
-  content:"";position:absolute;left:0;bottom:0;width:100%;height:1px;
-  background:var(--gold);transform:scaleX(0);transform-origin:right;
-  transition:transform 0.9s var(--ease);
-}
-.nav a:hover,.nav a.active{color:var(--tx)}
-.nav a:hover::after,.nav a.active::after{transform:scaleX(1);transform-origin:left}
-@media(max-width:1000px){.nav,.hdr .btn{display:none}}
-
-.burger{display:none;width:44px;height:44px;place-items:center;position:relative;z-index:2}
-.burger i{display:block;width:22px;height:1.5px;background:var(--tx);position:absolute;transition:transform 0.9s var(--ease),opacity 0.6s}
-.burger i:nth-child(1){transform:translateY(-5px)}
-.burger i:nth-child(3){transform:translateY(5px)}
-body.menu-open .burger i:nth-child(1){transform:rotate(45deg)}
-body.menu-open .burger i:nth-child(2){opacity:0}
-body.menu-open .burger i:nth-child(3){transform:rotate(-45deg)}
-@media(max-width:1000px){.burger{display:grid}}
-
-.drawer{
-  position:fixed;inset:0;z-index:890;background:var(--ink-1);
-  display:grid;place-content:center;gap:.4rem;padding:var(--gut);
-  clip-path:circle(0% at calc(100% - 44px) 60px);
-  transition:clip-path 1.6s var(--ease);
-}
-body.menu-open .drawer{clip-path:circle(150% at calc(100% - 44px) 60px)}
-.drawer a{
-  font-size:clamp(1.7rem,7vw,2.6rem);font-weight:300;letter-spacing:-.02em;
-  color:var(--tx);opacity:0;transform:translateY(20px);
-  transition:opacity 1s var(--ease),transform 1s var(--ease),color 0.6s;
-}
-body.menu-open .drawer a{opacity:1;transform:none}
-body.menu-open .drawer a:nth-child(1){transition-delay:0.44s}
-body.menu-open .drawer a:nth-child(2){transition-delay:0.58s}
-body.menu-open .drawer a:nth-child(3){transition-delay:0.72s}
-body.menu-open .drawer a:nth-child(4){transition-delay:0.86s}
-body.menu-open .drawer a:nth-child(5){transition-delay:1s}
-body.menu-open .drawer .btn{opacity:1;transform:none;transition-delay:1.16s}
-.drawer a:hover{color:var(--gold)}
-.drawer .btn{margin-top:2rem;justify-self:start;opacity:0;transform:translateY(20px);
-  transition:opacity 1s var(--ease),transform 1s var(--ease)}
-
-/* Barra de progresso do scroll */
-.prog{position:fixed;top:0;left:0;height:2px;z-index:950;width:0;
-  background:linear-gradient(90deg,var(--gold-deep),var(--gold-glow));
-  box-shadow:0 0 12px rgba(216,192,138,.6)}
-
-/* ---------- 10. HERO ---------- */
-.hero{position:relative;min-height:clamp(680px,100svh,1000px);display:flex;align-items:center;
-  padding-block:clamp(60px,9vw,110px);overflow:hidden;isolation:isolate}
-.hero-bg{position:absolute;inset:0;z-index:-2;pointer-events:none}
-.hero-bg::before{
-  content:"";position:absolute;inset:0;
-  background:
-    radial-gradient(120% 90% at 78% 42%,rgba(172,149,89,.16),transparent 58%),
-    radial-gradient(90% 70% at 8% 4%,rgba(172,149,89,.09),transparent 60%),
-    var(--ink);
-  animation:hero-glow-breathe 6s ease-in-out infinite;
-}
-@keyframes hero-glow-breathe{
-  0%,100%{opacity:.85}
-  50%{opacity:1}
-}
-/* grade técnica */
-.hero-bg::after{
-  content:"";position:absolute;inset:0;opacity:.5;
-  background-image:
-    linear-gradient(var(--line-soft) 1px,transparent 1px),
-    linear-gradient(90deg,var(--line-soft) 1px,transparent 1px);
-  background-size:74px 74px;
-  -webkit-mask-image:radial-gradient(80% 70% at 50% 40%,#000,transparent 78%);
-  mask-image:radial-gradient(80% 70% at 50% 40%,#000,transparent 78%);
-}
-.hero-grid{
-  display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
-  gap:clamp(2rem,5vw,4.5rem);align-items:center;width:100%;
-}
-@media(max-width:980px){.hero-grid{grid-template-columns:1fr;gap:2.5rem}}
-
-.hero h1{
-  font-size:var(--fs-display);font-weight:300;line-height:1.02;letter-spacing:-.035em;
-  margin-block:.2em .9rem;
-}
-.hero h1 b{font-weight:700}
-.hero h1 .gold{
-  color:transparent;background:linear-gradient(96deg,var(--gold-glow),var(--gold) 55%,var(--gold-deep));
-  -webkit-background-clip:text;background-clip:text;font-weight:700;
-}
-.hero-sub{color:var(--tx-dim);max-width:52ch;margin-bottom:2.2rem}
-.hero-cta{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center}
-.hero-cta .btn{font-size:.735rem;letter-spacing:.13em;padding-inline:1.6em}
-
-/* faixa de credenciais */
-.creds{display:flex;flex-wrap:wrap;gap:1.6rem 2.4rem;margin-top:2.8rem;
-  padding-top:1.8rem;border-top:1px solid var(--line-soft)}
-.creds div{display:grid;gap:.15rem}
-.creds b{font-size:clamp(1.35rem,2.4vw,1.9rem);font-weight:700;color:var(--gold-lite);letter-spacing:-.02em;line-height:1}
-.creds span{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--tx-mute)}
-
-/* ---------- 11. MÃO ANATÔMICA INTERATIVA ---------- */
-.handbox{
-  position:relative;width:100%;max-width:440px;aspect-ratio:1/1.12;
-  margin-inline:auto;perspective:1500px;touch-action:pan-y;
-}
-.hand-stage{position:absolute;inset:0;transform-style:preserve-3d;
-  transition:transform 1.8s var(--ease)}
-.hand-svg{position:absolute;inset:0;width:100%;height:100%}
-
-.hand-halo{
-  position:absolute;inset:8% 12%;border-radius:50%;z-index:0;
-  background:radial-gradient(circle,rgba(172,149,89,.28),transparent 66%);
-  filter:blur(52px);
-  animation:halo-breathe 4s ease-in-out infinite;
-}
-@keyframes halo-breathe{
-  0%,100%{opacity:.7;transform:scale(1)}
-  50%{opacity:1;transform:scale(1.12)}
-}
-
-.hand-rings{position:absolute;inset:0;z-index:0;display:grid;place-items:center;pointer-events:none}
-.hand-rings i{
-  position:absolute;width:72%;aspect-ratio:1;border-radius:50%;
-  border:1px solid rgba(172,149,89,.12);
-  animation:ring-pulse 4s ease-in-out infinite;
-}
-.hand-rings i:nth-child(2){width:90%;animation-delay:1.3s;border-color:rgba(172,149,89,.07)}
-.hand-rings i:nth-child(3){width:108%;animation-delay:2.6s;border-color:rgba(172,149,89,.04)}
-@keyframes ring-pulse{
-  0%,100%{opacity:.8;transform:scale(1)}
-  50%{opacity:1;transform:scale(1.04)}
-}
-
-.skin-lines{stroke:rgba(172,149,89,.2);stroke-width:.9;fill:none}
-.nerve{fill:none;stroke:var(--gold-glow);stroke-width:2.6;stroke-linecap:round;
-  stroke-linejoin:round;filter:drop-shadow(0 0 5px rgba(232,212,164,.8));
-  animation:nerve-glow 3s ease-in-out infinite}
-@keyframes nerve-glow{
-  0%,100%{filter:drop-shadow(0 0 4px rgba(232,212,164,.6))}
-  50%{filter:drop-shadow(0 0 10px rgba(232,212,164,1))}
-}
-.nerve-flow{fill:none;stroke:#fff;stroke-width:1.3;stroke-linecap:round;
-  stroke-dasharray:12 240;filter:drop-shadow(0 0 4px #fff);
-  animation:nerve-flow-anim 2.4s linear infinite}
-@keyframes nerve-flow-anim{to{stroke-dashoffset:-252}}
-
-/* ----- pontos interativos (HTML sobre o SVG) ----- */
-.hs{
-  position:absolute;z-index:4;transform:translate(-50%,-50%);
-  width:26px;height:26px;display:grid;place-items:center;
-  background:none;padding:0;cursor:pointer;
-}
-.hs::before{
-  content:"";position:absolute;width:22px;height:22px;border-radius:50%;
-  background:rgba(172,149,89,.18);
-}
-.hs b{
-  position:relative;z-index:2;width:22px;height:22px;border-radius:50%;
-  display:grid;place-items:center;
-  background:var(--gold);color:#0B0B08;
-  font-size:.62rem;font-weight:700;line-height:1;
-  box-shadow:0 0 0 1px rgba(232,212,164,.45),0 0 16px rgba(232,212,164,.35);
-  transition:transform 1s var(--ease),background 0.8s;
-}
-.hs:hover b,.hs.on b{transform:scale(1.22);background:var(--gold-glow)}
-
-/* tooltip do ponto */
-.hs i{
-  position:absolute;bottom:calc(100% + 12px);left:50%;transform:translate(-50%,6px);
-  white-space:nowrap;font-style:normal;pointer-events:none;
-  padding:.5em .85em;border:1px solid var(--line);
-  background:rgba(10,10,13,.94);backdrop-filter:blur(8px);
-  font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--gold-lite);opacity:0;transition:opacity 0.7s,transform 0.9s var(--ease);
-}
-.hs:hover i,.hs.on i,.hs:focus-visible i{opacity:1;transform:translate(-50%,0)}
-
-.hand-hint{
-  position:absolute;left:50%;bottom:-14px;transform:translateX(-50%);z-index:4;
-  display:flex;align-items:center;gap:.6em;white-space:nowrap;
-  font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--tx-mute);
-  transition:opacity 1.2s;
-}
-.hand-hint i{width:6px;height:6px;border-radius:50%;background:var(--gold);
-  opacity:.9}
-.handbox.touched .hand-hint{opacity:0}
-
-/* legenda numerada — sempre visível, sincronizada com os pontos */
-.hand-legend{
-  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem;
-  width:100%;max-width:440px;margin:1.8rem auto 0;
-}
-.hand-legend button{
-  display:flex;align-items:center;gap:.7em;text-align:left;
-  padding:.7em .9em;border:1px solid var(--line-soft);
-  font-size:.72rem;letter-spacing:.02em;color:var(--tx-dim);line-height:1.3;
-  transition:border-color 0.9s,color 0.9s,background 0.9s;
-}
-.hand-legend button em{
-  font-style:normal;width:18px;height:18px;flex:none;border-radius:50%;
-  display:grid;place-items:center;font-size:.58rem;font-weight:700;
-  background:rgba(172,149,89,.16);color:var(--gold-lite);
-  transition:background 0.8s,color 0.8s;
-}
-.hand-legend button:hover,.hand-legend button.on{
-  border-color:var(--line);color:var(--tx);background:rgba(172,149,89,.07)}
-.hand-legend button.on em{background:var(--gold);color:#0B0B08}
-@media(max-width:400px){.hand-legend{grid-template-columns:1fr}}
-
-/* ---------- 12. FAIXA DE ESPECIALIDADES — LETREIRO INFINITO ---------- */
-.ticker{
-  border-block:1px solid var(--line-soft);background:var(--ink-1);
-  padding-block:clamp(1.1rem,2.2vw,1.6rem);
-  overflow:hidden;position:relative;
-}
-/* fade-out nas bordas */
-.ticker::before,.ticker::after{
-  content:"";position:absolute;top:0;width:clamp(40px,8vw,120px);height:100%;
-  z-index:2;pointer-events:none;
-}
-.ticker::before{left:0;background:linear-gradient(90deg,var(--ink-1),transparent)}
-.ticker::after{right:0;background:linear-gradient(-90deg,var(--ink-1),transparent)}
-
-.ticker-track{
-  display:flex;width:max-content;
-  animation:ticker-scroll 38s linear infinite;
-}
-.ticker-track:hover{animation-play-state:paused}
-@keyframes ticker-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@media(prefers-reduced-motion:reduce){
-  .ticker-track{animation:none;flex-wrap:wrap;justify-content:center;gap:.6rem 1.4rem;width:100%}
-}
-
-.spec-list{
-  display:flex;align-items:center;
-  gap:clamp(1.4rem,3vw,2.8rem);
-  padding-inline:clamp(.7rem,1.5vw,1.4rem);
-  flex-shrink:0;
-}
-.spec-list li{
-  display:inline-flex;align-items:center;gap:clamp(1.4rem,3vw,2.8rem);
-  font-size:clamp(.6rem,.74vw,.7rem);letter-spacing:.24em;text-transform:uppercase;
-  color:var(--tx-mute);white-space:nowrap;transition:color .5s var(--ease);
-}
-.spec-list li::after{
-  content:"";width:4px;height:4px;border-radius:50%;
-  background:var(--gold);opacity:.6;flex:none;
-  animation:dot-pulse 2.6s ease-in-out infinite;
-}
-.spec-list li:nth-child(odd)::after{animation-delay:.9s}
-.spec-list li:nth-child(3n)::after{animation-delay:1.7s}
-.spec-list li:last-child::after{display:none}
-.spec-list li:hover{color:var(--gold-lite)}
-@keyframes dot-pulse{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.7)}}
-
-/* ---------- 13. CARDS DE PROBLEMA ---------- */
-.probs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:1.5rem;margin-top:3.4rem}
-.prob{
-  position:relative;padding:2.4rem 2rem;background:var(--ink-1);z-index:0;
-  border:1px solid var(--line-soft);overflow:hidden;isolation:isolate;
-  transition:transform 1.2s var(--ease),border-color 1s;
-}
-.prob::before{
-  content:"";position:absolute;inset:0;z-index:-1;opacity:0;
-  background:radial-gradient(90% 120% at 50% 0%,rgba(172,149,89,.14),transparent 70%);
-  transition:opacity 1.2s var(--ease);
-}
-.prob:hover{transform:translateY(-7px);border-color:var(--line)}
-.prob:hover::before{opacity:1}
-.prob-ph{
-  position:absolute;inset:0;z-index:-2;overflow:hidden;
-}
-.prob-ph img{
-  width:100%;height:100%;object-fit:cover;opacity:.26;
-  filter:grayscale(1) contrast(1.05);
-  transform:scale(1.04);
-  transition:opacity 1.6s var(--ease),transform 2.4s var(--ease);
-}
-.prob:hover .prob-ph img{opacity:.42;transform:scale(1.1)}
-.prob-ph::after{
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(13,13,16,.35),rgba(13,13,16,.9) 62%,var(--ink-1));
-}
-.prob-n{
-  position:absolute;top:1.1rem;right:1.4rem;font-size:3.6rem;font-weight:700;
-  line-height:1;color:rgba(255,255,255,.05);letter-spacing:-.05em;
-}
-.prob-ic{width:44px;height:44px;color:var(--gold);margin-bottom:1.6rem;
-  transition:transform 1.2s var(--ease)}
-.prob:hover .prob-ic{transform:translateY(-3px) scale(1.06)}
-.prob h3{font-size:1.08rem;font-weight:700;margin-bottom:.7rem;letter-spacing:-.01em}
-.prob p{font-size:.9rem;color:var(--tx-dim);line-height:1.6}
-.prob-bar{position:absolute;left:0;bottom:0;height:2px;width:100%;
-  background:var(--gold);transform:scaleX(0);transform-origin:left;
-  transition:transform 1.4s var(--ease)}
-.prob:hover .prob-bar{transform:scaleX(1)}
-
-/* ---------- 14. RAIO-X EXPLICATIVO ---------- */
-.anat{background:var(--ink-1);border-block:1px solid var(--line-soft);overflow:hidden}
-.anat-grid{
-  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.02fr);
-  gap:clamp(2.2rem,5vw,4.5rem);align-items:center;margin-top:3.4rem;
-}
-@media(max-width:940px){.anat-grid{grid-template-columns:1fr;gap:2.4rem}}
-
-/* --- chapa de raio-X --- */
-.xray{
-  position:relative;width:100%;max-width:560px;margin-inline:auto;
-  aspect-ratio:446/400;
-  background:radial-gradient(75% 60% at 50% 45%,#14161B,#08080A 78%);
-  border:1px solid var(--line-soft);
-  box-shadow:inset 0 0 90px rgba(0,0,0,.9);
-  overflow:hidden;
-}
-.xray::after{ /* brilho de negatoscópio */
-  content:"";position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(60% 50% at 50% 42%,rgba(190,210,255,.05),transparent 70%);
-}
-.xray svg{position:absolute;inset:0;width:100%;height:100%}
-.xr-bone{fill:#DDE4EE;opacity:.9}
-.xr-soft{fill:rgba(150,170,205,.075);stroke:rgba(160,180,215,.16);stroke-width:1}
-
-/* etiqueta técnica da chapa */
-.xr-meta{
-  position:absolute;z-index:3;display:flex;gap:.9rem;
-  font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(200,214,240,.3);
-}
-.xr-meta--tl{top:12px;left:14px}
-.xr-meta--br{bottom:12px;right:14px}
-.xr-corner{position:absolute;width:16px;height:16px;border:1px solid rgba(200,214,240,.18);z-index:3}
-.xr-corner:nth-of-type(1){top:8px;left:8px;border-right:0;border-bottom:0}
-.xr-corner:nth-of-type(2){top:8px;right:8px;border-left:0;border-bottom:0}
-.xr-corner:nth-of-type(3){bottom:8px;left:8px;border-right:0;border-top:0}
-.xr-corner:nth-of-type(4){bottom:8px;right:8px;border-left:0;border-top:0}
-
-/* ----- camadas de patologia sobre a chapa ----- */
-.xr-ov{opacity:0;visibility:hidden;transition:opacity 1.1s var(--ease),visibility 1.1s;pointer-events:none}
-.xr-ov.on{opacity:1;visibility:visible}
-
-/* foco inflamatório — pulsa devagar, como a dor */
-.pain{opacity:.8}
-
-.xr-lig{fill:none;stroke:#E8D4A4;stroke-width:5.5;stroke-linecap:round;opacity:.85}
-.xr-nerve{fill:none;stroke:#FFE9B8;stroke-linecap:round;
-  filter:drop-shadow(0 0 5px rgba(255,233,184,.7))}
-.xr-squeeze{stroke:#FF7B62;filter:drop-shadow(0 0 7px rgba(255,123,98,.9))}
-.xr-tendon{fill:none;stroke:#E9E0CD;stroke-width:4.6;stroke-linecap:round;opacity:.92}
-.xr-nodule{fill:#F2E6C8;stroke:rgba(120,105,70,.5);stroke-width:1}
-.xr-pulley{fill:none;stroke:#FFB199;stroke-width:3.4}
-.xr-block{stroke:#FF7B62;stroke-width:2.2;stroke-linecap:round;fill:none;opacity:.9}
-.xr-gap{stroke:#FF8A70;stroke-width:2.4;stroke-linecap:round;fill:none;opacity:.95}
-.xr-spur circle{fill:#F2E6C8;stroke:rgba(120,105,70,.45);stroke-width:.8;opacity:.95}
-
-/* chamadas dentro da chapa */
-.xr-tag line{stroke:rgba(255,255,255,.26);stroke-width:.8;stroke-dasharray:3 3}
-.xr-tag text{
-  font-family:'Ubuntu',sans-serif;font-size:9.5px;font-weight:700;
-  letter-spacing:.13em;text-transform:uppercase;fill:#FFD9A0;
-}
-.xr-tag .xr-tag-s{
-  font-size:7.5px;font-weight:400;letter-spacing:.08em;
-  text-transform:none;fill:rgba(242,239,233,.55);
-}
-
-/* --- seletor + explicação --- */
-.xr-list{display:grid;gap:.5rem;margin-bottom:2rem}
-.xr-item{
-  display:flex;align-items:center;gap:.9rem;text-align:left;width:100%;
-  padding:.95rem 1.15rem;border:1px solid var(--line-soft);
-  color:var(--tx-dim);transition:border-color 0.9s,background 0.9s,color 0.9s;
-}
-.xr-item em{
-  font-style:normal;width:22px;height:22px;flex:none;border-radius:50%;
-  display:grid;place-items:center;font-size:.6rem;font-weight:700;
-  background:rgba(172,149,89,.15);color:var(--gold-lite);transition:background 0.8s,color 0.8s;
-}
-.xr-item b{font-size:.92rem;font-weight:500}
-.xr-item:hover{border-color:var(--line);color:var(--tx)}
-.xr-item.on{border-color:var(--gold);background:rgba(172,149,89,.09);color:var(--tx)}
-.xr-item.on em{background:var(--gold);color:#0B0B08}
-@media(max-width:940px){
-  .xr-list{grid-template-columns:repeat(2,1fr);gap:.5rem}
-}
-@media(max-width:460px){.xr-list{grid-template-columns:1fr}}
-
-.xr-panel{position:relative;min-height:280px}
-.xr-body{display:grid;gap:1.3rem;animation:xrIn 1.1s var(--ease) both}
-@keyframes xrIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-.xr-row{display:grid;gap:.45rem}
-.xr-row h4{
-  display:flex;align-items:center;gap:.6em;
-  font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);
-}
-.xr-row h4 svg{width:14px;height:14px}
-.xr-row p{font-size:.94rem;color:var(--tx-dim);line-height:1.62;max-width:56ch}
-.xr-row p b{color:var(--tx);font-weight:500}
-.xr-cta{margin-top:.6rem}
-
-/* ---------- 15. TRATAMENTOS (ABAS) ---------- */
-.tabs{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);
-  gap:clamp(1.6rem,4vw,3.6rem);margin-top:3.6rem}
-@media(max-width:900px){.tabs{grid-template-columns:1fr}}
-.tab-nav{display:flex;flex-direction:column;gap:0;position:relative;
-  border-left:1px solid var(--line-soft)}
-@media(max-width:900px){
-  .tab-nav{flex-direction:row;overflow-x:auto;border-left:0;
-    border-bottom:1px solid var(--line-soft);scrollbar-width:none}
-  .tab-nav::-webkit-scrollbar{display:none}
-}
-.tab-btn{
-  position:relative;text-align:left;padding:1.35rem 1.4rem;
-  color:var(--tx-mute);transition:color 0.8s,background 0.8s;white-space:nowrap;
-}
-.tab-btn small{display:block;font-size:.6rem;letter-spacing:.24em;
-  text-transform:uppercase;color:var(--gold-deep);margin-bottom:.3rem;transition:color 0.8s}
-.tab-btn b{font-size:1rem;font-weight:500;letter-spacing:-.01em}
-.tab-btn::before{
-  content:"";position:absolute;left:-1px;top:0;bottom:0;width:2px;
-  background:var(--gold);transform:scaleY(0);transform-origin:top;
-  transition:transform 1.1s var(--ease);
-}
-@media(max-width:900px){
-  .tab-btn::before{left:0;right:0;top:auto;bottom:-1px;width:auto;height:2px;
-    transform:scaleX(0);transform-origin:left;transition:transform 1s var(--ease)}
-  .tab-btn.on::before{transform:scaleX(1)}
-}
-.tab-btn.on{color:var(--tx);background:rgba(255,255,255,.022)}
-.tab-btn.on small{color:var(--gold)}
-.tab-btn.on::before{transform:scaleY(1)}
-.tab-btn:hover{color:var(--tx)}
-
-.tab-panes{position:relative}
-.pane{display:none}
-.pane.on{display:block;animation:paneIn 1.2s var(--ease) both}
-@keyframes paneIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-.pane-top{display:flex;align-items:flex-start;gap:1.4rem;margin-bottom:1.6rem;flex-wrap:wrap}
-.pane-ic{width:56px;height:56px;flex:none;color:var(--gold);
-  border:1px solid var(--line);display:grid;place-items:center;padding:12px}
-.pane h3{font-size:clamp(1.5rem,2.6vw,2.05rem);font-weight:400;letter-spacing:-.025em;margin-bottom:.5rem}
-.pane h3 b{font-weight:700;color:var(--gold-lite)}
-.pane>p{color:var(--tx-dim);max-width:66ch;margin-bottom:2rem}
-.pane-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));
-  gap:1.6rem;margin-bottom:2.2rem}
-.pane-col h4{
-  font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;
-  color:var(--gold);margin-bottom:1rem;padding-bottom:.7rem;
-  border-bottom:1px solid var(--line-soft);
-}
-.pane-col li{display:flex;gap:.75rem;font-size:.88rem;color:var(--tx-dim);
-  line-height:1.55;margin-bottom:.85rem}
-.pane-col li svg{width:15px;height:15px;flex:none;color:var(--gold);margin-top:.28em}
-.pane-col li b{color:var(--tx);font-weight:500}
-.pane-for{
-  padding:1.2rem 1.4rem;background:rgba(172,149,89,.06);
-  border-left:2px solid var(--gold);font-size:.88rem;color:var(--tx-dim);margin-bottom:2rem}
-.pane-for b{display:block;color:var(--gold-lite);font-size:.66rem;letter-spacing:.22em;
-  text-transform:uppercase;margin-bottom:.4rem}
-
-/* ---------- 16. BENEFÍCIOS ---------- */
-.bens{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));
-  gap:1.4rem;margin-top:3.4rem}
-.ben{position:relative;padding:2.6rem 2rem 2.2rem;border:1px solid var(--line-soft);
-  display:flex;flex-direction:column;
-  transition:background 1s,border-color 1s;overflow:hidden}
-.ben p{flex:1}
-.ben .ben-arrow{margin-top:auto}
-.ben:hover{background:rgba(172,149,89,.045);border-color:var(--line)}
-.ben-n{font-size:.66rem;letter-spacing:.24em;color:var(--gold);margin-bottom:1.5rem;display:block}
-.ben h3{font-size:1.12rem;font-weight:500;margin-bottom:.8rem;letter-spacing:-.015em}
-.ben p{font-size:.9rem;color:var(--tx-dim);margin-bottom:1.6rem;line-height:1.6}
-.ben-arrow{width:34px;height:34px;border:1px solid var(--line);display:grid;place-items:center;
-  color:var(--gold);transition:background 0.9s var(--ease),color 0.9s,transform 0.9s var(--ease)}
-.ben:hover .ben-arrow{background:var(--gold);color:#0B0B08;transform:rotate(-45deg)}
-.ben-arrow svg{width:14px;height:14px}
-
-/* ---------- 17. SOBRE ---------- */
-.about{background:var(--bone);color:var(--tx-dark);position:relative}
-.about .kicker{color:var(--gold-deep)}
-.about .kicker::before,.about .kicker::after{background:linear-gradient(90deg,transparent,var(--gold-deep))}
-.about .lede,.about p{color:#4A4841}
-.about .h2 strong{color:var(--gold-deep)}
-.about-grid{display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);
-  gap:clamp(2rem,5vw,4.5rem);align-items:center}
-@media(max-width:980px){.about-grid{grid-template-columns:1fr}}
-.about-ph{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--bone-2)}
-.about-ph img{width:100%;height:100%;object-fit:cover;object-position:center top;
-  transition:transform 2.8s var(--ease)}
-.about-ph:hover img{transform:scale(1.045)}
-.about-ph::after{
-  content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(190deg,transparent 55%,rgba(20,20,15,.42));
-}
-.about-ph .tagbox{
-  position:absolute;left:0;bottom:0;z-index:2;padding:1.4rem 1.6rem;
-  background:rgba(8,8,10,.82);backdrop-filter:blur(10px);
-  border-top:2px solid var(--gold);color:var(--tx);
-}
-.about-ph .tagbox b{display:block;font-size:.98rem;font-weight:700;letter-spacing:-.01em}
-.about-ph .tagbox span{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-lite)}
-.about-ph .frame{position:absolute;inset:14px;border:1px solid rgba(244,241,234,.28);z-index:2;pointer-events:none}
-
-.creds-list{display:grid;gap:0;margin-block:2.4rem;border-top:1px solid rgba(20,20,15,.11)}
-.cred{display:grid;grid-template-columns:auto 1fr auto;gap:1.2rem;align-items:center;
-  padding-block:1.15rem;border-bottom:1px solid rgba(20,20,15,.11);
-  transition:padding-left 1s var(--ease),background 0.8s}
-.cred:hover{padding-left:.9rem;background:rgba(172,149,89,.07)}
-.cred-ic{width:34px;height:34px;color:var(--gold-deep);flex:none}
-.cred b{display:block;font-size:.95rem;font-weight:700;color:var(--tx-dark);letter-spacing:-.01em}
-.cred span{font-size:.82rem;color:#6A675F}
-.cred em{font-style:normal;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--gold-deep);font-weight:700;white-space:nowrap}
-@media(max-width:600px){.cred{grid-template-columns:auto 1fr}.cred em{display:none}}
-
-/* ---------- 18. JORNADA ---------- */
-.steps{position:relative;margin-top:4rem}
-.steps-line{position:absolute;left:12.5%;right:12.5%;top:34px;height:1px;background:rgba(20,20,15,.12)}
-.steps-line i{display:block;height:100%;width:0;background:var(--gold)}
-.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem}
-@media(max-width:820px){.steps-grid{grid-template-columns:repeat(2,1fr);gap:2.4rem}
-  .steps-line{display:none}}
-@media(max-width:460px){.steps-grid{grid-template-columns:1fr}}
-.step{position:relative;padding-top:0}
-.step-dot{
-  width:68px;height:68px;border-radius:50%;background:var(--bone);
-  border:1px solid rgba(20,20,15,.14);display:grid;place-items:center;
-  color:var(--gold-deep);position:relative;z-index:2;margin-bottom:1.4rem;
-  transition:background 1s var(--ease),color 1s,border-color 1s,transform 1.2s var(--ease);
-}
-.step:hover .step-dot{background:var(--gold);color:#fff;border-color:var(--gold);transform:scale(1.06)}
-.step-dot svg{width:26px;height:26px}
-.step-dot em{position:absolute;top:-6px;right:-6px;width:24px;height:24px;border-radius:50%;
-  background:var(--tx-dark);color:var(--bone);font-size:.64rem;font-weight:700;font-style:normal;
-  display:grid;place-items:center}
-.step h4{font-size:1rem;font-weight:700;margin-bottom:.45rem;color:var(--tx-dark)}
-.step p{font-size:.85rem;color:#6A675F;line-height:1.55}
-
-/* ---------- 19. DEPOIMENTOS ---------- */
-.tst{overflow:hidden;position:relative}
-.tst-head{display:flex;justify-content:space-between;align-items:flex-end;
-  gap:2rem;flex-wrap:wrap;margin-bottom:3rem}
-.tst-nav{display:flex;gap:.7rem}
-.tst-nav button{
-  width:52px;height:52px;border:1px solid var(--line);display:grid;place-items:center;
-  color:var(--gold);transition:background 0.8s var(--ease),color 0.8s,border-color 0.8s;
-}
-.tst-nav button:hover{background:var(--gold);color:#0B0B08;border-color:var(--gold)}
-.tst-nav button:disabled{opacity:.3;pointer-events:none}
-.tst-nav svg{width:17px;height:17px}
-.tst-view{overflow:hidden;margin-inline:calc(var(--gut)*-1);padding-inline:var(--gut)}
-.tst-track{display:flex;gap:1.5rem;transition:transform 1.7s var(--ease)}
-.tst-card{
-  flex:0 0 clamp(280px,32%,400px);padding:2.4rem 2.1rem;
-  background:var(--ink-1);border:1px solid var(--line-soft);
-  display:flex;flex-direction:column;gap:1.4rem;
-  transition:border-color 1s,transform 1.2s var(--ease);
-}
-@media(max-width:760px){.tst-card{flex:0 0 84%}}
-.tst-card:hover{border-color:var(--line);transform:translateY(-5px)}
-.tst-stars{display:flex;gap:.25rem;color:var(--gold)}
-.tst-stars svg{width:15px;height:15px}
-.tst-card blockquote{font-size:1rem;line-height:1.66;color:var(--tx);flex:1;position:relative}
-.tst-card blockquote::before{
-  content:"”";position:absolute;top:-2.2rem;left:-.4rem;font-size:5rem;line-height:1;
-  color:rgba(172,149,89,.14);font-family:Georgia,serif;pointer-events:none}
-.tst-who{display:flex;align-items:center;gap:.9rem;padding-top:1.2rem;border-top:1px solid var(--line-soft)}
-.tst-av{width:40px;height:40px;border-radius:50%;background:linear-gradient(140deg,var(--gold),var(--gold-deep));
-  display:grid;place-items:center;font-size:.82rem;font-weight:700;color:#0B0B08;flex:none}
-.tst-who b{display:block;font-size:.88rem;font-weight:500}
-.tst-who span{font-size:.68rem;color:var(--tx-mute);letter-spacing:.06em}
-.tst-bar{height:1px;background:rgba(255,255,255,.08);margin-top:2.4rem;position:relative;overflow:hidden}
-.tst-bar i{position:absolute;left:0;top:0;height:100%;background:var(--gold);
-  transition:transform 1.7s var(--ease),width 1.7s var(--ease)}
-
-/* ---------- 20. LOCAL ---------- */
-.loc{background:var(--ink-1);border-block:1px solid var(--line-soft)}
-.loc-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
-  gap:clamp(2rem,5vw,4.5rem);align-items:center}
-@media(max-width:980px){.loc-grid{grid-template-columns:1fr}}
-.loc-ph{position:relative;aspect-ratio:16/12;overflow:hidden;background:var(--ink-2);
-  border:1px solid var(--line-soft)}
-.loc-ph img{width:100%;height:100%;object-fit:cover;transition:transform 3s var(--ease)}
-.loc-ph:hover img{transform:scale(1.05)}
-.loc-badge{
-  position:absolute;top:1.2rem;left:1.2rem;z-index:2;display:flex;align-items:center;gap:.6em;
-  padding:.6em 1em;background:rgba(8,8,10,.8);backdrop-filter:blur(10px);
-  border:1px solid var(--line);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-lite)}
-.loc-badge i{width:6px;height:6px;border-radius:50%;background:#4ADE80;
-  box-shadow:0 0 8px #4ADE80;opacity:.9}
-.loc-list{display:grid;gap:0;margin-block:2.2rem}
-.loc-item{display:flex;gap:1.1rem;padding-block:1.15rem;border-bottom:1px solid var(--line-soft);
-  align-items:flex-start;transition:padding-left 1s var(--ease)}
-.loc-item:hover{padding-left:.7rem}
-.loc-item svg{width:19px;height:19px;color:var(--gold);flex:none;margin-top:.2em}
-.loc-item b{display:block;font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--tx-mute);margin-bottom:.25rem}
-.loc-item span{font-size:.95rem;color:var(--tx)}
-.loc-item a:hover span{color:var(--gold-lite)}
-.regions{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:.4rem}
-.regions span{padding:.42em .95em;border:1px solid var(--line-soft);font-size:.68rem;
-  letter-spacing:.1em;color:var(--tx-dim);transition:border-color 0.8s,color 0.8s,background 0.8s}
-.regions span:hover{border-color:var(--gold);color:var(--gold-lite);background:rgba(172,149,89,.07)}
-
-/* ---------- 21. QUIZ / DIAGNÓSTICO GUIADO ---------- */
-.quiz-wrap{position:relative;overflow:hidden}
-.quiz{
-  max-width:820px;margin-inline:auto;margin-top:3rem;
-  border:1px solid var(--line);background:
-    linear-gradient(180deg,rgba(172,149,89,.05),transparent 40%),var(--ink-1);
-  position:relative;
-}
-.quiz-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;
-  padding:1.15rem clamp(1.3rem,3vw,2.4rem);border-bottom:1px solid var(--line-soft)}
-.quiz-head span{font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--tx-mute)}
-.quiz-head b{color:var(--gold-lite)}
-.quiz-prog{height:2px;background:rgba(255,255,255,.07);position:relative}
-.quiz-prog i{position:absolute;left:0;top:0;height:100%;width:0;background:var(--gold);
-  transition:width 1.2s var(--ease);box-shadow:0 0 10px rgba(216,192,138,.6)}
-.quiz-body{padding:clamp(1.8rem,4vw,3rem);min-height:360px;position:relative}
-.qstep{display:none}
-.qstep.on{display:block;animation:qIn 1.1s var(--ease) both}
-@keyframes qIn{from{opacity:0;transform:translateX(22px)}to{opacity:1;transform:none}}
-.qstep h3{font-size:clamp(1.25rem,2.6vw,1.75rem);font-weight:400;letter-spacing:-.02em;
-  margin-bottom:.5rem}
-.qstep h3 b{font-weight:700;color:var(--gold-lite)}
-.qstep>p{font-size:.86rem;color:var(--tx-mute);margin-bottom:1.9rem}
-.qopts{display:grid;gap:.7rem}
-.qopt{
-  display:flex;align-items:center;gap:1rem;text-align:left;width:100%;
-  padding:1.1rem 1.3rem;border:1px solid var(--line-soft);background:rgba(255,255,255,.014);
-  transition:border-color 0.7s,background 0.7s,transform 0.7s var(--ease);
-}
-.qopt:hover{border-color:var(--gold);background:rgba(172,149,89,.07);transform:translateX(5px)}
-.qopt.sel{border-color:var(--gold);background:rgba(172,149,89,.11)}
-.qopt i{width:20px;height:20px;flex:none;border-radius:50%;border:1px solid var(--line);
-  display:grid;place-items:center;transition:border-color 0.6s,background 0.6s}
-.qopt i::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--gold);
-  transform:scale(0);transition:transform 0.6s var(--ease)}
-.qopt:hover i,.qopt.sel i{border-color:var(--gold)}
-.qopt.sel i::after{transform:scale(1)}
-.qopt span{font-size:.94rem}
-.qopt small{display:block;font-size:.76rem;color:var(--tx-mute);margin-top:.15rem}
-.quiz-foot{display:flex;justify-content:space-between;align-items:center;gap:1rem;
-  padding:1.15rem clamp(1.3rem,3vw,2.4rem);border-top:1px solid var(--line-soft)}
-.qback{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--tx-mute);
-  transition:color 0.6s;display:inline-flex;align-items:center;gap:.5em}
-.qback:hover{color:var(--gold-lite)}
-.qback svg{width:13px;height:13px}
-.qdots{display:flex;gap:.45rem}
-.qdots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.16);transition:all 0.8s var(--ease)}
-.qdots i.on{background:var(--gold);width:20px;border-radius:3px}
-
-/* Resultado */
-.qres{text-align:center}
-.qres-ic{width:70px;height:70px;margin:0 auto 1.6rem;border-radius:50%;
-  background:rgba(172,149,89,.12);border:1px solid var(--line);
-  display:grid;place-items:center;color:var(--gold);
-  animation:popIn 1.4s var(--ease) both}
-@keyframes popIn{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
-.qres-ic svg{width:30px;height:30px}
-.qres small{font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
-.qres h3{margin:.8rem 0 1rem}
-.qres p{color:var(--tx-dim);max-width:52ch;margin-inline:auto;font-size:.94rem}
-.qres-box{margin-block:1.9rem;padding:1.3rem;background:rgba(255,255,255,.024);
-  border:1px solid var(--line-soft);text-align:left}
-.qres-box b{display:block;font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;
-  color:var(--tx-mute);margin-bottom:.7rem}
-.qres-box ul{display:grid;gap:.5rem}
-.qres-box li{display:flex;gap:.6rem;font-size:.86rem;color:var(--tx-dim)}
-.qres-box li svg{width:14px;height:14px;color:var(--gold);flex:none;margin-top:.28em}
-.qres-note{font-size:.7rem;color:var(--tx-mute);margin-top:1.5rem;line-height:1.5}
-.qres-cta{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
-
-/* ---------- 22. CTA FINAL ---------- */
-.cta{position:relative;overflow:hidden;isolation:isolate;text-align:center}
-.cta::before{
-  content:"";position:absolute;inset:0;z-index:-1;
-  background:radial-gradient(90% 130% at 50% 100%,rgba(172,149,89,.22),transparent 62%),var(--ink);
-}
-.cta-mark{
-  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:-1;
-  width:min(620px,92vw);color:rgba(172,149,89,.055);pointer-events:none;
-}
-.cta h2{font-size:clamp(2.2rem,5.6vw,4.4rem);font-weight:300;letter-spacing:-.038em;
-  line-height:1.04;margin-bottom:1.4rem}
-.cta h2 b{font-weight:700;color:var(--gold-lite)}
-.cta .lede{margin-bottom:2.6rem}
-.cta-row{display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap}
-
-/* ---------- 23. FOOTER ---------- */
-.ft{background:var(--ink-1);border-top:1px solid var(--line-soft);
-  padding-block:clamp(3rem,6vw,4.6rem) 0}
-.ft-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:2.6rem}
-@media(max-width:900px){.ft-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:540px){.ft-grid{grid-template-columns:1fr}}
-.ft h4{font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);
-  margin-bottom:1.4rem}
-.ft li{margin-bottom:.7rem}
-.ft a,.ft p{font-size:.88rem;color:var(--tx-dim);transition:color 0.6s}
-.ft a:hover{color:var(--gold-lite)}
-.ft-brand p{max-width:34ch;margin-block:1.2rem 1.6rem;font-size:.86rem;line-height:1.6}
-.ft-social{display:flex;gap:.6rem}
-.ft-social a{width:40px;height:40px;border:1px solid var(--line-soft);display:grid;place-items:center;
-  color:var(--tx-dim);transition:all 0.8s var(--ease)}
-.ft-social a:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-3px)}
-.ft-social svg{width:16px;height:16px}
-.ft-bot{margin-top:3.4rem;padding-block:1.6rem;border-top:1px solid var(--line-soft);
-  display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
-  font-size:.72rem;color:var(--tx-mute)}
-.ft-bot a{font-size:.72rem}
-
-/* ---------- 24. BOTÃO FLUTUANTE ---------- */
-.fab{
-  position:fixed;right:clamp(14px,3vw,26px);bottom:clamp(14px,3vw,26px);z-index:880;
-  display:flex;align-items:center;gap:.7em;padding:.95em 1.35em;
-  background:var(--gold);color:#0B0B08;border-radius:100px;
-  font-size:.74rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  box-shadow:0 12px 36px -10px rgba(172,149,89,.7);
-  transform:translateY(140%);transition:transform 1.4s var(--ease),box-shadow 0.8s;
-}
-.fab.show{transform:none}
-.fab:hover{box-shadow:0 16px 46px -10px rgba(172,149,89,.9)}
-.fab svg{width:17px;height:17px}
-@media(max-width:520px){.fab span{display:none}.fab{padding:1.05em;border-radius:50%}}
-
-/* ---------- 25. MISC ---------- */
-.mark-bg{
-  position:absolute;pointer-events:none;user-select:none;z-index:0;
-  font-size:clamp(6rem,22vw,20rem);font-weight:700;letter-spacing:-.06em;line-height:.8;
-  color:rgba(255,255,255,.017);white-space:nowrap;
-}
-[hidden]{display:none!important}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-
-/* ==========================================================================
-   26. HAND COLUMN + AJUSTES FINOS DE RESPONSIVIDADE
-   ========================================================================== */
-.hand-col{display:grid;justify-items:center;width:100%}
-
-/* --- Tablet --- */
-@media(max-width:980px){
-  .hero{min-height:0;padding-block:clamp(48px,8vw,80px)}
-  .hero-grid{text-align:center;justify-items:center}
-  .hero-copy{display:grid;justify-items:center}
-  .hero .kicker{justify-content:center}
-  .hero-sub{margin-inline:auto}
-  .hero-cta{justify-content:center}
-  .creds{justify-content:center;text-align:center;width:100%}
-  .creds div{justify-items:center}
-  .hand-col{order:-1;margin-bottom:.5rem}
-}
-
-/* --- Mobile --- */
-@media(max-width:768px){
-  :root{--fs-display:clamp(2.1rem,9vw,3.1rem)}
-
-  /* tudo centralizado e com respiro */
-  .section{padding-block:clamp(56px,12vw,80px)}
-  .center .lede,.lede{margin-inline:auto}
-
-  .hero h1{letter-spacing:-.03em}
-  .hero-cta{width:100%;max-width:420px;margin-inline:auto;justify-content:center}
-  .hero-cta .btn{justify-content:center;flex:1 1 auto}
-  .creds{gap:1.4rem 1.2rem;justify-content:space-between}
-  .creds div{flex:1 1 40%}
-
-  /* seções que eram assimétricas passam a centralizar */
-  .anat-grid>*:first-child{text-align:center;justify-items:center}
-  .anat-grid .kicker{justify-content:center}
-  .xr-item{justify-content:flex-start}
-  .xr-row p{margin-inline:auto;text-align:center}
-  .xr-row h4{justify-content:center}
-  .xr-cta{display:flex;justify-content:center}
-
-  .about-grid>div:last-child{text-align:center}
-  .about-grid .kicker{justify-content:center}
-  .cred{text-align:left}
-  .about-grid .btn{margin-inline:auto}
-
-  .loc-grid>div:first-child{text-align:center}
-  .loc-grid .kicker{justify-content:center}
-  .loc-grid .regions{justify-content:center}
-  .loc-item{text-align:left}
-  .loc-grid>div:first-child>div:last-child{justify-content:center}
-
-  .tst-head{flex-direction:column;align-items:center;text-align:center;gap:1.6rem}
-  .tst-head .kicker{justify-content:center}
-  .tst-card{padding:1.9rem 1.6rem}
-
-  .pane-top{flex-direction:column;align-items:flex-start;gap:1rem}
-  .tab-btn{padding:1.1rem 1.15rem}
-  .tab-panes{min-height:0}
-  .pane{position:relative;inset:auto}
-  .pane:not(.on){display:none}
-
-  .quiz-body{min-height:0}
-  .qstep:not(.on){display:none}
-  .qstep{position:relative;inset:auto}
-  .qopt{padding:.95rem 1.05rem}
-  .qres-cta{flex-direction:column}
-  .qres-cta .btn{justify-content:center}
-
-  .bens,.probs{gap:1rem}
-  .prob{padding:2rem 1.6rem}
-  .ben{padding:2rem 1.6rem 1.8rem}
-
-  .cta-row{flex-direction:column;width:100%}
-  .cta-row .btn{justify-content:center}
-
-  .ft-grid{text-align:center;gap:2.2rem}
-  .ft .brand{justify-content:center}
-  .ft-brand p{margin-inline:auto}
-  .ft-social{justify-content:center}
-  .ft-bot{flex-direction:column;text-align:center;gap:.7rem}
-
-  .steps-grid{text-align:center}
-  .step-dot{margin-inline:auto}
-}
-
-/* --- Telas pequenas --- */
-@media(max-width:560px){
-  .hero-cta{flex-direction:column;align-items:stretch}
-}
-@media(max-width:520px){
-  .topbar .wrap{justify-content:center}
-  .topbar ul:first-child{display:none}
-  .topbar ul{gap:1.2rem}
-  .handbox{max-width:min(300px,80vw)}
-  .hs{width:22px;height:22px}
-  .hs b{width:19px;height:19px;font-size:.56rem}
-  .hs i{display:none}
-  .hand-hint{font-size:.52rem;letter-spacing:.14em}
-  .creds b{font-size:1.25rem}
-  .creds span{font-size:.58rem}
-  .tst-card{flex:0 0 88%}
-  .quiz-head{flex-direction:column;gap:.35rem;text-align:center}
-  .quiz-foot{flex-direction:column-reverse;gap:.9rem}
-  .about-ph .tagbox{padding:1rem 1.1rem;width:100%}
-  .xray{max-width:min(320px,86vw)}
-  .xr-mark{width:58px;height:58px}
-  .btn{padding:1em 1.5em;font-size:.72rem}
-}
-
-/* nada pode vazar horizontalmente */
-@media(max-width:768px){
-  .mark-bg{display:none}
-  .tst-view{margin-inline:calc(var(--gut)*-1);padding-inline:var(--gut)}
-}
-
-/* ==========================================================================
-   27. CORREÇÕES DE OVERFLOW E ORDEM NO MOBILE
-   ========================================================================== */
-html{overflow-x:clip}
-
-/* entradas laterais viram verticais no mobile — nunca empurram a página */
-@media(max-width:980px){
-  [data-rv="left"],[data-rv="right"]{transform:translateY(28px)}
-}
-
-@media(max-width:980px){
-  .hand-col{order:0;margin-top:2.6rem}          /* título vem antes da mão */
-  .anat-grid .xray{order:-1}                    /* a chapa aparece primeiro */
-}
-
-@media(max-width:768px){
-  .prob,.ben{text-align:center}
-  .prob-ic{margin-inline:auto}
-  .prob-n{top:.9rem;right:1.1rem;font-size:2.8rem}
-  .ben-arrow{margin-inline:auto}
-  .ft h4{justify-content:center}
-}
-
-/* logo com presença suficiente no mobile */
-@media(max-width:520px){
-  .brand img{height:30px}
-  .hdr .wrap{gap:.6rem}
-}
-/* espaço para a dica abaixo da mão */
-.hand-col{padding-bottom:6px}
-
-/* No celular as chamadas dentro da chapa ficariam pequenas demais para ler —
-   as manchas e as estruturas já comunicam, e o texto vem logo abaixo. */
-@media(max-width:700px){
-  .xr-tag{display:none}
-  .xray{max-width:min(420px,92vw)}
-}
-
-/* Carimbo da versão — serve para conferir, na hora, qual build está aberto.
-   Sai do ar quando o site for para produção. */
-.build{
-  display:inline-block;margin-left:.5em;padding:.15em .5em;
-  border:1px solid var(--line);color:var(--gold-lite);
-  font-size:.62rem;font-weight:700;letter-spacing:.12em;
-}
-
-/* ==========================================================================
-   28. ABOUT BADGES (home page — resumo do Dr.)
-   ========================================================================== */
-.about-badges{
-  display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2rem;
-}
-.about-badge{
-  display:inline-flex;align-items:center;gap:.55em;
-  padding:.55em 1em;border:1px solid rgba(20,20,15,.16);
-  background:rgba(172,149,89,.08);
-  font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--gold-deep);
-  transition:background 0.7s,border-color 0.7s;
-}
-.about-badge:hover{background:rgba(172,149,89,.15);border-color:rgba(172,149,89,.3)}
-.about-badge svg{width:14px;height:14px;flex:none;color:var(--gold-deep)}
-
-/* ==========================================================================
-   29. PÁGINA CONHEÇA O DR. (dr/index.html)
-   ========================================================================== */
-
-/* ----- Hero ----- */
-.dr-hero{
-  position:relative;
-  padding-block:clamp(80px,10vw,140px);
-  overflow:hidden;isolation:isolate;
-}
-.dr-hero-bg{
-  position:absolute;inset:0;z-index:-1;pointer-events:none;
-  background:
-    radial-gradient(120% 80% at 70% 40%,rgba(172,149,89,.15),transparent 58%),
-    radial-gradient(70% 60% at 4% 10%,rgba(172,149,89,.08),transparent 55%),
-    var(--ink);
-}
-.dr-hero-bg::after{
-  content:"";position:absolute;inset:0;opacity:.4;
-  background-image:
-    linear-gradient(var(--line-soft) 1px,transparent 1px),
-    linear-gradient(90deg,var(--line-soft) 1px,transparent 1px);
-  background-size:74px 74px;
-  -webkit-mask-image:radial-gradient(75% 65% at 55% 40%,#000,transparent 78%);
-  mask-image:radial-gradient(75% 65% at 55% 40%,#000,transparent 78%);
-}
-.dr-hero-grid{
-  display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);
-  gap:clamp(2.5rem,6vw,6rem);align-items:center;width:100%;
-}
-@media(max-width:900px){.dr-hero-grid{grid-template-columns:1fr;gap:3rem}}
-@media(max-width:900px){.dr-hero .dr-hero-photo{order:-1;max-width:420px;margin-inline:auto}}
-
-/* foto do dr. */
-.dr-photo-wrap{
-  position:relative;aspect-ratio:4/5;overflow:hidden;
-  background:var(--ink-2);
-}
-.dr-photo-wrap img{
-  width:100%;height:100%;object-fit:cover;object-position:center top;
-  transition:transform 2.8s var(--ease);
-}
-.dr-photo-wrap:hover img{transform:scale(1.04)}
-.dr-photo-frame{
-  position:absolute;inset:12px;
-  border:1px solid rgba(172,149,89,.22);
-  pointer-events:none;z-index:2;
-}
-.dr-photo-tag{
-  position:absolute;bottom:0;left:0;right:0;z-index:3;
-  padding:1.2rem 1.5rem;
-  background:rgba(8,8,10,.85);backdrop-filter:blur(12px);
-  border-top:2px solid var(--gold);color:var(--tx);
-}
-.dr-photo-tag b{display:block;font-size:.98rem;font-weight:700;letter-spacing:-.01em}
-.dr-photo-tag span{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-lite)}
-
-/* copy do hero */
-.dr-hero-copy h1{
-  font-size:var(--fs-display);font-weight:300;
-  line-height:1.02;letter-spacing:-.03em;
-  margin-block:.2em .4rem;
-}
-.dr-hero-copy h1 .gold{
-  color:transparent;
-  background:linear-gradient(96deg,var(--gold-glow),var(--gold) 55%,var(--gold-deep));
-  -webkit-background-clip:text;background-clip:text;font-weight:700;
-}
-
-/* ----- Cards de credenciais ----- */
-.dr-creds-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));
-  gap:1.4rem;
-}
-.dr-cred-card{
-  position:relative;display:flex;gap:1.2rem;align-items:flex-start;
-  padding:2rem 1.8rem;
-  background:var(--ink-2);border:1px solid var(--line-soft);
-  overflow:hidden;isolation:isolate;
-  transition:border-color 1s,transform 1.2s var(--ease);
-}
-.dr-cred-card::before{
-  content:"";position:absolute;inset:0;z-index:-1;opacity:0;
-  background:radial-gradient(90% 120% at 0% 0%,rgba(172,149,89,.12),transparent 70%);
-  transition:opacity 1.2s var(--ease);
-}
-.dr-cred-card:hover{border-color:var(--line);transform:translateY(-5px)}
-.dr-cred-card:hover::before{opacity:1}
-.dr-cred-icon{
-  flex:none;width:48px;height:48px;display:grid;place-items:center;
-  background:rgba(172,149,89,.12);color:var(--gold);
-  transition:background 0.8s,color 0.8s;
-}
-.dr-cred-card:hover .dr-cred-icon{background:var(--gold);color:#0B0B08}
-.dr-cred-body h3{font-size:1rem;font-weight:700;letter-spacing:-.01em;margin-bottom:.45rem}
-.dr-cred-body p{font-size:.86rem;color:var(--tx-dim);line-height:1.6}
-.dr-cred-badge{
-  position:absolute;top:1rem;right:1.2rem;
-  font-size:.56rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--gold-deep);background:rgba(172,149,89,.1);
-  padding:.22em .7em;
-}
-
-/* ----- Timeline de trajetória ----- */
-.dr-timeline-section{background:var(--ink)}
-.dr-timeline{
-  position:relative;
-  padding-left:2rem;
-}
-.dr-timeline::before{
-  content:"";position:absolute;left:0;top:.9rem;bottom:.9rem;width:1px;
-  background:linear-gradient(to bottom,transparent,var(--gold-deep) 15%,var(--gold-deep) 85%,transparent);
-}
-.dr-tl-item{
-  position:relative;display:flex;gap:1.8rem;align-items:flex-start;
-  padding-bottom:2.6rem;
-}
-.dr-tl-item:last-child{padding-bottom:0}
-.dr-tl-marker{
-  position:absolute;left:-2.42rem;top:.85rem;
-  width:12px;height:12px;border-radius:50%;flex:none;
-  background:var(--gold);
-  box-shadow:0 0 0 3px var(--ink),0 0 0 4px rgba(172,149,89,.3);
-}
-.dr-tl-content{}
-.dr-tl-year{
-  display:inline-block;
-  font-size:.6rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
-  color:var(--gold);margin-bottom:.45rem;
-}
-.dr-tl-content h3{font-size:1.08rem;font-weight:700;letter-spacing:-.01em;margin-bottom:.5rem}
-.dr-tl-content p{font-size:.9rem;color:var(--tx-dim);line-height:1.6;max-width:58ch}
-
-/* ----- Diplomas ----- */
-.dr-diplomas-section{}
-.dr-diploma-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));
-  gap:1.5rem;
-}
-.dr-diploma-card{
-  border:1px solid var(--line-soft);background:var(--ink-2);
-  overflow:hidden;transition:border-color 1s,transform 1.2s var(--ease);
-  cursor:default;
-}
-.dr-diploma-card:hover{border-color:var(--line);transform:translateY(-4px)}
-.dr-diploma-inner{display:flex;flex-direction:column}
-.dr-diploma-placeholder{
-  aspect-ratio:4/3;
-  display:grid;place-items:center;
-  background:linear-gradient(135deg,var(--ink-3),var(--ink-2));
-  color:rgba(172,149,89,.3);
-  border-bottom:1px solid var(--line-soft);
-  position:relative;
-}
-.dr-diploma-placeholder::after{
-  content:"";position:absolute;inset:0;
-  background:radial-gradient(60% 50% at 50% 40%,rgba(172,149,89,.07),transparent 70%);
-}
-/* When actual diploma images are provided, use:
-   .dr-diploma-card img { width:100%; height:100%; object-fit:cover; display:block; }
-*/
-.dr-diploma-label{
-  padding:1rem 1.2rem;
-}
-.dr-diploma-label b{display:block;font-size:.9rem;font-weight:700;letter-spacing:-.01em;margin-bottom:.2rem}
-.dr-diploma-label span{font-size:.72rem;color:var(--tx-mute);letter-spacing:.06em}
-
-/* ----- Responsividade da página Dr. ----- */
-@media(max-width:900px){
-  .dr-hero-copy{text-align:center}
-  .dr-hero-copy .kicker{justify-content:center}
-  .dr-hero-copy .creds{justify-content:center}
-}
-@media(max-width:768px){
-  .dr-timeline{padding-left:1.5rem}
-  .dr-tl-marker{left:-1.92rem}
-  .dr-creds-grid{gap:1rem}
-  .dr-cred-card{padding:1.6rem 1.4rem}
-}
-
-/* ==========================================================================
-   30. PRP HEADER — aliases para .hd / .hd-in / .hd-nav / .hd-burger
-   ========================================================================== */
-.hd{
-  position:sticky;top:0;z-index:900;
-  background:rgba(8,8,10,.72);backdrop-filter:blur(18px) saturate(140%);
-  -webkit-backdrop-filter:blur(18px) saturate(140%);
-  border-bottom:1px solid transparent;
-  transition:border-color 0.8s,background 0.8s,transform 1.1s var(--ease);
-}
-.hd.stuck{border-bottom-color:var(--line-soft)}
-.hd.hide{transform:translateY(-102%)}
-.hd-in{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;height:clamp(66px,7vw,84px)}
-.hd-nav{display:flex;align-items:center;gap:clamp(1rem,2.4vw,2.4rem);list-style:none}
-.hd-nav a{
-  position:relative;font-size:.78rem;font-weight:500;letter-spacing:.06em;
-  color:var(--tx-dim);padding-block:.5rem;transition:color 0.6s;
-}
-.hd-nav a::after{
-  content:"";position:absolute;left:0;bottom:0;width:100%;height:1px;
-  background:var(--gold);transform:scaleX(0);transform-origin:right;
-  transition:transform 0.9s var(--ease);
-}
-.hd-nav a:hover,.hd-nav a.active{color:var(--tx)}
-.hd-nav a:hover::after,.hd-nav a.active::after{transform:scaleX(1);transform-origin:left}
-@media(max-width:1000px){.hd-nav,.hd .btn{display:none}}
-.hd-burger{
-  display:none;width:44px;height:44px;place-items:center;
-  position:relative;z-index:2;background:none;border:none;cursor:pointer;
-}
-.hd-burger span{
-  display:block;width:22px;height:1.5px;background:var(--tx);
-  position:absolute;transition:transform 0.9s var(--ease),opacity 0.6s;
-}
-.hd-burger span:nth-child(1){transform:translateY(-5px)}
-.hd-burger span:nth-child(3){transform:translateY(5px)}
-body.menu-open .hd-burger span:nth-child(1){transform:rotate(45deg)}
-body.menu-open .hd-burger span:nth-child(2){opacity:0}
-body.menu-open .hd-burger span:nth-child(3){transform:rotate(-45deg)}
-@media(max-width:1000px){.hd-burger{display:grid}}
-
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Ubuntu:wght@300;400;500&display=swap" rel="stylesheet">
 <script>document.documentElement.className+=' js';</script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Physician","name":"Dr. Pedro Sarzi","medicalSpecialty":"Orthopedic","description":"Ortopedista e cirurgião de mão em Osasco, Barueri e Alphaville.","telephone":"+551138514000","email":"contato.pedrosarzi@gmail.com","address":{"@type":"PostalAddress","streetAddress":"R. Antônio Agú, 630","addressLocality":"Osasco","addressRegion":"SP","postalCode":"06013-006","addressCountry":"BR"},"openingHours":"Mo-Fr 08:00-17:00","sameAs":["https://www.instagram.com/pedro_sarzi"]}
+{"@context":"https://schema.org","@type":"Physician","@id":"https://www.drpedrosarzi.com.br/#medico","name":"Dr. Pedro Sarzi","url":"https://www.drpedrosarzi.com.br/","image":"https://www.drpedrosarzi.com.br/assets/fotos/dr-pedro-jaleco.webp","description":"Cirurgia da mão e do punho em Osasco/SP. CRM-SP 183.332, RQE 110447.","medicalSpecialty":["Musculoskeletal","Surgical"],"identifier":[{"@type":"PropertyValue","propertyID":"CRM-SP","value":"183.332"},{"@type":"PropertyValue","propertyID":"RQE","value":"110447"}],"telephone":"+551138514000","email":"contato.pedrosarzi@gmail.com","address":{"@type":"PostalAddress","streetAddress":"Rua Antônio Agú, 630, Centro","addressLocality":"Osasco","addressRegion":"SP","addressCountry":"BR"},"location":{"@type":"MedicalClinic","name":"Clínica Fares","address":{"@type":"PostalAddress","streetAddress":"Rua Antônio Agú, 630, Centro","addressLocality":"Osasco","addressRegion":"SP","addressCountry":"BR"},"telephone":"+551138514000"},"openingHours":["Mo 08:00-16:00","We 08:00-17:00","Th 08:00-17:00","Fr 08:00-12:30"],"areaServed":["Osasco","Barueri","Alphaville"],"sameAs":["https://www.instagram.com/pedro_sarzi"]}
 </script>
-<link rel="stylesheet" href="../assets/experience.css">
-<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
-<script src="../assets/experience.js" defer></script>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/pages/dr.css">
+<link rel="stylesheet" href="../assets/pages/dr-alt.css">
+<link rel="stylesheet" href="../assets/pages/alt.css">
+<link rel="icon" href="../assets/brand/favicon.svg" type="image/svg+xml">
+<link rel="preload" as="image" href="../assets/fotos/dr-pedro-jaleco.webp" type="image/webp">
+<script src="../assets/site.js" defer></script>
+<script src="../assets/pages/dr.js" defer></script>
+<link rel="stylesheet" href="../assets/tema.css">
 </head>
 <body>
 
-<!-- ===== PRELOADER ===== -->
-<div class="pre" id="pre">
-  <div class="pre-in">
-    <svg class="pre-mark" viewBox="0 0 60 60" style="--len:210">
-      <circle cx="30" cy="30" r="28"/>
-      <path d="M22 44V16h10a8 8 0 0 1 0 16h-10"/>
-      <path d="M31 32l11 12"/>
-    </svg>
-    <div class="pre-bar"><i id="preBar"></i></div>
-    <div class="pre-txt"><span>Dr. Pedro Sarzi</span><span id="preNum">0%</span></div>
-  </div>
-</div>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
 
-<div class="grain" aria-hidden="true"></div>
-<div class="prog" id="prog"></div>
-<div class="cursor" id="cur" aria-hidden="true"></div>
-<div class="cursor-dot" id="curDot" aria-hidden="true"></div>
-
-<!-- ===== SPRITE DE ÍCONES ===== -->
-<svg style="display:none" aria-hidden="true">
-<defs>
-  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></symbol>
-  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
-  <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></symbol>
-  <symbol id="i-ig" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></symbol>
-  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
-  <symbol id="i-arrow-l" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
-  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
-  <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z"/></symbol>
-  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
-  <symbol id="i-award" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="m8.2 14.3-1.4 7 5.2-3 5.2 3-1.4-7"/></symbol>
-  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></symbol>
-  <symbol id="i-micro" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18h12M8 18v-3a4 4 0 0 1 4-4"/><path d="m11 6 3-3 4 4-3 3z"/><path d="M15 13a5 5 0 0 1-5 5"/></symbol>
-  <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></symbol>
-  <symbol id="i-stetho" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3v6a5 5 0 0 0 10 0V3"/><path d="M4 3H2M14 3h2M9 14v2a5 5 0 0 0 10 0v-2"/><circle cx="19" cy="11" r="3"/></symbol>
-  <symbol id="i-hand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 11V4.5a1.5 1.5 0 0 1 3 0V11"/><path d="M14 10.5V3.8a1.5 1.5 0 0 1 3 0V12"/><path d="M17 11.5v-1a1.5 1.5 0 0 1 3 0V16a6 6 0 0 1-6 6h-2a7 7 0 0 1-7-7v-4a1.5 1.5 0 0 1 3 0v2"/><path d="M8 12V5.5a1.5 1.5 0 0 1 3 0V11"/></symbol>
-  <symbol id="i-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></symbol>
-  <symbol id="i-flame" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2s4 4.5 4 8a4 4 0 0 1-8 0c0-1 .4-2 1-2.8C8 9 6 11.5 6 14.5a6 6 0 0 0 12 0c0-4.5-6-12.5-6-12.5Z"/></symbol>
-</defs>
-</svg>
-
-<!-- ===== TOPBAR ===== -->
-<div class="topbar">
-  <div class="wrap">
-    <ul>
-      <li><svg><use href="#i-mail"/></svg><a href="mailto:contato.pedrosarzi@gmail.com">contato.pedrosarzi@gmail.com</a></li>
-      <li><svg><use href="#i-clock"/></svg>Seg a Sex · 08:00 – 17:00</li>
-    </ul>
-    <ul>
-      <li><svg><use href="#i-phone"/></svg><a href="tel:+551138514000">(11) 3851-4000</a></li>
-      <li><svg><use href="#i-ig"/></svg><a href="https://www.instagram.com/pedro_sarzi" target="_blank" rel="noopener">@pedro_sarzi</a></li>
-    </ul>
-  </div>
-</div>
-
-<!-- ===== HEADER ===== -->
-<header class="hdr" id="hdr">
-  <div class="wrap">
-    <a href="../" class="brand" aria-label="Dr. Pedro Sarzi — início">
-      <img src="../assets/image-4bdeecfee4.webp" alt="Dr. Pedro Sarzi — Ortopedista" width="400" height="84">
+<!-- ===== CABEÇALHO (sistema único: docs/site.md) ===== -->
+<header class="cabecalho" id="hdr">
+  <div class="wrap cabecalho__in">
+    <a class="assinatura" href="../">
+      <svg class="assinatura__mono" viewBox="6 2 194 297" fill="currentColor" fill-rule="evenodd" aria-hidden="true" focusable="false"><path d="M78 44 99 21V273L63 295C77 279 78 269 78 255Z"/><path d="M35 6C99 13 179 31 187 67 196 103 155 126 112 135 148 119 170 98 164 68 158 36 88 20 35 6Z"/><path d="M87 43C29 62 9 89 19 116 29 144 85 160 122 184 161 209 163 239 139 261 125 275 105 284 87 291 123 281 154 266 166 244 182 212 158 188 122 167 88 147 35 130 29 105 22 80 53 56 87 43Z"/></svg>
+      <span class="assinatura__txt"><span class="assinatura__nome">Pedro Sarzi</span><span class="assinatura__desc">Cirurgia da mão</span></span>
+      <span class="sr-only">, página inicial</span>
     </a>
-    <nav class="nav" id="nav">
-      <a href="../">Home</a>
+    <nav class="nav" id="nav" aria-label="Principal">
+      <a href="../">Início</a>
       <a href="../prp/">PRP</a>
-      <a href="./" class="active">Conheça o Dr.</a>
+      <a href="./" aria-current="page">O médico</a>
     </nav>
-    <a class="btn btn--sm" href="https://ig.me/m/pedro_sarzi" target="_blank" rel="noopener">
-      Chamar no Direct <svg class="ico"><use href="#i-arrow"/></svg>
-    </a>
-    <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false"><i></i><i></i><i></i></button>
+    <a class="btn cabecalho__cta" href="https://ig.me/m/pedro_sarzi" data-agendar target="_blank" rel="noopener">Agendar avaliação</a>
+    <button class="burger" id="burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="drawer"><i></i><i></i></button>
   </div>
 </header>
 
-<nav class="drawer" id="drawer">
-  <a href="../">Home</a>
-  <a href="../prp/">PRP — Medicina Regenerativa</a>
-  <a href="./" class="active">Conheça o Dr. Pedro Sarzi</a>
-  <a class="btn" href="https://ig.me/m/pedro_sarzi" target="_blank" rel="noopener">Chamar no Direct <svg class="ico"><use href="#i-arrow"/></svg></a>
+<nav class="gaveta" id="drawer" aria-label="Menu principal">
+  <a class="gaveta__marca" href="../"><svg class="gaveta__mono" viewBox="6 2 194 297" fill="currentColor" fill-rule="evenodd" aria-hidden="true" focusable="false"><path d="M78 44 99 21V273L63 295C77 279 78 269 78 255Z"/><path d="M35 6C99 13 179 31 187 67 196 103 155 126 112 135 148 119 170 98 164 68 158 36 88 20 35 6Z"/><path d="M87 43C29 62 9 89 19 116 29 144 85 160 122 184 161 209 163 239 139 261 125 275 105 284 87 291 123 281 154 266 166 244 182 212 158 188 122 167 88 147 35 130 29 105 22 80 53 56 87 43Z"/></svg><span class="gaveta__nome">Pedro Sarzi</span><span class="gaveta__desc">Cirurgia da mão</span></a>
+  <div class="gaveta__nav">
+    <a href="../">Início</a>
+    <a href="../prp/">PRP</a>
+    <a href="./" aria-current="page">O médico</a>
+  </div>
+  <a class="btn" href="https://ig.me/m/pedro_sarzi" data-agendar target="_blank" rel="noopener">Agendar avaliação</a>
+  <div class="gaveta__contato">
+    <a href="tel:+551138514000">(11) 3851-4000</a>
+    <span>Clínica Fares, em Osasco, e São Luiz, em Alphaville e em Osasco</span>
+    <a href="#onde">Dias e horários de cada local</a>
+    <p class="id-medico"><span>Dr. Pedro Sarzi · Médico</span><span class="id-medico__sep"> · </span><span>CRM-SP 183.332 · RQE 110447</span></p>
+  </div>
 </nav>
 
-<main id="top">
+<main id="conteudo">
 
-<!-- ===== HERO DO DR. ===== -->
-<section class="dr-hero">
-  <div class="dr-hero-bg" aria-hidden="true"></div>
-  <div class="wrap dr-hero-grid">
-
-    <div class="dr-hero-photo" data-rv="left">
-      <div class="dr-photo-wrap">
-        <img src="../assets/image-829965bedf.webp" alt="Dr. Pedro Sarzi, ortopedista e cirurgião de mão" loading="eager" decoding="async">
-        <div class="dr-photo-frame" aria-hidden="true"></div>
-        <div class="dr-photo-tag">
-          <b>Dr. Pedro Sarzi</b>
-          <span>CRM-SP 183.332 · TEOT 17744</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="dr-hero-copy" data-rv="fade">
-      <span class="kicker">Sobre o especialista</span>
-      <h1>
-        <span class="rise"><span>Cuidado que vai</span></span>
-        <span class="rise"><span>além do <span class="gold">diagnóstico.</span></span></span>
+<!-- ===== 1. CAPA: retrato ===== -->
+<section class="capa medico tex-digital" aria-labelledby="medico-titulo">
+  <div class="wrap capa__grade medico__grade">
+    <figure class="capa__figura medico__figura">
+      <div class="gonio medico__gonio" data-gonio data-gonio-valor="150" data-gonio-varrer aria-hidden="true"></div>
+      <img class="medico__retrato abre" style="--atraso:120ms" src="../assets/fotos/dr-pedro-jaleco.webp" width="819" height="1024" alt="Dr. Pedro Sarzi de jaleco branco, em pé, com as mãos juntas à frente do corpo" fetchpriority="high" decoding="async">
+    </figure>
+    <div class="capa__texto medico__texto">
+      <h1 class="medico__titulo" id="medico-titulo">
+        <span class="rise t-hero"><span>Dr. Pedro Sarzi</span></span>
+        <span class="rise medico__funcao"><span>Cirurgia da mão e do punho em Osasco.</span></span>
       </h1>
-      <p class="hero-sub" style="margin-top:1.2rem">
-        Dr. Pedro Sarzi é médico ortopedista e traumatologista com especialização em cirurgia da mão e vasta experiência no tratamento de condições musculares, ósseas e nervosas do membro superior. Reconhecido pelo atendimento humanizado e personalizado, prioriza sempre o bem-estar e a qualidade de vida de cada paciente.
-      </p>
-      <p class="hero-sub" style="margin-top:.9rem">
-        Atua nas cidades de Osasco, Barueri e Alphaville, com mais de 12 anos de prática clínica e cirúrgica, mais de 3.000 atendimentos realizados e formação de alto nível nas principais instituições de ensino do Brasil.
-      </p>
-      <div class="creds stagger" style="margin-top:2rem">
-        <div><b data-count="12" data-suffix="+">0</b><span>Anos de prática</span></div>
-        <div><b data-count="3000" data-suffix="+">0</b><span>Atendimentos</span></div>
-        <div><b>SBOT</b><span>Membro titular</span></div>
-        <div><b>UNESP</b><span>Microcirurgia</span></div>
+      <p class="t-lead abre" style="--atraso:380ms">Cuida de dor, formigamento, dedos que travam e lesões da mão e do punho. Atende na Clínica Fares, no Centro de Osasco.</p>
+      <div class="acoes abre" style="--atraso:480ms">
+        <a class="btn" href="https://ig.me/m/pedro_sarzi" data-agendar target="_blank" rel="noopener">Agendar avaliação</a>
+        <a class="link" href="#formacao">Ver a formação</a>
       </div>
-      <div style="margin-top:2rem">
-        <a class="btn" href="https://ig.me/m/pedro_sarzi" target="_blank" rel="noopener">
-          Agendar consulta <svg class="ico"><use href="#i-arrow"/></svg>
-        </a>
-      </div>
+      <p class="id-medico capa__id abre" style="--atraso:580ms"><span>Dr. Pedro Sarzi · Médico</span><span class="id-medico__sep"> · </span><span>CRM-SP 183.332 · RQE 110447</span></p>
     </div>
-
   </div>
 </section>
 
-<hr class="rule">
+<!-- Desenhos reaproveitados nesta página: contorno da mão (o mesmo da home), hachura e a placa da explicação -->
+<svg class="sr-only" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <g id="handGeo"><path d="M158 492C157.8 482 158 471.5 157.5 462C157.1 453.3 156.8 444.9 155.5 437C154.3 429.6 152.8 422.5 150 416C147.3 409.6 142.9 403.9 139 398C135 391.9 130 386.1 126 380C122.1 374.1 118.3 367.7 115 362C112.2 357.1 110 351.6 107.4 347.9C105.4 345.2 103.7 343.9 101.5 341.5C98.7 338.6 94.7 334.8 92 331.6C89.7 329 88.2 326.7 86 323.9C83.3 320.6 80 317.9 77.1 313.2C72.7 306.3 66.6 290.9 64.3 285.2C63.3 282.7 62.8 281.7 62.5 279.8C62.1 278.1 62 276.2 62.3 274.4C62.5 272.8 63 271 63.7 269.6C64.2 268.5 64.9 267.6 65.7 266.8C66.5 266 67.4 265.3 68.4 264.8C69.4 264.3 70.5 264 71.6 263.8C72.8 263.7 73.9 263.7 75.1 263.9C76.6 264.2 78.3 264.8 79.8 265.7C81.3 266.5 82.8 267.8 84 269.1C85.2 270.4 85.8 271.5 87.2 273.7C90.4 279 97.9 296.3 101.9 300.8C103.6 302.7 104.9 302.8 106.5 304.1C108.8 305.8 111.4 308.9 114 310.4C116.4 311.7 119.1 313.4 121.5 313C124 312.6 126.6 309.9 128.5 307.5C130.6 304.8 131.9 300.9 133 297C134.2 292.5 134.5 288 135 282C135.8 273.2 136.7 259.5 136.5 249.4C136.4 240.8 135.3 233.8 134.5 225.3C133.7 215.6 132.5 203.9 131.7 194.5C131 186.5 130.7 179.8 130.1 172.4C129.4 164.8 128.3 157.5 127.8 149.6C127.3 141.2 127.1 128.6 127.3 123.4C127.3 121.2 127.3 120.2 127.7 118.7C128 117.2 128.5 115.7 129.3 114.4C130 113.2 131 112 132 111.2C132.8 110.5 133.6 110 134.5 109.6C135.4 109.3 136.3 109.1 137.3 109C138.2 109 139.2 109.1 140.1 109.3C141 109.6 141.9 110 142.8 110.6C143.8 111.3 145 112.4 145.8 113.5C146.7 114.7 147.4 116.1 147.9 117.5C148.4 119 148.5 120 148.8 122.2C149.6 127.4 150.3 140.1 151.2 148.4C152 155.8 152.9 162.5 153.9 169.6C155 176.9 156.3 183.6 157.3 191.5C158.5 201 159.3 213.1 160.3 222.8C161.2 231.4 161.6 241.4 162.9 247C163.6 250.1 164.2 252.4 165.4 254C166.3 255.1 167.5 256.2 168.5 256.2C169.5 256.2 170.7 255 171.6 254C172.7 252.6 173.5 251 174.1 248.2C175.3 241.8 173.8 226.6 173.5 215.8C173.3 205 172.8 193.3 172.7 183.4C172.6 175.1 172.9 168.1 172.9 160.4C172.9 152.7 172.5 145.6 172.5 137.2C172.5 127.5 172.4 111.5 172.8 105.6C172.9 103.2 173 102.2 173.4 100.6C173.8 99.1 174.4 97.6 175.2 96.3C176 95.1 177.1 93.8 178.1 93C179 92.3 179.9 91.9 180.8 91.5C181.7 91.2 182.7 91 183.7 91C184.7 91 185.7 91.1 186.6 91.4C187.6 91.7 188.5 92.2 189.3 92.8C190.4 93.6 191.6 94.8 192.4 96C193.3 97.2 193.9 98.7 194.4 100.2C194.9 101.8 194.9 102.8 195.2 105.1C195.8 111.1 196.3 127.1 196.7 136.8C197.1 145 197.3 152 197.7 159.6C198.1 167.3 198.9 174.3 199.3 182.6C199.8 192.5 199.9 204.2 200.3 215C200.6 225.8 200.9 240.2 201.5 247.4C201.8 251.1 202 253.9 202.7 255.7C203.1 256.7 203.6 257.9 204.1 257.9C204.6 257.9 205.1 256.6 205.5 255.7C206.1 254.4 206.3 253.2 206.7 250.9C207.6 245.4 208.2 232 208.8 222.6C209.5 213.1 209.9 203.1 210.6 194.3C211.3 186.5 212.2 179.6 212.8 172.3C213.4 165.1 213.8 158.5 214.3 150.6C214.9 141.3 215.5 125.6 216.2 120C216.4 117.8 216.5 116.9 217 115.4C217.4 114.1 218.1 112.7 218.9 111.5C219.7 110.4 220.8 109.3 221.8 108.6C222.6 108 223.4 107.6 224.3 107.4C225.2 107.1 226.1 107 227 107C227.9 107 228.8 107.2 229.7 107.5C230.6 107.9 231.4 108.3 232.2 109C233.1 109.7 234.1 110.9 234.8 112C235.6 113.2 236.1 114.7 236.5 116.1C236.9 117.5 236.9 118.4 237 120.6C237.3 126.3 237.1 141.9 236.9 151.4C236.7 159.4 236.2 166.2 235.9 173.7C235.7 181 235.9 187.9 235.6 195.7C235.2 204.6 234.4 214.7 233.9 224.1C233.4 233.6 232.4 244.6 232.5 252.5C232.5 258.1 232.7 264.3 233.4 266.9C233.7 268 234.2 269.1 234.6 269.1C235 269.1 235.4 267.8 235.8 266.9C236.2 265.9 236.3 265 236.7 263.1C237.7 258.3 239.5 245 240.8 236.2C242 227.8 243 218.9 244.2 211.4C245.2 205.2 246.5 200.1 247.5 194.5C248.5 188.9 249.2 183.4 250.2 177.6C251.3 171.2 252.9 161.7 253.9 157.6C254.3 155.7 254.4 154.9 255 153.6C255.5 152.4 256.3 151.3 257.1 150.3C257.9 149.4 259 148.6 259.9 148C260.7 147.6 261.5 147.3 262.3 147.2C263.1 147 264 147 264.8 147.1C265.5 147.2 266.4 147.5 267.1 147.9C267.8 148.2 268.5 148.7 269.1 149.3C269.9 150.1 270.7 151.2 271.2 152.3C271.8 153.5 272.1 154.8 272.3 156.1C272.5 157.4 272.4 158.3 272.3 160.2C272.1 164.4 271 174 270.2 180.4C269.5 186.4 268.6 191.8 267.9 197.5C267.2 203.2 266.9 208.4 266.2 214.6C265.3 222.1 264 230.9 262.9 239.3C261.8 248 259.9 258.2 259.6 266.3C259.4 272.8 260.1 277.8 260.6 284C261.1 290.9 262 298.3 262.6 306C263.2 314.5 264.2 323.9 264 333C263.8 342.3 263.2 351.9 261.5 361C259.8 369.9 257.1 378.8 254 387C251 394.8 246.4 401.6 243.5 409C240.7 416.2 238.4 423.1 237 431C235.4 439.9 235.4 450.1 235 460C234.6 470.4 234.7 481.3 234.5 492Z"/></g>
+    <pattern id="sHach" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(38)"><line x1="0" y1="0" x2="0" y2="5" stroke="#7E6A38" stroke-width="1.1" opacity=".55"/></pattern>
+    <pattern id="pHach" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="4" stroke="#D8C08A" stroke-width=".6"/></pattern>
+    <symbol id="placaExplica" viewBox="40 80 260 420">
+      <rect x="-200" y="-200" width="740" height="900" fill="#0D0D10"/>
+      <use href="#handGeo" fill="#141418" stroke="#D8C08A" stroke-width="1.2" stroke-linejoin="round"/>
+      <ellipse cx="193" cy="377" rx="40" ry="25" fill="url(#pHach)" stroke="#D8C08A" stroke-width="1" stroke-dasharray="3 3"/>
+      <path d="M158 370 C176 383 212 383 232 370" fill="none" stroke="#D8C08A" stroke-width="3.2" stroke-linecap="round"/>
+      <g fill="none" stroke="#F4F1EA" stroke-linecap="round">
+        <path d="M194 452 C193 426 192 404 192 390" stroke-width="2.6"/>
+        <path d="M192 390 C191.6 383 191.6 374 192 366" stroke-width="1.1"/>
+        <path d="M192 366 C186 340 176 296 167 232" stroke-width="2.2"/>
+        <path d="M192 366 C182 352 168 342 154 334" stroke-width="2.2"/>
+        <path d="M193 366 C194 330 192 290 188 214" stroke-width="2.2"/>
+      </g>
+      <g font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="13" fill="#D8C08A">
+        <path d="M160 376 L106 432" stroke="#D8C08A" stroke-width=".7" fill="none"/><text x="46" y="446">Ligamento</text>
+        <path d="M168 300 L118 262" stroke="#D8C08A" stroke-width=".7" fill="none"/><text x="58" y="256">Nervo mediano</text>
+      </g>
+    </symbol>
+  </defs>
+</svg>
 
-<!-- ===== CREDENCIAIS E FORMAÇÃO ===== -->
-<section class="section" id="formacao" style="background:var(--ink-1)">
+<!-- ===== 2. FORMAÇÃO: registros em placas e a trajetória costurada pelo fio (marfim) ===== -->
+<section class="cap cap--marfim formacao" id="formacao" aria-labelledby="formacao-titulo">
   <div class="wrap">
-    <div class="center" data-rv="up">
-      <span class="kicker">Formação &amp; Credenciais</span>
-      <h2 class="h2">Referência em <strong>Cirurgia da Mão</strong></h2>
-      <p class="lede" style="margin-top:1rem">Trajetória de excelência nas principais instituições médicas do Brasil, com credenciais reconhecidas pelos órgãos reguladores e pelas sociedades científicas da área.</p>
-    </div>
+    <header class="secao__cabeca">
+      <h2 class="cap__titulo" id="formacao-titulo">Formação</h2>
+      <p class="t-lead">Da faculdade à atualização mais recente, com os registros que qualquer pessoa pode conferir.</p>
+    </header>
 
-    <div class="dr-creds-grid stagger" style="margin-top:3.6rem">
+    <ul class="placas" aria-label="Registros profissionais">
+      <li class="placa-reg">
+        <span class="placa-reg__sigla">CRM-SP</span>
+        <span class="placa-reg__num">183.332</span>
+        <span class="placa-reg__rotulo">Registro médico</span>
+      </li>
+      <li class="placa-reg">
+        <span class="placa-reg__sigla">RQE</span>
+        <span class="placa-reg__num">110447</span>
+        <span class="placa-reg__rotulo">Registro de especialista</span>
+      </li>
+      <li class="placa-reg">
+        <span class="placa-reg__sigla">TEOT</span>
+        <span class="placa-reg__num">17.744</span>
+        <span class="placa-reg__rotulo">Título em ortopedia e traumatologia</span>
+      </li>
+    </ul>
+    <p class="placas__conferir">Os registros aparecem na <a href="https://portal.cfm.org.br/busca-medicos/" target="_blank" rel="noopener">busca de médicos do CFM</a>.</p>
 
-      <div class="dr-cred-card">
-        <div class="dr-cred-icon"><svg class="ico" width="28" height="28"><use href="#i-award"/></svg></div>
-        <div class="dr-cred-body">
-          <h3>CRM-SP 183.332</h3>
-          <p>Registro no Conselho Regional de Medicina de São Paulo — habilitação plena para exercício da medicina no estado.</p>
+    <ol class="fio" id="fio" aria-label="Trajetória">
+      <li class="fio__marco">
+        <span class="fio__no" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="30" height="24" rx="1.5"/><path d="M14 16h20M14 21h13"/><circle cx="31" cy="30" r="4.5"/><path d="M28.6 33.6 27.4 40l3.6-2 3.6 2-1.2-6.4"/></svg></span>
+        <div class="fio__ficha">
+          <p class="fio__onde">Universidade de Mogi das Cruzes (UMC)</p>
+          <h3>Graduação em medicina</h3>
+          <p>Com o diploma veio o registro no Conselho Regional de Medicina de São Paulo <span class="nobr">(CRM-SP 183.332)</span>.</p>
         </div>
-        <div class="dr-cred-badge">CRM-SP</div>
-      </div>
-
-      <div class="dr-cred-card">
-        <div class="dr-cred-icon"><svg class="ico" width="28" height="28"><use href="#i-shield"/></svg></div>
-        <div class="dr-cred-body">
-          <h3>TEOT 17744 · SBOT</h3>
-          <p>Título de Especialista em Ortopedia e Traumatologia pela Sociedade Brasileira de Ortopedia e Traumatologia — o mais alto grau de certificação na especialidade.</p>
+      </li>
+      <li class="fio__marco">
+        <span class="fio__no" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 39V17l13-7 13 7v22"/><path d="M7 39h34"/><path d="M24 17v10M19 22h10"/><path d="M20.5 39v-6.5h7V39"/></svg></span>
+        <div class="fio__ficha">
+          <p class="fio__onde">Servidores Municipais de Piracicaba</p>
+          <h3>Residência em ortopedia e traumatologia</h3>
+          <p>Residência é o treinamento em hospital depois da faculdade. A ortopedia cuida de ossos, articulações, músculos e tendões; a traumatologia, das lesões causadas por quedas e acidentes. Depois da residência, foi aprovado na prova da SBOT e recebeu o título de especialista em ortopedia e traumatologia (TEOT&nbsp;17.744).</p>
         </div>
-        <div class="dr-cred-badge">TEOT</div>
-      </div>
-
-      <div class="dr-cred-card">
-        <div class="dr-cred-icon"><svg class="ico" width="28" height="28"><use href="#i-micro"/></svg></div>
-        <div class="dr-cred-body">
-          <h3>Microcirurgia · UNESP</h3>
-          <p>Especialização em técnicas de microcirurgia pela Universidade Estadual Paulista Júlio de Mesquita Filho — referência nacional em treinamento cirúrgico de alta precisão.</p>
+      </li>
+      <li class="fio__marco">
+        <span class="fio__no" aria-hidden="true"><svg viewBox="0 0 48 48"><svg x="12" y="5" width="24" height="38" viewBox="48 84 240 412"><use href="#handGeo" fill="none" stroke="currentColor" stroke-width="12" stroke-linejoin="round"/></svg></svg></span>
+        <div class="fio__ficha">
+          <p class="fio__onde">Universidade Estadual Paulista (UNESP)</p>
+          <h3>Especialização em cirurgia da mão</h3>
+          <p>Formação dedicada à mão e ao punho: ossos, articulações, tendões e nervos. Inclui a microcirurgia, feita com lentes de aumento em estruturas muito finas, como nervos e pequenos vasos.</p>
         </div>
-        <div class="dr-cred-badge">UNESP</div>
-      </div>
-
-      <div class="dr-cred-card">
-        <div class="dr-cred-icon"><svg class="ico" width="28" height="28"><use href="#i-hand"/></svg></div>
-        <div class="dr-cred-body">
-          <h3>Cirurgia da Mão</h3>
-          <p>Especialização em cirurgia da mão e punho, com domínio de técnicas para síndrome do túnel do carpo, dedo em gatilho, tendinites e reconstruções complexas.</p>
+      </li>
+      <li class="fio__marco">
+        <span class="fio__no" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="19" cy="24" r="9"/><circle cx="29" cy="24" r="9"/></svg></span>
+        <div class="fio__ficha">
+          <p class="fio__onde">SBCM e SBOT</p>
+          <h3>Sociedades médicas</h3>
+          <p>Membro titular da Sociedade Brasileira de Cirurgia da Mão (SBCM) e membro da Sociedade Brasileira de Ortopedia e Traumatologia (SBOT).</p>
         </div>
-        <div class="dr-cred-badge">SBCM</div>
-      </div>
-
-      <div class="dr-cred-card">
-        <div class="dr-cred-icon"><svg class="ico" width="28" height="28"><use href="#i-stetho"/></svg></div>
-        <div class="dr-cred-body">
-          <h3>Reabilitação e Medicina Regenerativa</h3>
-          <p>Formação complementar em reabilitação musculoesquelética e medicina regenerativa, incluindo PRP (Plasma Rico em Plaquetas) para tratamento minimamente invasivo.</p>
+      </li>
+      <li class="fio__marco">
+        <span class="fio__no" aria-hidden="true"><svg viewBox="0 0 48 48"><text x="24" y="33" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="27" fill="currentColor">10</text></svg></span>
+        <div class="fio__ficha">
+          <p class="fio__onde">2016 a 2026</p>
+          <h3>Dez anos de medicina</h3>
+          <p>Em 2026, recebeu do CREMESP o diploma pelos dez anos de exercício da profissão.</p>
         </div>
-        <div class="dr-cred-badge">PRP</div>
-      </div>
-
-      <div class="dr-cred-card">
-        <div class="dr-cred-icon"><svg class="ico" width="28" height="28"><use href="#i-book"/></svg></div>
-        <div class="dr-cred-body">
-          <h3>Formação Médica de Base</h3>
-          <p>Graduação em Medicina com residência em Ortopedia e Traumatologia, seguida de fellowship em cirurgia da mão — trajetória de formação contínua e atualização científica permanente.</p>
+      </li>
+      <li class="fio__marco">
+        <span class="fio__no" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M24 15c-4-3-10-4-15-3v24c5-1 11 0 15 3 4-3 10-4 15-3V12c-5-1-11 0-15 3z"/><path d="M24 15v24"/></svg></span>
+        <div class="fio__ficha">
+          <p class="fio__onde">Julho de 2026</p>
+          <h3>Atualização em medicina regenerativa</h3>
+          <p>Curso de formação continuada. Entra aqui como estudo e atualização, não como especialidade médica.</p>
         </div>
-        <div class="dr-cred-badge">Res.</div>
-      </div>
-
-    </div>
+      </li>
+    </ol>
   </div>
 </section>
 
-<!-- ===== TIMELINE DE TRAJETÓRIA ===== -->
-<section class="section dr-timeline-section">
+<!-- ===== 3. COMO ELE ATENDE: três momentos contados na rolagem (carvão) =====
+     No computador, o quadro fica parado à esquerda e troca de cena conforme o
+     passo ao lado chega ao meio da tela (dr.js). No celular, cada passo traz a
+     sua imagem. -->
+<section class="cap cap--carvao atende marca-dagua" id="consulta" aria-labelledby="atende-titulo">
   <div class="wrap">
-    <div data-rv="up">
-      <span class="kicker">Trajetória</span>
-      <h2 class="h2">Uma carreira construída<br><strong>passo a passo</strong></h2>
+    <header class="secao__cabeca">
+      <h2 class="cap__titulo" id="atende-titulo">Como ele atende</h2>
+      <p class="t-lead">Em toda consulta, três momentos: ouvir, explicar e combinar o plano.</p>
+    </header>
+    <div class="relato" id="relato">
+      <div class="relato__palco">
+        <figure class="quadro quadro--arco relato__quadro">
+          <div class="quadro__passe relato__cenas">
+            <img class="relato__cena on" data-i="0" src="../assets/fotos/dr-pedro-consultorio.webp" width="900" height="893" alt="Dr. Pedro Sarzi no consultório, de jaleco branco" loading="lazy" decoding="async">
+            <svg class="relato__cena relato__placa" data-i="1" viewBox="-34 -56 328 532" role="img" aria-label="Gravura da mão com o nervo mediano passando sob o ligamento do punho"><use href="#placaExplica" width="260" height="420"/></svg>
+            <img class="relato__cena" data-i="2" src="../assets/image-829965bedf.webp" width="900" height="1125" alt="Dr. Pedro Sarzi de touca e máscara no centro cirúrgico" loading="lazy" decoding="async">
+          </div>
+          <figcaption id="relatoLegenda">No consultório, na Clínica Fares.</figcaption>
+        </figure>
+      </div>
+      <ol class="relato__passos">
+        <li class="relato__passo on" data-i="0" data-legenda="No consultório, na Clínica Fares.">
+          <figure class="quadro quadro--arco relato__foto">
+            <div class="quadro__passe"><img src="../assets/fotos/dr-pedro-consultorio.webp" width="900" height="893" alt="Dr. Pedro Sarzi no consultório, de jaleco branco" loading="lazy" decoding="async"></div>
+          </figure>
+          <p class="relato__n" aria-hidden="true">1</p>
+          <h3>Primeiro, a conversa</h3>
+          <p>Você conta o que sente, quando começou e o que mudou na sua rotina. O exame da mão parte dessa conversa.</p>
+        </li>
+        <li class="relato__passo" data-i="1" data-legenda="Fig. 1. O nervo mediano no túnel do carpo. Ilustração esquemática.">
+          <figure class="quadro quadro--arco relato__foto">
+            <div class="quadro__passe"><svg class="relato__placa" viewBox="-34 -56 328 532" role="img" aria-label="Gravura da mão com o nervo mediano passando sob o ligamento do punho"><use href="#placaExplica" width="260" height="420"/></svg></div>
+            <figcaption>Fig. 1. O nervo mediano no túnel do carpo. Ilustração esquemática.</figcaption>
+          </figure>
+          <p class="relato__n" aria-hidden="true">2</p>
+          <h3>Depois, a explicação</h3>
+          <p>O diagnóstico é explicado em palavras simples, junto com o que cada opção de tratamento envolve.</p>
+        </li>
+        <li class="relato__passo" data-i="2" data-legenda="No centro cirúrgico.">
+          <figure class="quadro quadro--arco relato__foto">
+            <div class="quadro__passe"><img src="../assets/image-829965bedf.webp" width="900" height="1125" alt="Dr. Pedro Sarzi de touca e máscara no centro cirúrgico" loading="lazy" decoding="async"></div>
+          </figure>
+          <p class="relato__n" aria-hidden="true">3</p>
+          <h3>Então, o plano</h3>
+          <p>O plano leva em conta o seu trabalho e o que você precisa voltar a fazer com as mãos. Nem todo caso pede cirurgia; quando ela é indicada, você entende o porquê.</p>
+        </li>
+      </ol>
     </div>
-
-    <div class="dr-timeline" style="margin-top:3.2rem">
-      <div class="dr-tl-item" data-rv="left">
-        <div class="dr-tl-marker"></div>
-        <div class="dr-tl-content">
-          <span class="dr-tl-year">Graduação</span>
-          <h3>Medicina</h3>
-          <p>Formação médica completa com sólida base em anatomia, fisiologia e propedêutica clínica, que orienta até hoje cada decisão diagnóstica e terapêutica.</p>
-        </div>
-      </div>
-      <div class="dr-tl-item" data-rv="left">
-        <div class="dr-tl-marker"></div>
-        <div class="dr-tl-content">
-          <span class="dr-tl-year">Residência</span>
-          <h3>Ortopedia e Traumatologia</h3>
-          <p>Residência médica em ortopedia e traumatologia, com formação prática intensiva em cirurgias de emergência, fraturas e patologias articulares.</p>
-        </div>
-      </div>
-      <div class="dr-tl-item" data-rv="left">
-        <div class="dr-tl-marker"></div>
-        <div class="dr-tl-content">
-          <span class="dr-tl-year">Especialização</span>
-          <h3>Cirurgia da Mão · UNESP</h3>
-          <p>Fellowship e especialização em microcirurgia e cirurgia da mão pela UNESP — treinamento nas técnicas mais avançadas de reconstrução e reparo de estruturas delicadas do membro superior.</p>
-        </div>
-      </div>
-      <div class="dr-tl-item" data-rv="left">
-        <div class="dr-tl-marker"></div>
-        <div class="dr-tl-content">
-          <span class="dr-tl-year">Certificação</span>
-          <h3>TEOT · Membro Titular SBOT</h3>
-          <p>Aprovação no Título de Especialista em Ortopedia e Traumatologia (TEOT 17744) e ingresso como Membro Titular da Sociedade Brasileira de Ortopedia e Traumatologia.</p>
-        </div>
-      </div>
-      <div class="dr-tl-item" data-rv="left">
-        <div class="dr-tl-marker"></div>
-        <div class="dr-tl-content">
-          <span class="dr-tl-year">Atualidade</span>
-          <h3>+12 anos · Osasco, Barueri &amp; Alphaville</h3>
-          <p>Mais de uma década de atuação clínica e cirúrgica em Osasco, Barueri e Alphaville, consolidando referência regional no tratamento ortopédico especializado da mão e punho.</p>
-        </div>
-      </div>
-    </div>
+    <figure class="atende__citacao">
+      <blockquote>
+        <p>Usar o que aprendi e as minhas mãos para ajudar a aliviar a dor, recuperar movimentos e devolver autonomia, dentro do que cada caso permite.</p>
+      </blockquote>
+      <figcaption>Dr. Pedro Sarzi</figcaption>
+    </figure>
   </div>
 </section>
 
-<!-- ===== DIPLOMAS E CERTIFICAÇÕES ===== -->
-<section class="section dr-diplomas-section" id="diplomas" style="background:var(--ink-1)">
+<!-- ===== 4. ÁREAS DE ATUAÇÃO: fichas com a região na mão (marfim) ===== -->
+<section class="cap cap--marfim areas" id="areas" aria-labelledby="areas-titulo">
   <div class="wrap">
-    <div class="center" data-rv="up">
-      <span class="kicker">Diplomas &amp; Certificações</span>
-      <h2 class="h2">Formação <strong>comprovada</strong></h2>
-      <p class="lede" style="margin-top:.9rem">Diplomas, títulos e certificações que atestam a trajetória acadêmica e profissional do Dr. Pedro Sarzi.</p>
-    </div>
-
-    <div class="dr-diploma-grid stagger" style="margin-top:3rem">
-      <div class="dr-diploma-card">
-        <div class="dr-diploma-inner">
-          <div class="dr-diploma-placeholder">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+    <header class="secao__cabeca">
+      <h2 class="cap__titulo" id="areas-titulo">Áreas de atuação</h2>
+      <p class="t-lead">Mão, punho e os nervos e tendões que chegam até eles. Primeiro o que você sente, depois o nome técnico.</p>
+      <p class="sinais__nota">Imagens conceituais ilustrativas.</p>
+    </header>
+    <ul class="sinais sinais--foto sinais--3 areas__fichas">
+      <li class="sinal" data-area="nervo" style="--foto-pos:center 42%">
+        <div class="sinal__giro">
+          <div class="sinal__face sinal__frente">
+            <span class="sinal__media"><img src="../imagensnovas/cards/dr-nervo.webp" width="768" height="1024" alt="Exame clínico do punho e da mão para investigar compressão de nervo" loading="lazy" decoding="async"></span>
+            <h3 class="sinal__titulo">Formigamento e dormência</h3>
+            <p class="sinal__sub">Nervos apertados no punho ou no cotovelo</p>
+            <button class="sinal__virar" type="button" aria-expanded="false" aria-controls="area-nervo"><span class="sr-only">Ver o que entra em: Formigamento e dormência</span></button>
+            <span class="sinal__mais" aria-hidden="true"></span>
           </div>
-          <div class="dr-diploma-label">
-            <b>Diploma de Medicina</b>
-            <span>Graduação</span>
-          </div>
-        </div>
-      </div>
-      <div class="dr-diploma-card">
-        <div class="dr-diploma-inner">
-          <div class="dr-diploma-placeholder">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="m8.2 14.3-1.4 7 5.2-3 5.2 3-1.4-7"/></svg>
-          </div>
-          <div class="dr-diploma-label">
-            <b>Residência em Ortopedia</b>
-            <span>e Traumatologia</span>
+          <div class="sinal__face sinal__verso" id="area-nervo" inert>
+            <p class="sinal__nome">Formigamento e dormência</p>
+            <p class="sinal__texto">Síndrome do túnel do carpo, túnel cubital (o nervo apertado no cotovelo) e outras compressões de nervo.</p>
+            <p class="sinal__liga">Ver no atlas</p>
+            <p class="sinal__links"><a class="link" href="../?atlas=tunel-do-carpo#tratamentos">Túnel do carpo</a></p>
+            <p class="sinal__nota">Conteúdo educativo; a avaliação considera o seu caso.</p>
+            <button class="sinal__voltar" type="button" aria-label="Voltar à ficha Formigamento e dormência"></button>
           </div>
         </div>
-      </div>
-      <div class="dr-diploma-card">
-        <div class="dr-diploma-inner">
-          <div class="dr-diploma-placeholder">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>
+      </li>
+      <li class="sinal" data-area="dedo" style="--foto-pos:center 44%">
+        <div class="sinal__giro">
+          <div class="sinal__face sinal__frente">
+            <span class="sinal__media"><img src="../imagensnovas/cards/dr-dedo.webp" width="768" height="1024" alt="Exame da palma e dos tendões durante a flexão dos dedos" loading="lazy" decoding="async"></span>
+            <h3 class="sinal__titulo">Dedo que trava, estala ou não estica</h3>
+            <p class="sinal__sub">Tendões dos dedos e a palma da mão</p>
+            <button class="sinal__virar" type="button" aria-expanded="false" aria-controls="area-dedo"><span class="sr-only">Ver o que entra em: Dedo que trava, estala ou não estica</span></button>
+            <span class="sinal__mais" aria-hidden="true"></span>
           </div>
-          <div class="dr-diploma-label">
-            <b>TEOT 17744 · SBOT</b>
-            <span>Título de Especialista</span>
-          </div>
-        </div>
-      </div>
-      <div class="dr-diploma-card">
-        <div class="dr-diploma-inner">
-          <div class="dr-diploma-placeholder">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18h12M8 18v-3a4 4 0 0 1 4-4"/><path d="m11 6 3-3 4 4-3 3z"/><path d="M15 13a5 5 0 0 1-5 5"/></svg>
-          </div>
-          <div class="dr-diploma-label">
-            <b>Microcirurgia · UNESP</b>
-            <span>Especialização</span>
+          <div class="sinal__face sinal__verso" id="area-dedo" inert>
+            <p class="sinal__nome">Dedo que trava, estala ou não estica</p>
+            <p class="sinal__texto">Dedo em gatilho, quando o tendão desliza com dificuldade, e contratura de Dupuytren, um espessamento na palma que puxa o dedo para dentro.</p>
+            <p class="sinal__liga">Ver no atlas</p>
+            <p class="sinal__links"><a class="link" href="../?atlas=dedo-em-gatilho#tratamentos">Dedo em gatilho</a><a class="link" href="../?atlas=dupuytren#tratamentos">Dupuytren</a></p>
+            <p class="sinal__nota">Conteúdo educativo; a avaliação considera o seu caso.</p>
+            <button class="sinal__voltar" type="button" aria-label="Voltar à ficha Dedo que trava, estala ou não estica"></button>
           </div>
         </div>
-      </div>
-    </div>
-
-    <p class="center" style="margin-top:2.4rem;font-size:.8rem;color:var(--tx-mute);letter-spacing:.08em">
-      Documentos originais disponíveis para consulta mediante solicitação.
-    </p>
+      </li>
+      <li class="sinal" data-area="punho" style="--foto-pos:center 48%">
+        <div class="sinal__giro">
+          <div class="sinal__face sinal__frente">
+            <span class="sinal__media"><img src="../imagensnovas/cards/dr-punho.webp" width="768" height="1024" alt="Avaliação da base do polegar e do punho" loading="lazy" decoding="async"></span>
+            <h3 class="sinal__titulo">Dor no punho e na base do polegar</h3>
+            <p class="sinal__sub">Tendões e articulação do polegar</p>
+            <button class="sinal__virar" type="button" aria-expanded="false" aria-controls="area-punho"><span class="sr-only">Ver o que entra em: Dor no punho e na base do polegar</span></button>
+            <span class="sinal__mais" aria-hidden="true"></span>
+          </div>
+          <div class="sinal__face sinal__verso" id="area-punho" inert>
+            <p class="sinal__nome">Dor no punho e na base do polegar</p>
+            <p class="sinal__texto">Tendinite de De Quervain, nos tendões do polegar, e rizartrose, o desgaste da articulação na base do polegar.</p>
+            <p class="sinal__liga">Ver no atlas</p>
+            <p class="sinal__links"><a class="link" href="../?atlas=de-quervain#tratamentos">De Quervain</a><a class="link" href="../?atlas=rizartrose#tratamentos">Rizartrose</a></p>
+            <p class="sinal__nota">Conteúdo educativo; a avaliação considera o seu caso.</p>
+            <button class="sinal__voltar" type="button" aria-label="Voltar à ficha Dor no punho e na base do polegar"></button>
+          </div>
+        </div>
+      </li>
+      <li class="sinal" data-area="caroco" style="--foto-pos:center 45%">
+        <div class="sinal__giro">
+          <div class="sinal__face sinal__frente">
+            <span class="sinal__media"><img src="../imagensnovas/cards/dr-cisto.webp" width="768" height="1024" alt="Pequena saliência no punho observada durante avaliação clínica" loading="lazy" decoding="async"></span>
+            <h3 class="sinal__titulo">Caroço na mão ou no punho</h3>
+            <p class="sinal__sub">Cistos e outros nódulos</p>
+            <button class="sinal__virar" type="button" aria-expanded="false" aria-controls="area-caroco"><span class="sr-only">Ver o que entra em: Caroço na mão ou no punho</span></button>
+            <span class="sinal__mais" aria-hidden="true"></span>
+          </div>
+          <div class="sinal__face sinal__verso" id="area-caroco" inert>
+            <p class="sinal__nome">Caroço na mão ou no punho</p>
+            <p class="sinal__texto">Cistos sinoviais, pequenas bolsas de líquido junto às articulações e aos tendões, e outros nódulos.</p>
+            <p class="sinal__liga">Ver no atlas</p>
+            <p class="sinal__links"><a class="link" href="../?atlas=cisto-sinovial#tratamentos">Cisto sinovial</a></p>
+            <p class="sinal__nota">Conteúdo educativo; a avaliação considera o seu caso.</p>
+            <button class="sinal__voltar" type="button" aria-label="Voltar à ficha Caroço na mão ou no punho"></button>
+          </div>
+        </div>
+      </li>
+      <li class="sinal" data-area="queda" style="--foto-pos:center 42%">
+        <div class="sinal__giro">
+          <div class="sinal__face sinal__frente">
+            <span class="sinal__media"><img src="../imagensnovas/cards/dr-fratura.webp" width="768" height="1024" alt="Mão e punho protegidos por uma tala durante avaliação" loading="lazy" decoding="async"></span>
+            <h3 class="sinal__titulo">Quedas e pancadas</h3>
+            <p class="sinal__sub">Fraturas, luxações e entorses</p>
+            <button class="sinal__virar" type="button" aria-expanded="false" aria-controls="area-queda"><span class="sr-only">Ver o que entra em: Quedas e pancadas</span></button>
+            <span class="sinal__mais" aria-hidden="true"></span>
+          </div>
+          <div class="sinal__face sinal__verso" id="area-queda" inert>
+            <p class="sinal__nome">Quedas e pancadas</p>
+            <p class="sinal__texto">Fraturas, luxações e entorses dos dedos, da mão e do punho.</p>
+            <p class="sinal__liga">Ver no atlas</p>
+            <p class="sinal__links"><a class="link" href="../?atlas=fraturas#tratamentos">Fraturas</a></p>
+            <p class="sinal__nota">Conteúdo educativo; a avaliação considera o seu caso.</p>
+            <button class="sinal__voltar" type="button" aria-label="Voltar à ficha Quedas e pancadas"></button>
+          </div>
+        </div>
+      </li>
+      <li class="sinal" data-area="corte" style="--foto-pos:center 48%">
+        <div class="sinal__giro">
+          <div class="sinal__face sinal__frente">
+            <span class="sinal__media"><img src="../imagensnovas/cards/dr-microcirurgia.webp" width="768" height="1024" alt="Instrumentos delicados preparados para procedimento de microcirurgia" loading="lazy" decoding="async"></span>
+            <h3 class="sinal__titulo">Cortes em nervos e tendões</h3>
+            <p class="sinal__sub">Reparo fino, com lentes de aumento</p>
+            <button class="sinal__virar" type="button" aria-expanded="false" aria-controls="area-corte"><span class="sr-only">Ver o que entra em: Cortes em nervos e tendões</span></button>
+            <span class="sinal__mais" aria-hidden="true"></span>
+          </div>
+          <div class="sinal__face sinal__verso" id="area-corte" inert>
+            <p class="sinal__nome">Cortes em nervos e tendões</p>
+            <p class="sinal__texto">Lesões de tendão e de nervo. Quando a estrutura é muito fina, o reparo é feito por microcirurgia, com lentes de aumento.</p>
+            <p class="sinal__liga">Ver no atlas</p>
+            <p class="sinal__links"><a class="link" href="../?atlas=lesoes-de-tendao#tratamentos">Lesões de tendão</a></p>
+            <p class="sinal__nota">Conteúdo educativo; a avaliação considera o seu caso.</p>
+            <button class="sinal__voltar" type="button" aria-label="Voltar à ficha Cortes em nervos e tendões"></button>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <div class="pontos" aria-hidden="true"></div>
+    <p class="areas__guia">Não sabe dizer o nome do que sente? <a class="link" href="../#diagnostico">Entenda seus sintomas</a></p>
   </div>
 </section>
 
-<!-- ===== CTA FINAL ===== -->
-<section class="section" style="background:radial-gradient(90% 80% at 50% 50%,rgba(172,149,89,.13),transparent 70%),var(--ink)">
-  <div class="wrap center" data-rv="up">
-    <span class="kicker">Agende sua avaliação</span>
-    <h2 class="h2">Pronto para cuidar<br>das <strong>suas mãos?</strong></h2>
-    <p class="lede" style="margin-top:1rem">Consulta presencial em Osasco, Barueri ou Alphaville. Atendimento personalizado, diagnóstico preciso e tratamento orientado para sua qualidade de vida.</p>
-    <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-top:2.4rem">
-      <a class="btn" href="https://ig.me/m/pedro_sarzi" target="_blank" rel="noopener">
-        Agendar pelo Instagram <svg class="ico"><use href="#i-arrow"/></svg>
-      </a>
-      <a class="btn btn--ghost" href="../prp/">
-        Conheça o tratamento PRP <svg class="ico"><use href="#i-arrow"/></svg>
-      </a>
+<!-- ===== 5. ONDE ATENDE: molduras (componente do site.css, o mesmo da home) ===== -->
+<section class="cap cap--linho" id="onde" aria-labelledby="local-titulo">
+  <div class="wrap">
+    <div class="onde">
+      <header class="secao__cabeca">
+        <h2 class="cap__titulo" id="local-titulo">Onde atende</h2>
+        <p class="t-lead">Em três locais, em Osasco e em Alphaville. Veja em que dia ele está em cada um.</p>
+      </header>
+      <div class="onde__grade">
+        <article class="moldura onde__card onde__horario">
+          <h3>Dias e horários</h3>
+          <p class="semana__agora" id="semanaAgora" aria-live="polite" hidden></p>
+          <ol class="semana" id="semana"><li data-dia="1"><span class="semana__dia">Segunda</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 16h</span><span class="turno__local">Clínica Fares</span></li><li data-local="alphaville"><span class="turno__hora">17h às 19h</span><span class="turno__local">São Luiz Alphaville</span></li></ul></li><li data-dia="2" data-agora="Hoje é dia de hospital, sem consultas. Na quarta ele atende na <b>Clínica Fares</b>, das 8h às 17h."><span class="semana__dia">Terça</span><ul class="semana__turnos"><li class="turno--sem"><span class="turno__hora"></span><span class="turno__local">Dia de hospital, sem consultas</span></li></ul></li><li data-dia="3"><span class="semana__dia">Quarta</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 17h</span><span class="turno__local">Clínica Fares</span></li></ul></li><li data-dia="4"><span class="semana__dia">Quinta</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 17h</span><span class="turno__local">Clínica Fares</span></li><li data-local="osasco"><span class="turno__hora">17h às 20h</span><span class="turno__local">São Luiz Osasco</span></li></ul></li><li data-dia="5"><span class="semana__dia">Sexta</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 12h30</span><span class="turno__local">Clínica Fares</span></li><li class="turno--sem"><span class="turno__hora">Tarde</span><span class="turno__local">Cirurgias</span></li></ul></li><li data-dia="6" data-agora="Hoje é sábado: a <b>Clínica Fares</b> abre das 8h às 16h em dois sábados por mês. Confirme a data ao agendar."><span class="semana__dia">Sábado</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 16h</span><span class="turno__local">Clínica Fares, dois por mês</span></li></ul></li><li data-dia="0" data-agora="Hoje é domingo, sem atendimento. Na segunda ele atende na <b>Clínica Fares</b>, das 8h às 16h."><span class="semana__dia">Domingo</span><ul class="semana__turnos"><li class="turno--sem"><span class="turno__hora"></span><span class="turno__local">Sem atendimento</span></li></ul></li></ol>
+          <p class="semana__nota">Os sábados de atendimento são dois por mês: confirme a data ao agendar.</p>
+        </article>
+        <article class="moldura onde__card onde__locais">
+          <h3>Locais</h3>
+          <ul class="locais">
+            <li class="local" data-local="fares" data-nome="Clínica Fares, Rua Antônio Agú, 630, Centro, Osasco" data-mapa="Clínica Fares, Rua Antônio Agú, 630, Osasco SP">
+              <button class="local__filtro" type="button" aria-pressed="false" aria-controls="semana"><span class="local__nome">Clínica Fares</span><span class="local__tipo">consultório</span></button>
+              <p class="local__end">Rua Antônio Agú, 630, Centro, Osasco</p>
+              <p class="local__dias">Segunda, quarta, quinta, sexta e dois sábados por mês</p>
+              <p class="local__links"><a class="link" href="https://www.google.com/maps/search/?api=1&amp;query=Cl%C3%ADnica%20Fares%2C%20Rua%20Ant%C3%B4nio%20Ag%C3%BA%20630%2C%20Osasco%20SP" target="_blank" rel="noopener">Google Maps</a><a class="link" href="https://waze.com/ul?q=Rua%20Ant%C3%B4nio%20Ag%C3%BA%2C%20630%2C%20Osasco&amp;navigate=yes" target="_blank" rel="noopener">Waze</a></p>
+            </li>
+            <li class="local" data-local="alphaville" data-nome="São Luiz Alphaville" data-mapa="Hospital São Luiz Alphaville">
+              <button class="local__filtro" type="button" aria-pressed="false" aria-controls="semana"><span class="local__nome">São Luiz Alphaville</span><span class="local__tipo">ambulatório</span></button>
+              <p class="local__end">Alphaville</p>
+              <p class="local__dias">Segunda, das 17h às 19h</p>
+              <p class="local__links"><a class="link" href="https://www.google.com/maps/search/?api=1&amp;query=Hospital%20S%C3%A3o%20Luiz%20Alphaville" target="_blank" rel="noopener">Google Maps</a></p>
+            </li>
+            <li class="local" data-local="osasco" data-nome="São Luiz Osasco, centro médico" data-mapa="Hospital São Luiz Osasco centro médico">
+              <button class="local__filtro" type="button" aria-pressed="false" aria-controls="semana"><span class="local__nome">São Luiz Osasco</span><span class="local__tipo">centro médico</span></button>
+              <p class="local__end">Osasco</p>
+              <p class="local__dias">Quinta, das 17h às 20h</p>
+              <p class="local__links"><a class="link" href="https://www.google.com/maps/search/?api=1&amp;query=Hospital%20S%C3%A3o%20Luiz%20Osasco%20centro%20m%C3%A9dico" target="_blank" rel="noopener">Google Maps</a></p>
+            </li>
+          </ul>
+          <p class="locais__dica">Toque no nome de um local para ver só os dias dele na agenda.</p>
+        </article>
+        <article class="moldura onde__card onde__agenda">
+          <h3>Agendamento</h3>
+          <p>Envie uma mensagem e combine o local, o dia e o horário da avaliação.</p>
+          <a class="btn" href="https://ig.me/m/pedro_sarzi" data-agendar target="_blank" rel="noopener">Agendar avaliação</a>
+          <ul class="onde__contato">
+            <li><a href="tel:+551138514000">(11)&nbsp;3851-4000</a><span>central da Clínica Fares</span></li>
+            <li><a href="mailto:contato.pedrosarzi@gmail.com">contato.pedrosarzi@gmail.com</a></li>
+          </ul>
+        </article>
+        <figure class="quadro onde__foto">
+          <div class="quadro__passe"><img src="../assets/image-be927f6d3d.webp" width="1100" height="825" alt="Fachada da Clínica Fares, com a entrada e a calçada, em Osasco" loading="lazy" decoding="async"></div>
+          <figcaption>Clínica Fares, Rua Antônio Agú, 630, Centro de Osasco</figcaption>
+        </figure>
+        <figure class="moldura onde__mapa" id="mapa">
+          <div class="mapa__capa">
+            <svg class="mapa__rosa" viewBox="-60 -60 120 120" aria-hidden="true" focusable="false"><circle r="44" fill="none" stroke="currentColor" stroke-width=".8" opacity=".55"/><circle r="38" fill="none" stroke="currentColor" stroke-width=".5" stroke-dasharray="1.5 3" opacity=".7"/><path d="M0-52L6-6 0 0-6-6Z" fill="currentColor"/><path d="M0-52L6-6 0 0Z" fill="currentColor" opacity=".55"/><path d="M0 52L6 6 0 0-6 6Z" fill="none" stroke="currentColor" stroke-width=".8"/><path d="M52 0L6 6 0 0 6-6Z" fill="none" stroke="currentColor" stroke-width=".8"/><path d="M-52 0L-6 6 0 0-6-6Z" fill="none" stroke="currentColor" stroke-width=".8"/><path d="M30-30L4-4M-30 30L-4 4M30 30L4 4M-30-30L-4-4" stroke="currentColor" stroke-width=".6" opacity=".6"/><text y="-56" text-anchor="middle" font-size="11" fill="currentColor" font-family="Cormorant Garamond, serif" font-style="italic">N</text></svg>
+            <p class="mapa__texto">Veja o local no mapa sem sair da página.</p>
+            <button class="btn btn--fantasma" type="button" id="mapaBtn">Mostrar o mapa aqui</button>
+            <p class="mapa__nota">O mapa é carregado do Google quando você toca no botão.</p>
+          </div>
+        </figure>
+      </div>
     </div>
   </div>
 </section>
 
 </main>
 
-<!-- ===== RODAPÉ ===== -->
-<footer class="ft">
-  <div class="wrap ft-grid">
-    <div class="ft-brand">
-      <img src="../assets/image-4bdeecfee4.webp" alt="Dr. Pedro Sarzi — Ortopedista" width="400" height="84">
-      <p>Dr. Pedro Sarzi se destaca em ortopedia com especialização em mãos, cuidando de seus pacientes com profissionalismo e excelência.</p>
-    </div>
-    <nav class="ft-nav" aria-label="Navegação do rodapé">
-      <h4>Navegação</h4>
-      <ul>
-        <li><a href="../">Home</a></li>
-        <li><a href="../prp/">PRP — Medicina Regenerativa</a></li>
-        <li><a href="./" aria-current="page">Conheça o Dr. Pedro Sarzi</a></li>
-      </ul>
-    </nav>
-    <div class="ft-contact">
-      <h4>Contato</h4>
-      <ul>
-        <li><svg><use href="#i-phone"/></svg><a href="tel:+551138514000">(11) 3851-4000</a></li>
-        <li><svg><use href="#i-mail"/></svg><a href="mailto:contato.pedrosarzi@gmail.com">contato.pedrosarzi@gmail.com</a></li>
-        <li><svg><use href="#i-pin"/></svg><span>R. Antônio Agú, 630 — Osasco, SP</span></li>
-      </ul>
-    </div>
-  </div>
-  <div class="ft-bottom">
-    <div class="wrap">
-      <span>© <span id="yr"></span> Dr. Pedro Sarzi · CRM-SP 183.332 · TEOT 17744. Todos os direitos reservados.</span>
-      <nav>
-        <a href="https://www.instagram.com/pedro_sarzi" target="_blank" rel="noopener"><svg><use href="#i-ig"/></svg></a>
+<!-- Agendar no celular: barra fixa só abaixo de 600 px (site.js mostra depois de 700 px e esconde sobre o rodapé e quando outro botão de agendar está na tela) -->
+<a class="fab" id="fab" href="https://ig.me/m/pedro_sarzi" data-agendar target="_blank" rel="noopener">Agendar avaliação</a>
+
+<!-- ===== RODAPÉ (sistema único: docs/site.md) ===== -->
+<footer class="rodape">
+  <svg class="rodape__mono" viewBox="6 2 194 297" fill="currentColor" fill-rule="evenodd" aria-hidden="true" focusable="false"><path d="M78 44 99 21V273L63 295C77 279 78 269 78 255Z"/><path d="M35 6C99 13 179 31 187 67 196 103 155 126 112 135 148 119 170 98 164 68 158 36 88 20 35 6Z"/><path d="M87 43C29 62 9 89 19 116 29 144 85 160 122 184 161 209 163 239 139 261 125 275 105 284 87 291 123 281 154 266 166 244 182 212 158 188 122 167 88 147 35 130 29 105 22 80 53 56 87 43Z"/></svg>
+  <div class="wrap">
+    <div class="rodape__grade">
+      <div class="rodape__marca">
+        <a class="assinatura" href="../">
+          <svg class="assinatura__mono" viewBox="6 2 194 297" fill="currentColor" fill-rule="evenodd" aria-hidden="true" focusable="false"><path d="M78 44 99 21V273L63 295C77 279 78 269 78 255Z"/><path d="M35 6C99 13 179 31 187 67 196 103 155 126 112 135 148 119 170 98 164 68 158 36 88 20 35 6Z"/><path d="M87 43C29 62 9 89 19 116 29 144 85 160 122 184 161 209 163 239 139 261 125 275 105 284 87 291 123 281 154 266 166 244 182 212 158 188 122 167 88 147 35 130 29 105 22 80 53 56 87 43Z"/></svg>
+          <span class="assinatura__txt"><span class="assinatura__nome">Pedro Sarzi</span><span class="assinatura__desc">Cirurgia da mão</span></span>
+          <span class="sr-only">, página inicial</span>
+        </a>
+        <p class="rodape__frase">Cirurgia da mão e do punho em Osasco/SP. Consultas na Clínica Fares.</p>
+      </div>
+      <nav class="rodape__paginas" aria-label="Páginas do site">
+        <h2 class="rodape__titulo">Páginas</h2>
+        <ul class="rodape__lista">
+          <li><a href="../">Início</a></li>
+          <li><a href="../prp/">PRP</a></li>
+          <li><a href="./" aria-current="page">O médico</a></li>
+        </ul>
       </nav>
+      <div class="rodape__atendimento">
+        <h2 class="rodape__titulo">Atendimento</h2>
+        <address>
+          <p>Clínica Fares<br>Rua Antônio Agú, 630, Centro<br>Osasco/SP</p>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Cl%C3%ADnica%20Fares%2C%20Rua%20Ant%C3%B4nio%20Ag%C3%BA%20630%2C%20Osasco%20SP" target="_blank" rel="noopener">Ver no mapa</a>
+          <p>Também no São Luiz Alphaville e no São Luiz Osasco</p>
+          <a href="#onde">Dias e horários de cada local</a>
+          <a href="tel:+551138514000">(11) 3851-4000, central da Clínica Fares</a>
+          <a href="mailto:contato.pedrosarzi@gmail.com">contato.pedrosarzi@gmail.com</a>
+          <a href="https://www.instagram.com/pedro_sarzi" target="_blank" rel="noopener">Instagram @pedro_sarzi</a>
+        </address>
+      </div>
+    </div>
+    <div class="rodape__base">
+      <p class="id-medico"><span>Dr. Pedro Sarzi · Médico</span><span class="id-medico__sep"> · </span><span>CRM-SP 183.332 · RQE 110447</span></p>
+      <p>Conteúdo educativo. Não substitui a consulta médica.</p>
+      <p>© <span id="yr">2026</span> Pedro Sarzi</p>
     </div>
   </div>
 </footer>
 
-<script>
-/* =========================================================
-   Dr. Pedro Sarzi — interações
-   ========================================================= */
-(function () {
-'use strict';
-
-const $  = (s, c) => { try { return (c || document).querySelector(s); } catch(e) { return null; } };
-const $$ = (s, c) => { try { return Array.from((c || document).querySelectorAll(s)); } catch(e) { return []; } };
-const lerp = (a, b, t) => a + (b - a) * t;
-const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
-const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const COARSE = window.matchMedia('(hover:none), (pointer:coarse)').matches;
-
-/* ---------- 0. BASE DE ANIMAÇÃO ----------
-   O relógio só começa no primeiro quadro que o navegador realmente desenha.
-   Ancorar em performance.now() no momento do IntersectionObserver fazia o
-   progresso "pular" quando havia atraso de renderização — o contador ia
-   direto para o fim. O progresso também fica travado entre 0 e 1, para que
-   diferenças de clock durante uma rolagem rápida não gerem valor negativo
-   nem estourado. */
-function animate (dur, onStep, onDone) {
-  if (RM) { onStep(1); if (onDone) onDone(); return; }
-  let startTime = null;
-  function frame (timestamp) {
-    if (!startTime) startTime = timestamp;
-    const k = Math.max(0, Math.min((timestamp - startTime) / dur, 1));
-    onStep(k);
-    if (k < 1) requestAnimationFrame(frame);
-    else if (onDone) onDone();
-  }
-  requestAnimationFrame(frame);
-}
-
-/* Suavização independente da taxa de quadros.
-   Um lerp de fator fixo por quadro corre ao dobro da velocidade num monitor
-   de 120 Hz. Normalizando pelo delta real, o movimento tem a mesma cadência
-   em 60, 90 ou 144 Hz. */
-const smooth = (rate, dt) => 1 - Math.pow(1 - rate, Math.min(dt, 100) / 16.667);
-
-/* ---------- 1. PRELOADER ---------- */
-document.querySelector('#pre')?.remove();
-
-/* ---------- 2. CURSOR ---------- */
-/* Native system cursor; no tracking loop. */
-
-/* ---------- 3. HEADER / SCROLL ---------- */
-(function header () {
-  const hdr = $('#hdr') || $('#hd'), prog = $('#prog'), fab = $('#fab');
-  let last = 0;
-  const links = $$('#nav a, #hdNav a');
-  const secs = links.map(a => $(a.getAttribute('href'))).filter(Boolean);
-
-  function onScroll () {
-    const y = scrollY;
-    const max = document.documentElement.scrollHeight - innerHeight;
-    if (prog) prog.style.width = (max > 0 ? (y / max) * 100 : 0) + '%';
-    if (hdr) { hdr.classList.toggle('stuck', y > 12); hdr.classList.toggle('hide', y > 420 && y > last && !document.body.classList.contains('menu-open')); }
-    if (fab) fab.classList.toggle('show', y > 700);
-    last = y;
-
-    let cur = -1;
-    secs.forEach((s, i) => { if (s.getBoundingClientRect().top <= 160) cur = i; });
-    links.forEach((a, i) => a.classList.toggle('active', i === cur));
-  }
-  addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-})();
-
-/* ---------- 4. MENU MOBILE ---------- */
-(function menu () {
-  const b = $('#burger'), d = $('#drawer');
-  if (!b || !d) return;
-  const close = () => { document.body.classList.remove('menu-open'); b.setAttribute('aria-expanded', 'false'); };
-  b.addEventListener('click', () => {
-    const open = document.body.classList.toggle('menu-open');
-    b.setAttribute('aria-expanded', String(open));
-  });
-  $$('a', d).forEach(a => a.addEventListener('click', close));
-  addEventListener('keydown', e => e.key === 'Escape' && close());
-})();
-
-/* ---------- 5. REVEAL ---------- */
-(function reveal () {
-  const els = $$('[data-rv], .stagger, .rise, #steps');
-  if (!('IntersectionObserver' in window)) { els.forEach(e => e.classList.add('in')); return; }
-  const io = new IntersectionObserver((ents) => {
-    ents.forEach(en => {
-      if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
-    });
-  }, { threshold: .12, rootMargin: '0px 0px -8% 0px' });
-  els.forEach(e => io.observe(e));
-  document.body.addEventListener('siteready', () => {
-    $$('.hero .rise, .hero [data-rv], .hero .stagger').forEach(e => e.classList.add('in'));
-  });
-})();
-
-/* ---------- 6. CONTADORES ---------- */
-(function counters () {
-  const els = $$('[data-count]');
-  if (!els.length) return;
-  const io = new IntersectionObserver(ents => {
-    ents.forEach(en => {
-      if (!en.isIntersecting) return;
-      const el = en.target, to = +el.dataset.count, suf = el.dataset.suffix || '';
-      animate(1800, k => {
-        const e = 1 - Math.pow(1 - k, 3);
-        el.textContent = Math.round(to * e).toLocaleString('pt-BR') + (k === 1 ? suf : '');
-      });
-      io.unobserve(el);
-    });
-  }, { threshold: .6 });
-  els.forEach(e => io.observe(e));
-})();
-
-/* ---------- 6b. BARRA DA JORNADA ----------
-   Antes era uma transição CSS disparada junto com a classe .in: sem um
-   reflow entre os dois estados o navegador às vezes pula direto para a
-   largura final. Passou a usar o mesmo relógio ancorado no primeiro quadro. */
-(function stepsBar () {
-  const bar = $('.steps-line i');
-  if (!bar) return;
-  const io = new IntersectionObserver(ents => {
-    ents.forEach(en => {
-      if (!en.isIntersecting) return;
-      io.unobserve(en.target);
-      if (RM) { bar.style.width = '100%'; return; }
-      animate(1400, k => {
-        const e = 1 - Math.pow(1 - k, 3);
-        bar.style.width = (e * 100).toFixed(2) + '%';
-      });
-    });
-  }, { threshold: .35 });
-  io.observe($('#steps') || bar);
-})();
-
-/* ---------- 7b. TICKER — nenhum JS necessário, só CSS animation ---------- */
-
-/* ---------- 8. MÃO ANATÔMICA ---------- */
-const HAND_BONES = [
-  // indicador
-  [158,352,152,262,9],[151,256,145,196,8],[144,190,141,152,7],[140,146,139,122,6],
-  // médio
-  [189,354,188,258,9.5],[188,252,186,186,8.5],[186,180,185,140,7.5],[185,134,184,106,6.5],
-  // anelar
-  [216,352,218,262,9],[219,256,222,198,8],[223,192,225,154,7],[225,148,226,120,6],
-  // mínimo
-  [240,350,245,270,8],[246,264,252,216,7],[253,210,257,182,6],[258,176,261,158,5.5],
-  // polegar
-  [152,360,118,336,11],[114,332,92,310,10],[88,306,74,276,8.5],
-  // rádio e ulna
-  [176,398,172,442,19],[212,400,216,442,14]
-];
-const HAND_CARPALS = [
-  [162,368,10,8,-12],[182,370,10,8,8],[202,366,11,9,0],[222,370,10,8,14],
-  [168,388,10,7,-18],[188,390,10,7,0],[208,388,9,7,12],[226,394,7,5,0]
-];
-
-function drawBones(target, bones, carpals, colour) {
-  if (!target) return;
-  const NS='http://www.w3.org/2000/svg';
-  const id=target.id+'-ivory';
-  target.innerHTML='<defs><linearGradient id="'+id+'" x1="0" x2="1"><stop stop-color="#63777b"/><stop offset=".25" stop-color="#c1cec6"/><stop offset=".5" stop-color="#f0eddb"/><stop offset=".76" stop-color="#c2cec8"/><stop offset="1" stop-color="#61777e"/></linearGradient></defs>';
-  bones.forEach(([x1,y1,x2,y2,w])=>{
-    const length=Math.hypot(x2-x1,y2-y1),r=w*.55,n=w*.29;
-    const g=document.createElementNS(NS,'g');
-    g.setAttribute('transform','translate('+x1+' '+y1+') rotate('+(Math.atan2(y2-y1,x2-x1)*180/Math.PI-90)+')');
-    g.innerHTML='<path d="M'+(-r)+' 0C'+(-r)+' '+(-r)+' '+r+' '+(-r)+' '+r+' 0C'+r+' '+(length*.18)+' '+n+' '+(length*.27)+' '+n+' '+(length*.5)+'S'+(r*1.25)+' '+(length*.85)+' '+r+' '+length+'C'+r+' '+(length+r)+' '+(-r)+' '+(length+r)+' '+(-r)+' '+length+'C'+(-r*1.25)+' '+(length*.85)+' '+(-n)+' '+(length*.7)+' '+(-n)+' '+(length*.5)+'S'+(-r)+' '+(length*.18)+' '+(-r)+' 0Z" fill="url(#'+id+')" stroke="#b8d5d044" stroke-width=".6"/><path d="M'+(-w*.16)+' 2Q'+(-w*.1)+' '+(length*.5)+' '+(-w*.16)+' '+(length-2)+'" fill="none" stroke="#f6f3d9" stroke-width=".6" opacity=".5"/>';
-    target.append(g);
-  });
-  (carpals||[]).forEach(([x,y,rx,ry,rot])=>{
-    const p=document.createElementNS(NS,'path');
-    p.setAttribute('d','M'+(-rx)+' 0Q'+(-rx)+' '+(-ry)+' 0 '+(-ry)+'Q'+rx+' '+(-ry)+' '+rx+' 0Q'+(rx*.7)+' '+ry+' 0 '+ry+'Q'+(-rx)+' '+ry+' '+(-rx)+' 0Z');
-    p.setAttribute('transform','translate('+x+' '+y+') rotate('+rot+')');p.setAttribute('fill','url(#'+id+')');p.setAttribute('stroke','#142b35');p.setAttribute('stroke-width','1');target.append(p);
-  });
-}
-
-if ($('#bones')) drawBones($('#bones'), HAND_BONES, HAND_CARPALS);
-
-/* ---------- 9. RAIO-X EXPLICATIVO ---------- */
-(function xray () {
-  const wrap = $('#xray'), list = $('#xrList'), panel = $('#xrPanel'),
-        bonesG = $('#xrBones'), overlays = $$('.xr-ov', $('#xray'));
-  if (!wrap || !list) return;
-
-  drawBones(bonesG, HAND_BONES, HAND_CARPALS, '#DDE4EE');
-
-  const DATA = [
-    { xy: [192, 380], tag: 'Túnel do Carpo', tab: 0,
-      what: 'Existe um <b>túnel estreito dentro do seu punho</b> por onde passam os tendões e um nervo importante. Quando esse espaço aperta, o nervo é o primeiro a ser espremido.',
-      feel: 'Formigamento e dormência no <b>polegar, indicador e dedo médio</b>, quase sempre pior à noite. Você acorda e precisa sacudir a mão para "voltar ao normal".',
-      do:   'Órtese para dormir, fisioterapia e, quando o nervo já está muito comprimido, uma <b>cirurgia pequena que abre o túnel</b> e libera o nervo — recuperação curta.' },
-    { xy: [219, 264], tag: 'Dedo em Gatilho', tab: 1,
-      what: 'O tendão que dobra o dedo desliza por uma espécie de <b>argola</b>. Se ele incha, passa a não caber — como uma corda grossa forçando por um anel apertado.',
-      feel: 'O dedo <b>trava dobrado e solta com um estalo</b>, geralmente pior ao acordar. Às vezes é preciso usar a outra mão para esticá-lo.',
-      do:   'Imobilização, <b>infiltração no ponto exato</b> ou um procedimento rápido que abre essa argola. O tendão volta a deslizar e o travamento acaba.' },
-    { xy: [124, 332], tag: 'Tendinite', tab: 2,
-      what: 'Os tendões que movem o polegar passam por um <b>canal na lateral do punho</b>. Uso repetitivo inflama esses tendões e o canal fica apertado demais.',
-      feel: 'Dor forte na lateral do punho ao <b>pegar peso, torcer uma tampa ou levantar uma criança no colo</b>. Costuma piorar ao longo do dia.',
-      do:   'Órtese específica, ajuste de como você usa a mão e <b>infiltração guiada por ultrassom</b>. Em poucos casos é preciso liberar o canal cirurgicamente.' },
-    { xy: [141, 136], tag: 'Artrose', tab: 2,
-      what: 'Entre dois ossos existe uma <b>cartilagem que funciona como almofada</b>. Com o tempo ela desgasta e os ossos passam a se tocar diretamente.',
-      feel: '<b>Rigidez ao acordar</b>, dor que piora com o uso, inchaço nos nós dos dedos e perda de força na pinça — abrir potes fica difícil.',
-      do:   'Radiografia para medir o desgaste, <b>infiltração para aliviar a dor</b>, órtese e reabilitação para proteger a articulação e retardar a evolução.' }
-  ];
-
-  const ICONS = { what: '#i-scan', feel: '#i-flame', do: '#i-shield' };
-  const btns = $$('.xr-item', list);
-
-  function show (i) {
-    const d = DATA[i];
-    btns.forEach((b, k) => { b.classList.toggle('on', k === i); b.setAttribute('aria-selected', String(k === i)); });
-    overlays.forEach(o => o.classList.toggle('on', +o.dataset.ov === i));
-    panel.innerHTML = `
-      <div class="xr-body">
-        <div class="xr-row"><h4><svg><use href="${ICONS.what}"/></svg> O que é</h4><p>${d.what}</p></div>
-        <div class="xr-row"><h4><svg><use href="${ICONS.feel}"/></svg> O que você sente</h4><p>${d.feel}</p></div>
-        <div class="xr-row"><h4><svg><use href="${ICONS.do}"/></svg> O que o Dr. Pedro faz</h4><p>${d.do}</p></div>
-        <div class="xr-cta"><a class="ulink" href="#tratamentos" data-goto="${d.tab}">Ver o tratamento completo <svg><use href="#i-arrow"/></svg></a></div>
-      </div>`;
-    const link = $('[data-goto]', panel);
-    link.addEventListener('click', () => setTimeout(() => window.__setTab && window.__setTab(d.tab), 900));
-  }
-
-  btns.forEach((b, i) => b.addEventListener('click', () => show(i)));
-  show(0);
-})();
-
-/* ---------- 10. ABAS DE TRATAMENTO ---------- */
-(function tabs () {
-  const nav = $('#tabNav');
-  if (!nav) return;
-  const btns = $$('.tab-btn', nav), panes = $$('.pane');
-  function set (i) {
-    btns.forEach((b, k) => { b.classList.toggle('on', k === i); b.setAttribute('aria-selected', String(k === i)); });
-    panes.forEach((p, k) => p.classList.toggle('on', k === i));
-  }
-  btns.forEach(b => b.addEventListener('click', () => set(+b.dataset.i)));
-  window.__setTab = set;
-  $$('[data-goto]').forEach(a => a.addEventListener('click', () => setTimeout(() => set(+a.dataset.goto), 800)));
-})();
-
-/* ---------- 11. CARROSSEL DE DEPOIMENTOS ---------- */
-(function slider () {
-  const track = $('#tstTrack'), prev = $('#tPrev'), next = $('#tNext'), bar = $('#tstBar');
-  if (!track) return;
-  let i = 0;
-  const cards = $$('.tst-card', track);
-
-  function step () {
-    const r = cards[0].getBoundingClientRect();
-    const gap = parseFloat(getComputedStyle(track).gap) || 24;
-    return r.width + gap;
-  }
-  function perView () {
-    return Math.max(1, Math.round(track.parentElement.clientWidth / step()));
-  }
-  function maxI () { return Math.max(0, cards.length - perView()); }
-  function go (n) {
-    i = clamp(n, 0, maxI());
-    track.style.transform = `translateX(${-i * step()}px)`;
-    prev.disabled = i === 0; next.disabled = i === maxI();
-    const w = maxI() === 0 ? 100 : (perView() / cards.length) * 100;
-    bar.style.width = w + '%';
-    bar.style.transform = `translateX(${maxI() === 0 ? 0 : (i / maxI()) * (100 / w * 100 - 100)}%)`;
-  }
-  prev.addEventListener('click', () => go(i - 1));
-  next.addEventListener('click', () => go(i + 1));
-  addEventListener('resize', () => go(i));
-  setTimeout(() => go(0), 100);
-
-  // swipe
-  let x0 = null;
-  track.addEventListener('pointerdown', e => { x0 = e.clientX; });
-  addEventListener('pointerup', e => {
-    if (x0 === null) return;
-    const d = e.clientX - x0; x0 = null;
-    if (Math.abs(d) > 45) go(i + (d < 0 ? 1 : -1));
-  });
-})();
-
-/* ---------- 12. DIAGNÓSTICO GUIADO ---------- */
-(function quiz () {
-  const body = $('#quizBody'), progEl = $('#qProg'), numEl = $('#qNum'),
-        backEl = $('#qBack'), dotsEl = $('#qDots');
-  if (!body) return;
-
-  const Q = [
-    { q: 'Onde <b>exatamente</b> começa o seu incômodo?',
-      h: 'Escolha a região que melhor descreve o seu caso.',
-      o: [
-        { t: 'No punho e nos três primeiros dedos', s: 'Polegar, indicador e médio', v: { carpo: 3 } },
-        { t: 'Em um dedo que trava ou estala', s: 'Precisa "destravar" com a outra mão', v: { gatilho: 3 } },
-        { t: 'Na base do polegar ou na lateral do punho', s: 'Piora ao torcer ou segurar peso', v: { tendinite: 3, artrose: 2 } },
-        { t: 'Na mão inteira, depois de uma queda ou pancada', s: 'Trauma recente', v: { trauma: 4 } }
-      ] },
-    { q: 'Como o sintoma <b>se manifesta</b>?',
-      h: 'O tipo de sintoma diz muito sobre a estrutura envolvida.',
-      o: [
-        { t: 'Formigamento ou dormência, pior à noite', s: 'Acorda e precisa sacudir a mão', v: { carpo: 3 } },
-        { t: 'Travamento, estalo ou "click" ao mover', s: 'Especialmente ao acordar', v: { gatilho: 3 } },
-        { t: 'Dor ao segurar, torcer ou apertar', s: 'Melhora com repouso', v: { tendinite: 3, artrose: 1 } },
-        { t: 'Inchaço, nódulo ou deformidade visível', s: 'Mudança no formato da mão ou do dedo', v: { trauma: 2, artrose: 2 } }
-      ] },
-    { q: 'Há <b>quanto tempo</b> isso acontece?',
-      h: 'O tempo de compressão influencia diretamente a recuperação.',
-      o: [
-        { t: 'Menos de 1 mês', s: 'Começou há pouco', v: {}, u: 1 },
-        { t: 'De 1 a 6 meses', s: 'Vem e volta', v: {}, u: 2 },
-        { t: 'Mais de 6 meses', s: 'Já virou rotina', v: {}, u: 3 },
-        { t: 'Não sei precisar', s: 'Foi aparecendo aos poucos', v: {}, u: 2 }
-      ] },
-    { q: 'O que você <b>já tentou</b> até aqui?',
-      h: 'Ajuda a definir qual é o próximo passo lógico.',
-      o: [
-        { t: 'Nada ainda', s: 'Esta é a primeira busca por ajuda', v: {}, u: 0 },
-        { t: 'Anti-inflamatório ou pomada', s: 'Alívio temporário', v: {}, u: 1 },
-        { t: 'Fisioterapia ou imobilização', s: 'Com melhora parcial', v: {}, u: 2 },
-        { t: 'Infiltração ou já me falaram em cirurgia', s: 'Caso já avaliado antes', v: {}, u: 3 }
-      ] },
-    { q: 'Qual o <b>impacto</b> no seu dia a dia?',
-      h: 'Última pergunta — isso define a prioridade da avaliação.',
-      o: [
-        { t: 'Incomoda, mas eu convivo', s: 'Sem limitação relevante', v: {}, u: 1 },
-        { t: 'Atrapalha meu trabalho', s: 'Digitar, dirigir, usar ferramentas', v: {}, u: 2 },
-        { t: 'Me acorda de madrugada', s: 'Afeta o sono', v: {}, u: 3 },
-        { t: 'Perdi força e deixo cair objetos', s: 'Já há perda funcional', v: {}, u: 4 }
-      ] }
-  ];
-
-  const RES = {
-    carpo: { tab: 0, name: 'Síndrome do Túnel do Carpo',
-      d: 'Seus sintomas têm o padrão clássico de compressão do <b>nervo mediano</b> dentro do punho — a causa mais comum de formigamento noturno nas mãos.',
-      n: ['Teste clínico específico (Phalen e Tinel) na consulta',
-          'Órtese noturna para descomprimir o nervo enquanto você dorme',
-          'Eletroneuromiografia se houver perda de força',
-          'Liberação minimamente invasiva nos casos avançados'] },
-    gatilho: { tab: 1, name: 'Dedo em Gatilho',
-      d: 'O padrão de travamento e estalo aponta para <b>inflamação do tendão flexor</b> na polia que o envolve — o clássico dedo em gatilho.',
-      n: ['Avaliação do nódulo tendíneo e do grau de travamento',
-          'Imobilização temporária para desinflamar',
-          'Infiltração guiada na bainha do tendão',
-          'Liberação cirúrgica da polia A1, rápida e definitiva'] },
-    tendinite: { tab: 2, name: 'Tendinite / De Quervain',
-      d: 'A dor ao torcer e segurar sugere <b>tendinite</b> — frequentemente a de De Quervain, que acomete os tendões do polegar no lado do punho.',
-      n: ['Teste de Finkelstein para confirmar o diagnóstico',
-          'Órtese específica para polegar e punho',
-          'Infiltração articular guiada por ultrassom',
-          'Ajuste de ergonomia para evitar recidiva'] },
-    artrose: { tab: 2, name: 'Artrose / Dor Articular',
-      d: 'O quadro sugere <b>desgaste articular</b> — comum na base do polegar (rizartrose) e nas articulações dos dedos.',
-      n: ['Radiografia para graduar o desgaste',
-          'Infiltração articular para alívio rápido da dor',
-          'Órtese e reabilitação para proteger a articulação',
-          'Opções cirúrgicas nos casos refratários'] },
-    trauma: { tab: 3, name: 'Lesão Traumática',
-      d: 'Traumas na mão pedem <b>avaliação rápida</b>: um osso consolidado fora do eixo compromete pinça, força e estética de forma permanente.',
-      n: ['Radiografia para avaliar desvio e estabilidade',
-          'Redução e imobilização quando suficiente',
-          'Fixação cirúrgica para mobilizar precocemente',
-          'Reabilitação orientada contra rigidez'] }
-  };
-
-  let step = 0;
-  let advancing = false, advanceTimer = null;
-  const ans = new Array(Q.length).fill(null);
-
-  dotsEl.innerHTML = Q.map(() => '<i></i>').join('');
-  const dots = $$('i', dotsEl);
-
-  function paint () {
-    const total = Q.length;
-    numEl.textContent = Math.min(step + 1, total);
-    progEl.style.width = (step / total) * 100 + '%';
-    dots.forEach((d, i) => d.classList.toggle('on', i === step));
-    backEl.hidden = step === 0 || step > Q.length - 1;
-  }
-
-  function renderStep () {
-    clearTimeout(advanceTimer); advancing = false; backEl.disabled = false;
-    const s = Q[step];
-    body.innerHTML = `
-      <div class="qstep on">
-        <h3>${s.q}</h3>
-        <p>${s.h}</p>
-        <div class="qopts">
-          ${s.o.map((o, i) => `
-            <button class="qopt" data-i="${i}">
-              <i></i>
-              <span>${o.t}<small>${o.s}</small></span>
-            </button>`).join('')}
-        </div>
-      </div>`;
-    $$('.qopt', body).forEach(b => b.addEventListener('click', () => {
-      if (advancing) return;
-      advancing = true; backEl.disabled = true;
-      $$('.qopt', body).forEach(option => option.disabled = true);
-      b.classList.add('sel');
-      ans[step] = +b.dataset.i;
-      advanceTimer = setTimeout(() => { step++; step < Q.length ? (renderStep(), paint()) : (result(), paint()); }, RM ? 0 : 280);
-    }));
-    paint();
-  }
-
-  function result () {
-    const score = { carpo: 0, gatilho: 0, tendinite: 0, artrose: 0, trauma: 0 };
-    let urg = 0;
-    ans.forEach((a, i) => {
-      if (a === null) return;
-      const o = Q[i].o[a];
-      Object.entries(o.v || {}).forEach(([k, v]) => score[k] += v);
-      urg += o.u || 0;
-    });
-    const key = Object.entries(score).sort((a, b) => b[1] - a[1])[0][0];
-    const r = RES[key];
-
-    const level = urg >= 8 ? { t: 'Avaliação prioritária', c: '#E0A45C' }
-                : urg >= 5 ? { t: 'Avaliação recomendada em breve', c: '#D8C08A' }
-                : { t: 'Sinal de alerta inicial', c: '#AC9559' };
-
-    progEl.style.width = '100%';
-    dots.forEach(d => d.classList.remove('on'));
-    numEl.textContent = '5';
-    backEl.hidden = true;
-
-    body.innerHTML = `
-      <div class="qstep on qres">
-        <div class="qres-ic"><svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><use href="#i-scan"/></svg></div>
-        <small style="color:${level.c}">${level.t}</small>
-        <h3>Seu quadro sugere<br><b>${r.name}</b></h3>
-        <p>${r.d}</p>
-        <div class="qres-box">
-          <b>O que o Dr. Pedro faria a seguir</b>
-          <ul>${r.n.map(x => `<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><use href="#i-check"/></svg><span>${x}</span></li>`).join('')}</ul>
-        </div>
-        <div class="qres-cta">
-          <a class="btn" href="https://ig.me/m/pedro_sarzi" target="_blank" rel="noopener">Chamar no Direct agora <svg class="ico"><use href="#i-arrow"/></svg></a>
-          <button class="btn btn--ghost" id="qSeeTab">Ver o tratamento</button>
-          <button class="btn btn--ghost" id="qAgain">Refazer</button>
-        </div>
-        <p class="qres-note">Esta orientação é educativa e baseada apenas nas suas respostas. Somente o exame clínico presencial permite o diagnóstico definitivo.</p>
-      </div>`;
-
-    $('#qSeeTab').addEventListener('click', () => {
-      $('#tratamentos').scrollIntoView({ behavior: RM ? 'auto' : 'smooth' });
-      setTimeout(() => window.__setTab && window.__setTab(r.tab), RM ? 0 : 900);
-    });
-    $('#qAgain').addEventListener('click', () => { step = 0; ans.fill(null); renderStep(); });
-  }
-
-  backEl.addEventListener('click', () => { if (!advancing && step > 0) { step--; renderStep(); } });
-  renderStep();
-})();
-
-/* ---------- 13. DIVERSOS ---------- */
-if (COARSE) {
-  const hint = document.querySelector('.hand-hint');
-  if (hint) hint.innerHTML = '<i></i> Toque nos pontos numerados';
-}
-
-$('#yr') && ($('#yr').textContent = new Date().getFullYear());
-
-$$('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
-  const id = a.getAttribute('href');
-  if (id.length < 2) return;
-  const t = $(id);
-  if (!t) return;
-  e.preventDefault();
-  t.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' });
-}));
-
-})();
-
-</script>
 </body>
 </html>

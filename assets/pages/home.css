@@ -1,0 +1,510 @@
+/* ==========================================================================
+   Home (/) · estilos da página (v3, out/2026)
+   Base em assets/site.css (tokens, .cap, .capa, .placa, .ficha, .opcao...) e
+   assets/tema.css (texturas, luz, tom das fotos). Aqui só a composição de cada
+   capítulo: capa · frase da marca (rolagem) · sinais (cards que viram) ·
+   onde dói (atlas) · questionário · médico · caminhos (régua) · consulta e
+   onde atende (molduras) · chamada final. Comportamento em pages/home.js.
+   Referência: docs/design.md (seção "Home v3") e docs/site.md.
+   ========================================================================== */
+
+/* ---------- Traço de gravura ---------- */
+.osso{fill:#121318;stroke:#D8C08A;stroke-width:.55;stroke-opacity:.85}
+.osso__eixo{fill:none;stroke:#D8C08A;stroke-width:.4;opacity:.45}
+
+@keyframes folha{from{opacity:0;transform:translateY(8px)}}
+
+/* Cabeça de seção: título grande e uma frase de apoio, sem sobrelinha */
+
+/* ==========================================================================
+   1. CAPA: foto do manual (p. 14) em tela cheia
+   ========================================================================== */
+.inicio{display:grid;align-items:end;min-height:min(94svh,880px);padding-block:0;overflow:clip;background:var(--carvao)}
+.inicio__foto{position:absolute;inset:0;z-index:-2}
+.inicio__foto img{width:100%;height:100%;object-fit:cover;object-position:68% 40%}
+.inicio::after{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(8,8,10,.94) 0%,rgba(8,8,10,.82) 32%,rgba(8,8,10,.35) 62%,rgba(8,8,10,.05) 85%),
+    linear-gradient(0deg,rgba(8,8,10,.85) 0%,rgba(8,8,10,0) 34%);
+}
+.inicio .capa__grade{padding-block:calc(var(--hdr-h) + 64px) 72px}
+.inicio__texto{max-width:620px}
+.inicio .t-hero{font-size:clamp(2.875rem,5.4vw,4.75rem);line-height:1.02}
+.inicio .t-lead{max-width:34ch}
+.inicio .acoes{margin-top:36px}
+.inicio .capa__id{margin-top:72px}
+.inicio .t-lead.abre{--atraso:420ms}
+.inicio .acoes.abre{--atraso:520ms}
+@media (min-width:900px){.inicio__texto{grid-column:1 / 8}}
+@media (max-width:899px){
+  .inicio{display:block;min-height:0}
+  .inicio__foto{position:relative;inset:auto;height:62vw;max-height:440px}
+  .inicio::after{background:linear-gradient(0deg,var(--carvao) 0%,rgba(8,8,10,.4) 22%,rgba(8,8,10,0) 50%);height:min(62vw,440px)}
+  .inicio .capa__grade{padding-block:8px 48px}
+}
+
+/* ==========================================================================
+   2. FRASE DA MARCA: o arco do movimento
+   Cena presa à tela durante a rolagem (home.js): o ponteiro do goniômetro
+   varre de 0° a 180°, a frase ganha tinta palavra por palavra e os três
+   valores aparecem quando o ponteiro passa por eles. Com movimento reduzido
+   ou pausado, a cena fica parada no estado final.
+   ========================================================================== */
+.manifesto{position:relative;background:url("../brand/papel.svg") 0 0/640px 640px,var(--marfim);color:var(--tinta);
+  --cor-titulo:var(--tinta);--cor-texto:var(--texto-claro);--cor-foco:var(--ouro-profundo)}
+.manifesto__trilho{height:250vh}
+@supports (height:1svh){.manifesto__trilho{height:250svh}}
+.manifesto__palco{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:calc(var(--hdr-h) + 20px) var(--margem) 32px;overflow:hidden}
+@supports (height:1svh){.manifesto__palco{height:100svh}}
+.manifesto__peca{position:relative;width:min(100%,1000px,calc((100vh - 330px) * 1.8))}
+@supports (height:1svh){.manifesto__peca{width:min(100%,1000px,calc((100svh - 330px) * 1.8))}}
+.manifesto__arco{color:var(--ouro-profundo)}
+.manifesto__arco svg{display:block;width:100%;height:auto;overflow:visible}
+.manifesto__arco .gonio__arco{fill:none;stroke:currentColor;stroke-width:1.3;opacity:.55}
+.manifesto__arco .gonio__marca{stroke:currentColor;stroke-width:1;opacity:.35}
+.manifesto__arco .gonio__marca--15{opacity:.55}
+.manifesto__arco .gonio__marca--45{opacity:.9;stroke-width:1.4}
+.manifesto__arco .gonio__base{stroke:currentColor;stroke-width:1;opacity:.35}
+.manifesto__arco .gonio__num{font-family:var(--serif);font-style:italic;font-size:24px;fill:currentColor}
+.manifesto__arco .gonio__agulha{stroke:var(--tinta);stroke-width:1.8;stroke-linecap:round}
+.manifesto__arco .gonio__eixo{fill:var(--marfim);stroke:var(--tinta);stroke-width:1.6}
+.manifesto__arco .gonio__centro{fill:var(--tinta)}
+.manifesto__setor{fill:url(#mHach);stroke:none}
+.manifesto__setor-borda{fill:none;stroke:var(--ouro-profundo);stroke-width:2.4;stroke-linecap:round}
+
+.manifesto__frase{position:absolute;left:50%;top:47%;width:62%;transform:translate(-50%,-50%);text-align:center;
+  font-family:var(--serif);font-weight:300;font-size:clamp(1.75rem,3.9vw,3.4rem);line-height:1.12;color:var(--tinta);text-wrap:balance}
+.mw{opacity:.16;transition:opacity 450ms var(--ease)}
+.mw.on{opacity:1}
+.manifesto__graus{position:absolute;left:50%;top:100%;margin-top:14px;transform:translateX(-50%);
+  font-family:var(--serif);font-style:italic;font-size:1.375rem;line-height:1;color:var(--ouro-profundo);font-variant-numeric:lining-nums tabular-nums}
+.manifesto__valores{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,4vw,56px);width:min(100%,960px);margin-top:64px}
+.manifesto__valores li{display:grid;align-content:start;gap:6px;padding-top:16px;border-top:1px solid rgba(126,106,56,.3);text-align:center;
+  opacity:.25;transform:translateY(8px);transition:opacity 550ms var(--ease),transform 550ms var(--ease),border-color 550ms}
+.manifesto__valores li.on{opacity:1;transform:none;border-color:var(--ouro-profundo)}
+.manifesto__valores strong{font-family:var(--serif);font-weight:400;font-size:clamp(1.25rem,2vw,1.75rem);line-height:1.1;color:var(--tinta)}
+.manifesto__valores span{font-size:.9375rem;line-height:1.45;color:var(--texto-claro)}
+@media (max-width:699px){
+  .manifesto__peca{display:flex;flex-direction:column;width:100%}
+  .manifesto__frase{position:static;order:-1;transform:none;width:auto;margin-bottom:28px;font-size:clamp(1.875rem,8.4vw,2.375rem)}
+  .manifesto__valores{margin-top:56px;gap:12px}
+  .manifesto__valores span{font-size:.8125rem}
+}
+/* estado parado (movimento reduzido ou pausado): sem trilho, tudo com tinta */
+.manifesto--estatico .manifesto__trilho{height:auto}
+.manifesto--estatico .manifesto__palco{position:relative;height:auto;padding-block:clamp(88px,10vw,140px)}
+.manifesto--estatico .mw{opacity:1}
+.manifesto--estatico .manifesto__valores li{opacity:1;transform:none;border-color:var(--ouro-profundo)}
+
+
+/* ==========================================================================
+   4. ONDE DÓI? Atlas das condições: uma mão, oito regiões
+   A placa (Fig. 1) tem a mão em camadas (lupa, ossos, nervos), os pontos das
+   condições e, logo abaixo, a legenda, que é a lista de abas. A ficha da
+   condição escolhida fica ao lado.
+   ========================================================================== */
+.atlas__palco{display:grid;gap:40px;align-items:start}
+@media (min-width:1000px){.atlas__palco{grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);gap:clamp(40px,5vw,72px)}}
+
+/* placa */
+.mao{--mao:min(300px,76vw);padding:0;background:var(--carvao);border-color:var(--filete-escuro)}
+@media (min-width:600px){.mao{--mao:330px}}
+@media (min-width:1200px){.mao{--mao:350px}}
+.mao>.mao__legenda{margin:0;padding:14px 20px 18px;border-top:1px solid var(--filete-escuro);color:var(--texto-escuro)}
+
+.lab-hand{position:relative;overflow:hidden;padding:calc(var(--mao) * .13 + 20px) 0 0}
+.handbox{position:relative;width:var(--mao);margin-left:calc(50% - var(--mao) * .556)}
+.hand-stage{position:relative;z-index:1}
+.hand-svg{display:block;width:100%;height:auto;overflow:hidden}
+.mao__contorno{fill:none;stroke:#D8C08A;stroke-width:1.05;stroke-linejoin:round}
+
+/* goniômetro em volta da mão: centro no punho, varre até 90° quando a placa aparece */
+.mao__gonio{position:absolute;z-index:0;pointer-events:none;color:var(--ouro);
+  width:calc(var(--mao) * 2.9167);left:calc(var(--mao) * -.9023);top:calc(var(--mao) * -.2333)}
+.mao__gonio svg{display:block;width:100%;height:auto;overflow:visible}
+.mao__gonio .gonio__marca{opacity:.5}
+.mao__gonio .gonio__marca--15{opacity:.7}
+.mao__gonio .gonio__marca--45{opacity:.95}
+.mao__gonio .gonio__base{display:none}
+.mao__gonio .gonio__num{font-size:18px;fill:var(--texto-escuro)}
+.mao__gonio .gonio__agulha{stroke:var(--champanhe)}
+.mao__gonio .gonio__eixo{fill:var(--carvao);stroke:var(--champanhe)}
+.mao__gonio .gonio__centro{fill:var(--champanhe)}
+
+/* camadas do desenho */
+.mao__base{opacity:.42}
+.mao__tendoes path{fill:none;stroke:#D8C08A;stroke-width:1;opacity:.24}
+.mao__dobras path{fill:none;stroke:#D8C08A;stroke-width:.55;opacity:.28}
+.nerve{fill:none;stroke:var(--marfim);stroke-width:1;stroke-linecap:round;opacity:.7}
+#bones,#nerves{transition:opacity 250ms var(--ease)}
+#scanRing{stroke:var(--champanhe);stroke-width:1;stroke-dasharray:3 4;vector-effect:non-scaling-stroke;opacity:.85;transition:opacity 200ms}
+
+/* regiões das condições (sobrepostas na própria mão) */
+.xr-ov{opacity:0;transition:opacity 320ms var(--ease)}
+.xr-ov.on{opacity:1}
+.xr-zona{fill:url(#xrHachura);stroke:var(--champanhe);stroke-width:1;stroke-dasharray:3 3;vector-effect:non-scaling-stroke}
+.xr-nervo{fill:none;stroke:var(--marfim);stroke-width:2.6;stroke-linecap:round}
+.xr-nervo--fino{stroke-width:1.1}
+.xr-lig{fill:none;stroke:var(--champanhe);stroke-width:3.2;stroke-linecap:round}
+.xr-tendao{fill:none;stroke:#E9DAB4;stroke-width:2.2;stroke-linecap:round}
+.xr-polia{fill:#0F1013;stroke:var(--marfim);stroke-width:1.4}
+.xr-nodulo{fill:var(--champanhe)}
+.xr-fenda{fill:none;stroke:var(--marfim);stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round}
+.xr-esporao{fill:var(--marfim)}
+.xr-cisto{fill:rgba(244,241,234,.16);stroke:var(--marfim);stroke-width:1.3}
+.xr-haste{fill:none;stroke:var(--marfim);stroke-width:1.2}
+.xr-cordao{fill:none;stroke:var(--marfim);stroke-width:3;stroke-linecap:round}
+.xr-corte{fill:none;stroke:var(--marfim);stroke-width:1.2;stroke-dasharray:2 2}
+
+/* pontos das condições: ponto dourado; o nome aparece no escolhido e ao passar o cursor */
+.hs{position:absolute;z-index:2;display:grid;place-items:center;width:44px;height:44px;transform:translate(-50%,-50%);cursor:pointer}
+.hs b{position:relative;display:block;width:14px;height:14px;border:1.5px solid var(--champanhe);border-radius:50%;background:var(--carvao);
+  transition:background-color 220ms,transform 220ms var(--ease),box-shadow 220ms}
+.hs b::after{content:"";position:absolute;inset:-7px;border:1px solid rgba(216,192,138,.5);border-radius:50%;opacity:0;transform:scale(.6)}
+.hs:hover b{transform:scale(1.15)}
+.hs.on b{background:var(--champanhe);box-shadow:0 0 0 5px rgba(216,192,138,.18)}
+.hs.on b::after{animation:pulso 2.4s var(--ease) infinite}
+@keyframes pulso{0%{opacity:.8;transform:scale(.6)}70%,100%{opacity:0;transform:scale(1.5)}}
+.hs i{position:absolute;left:50%;bottom:calc(100% - 4px);transform:translate(-50%,6px);padding:5px 10px;white-space:nowrap;pointer-events:none;
+  font-style:normal;font-size:.8125rem;line-height:1.2;color:var(--marfim);background:rgba(8,8,10,.92);border:1px solid var(--filete-escuro);border-radius:2px;
+  opacity:0;transition:opacity 200ms,transform 200ms var(--ease)}
+.hs.on i,.hs:hover i{opacity:1;transform:translate(-50%,0)}
+.hand-hint{position:relative;z-index:1;width:max-content;max-width:calc(100vw - 64px);margin:8px 0 0 calc(var(--mao) * .556);transform:translateX(-50%);
+  font-family:var(--serif);font-style:italic;font-size:1rem;line-height:1.3;color:#8F8B82;text-align:center}
+@media (min-width:900px){.hand-hint{display:none}}
+
+/* camadas: Lupa, Ossos, Nervos */
+.mao__camadas{position:absolute;z-index:3;left:12px;bottom:40px;display:grid;gap:0}
+.mao__camadas button{position:relative;display:flex;align-items:center;gap:10px;min-height:44px;padding:0 8px 0 4px;font-size:.875rem;color:var(--texto-escuro);transition:color var(--t-rapido)}
+.mao__camadas button::before{content:"";flex:none;width:11px;height:11px;border:1px solid var(--ouro);border-radius:50%}
+.mao__camadas button:hover,.mao__camadas button[aria-pressed="true"]{color:var(--marfim)}
+.mao__camadas button[aria-pressed="true"]::before{background:radial-gradient(circle,var(--champanhe) 0 3px,transparent 3.5px);border-color:var(--champanhe)}
+@media (max-width:599px){
+  .lab-hand{display:flex;flex-direction:column}
+  .mao__camadas{position:static;order:2;display:flex;justify-content:center;gap:4px 18px;margin-top:8px}
+}
+
+/* legenda da placa = lista de condições (abas) */
+.atlas__indice{display:grid;grid-template-columns:1fr 1fr;column-gap:20px;margin:16px 20px 4px;border-top:1px solid var(--filete-escuro)}
+.tab-btn{display:flex;align-items:center;gap:12px;min-height:46px;padding:8px 0;border-bottom:1px solid var(--filete-escuro);text-align:left;
+  font-size:.9375rem;line-height:1.25;color:var(--texto-escuro);transition:color var(--t-rapido)}
+.tab-btn::before{content:"";flex:none;width:9px;height:9px;border:1.3px solid var(--champanhe);border-radius:50%;transition:background-color var(--t-rapido)}
+.tab-btn:hover{color:var(--marfim)}
+.tab-btn.on{color:var(--marfim)}
+.tab-btn.on::before{background:var(--champanhe)}
+@media (max-width:359px){.atlas__indice{grid-template-columns:1fr}}
+
+/* ficha da condição */
+@media (min-width:1000px){.atlas__textos{position:sticky;top:calc(var(--hdr-h) + 28px)}}
+.js .pane:not(.on){display:none}
+.pane.on{animation:folha 380ms var(--ease)}
+.pane+.pane{margin-top:56px}
+.js .pane+.pane{margin-top:0}
+.pane:focus-visible{outline-offset:8px}
+.pane h3{font-size:clamp(2rem,3vw,2.75rem);line-height:1.06;color:var(--marfim)}
+.pane__oque{margin-top:16px;max-width:46ch;font-weight:300;font-size:1.1875rem;line-height:1.6;color:var(--marfim)}
+.pane h4,.qres h4{margin-top:32px;font-size:.875rem;font-weight:500;line-height:1.3;color:var(--cor-suave)}
+.pane__sinais{display:grid;gap:10px;margin-top:14px}
+.pane__sinais li{position:relative;padding-left:24px;font-size:1rem;line-height:1.5;color:var(--texto-escuro)}
+.pane__sinais li::before{content:"";position:absolute;left:2px;top:.55em;width:8px;height:8px;border:1px solid var(--champanhe);border-radius:50%}
+.pane__trilha{display:flex;margin-top:18px}
+.pane__trilha li{position:relative;flex:1 1 0;min-width:0;padding:28px 14px 0 0;font-size:.9375rem;line-height:1.35;color:var(--marfim)}
+.pane__trilha li::before{content:"";position:absolute;z-index:1;left:0;top:4px;width:12px;height:12px;border:1px solid var(--champanhe);border-radius:50%;background:var(--carvao)}
+.pane__trilha li:first-child::before{background:var(--champanhe)}
+.pane__trilha li::after{content:"";position:absolute;left:12px;right:0;top:10px;height:1px;background:repeating-linear-gradient(90deg,rgba(216,192,138,.6) 0 5px,transparent 5px 10px)}
+.pane__trilha li:last-child::after{display:none}
+@media (max-width:599px){
+  .pane__trilha{flex-direction:column;gap:14px}
+  .pane__trilha li{padding:0 0 0 28px}
+  .pane__trilha li::before{top:.3em}
+  .pane__trilha li::after{left:5.5px;right:auto;top:calc(.3em + 12px);width:1px;height:calc(100% + 2px);background:repeating-linear-gradient(180deg,rgba(216,192,138,.6) 0 4px,transparent 4px 8px)}
+}
+.pane__conforme{margin-top:16px;font-family:var(--serif);font-style:italic;font-size:1.0625rem;line-height:1.4;color:#9A968C}
+.pane__nota{margin-top:18px;max-width:48ch;padding-left:14px;border-left:1px solid var(--champanhe);font-size:.9375rem;line-height:1.5;color:var(--texto-escuro)}
+.pane__mais{margin-top:28px;border-top:1px solid var(--filete-escuro);border-bottom-color:var(--filete-escuro)}
+.pane__mais>summary{font-size:1.125rem}
+.pane__lista{margin:4px 0 20px;border-top:1px solid var(--cor-filete)}
+.pane__lista li{position:relative;padding:10px 0 10px 22px;border-bottom:1px solid var(--cor-filete);font-size:1rem;line-height:1.5;color:var(--cor-texto)}
+.pane__lista li::before{content:"";position:absolute;left:0;top:1.3em;width:10px;height:1px;background:var(--cor-deco)}
+
+.atlas__rodape{margin-top:48px;padding-top:24px;border-top:1px solid var(--cor-filete)}
+
+/* ==========================================================================
+   5. ENTENDA SEUS SINTOMAS (questionário)
+   ========================================================================== */
+.quiz{max-width:720px}
+.quiz__topo{display:flex;align-items:flex-end;gap:20px;padding-bottom:18px}
+.quiz__gonio{width:132px;flex:none}
+.quiz__passo{padding-bottom:4px;font-size:.9375rem;color:var(--cor-suave)}
+.quiz__passo b{font-weight:500;color:var(--cor-titulo)}
+.quiz__corpo{min-height:420px}
+@media (max-width:599px){.quiz__corpo{min-height:0}}
+.quiz__pergunta{font-size:clamp(1.75rem,2.4vw,2.125rem);line-height:1.15;outline:none}
+.quiz__ajuda{margin-top:8px;color:var(--cor-texto)}
+.qopts{margin-top:24px}
+.qopt{font-size:1.0625rem;line-height:1.35}
+.qopt small{font-size:.9rem}
+.qstep.on{animation:folha 260ms var(--ease)}
+.quiz__pe{min-height:52px;padding-top:12px}
+.quiz__voltar{min-height:44px;font-size:.9375rem;font-weight:500;color:var(--cor-titulo);text-decoration:underline;text-decoration-color:var(--cor-destaque);text-underline-offset:.3em}
+.quiz__voltar:hover{text-decoration-thickness:2px}
+.quiz__voltar:disabled{opacity:.5}
+.qres__pre{font-family:var(--serif);font-style:italic;font-size:1.25rem;line-height:1.2;color:var(--cor-destaque)}
+.qres__nome{margin-top:6px;font-size:clamp(2rem,3vw,2.5rem);line-height:1.1;outline:none}
+.qres__texto{margin-top:14px;max-width:58ch}
+.qres__alerta{margin-top:16px;padding:14px 16px;border:1px solid var(--cor-filete-forte);border-radius:var(--raio);max-width:58ch;color:var(--cor-titulo)}
+.qres .pane__lista{margin-top:10px}
+.qres__resumo{margin-top:0;border-top:0}
+.qres__resumo>summary{font-size:1.25rem;min-height:56px;padding-block:12px}
+.qres__resumo .ficha{margin-bottom:16px}
+.qres__acoes{margin-top:28px}
+.qres__acoes button.link{padding:0}
+.qres__nota{margin-top:20px;max-width:52ch}
+
+/* ==========================================================================
+   6. O MÉDICO: retrato em cor sob um arco de luz
+   ========================================================================== */
+.medico__foto{width:min(100%,340px);aspect-ratio:4 / 5}
+.medico__texto>*+*{margin-top:18px}
+.medico__texto .t-lead{max-width:30ch}
+.medico__texto .prosa{color:var(--cor-texto)}
+.medico__ficha{margin-top:32px}
+.medico__ficha dd{line-height:1.5}
+.medico__texto .link{margin-top:20px}
+@media (min-width:900px){
+  .medico .cap__grade{align-items:start}
+  .medico__foto{grid-column:1 / 5;width:100%;max-width:420px;margin-top:8px}
+  .medico__texto{grid-column:6 / 13}
+}
+#medico .medico__recorte{position:relative;overflow:visible;background:none}
+#medico .medico__recorte::before{
+  content:"";position:absolute;inset:12% 3% 0;border-radius:999px 999px 0 0;
+  background:radial-gradient(80% 60% at 50% 30%,rgba(216,192,138,.22),rgba(216,192,138,.04) 70%),#121216;
+  box-shadow:inset 0 0 0 1px rgba(216,192,138,.32);
+}
+#medico .medico__recorte::after{content:"";position:absolute;inset:auto 0 0;height:1px;background:rgba(216,192,138,.45)}
+#medico .medico__recorte>img{position:relative;width:100%;height:100%;object-fit:contain;object-position:50% 100%;filter:saturate(.9) contrast(1.03)}
+
+/* ==========================================================================
+   7. CAMINHOS DE CUIDADO: régua graduada
+   Cinco marcos numa régua (sequência real). O trecho percorrido fica em
+   ouro profundo; cada marco abre um painel com o numeral grande.
+   ========================================================================== */
+.trilha{--feito:0}
+.trilha__marcos{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}
+.trilha__regua{position:absolute;left:10%;right:10%;top:16px;height:7px;border-bottom:1px solid rgba(126,106,56,.4);
+  background:repeating-linear-gradient(90deg,rgba(126,106,56,.4) 0 1px,transparent 1px 12px) left bottom/100% 6px no-repeat;
+  transform:scaleX(0);transform-origin:left center;transition:transform 1.4s var(--ease)}
+.trilha.visto .trilha__regua{transform:none}
+.trilha__feito{position:absolute;left:0;bottom:-1.5px;height:2px;width:calc(var(--feito) * 100%);background:var(--ouro-profundo);transition:width 700ms var(--ease)}
+.trilha__marco{position:relative;z-index:1;display:grid;justify-items:center;align-content:start;gap:14px;min-height:44px;padding:0 6px 20px;text-align:center;cursor:pointer}
+.trilha__n{display:grid;place-items:center;width:44px;height:44px;border:1px solid rgba(126,106,56,.55);border-radius:50%;background:var(--marfim);
+  font-family:var(--serif);font-style:italic;font-size:1.25rem;line-height:1;color:var(--tinta);
+  transition:background-color 300ms,color 300ms,border-color 300ms,box-shadow 300ms}
+.trilha__nome{font-family:var(--serif);font-size:clamp(1.125rem,1.6vw,1.375rem);line-height:1.15;color:var(--texto-claro);transition:color 300ms}
+.trilha__marco.feito .trilha__n{background:#EAE0CB;border-color:var(--ouro-profundo)}
+.trilha__marco.on .trilha__n{background:var(--tinta);border-color:var(--tinta);color:var(--marfim);box-shadow:0 0 0 7px rgba(126,106,56,.14)}
+.trilha__marco.on .trilha__nome,.trilha__marco:hover .trilha__nome{color:var(--tinta)}
+.trilha__marco:hover .trilha__n{border-color:var(--ouro-profundo)}
+.trilha__marco:focus-visible{outline:none}
+.trilha__marco:focus-visible .trilha__n{outline:2px solid var(--ouro-profundo);outline-offset:4px}
+
+.trilha__paineis{margin-top:36px}
+.trilha__painel{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr) minmax(180px,.42fr);gap:clamp(24px,5vw,80px);align-items:start;
+  padding:clamp(28px,4vw,52px) clamp(24px,4.5vw,64px);background:url("../brand/papel.svg") 0 0/640px 640px,var(--areia);border:1px solid rgba(126,106,56,.28)}
+.trilha__painel::before{content:"";position:absolute;inset:8px;border:1px solid rgba(126,106,56,.16);pointer-events:none}
+.trilha__painel[hidden]{display:none}
+.trilha__painel.on{animation:trilhaEntra 480ms var(--ease)}
+@keyframes trilhaEntra{from{opacity:0;transform:translateX(calc(var(--dir,1) * 28px))}}
+.trilha__grande{font-family:var(--serif);font-weight:300;font-variant-numeric:lining-nums;font-size:clamp(5.5rem,11vw,9.5rem);line-height:.78;color:var(--ouro);opacity:.6}
+.trilha__texto h3{font-size:clamp(1.875rem,2.8vw,2.5rem);line-height:1.08}
+.trilha__texto p{margin-top:14px;max-width:58ch;font-size:1.0625rem;line-height:1.65;color:var(--texto-claro)}
+.trilha__texto .trilha__detalhe{margin-top:18px;font-family:var(--serif);font-style:italic;font-size:1.3125rem;line-height:1.35;color:var(--ouro-profundo)}
+.trilha__seguinte{align-self:stretch;display:flex;flex-direction:column;justify-content:flex-end;gap:6px;padding-left:clamp(20px,2.4vw,36px);border-left:1px solid rgba(126,106,56,.25)}
+.trilha__seguinte>p:first-child{font-size:.875rem;color:var(--texto-claro)}
+.trilha__ir{align-self:flex-start;min-height:44px;text-align:left;font-family:var(--serif);font-size:1.5rem;line-height:1.15;color:var(--tinta);
+  text-decoration:underline;text-decoration-color:rgba(126,106,56,.45);text-decoration-thickness:1px;text-underline-offset:.22em}
+.trilha__ir:hover{text-decoration-color:var(--ouro-profundo);text-decoration-thickness:2px}
+.trilha__fim{font-family:var(--serif);font-style:italic;font-size:1.25rem;line-height:1.3;color:var(--ouro-profundo)}
+.trilha__nav{display:flex;justify-content:space-between;gap:16px;margin-top:16px}
+.trilha__seta{min-height:44px;font-size:.9375rem;font-weight:500;color:var(--tinta);text-decoration:underline;text-decoration-color:rgba(126,106,56,.55);text-underline-offset:.3em}
+.trilha__seta:hover{text-decoration-thickness:2px}
+.trilha__seta:disabled{opacity:.35;text-decoration:none;cursor:default}
+@media (min-width:700px) and (max-width:1099px){
+  .trilha__painel{grid-template-columns:auto minmax(0,1fr)}
+  .trilha__seguinte{grid-column:2;padding:18px 0 0;border-left:0;border-top:1px solid rgba(126,106,56,.25)}
+}
+@media (max-width:699px){
+  .trilha__nome{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .trilha__marco{padding-bottom:4px}
+  .trilha__n{width:42px;height:42px}
+  .trilha__regua{top:15px}
+  .trilha__painel{grid-template-columns:1fr;gap:4px;padding:28px 24px}
+  .trilha__seguinte{margin-top:20px;padding:18px 0 0;border-left:0;border-top:1px solid rgba(126,106,56,.25)}
+  .trilha__grande{font-size:4.5rem}
+}
+
+/* ==========================================================================
+   8. COMO É A CONSULTA (régua com quatro marcas)
+   ========================================================================== */
+.consulta__passos{counter-reset:passo;display:grid;gap:28px}
+.consulta__passos>li{position:relative;padding-left:56px}
+.consulta__passos>li::before{content:counter(passo);counter-increment:passo;position:absolute;left:0;top:-4px;
+  font-family:var(--serif);font-style:italic;font-size:2.125rem;line-height:1;color:var(--cor-destaque)}
+.consulta__passos h3{font-size:1.5rem;line-height:1.2}
+.consulta__passos h3+p{margin-top:6px;max-width:34ch}
+.steps-line{display:none}
+@media (min-width:900px){
+  .steps{margin-top:16px}
+  .steps-line{display:block;position:relative;height:18px;margin-bottom:28px;border-bottom:1px solid var(--cor-filete-forte);
+    background:repeating-linear-gradient(90deg,var(--cor-filete-forte) 0 1px,transparent 1px 16px) left bottom/100% 7px no-repeat}
+  .steps-line i{position:absolute;left:0;bottom:-1px;width:100%;height:1px;background:var(--cor-destaque)}
+  .consulta__passos{grid-template-columns:repeat(4,minmax(0,1fr));column-gap:var(--calha)}
+  .consulta__passos>li{padding-left:0;padding-top:52px}
+  .consulta__passos>li::before{top:0}
+  .consulta__passos>li::after{content:"";position:absolute;left:0;top:-46px;width:1px;height:18px;background:var(--cor-destaque)}
+}
+
+
+
+/* "Onde atende" (componente do site.css) vem depois da consulta, no mesmo capítulo */
+#atendimento .onde{margin-top:clamp(80px,10vw,136px)}
+
+/* ==========================================================================
+   Movimento reduzido: fichas trocam de face sem girar; nada desliza sozinho
+   ========================================================================== */
+@media (prefers-reduced-motion:reduce){
+  .trilha__regua{transform:none;transition:none}
+  .trilha__feito{transition:none}
+  .pane.on,.trilha__painel.on,.qstep.on{animation:none}
+  .mw,.manifesto__valores li{transition:none}
+  .hs.on b::after{animation:none}
+}
+html.motion-paused .hs.on b::after{animation:none}
+@media print{
+  .inicio__foto,.inicio::after{display:none}
+  .manifesto__trilho{height:auto}.manifesto__palco{position:relative;height:auto}
+}
+
+/* ==========================================================================
+   11. CELULAR: simetria e ritmo (revisado em 320, 360, 390 e 430 px)
+   Títulos, frases curtas e chamadas ao centro; leitura (parágrafo longo,
+   lista, ficha) à esquerda, em blocos com margens iguais. Respiro entre
+   capítulos de 80 px; cabeça de seção a 36 px do conteúdo.
+   ========================================================================== */
+@media (max-width:699px){
+
+  /* capa: duas linhas exatas ("Cuidado para os gestos" / "que fazem sua vida.") */
+  .inicio .t-hero{font-size:min(calc((100vw - 32px) / 9.25),2.875rem)}
+  .inicio .capa__grade{padding-block:6px 44px}
+  .inicio .t-lead{text-wrap:balance}
+  .inicio .acoes{margin-top:28px}
+  .inicio .capa__id{margin-top:36px}
+
+  /* frase da marca: cena centrada entre o topo e a barra de agendar */
+  .manifesto__palco{padding:24px var(--margem) 84px}
+  .manifesto__arco .gonio__num{display:none}
+  .manifesto__frase{margin-bottom:40px}
+  .manifesto__graus{margin-top:10px}
+  .manifesto__valores{margin-top:48px;gap:10px}
+  .manifesto__valores strong{font-size:1.3125rem}
+  .manifesto__valores span{font-size:.875rem;line-height:1.4}
+  .manifesto--estatico .manifesto__palco{padding-block:80px}
+
+  /* onde dói: legenda ao centro, ficha da condição como folha emoldurada */
+  .mao>.mao__legenda{text-align:center}
+  .atlas__palco{gap:28px}
+  .pane{padding:30px 22px 8px;border:1px solid var(--filete-escuro);background:rgba(244,241,234,.025)}
+  .pane h3{text-align:center}
+  .pane h3::after{content:"";display:block;width:32px;height:1px;margin:16px auto 0;background:var(--champanhe)}
+  .pane__oque{margin-top:20px;font-size:1.0625rem}
+  .pane h4{margin-top:28px}
+  .pane__mais{margin-inline:-22px;padding-inline:22px;border-bottom:0}
+  .atlas__rodape{margin-top:32px;padding-top:0;border-top:0;text-align:center}
+
+  /* questionário: progresso e pergunta ao centro, opções como fichas */
+  .quiz{margin-inline:auto}
+  .quiz__topo{flex-direction:column;align-items:center;gap:6px;padding-bottom:20px}
+  .quiz__gonio{width:150px}
+  .quiz__passo{padding-bottom:0}
+  .quiz__pergunta,.quiz__ajuda{text-align:center}
+  .quiz__ajuda{max-width:30ch;margin-inline:auto}
+  .qopts{display:grid;gap:10px;margin-top:22px;border-top:0}
+  .qopt{border:1px solid rgba(126,106,56,.26);border-radius:2px;background:rgba(255,255,255,.42)}
+  .quiz__pe{display:flex;justify-content:center}
+  .qres__pre,.qres__nome,.qres__texto{text-align:center}
+  .qres__texto{margin-inline:auto}
+  .qres__acoes{align-items:stretch}
+
+  /* caminhos: painel ao centro */
+  .trilha__paineis{margin-top:28px}
+  .trilha__painel{text-align:center;padding:32px 22px 28px}
+  .trilha__grande{font-size:4.5rem;line-height:.8}
+  .trilha__texto p{margin-inline:auto}
+  .trilha__seguinte{align-items:center}
+  .trilha__ir{align-self:center;text-align:center}
+}
+
+@media (max-width:899px){
+  /* o médico: retrato no eixo, nome e linha fina ao centro, leitura à esquerda */
+  .medico__foto{margin-inline:auto}
+  #medico .medico__recorte{width:min(100%,340px)}
+  .medico__texto{margin-top:8px}
+  .medico__texto>.cap__titulo,.medico__texto>.t-lead{text-align:center;margin-inline:auto}
+  .medico__texto>.t-lead::after{content:"";display:block;width:32px;height:1px;margin:24px auto 4px;background:var(--champanhe)}
+  .medico__texto>.link{display:flex;width:fit-content;margin-inline:auto}
+
+  /* como é a consulta: passos ao centro, ligados por um ponto de sutura */
+  .consulta__passos{gap:0}
+  .consulta__passos>li{padding:0;text-align:center}
+  .consulta__passos>li::before{position:static;display:block;margin-bottom:10px}
+  .consulta__passos>li:not(:last-child)::after{content:"";display:block;width:1px;height:30px;margin:20px auto;
+    background:repeating-linear-gradient(180deg,rgba(126,106,56,.55) 0 4px,transparent 4px 8px)}
+  .consulta__passos h3+p{max-width:30ch;margin-inline:auto}
+
+  /* onde atende vem logo depois da consulta, no mesmo capítulo */
+  #atendimento .onde{margin-top:80px}
+}
+@media (max-width:359px){
+  .manifesto__valores{gap:8px}
+  .manifesto__valores strong{font-size:1.125rem}
+  .manifesto__valores span{font-size:.8125rem}
+}
+@media (max-width:699px) and (max-height:720px){
+  /* tela baixa (iPhone SE): a cena da frase cabe sem cortar */
+  .manifesto__peca{width:min(100%,300px);margin-inline:auto}
+  .manifesto__frase{margin-bottom:28px}
+  .manifesto__valores{margin-top:32px}
+  .manifesto__valores span{display:none}
+}
+
+/* ==========================================================================
+   12. CELULAR: leitura ao centro (pedido de 07/10/2026)
+   Ficha da condição, texto e ficha do médico e mini mão dos cards de sinais
+   passam a ficar no eixo central da tela.
+   ========================================================================== */
+@media (max-width:699px){
+  /* ficha da condição: o que é, sinais, trilha e nota ao centro */
+  .pane__oque{margin-inline:auto;text-align:center;text-wrap:balance}
+  .pane h4{text-align:center}
+  .pane__sinais{justify-items:center;text-align:center}
+  .pane__sinais li{padding-left:0;max-width:30ch;text-wrap:balance}
+  .pane__sinais li::before{position:relative;left:auto;top:auto;display:inline-block;margin-right:10px;vertical-align:.08em}
+  .pane__conforme{text-align:center;text-wrap:balance}
+  .pane__nota{margin-inline:auto;padding:14px 0 0;border-left:0;border-top:1px solid var(--champanhe);text-align:center;text-wrap:balance}
+}
+@media (max-width:599px){
+  /* trilha da condição: etapas empilhadas no eixo, ligadas por um ponto de sutura */
+  .pane__trilha{align-items:center;gap:0}
+  .pane__trilha li{padding:0;text-align:center}
+  .pane__trilha li::before{position:static;display:block;margin:0 auto 8px}
+  .pane__trilha li::after{position:static;display:block;width:1px;height:18px;margin:8px auto;
+    background:repeating-linear-gradient(180deg,rgba(216,192,138,.6) 0 4px,transparent 4px 8px)}
+
+  /* o médico: parágrafo e ficha ao centro */
+  .medico__texto>.prosa{margin-inline:auto;text-align:center;text-wrap:balance}
+  .medico__ficha>div{justify-items:center;text-align:center}
+  .medico__ficha dd{max-width:32ch;text-wrap:balance}
+}

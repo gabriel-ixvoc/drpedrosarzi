@@ -1,0 +1,66 @@
+/* Acabamento da alternativa PRP; interações e conteúdo seguem os arquivos-base. */
+.prp-capa .t-hero{max-width:11ch;text-wrap:balance}
+.prp-capa__figura .lab-card.lab-placa{border-radius:2px;box-shadow:0 28px 64px -42px rgba(0,0,0,.9)}
+.prp-capa__figura .lab-fig{font-size:1.1rem}
+.indic{align-items:stretch;gap:18px}
+.indic__item{display:grid;grid-template-columns:1fr;grid-template-rows:auto auto auto 1fr auto;align-content:start;min-width:0;overflow:hidden;padding:0 0 22px}
+.indic__item::before{inset:7px;z-index:1}
+.indic__imagem{display:block;width:100%;height:clamp(150px,16vw,220px);grid-column:1;grid-row:1;object-fit:cover;filter:saturate(.78) contrast(1.04)}
+.indic__item:nth-child(1) .indic__imagem{object-position:50% 48%}
+.indic__item:nth-child(2) .indic__imagem{object-position:50% 45%}
+.indic__item:nth-child(3) .indic__imagem{object-position:50% 48%}
+.indic__item:nth-child(4) .indic__imagem{object-position:50% 42%}
+.indic__item .indic__glifo{display:none}
+.indic__regiao,.indic__item h3,.indic__desc,.indic__marca{position:relative;z-index:1;margin-inline:18px}
+.indic__regiao{margin-top:18px}
+.indic__item h3{margin-top:6px;font-size:clamp(1.35rem,1.7vw,1.65rem)}
+.indic__desc{margin-top:8px}
+/* a descrição tem largura máxima (30ch): margem automática para ficar no eixo do card */
+.indic__item .indic__desc{margin-inline:auto;max-width:min(30ch,calc(100% - 36px))}
+.indic__marca{margin-top:12px;padding-top:0}
+.indic__item--membro{box-shadow:inset 0 0 0 1px var(--ouro-profundo),0 26px 46px -30px rgba(8,8,10,.55)}
+.indic__fora{position:relative;overflow:hidden;justify-content:flex-start;min-height:180px;margin-top:24px;padding:0;gap:0;border-style:solid;border-color:rgba(126,106,56,.35);background:url("../brand/papel.svg") 0 0/640px 640px,var(--linho)}
+.indic__fora .indic__imagem{align-self:stretch;flex:none;width:210px;min-height:180px;object-fit:cover;object-position:50% 46%;filter:saturate(.72)}
+.indic__fora .indic__glifo{display:none}
+.indic__fora-texto{padding:24px clamp(22px,4vw,48px)}
+.indic__fora .indic__regiao,.indic__fora h3,.indic__fora .indic__desc{margin-inline:0}
+.indic__fora .indic__regiao{margin-top:0}
+.indic__fora h3{font-style:normal}
+.indic__fora .indic__desc{margin-top:8px}
+.lab-placa #processScene{padding:14px clamp(10px,2vw,24px) 0}
+.lab-placa .lab-art{filter:drop-shadow(0 14px 18px rgba(0,0,0,.2))}
+.lab-placa .lab-bottom{padding-inline:clamp(16px,2.5vw,28px)}
+.lab-placa .lab-tabs{gap:0 clamp(14px,2vw,26px)}
+.process-illus-inner.lab-card{border-radius:2px;box-shadow:0 28px 64px -42px rgba(8,8,10,.58)}
+.processo__placa{align-self:start}
+@media(max-width:899px){
+  .indic{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .indic__item{grid-template-columns:1fr;grid-template-rows:auto auto auto 1fr auto}
+  .indic__imagem{height:clamp(145px,28vw,205px)}
+}
+@media(max-width:599px){
+  .prp-capa .capa__texto{text-align:center}
+  .prp-capa .t-hero{max-width:none;margin-inline:auto}
+  .prp-capa .t-lead{margin-inline:auto}
+  .prp-capa .acoes{justify-content:center}
+  .prp-capa .capa__id{justify-content:center;text-align:center}
+  /* indicações: carrossel com pontos, como as fichas das outras seções; ficha ao centro */
+  .indic{grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:80vw;gap:12px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;margin-inline:calc(var(--margem) * -1);padding:6px 10vw 12px;scrollbar-width:none}
+  .indic::-webkit-scrollbar{display:none}
+  .indic__item{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;scroll-snap-align:center;scroll-snap-stop:always;text-align:center}
+  .indic__marca{margin-top:auto;padding-top:12px}
+  .indic__imagem{height:clamp(170px,52vw,220px)}
+  .indic__item .indic__desc{max-width:min(30ch,calc(100% - 44px))}
+  .indic__fora{display:flex;flex-direction:column;min-height:0;text-align:center}
+  .indic__fora .indic__imagem{width:100%;min-height:0;height:clamp(150px,44vw,190px)}
+  .indic__fora-texto{padding:20px 22px 24px}
+  .lab-placa .lab-topline{align-items:flex-start;gap:8px;padding:14px}
+  .lab-placa .lab-status{font-size:.74rem}
+  .lab-placa .lab-tabs{justify-content:space-between;gap:8px}
+  .lab-placa .lab-tabs button{font-size:.875rem}
+  .processo__passos{gap:8px}
+}
+@media(prefers-reduced-motion:reduce){.indic__imagem,.lab-placa .lab-art{transition:none;animation:none}}
+/* O que o PRP não é, com foto: pergunta em até três linhas; sem o "?" de ornamento da versão sem foto. */
+.mitos.sinais--foto .sinal__titulo{max-width:15ch}
+.mitos.sinais--foto .sinal__frente::after{display:none}

@@ -1,0 +1,126 @@
+/* ==========================================================================
+   PRP (/prp/) · estilos da página
+   Base em site.css (capa, capítulos, tipografia, botões). Aqui só o que é
+   desta página: capa com a Fig. 1, fichas das indicações da Resolução CFM
+   2.464/2026, o que o PRP não é (fichas que viram, site.css), player de
+   etapas e perguntas. O "Onde atende" do fim é o componente do site.css.
+   As placas (Fig. 1 e Fig. 2) ficam em pages/lab.css.
+   ========================================================================== */
+
+/* ---------- 1. Capa ---------- */
+.prp-capa__figura{width:100%;max-width:560px;justify-self:center}
+.prp-capa .t-lead{max-width:44ch}
+@media (min-width:900px){
+  .prp-capa .capa__texto{grid-column:1 / 7}
+  .prp-capa__figura{grid-column:8 / 13;justify-self:end}
+}
+@media (min-width:900px) and (max-width:1199px){
+  .prp-capa__figura{grid-column:7 / 13}
+}
+@media (min-width:1100px){
+  .prp-capa{padding-block:64px 72px}
+}
+
+/* ---------- 2. Como é preparado (marfim; a placa escura fica embutida) ---------- */
+.processo__passos{border-top:1px solid var(--cor-filete)}
+.process-step{
+  display:grid;grid-template-columns:32px 1fr;gap:4px 12px;padding-block:18px;
+  border-bottom:1px solid var(--cor-filete);cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.process-step-num{font-family:var(--serif);font-style:italic;font-size:1.375rem;line-height:1.1;color:var(--cor-suave);transition:color var(--t-rapido)}
+.process-step h3{font-size:1.5rem;line-height:1.15;color:var(--cor-texto);transition:color var(--t-rapido)}
+.process-step p{margin-top:6px;max-width:40ch;font-size:.9375rem;line-height:1.55;color:var(--cor-suave)}
+.process-step:hover h3{color:var(--cor-titulo)}
+.process-step.active .process-step-num{color:var(--cor-destaque)}
+.process-step.active h3{color:var(--cor-titulo)}
+.process-step.active p{color:var(--cor-texto)}
+.process-step:focus-visible{outline:2px solid var(--cor-foco);outline-offset:2px}
+@media (max-width:899px){
+  .processo__margem{order:1}
+  .processo__placa{order:2}
+  .processo__passos{order:3}
+  .process-step p{display:none}
+}
+@media (min-width:900px){
+  .processo__grade{grid-template-rows:auto 1fr;row-gap:40px}
+  .processo__margem{grid-column:1 / 5;grid-row:1}
+  .processo__passos{grid-column:1 / 5;grid-row:2;align-self:start}
+  .processo__placa{grid-column:6 / 13;grid-row:1 / 3}
+}
+
+/* ---------- 3. Quando o CFM autoriza: quatro fichas e a que fica fora ---------- */
+.indicacoes__fonte{margin-top:12px;font-size:.9375rem;color:var(--texto-claro)}
+.indicacoes__fonte a,.indicacoes__nota a{color:var(--ouro-profundo);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.25em}
+.indicacoes__fonte a:hover,.indicacoes__nota a:hover{text-decoration-thickness:2px}
+.indic{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+@media (max-width:1099px){.indic{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:599px){.indic{grid-template-columns:1fr;gap:14px}}
+.indic__item{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;padding:30px 22px 26px;
+  background:url("../brand/papel.svg") 0 0/640px 640px,var(--marfim);border:1px solid rgba(126,106,56,.28);
+  box-shadow:0 22px 40px -30px rgba(8,8,10,.45)}
+.indic__item::before{content:"";position:absolute;inset:8px;border:1px solid rgba(126,106,56,.15);pointer-events:none}
+.indic__glifo{width:76px;height:76px;padding:12px;margin-bottom:16px;border:1px solid rgba(126,106,56,.32);border-radius:50%;
+  color:var(--ouro-profundo);background:radial-gradient(circle at 50% 40%,rgba(255,255,255,.7),rgba(236,229,214,.5));overflow:visible}
+/* o ponto que a indicação trata: em tinta, sobre o desenho em ouro */
+.indic__glifo .g-real{stroke:var(--tinta)}
+.indic__glifo circle.g-real{fill:rgba(126,106,56,.2)}
+.indic__regiao{font-size:.8125rem;font-weight:500;letter-spacing:.04em;color:var(--ouro-profundo)}
+.indic__item h3,.indic__fora h3{margin-top:4px;font-size:clamp(1.5rem,1.9vw,1.75rem);line-height:1.1;color:var(--tinta);text-wrap:balance}
+.indic__desc{margin-top:10px;max-width:30ch;font-size:.9375rem;line-height:1.55;color:var(--texto-claro);text-wrap:balance}
+/* a do membro superior: moldura em ouro profundo */
+.indic__item--membro{border-color:var(--ouro-profundo);box-shadow:0 0 0 1px var(--ouro-profundo),0 26px 46px -30px rgba(8,8,10,.55)}
+.indic__item--membro::before{border-color:rgba(126,106,56,.42)}
+.indic__marca{margin-top:auto;padding-top:14px;font-size:.875rem;font-weight:500;line-height:1.4;color:var(--tinta);text-wrap:balance}
+/* mão e punho: a ficha que falta, com filete tracejado (ponto de sutura) */
+.indic__fora{display:flex;align-items:center;justify-content:center;gap:28px;margin-top:20px;padding:26px 30px;
+  border:1px dashed rgba(126,106,56,.6);background:rgba(244,241,234,.55)}
+.indic__fora .indic__glifo{flex:none;margin:0;color:var(--texto-claro);background:none}
+.indic__fora h3{font-style:italic}
+.indic__fora .indic__desc{max-width:62ch;color:var(--tinta);font-size:1rem}
+.indicacoes__nota{margin-top:24px;text-align:center;font-size:.9375rem;color:var(--texto-claro)}
+@media (max-width:699px){
+  .indic__fora{flex-direction:column;gap:14px;text-align:center;padding:26px 20px}
+  .indic__fora .indic__desc{margin-inline:auto}
+}
+
+/* ---------- 4. O que o PRP não é: fichas que viram (componente do site.css) ---------- */
+/* interrogação grande e clara no meio da frente: diz "pergunta" sem texto a mais */
+.mitos .sinal__frente::after{content:"?";position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);
+  font-family:var(--serif);font-weight:300;font-size:9rem;line-height:1;color:rgba(126,106,56,.14);pointer-events:none}
+.mitos .sinal__titulo{font-size:clamp(1.5rem,1.9vw,1.875rem);text-wrap:balance}
+.mito__nao{margin-top:8px;font-family:var(--serif);font-style:italic;font-weight:400;font-size:2.75rem;line-height:1;color:var(--champanhe)}
+.mitos .sinal__texto{margin-top:14px}
+@media (max-width:699px){
+  .mitos .sinal__frente,.mitos .sinal__verso{align-items:center;text-align:center}
+  .mitos .sinal__nome{padding-inline:44px}
+}
+
+/* ---------- 5. Perguntas frequentes (mesmo desenho do acordeão) ---------- */
+.faq-list{border-top:1px solid var(--cor-filete)}
+.faq-item{border-bottom:1px solid var(--cor-filete)}
+.faq-q{
+  display:flex;align-items:center;justify-content:space-between;gap:24px;width:100%;min-height:64px;padding-block:18px;
+  font-family:var(--serif);font-size:1.5rem;line-height:1.2;color:var(--cor-titulo);text-align:left;
+}
+.faq-q::after{
+  content:"";flex:none;width:14px;height:14px;color:var(--cor-destaque);
+  background:linear-gradient(currentColor,currentColor) center/100% 1px no-repeat,linear-gradient(currentColor,currentColor) center/1px 100% no-repeat;
+  transition:transform 250ms var(--ease);
+}
+.faq-item.open .faq-q::after{transform:rotate(45deg)}
+.faq-q:hover{text-decoration:underline;text-decoration-color:var(--cor-filete-forte);text-decoration-thickness:1px;text-underline-offset:.22em}
+.faq-q:hover::after,.faq-q:active::after{color:var(--cor-titulo)}
+.faq-q:focus-visible{outline-offset:-2px}
+.faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows 260ms var(--ease)}
+.faq-item.open .faq-a{grid-template-rows:1fr}
+.faq-a-inner{overflow:hidden;min-height:0}
+.faq-a-inner p{max-width:62ch;padding-bottom:24px;color:var(--cor-texto)}
+.faq-a-inner a{color:var(--cor-destaque);text-decoration:underline;text-underline-offset:.25em;white-space:nowrap}
+@media (max-width:599px){.faq-q{font-size:1.3125rem}}
+
+/* ---------- Celular: título da capa em duas linhas exatas ----------
+   "e quando é indicado." mede 7,99 em; a fonte acompanha a largura da tela. */
+@media (max-width:599px){
+  .prp-capa .t-hero{font-size:min(calc((100vw - 32px) / 8.3),2.875rem)}
+}
