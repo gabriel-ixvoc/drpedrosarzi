@@ -1,0 +1,753 @@
+/* ==========================================================================
+   Pedro Sarzi · base compartilhada do site ("Atlas da mão")
+   Tokens, tipografia, capítulos, cabeçalho, rodapé e componentes comuns.
+   Regras de cada página ficam em assets/pages/<página>.css.
+   Referência: docs/design.md e docs/site.md.
+   ========================================================================== */
+
+/* ---------- 1. Tokens ---------- */
+:root{
+  --carvao:#08080A;
+  --grafite:#121317;
+  --grafite-2:#1B1D22;
+  --marfim:#F4F1EA;
+  --linho:#E9E4D8;
+  --tinta:#1C1D21;
+  --ouro:#AC9559;
+  --champanhe:#D8C08A;
+  --ouro-profundo:#7E6A38;
+  --texto-escuro:#BDB8AC;
+  --texto-claro:#4A4A4F;
+  --filete-escuro:rgba(216,192,138,.16);
+  --filete-claro:rgba(28,29,33,.14);
+  --serif:"Cormorant Garamond",Georgia,serif;
+  --sans:"Ubuntu",system-ui,sans-serif;
+  --raio:2px;
+  --t-rapido:200ms;
+  --t-entrada:550ms;
+  --ease:cubic-bezier(.2,.7,.1,1);
+
+  /* métrica */
+  --largura:1240px;
+  --margem:16px;
+  --calha:24px;
+  --hdr-h:64px;
+  --ritmo:80px;
+
+  /* camadas */
+  --z-controle:30;
+  --z-gaveta:40;
+  --z-cabecalho:50;
+  --z-pular:60;
+  --z-grao:70;
+}
+@media (min-width:600px){:root{--margem:32px}}
+@media (min-width:900px){:root{--ritmo:136px}}
+@media (min-width:1100px){:root{--margem:48px;--hdr-h:76px}}
+
+/* Cores por superfície. Componentes usam só as variáveis --cor-*,
+   então funcionam em capítulo escuro ou claro sem regra extra. */
+body,.cap--carvao,.cap--grafite,.sup-escura{
+  --cor-fundo:var(--carvao);
+  --cor-titulo:var(--marfim);
+  --cor-texto:var(--texto-escuro);
+  --cor-suave:#8F8B82;
+  --cor-destaque:var(--champanhe);
+  --cor-deco:var(--ouro);
+  --cor-filete:var(--filete-escuro);
+  --cor-filete-forte:rgba(216,192,138,.34);
+  --cor-foco:var(--champanhe);
+  --btn-fundo:var(--champanhe);
+  --btn-texto:var(--carvao);
+  --btn-fundo-hover:var(--marfim);
+}
+.cap--grafite{--cor-fundo:var(--grafite)}
+.cap--marfim,.cap--linho,.sup-clara{
+  --cor-fundo:var(--marfim);
+  --cor-titulo:var(--tinta);
+  --cor-texto:var(--texto-claro);
+  --cor-suave:#66666C;
+  --cor-destaque:var(--ouro-profundo);
+  --cor-deco:var(--ouro);
+  --cor-filete:var(--filete-claro);
+  --cor-filete-forte:rgba(28,29,33,.3);
+  --cor-foco:var(--ouro-profundo);
+  --btn-fundo:var(--carvao);
+  --btn-texto:var(--marfim);
+  --btn-fundo-hover:var(--ouro-profundo);
+}
+.cap--linho{--cor-fundo:var(--linho)}
+
+/* ---------- 2. Reset ---------- */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:calc(var(--hdr-h) + 16px);overflow-x:clip}
+body{
+  min-height:100vh;overflow-x:clip;
+  font-family:var(--sans);font-size:1.0625rem;line-height:1.62;font-weight:400;
+  background:var(--carvao);color:var(--cor-texto);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;
+}
+img,svg,video{display:block;max-width:100%}
+img{height:auto}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:inherit}
+ul,ol{list-style:none}
+input,select,textarea{font:inherit;color:inherit}
+address{font-style:normal}
+[hidden]{display:none!important}
+::selection{background:var(--champanhe);color:var(--carvao)}
+:focus{outline:none}
+:focus-visible{outline:2px solid var(--cor-foco);outline-offset:3px}
+/* destinos de âncora recebem foco (site.js, seção 8) sem contorno no capítulo inteiro */
+main:focus,main [tabindex="-1"]:focus{outline:none}
+body.menu-open{overflow:hidden}
+
+/* ---------- 3. Tipografia ---------- */
+html{hanging-punctuation:first allow-end last}
+h1,h2,h3{font-family:var(--serif);font-weight:400;color:var(--cor-titulo);line-height:1.1;letter-spacing:0;text-wrap:balance}
+h4,h5,h6{font-family:var(--sans);font-weight:500;color:var(--cor-titulo);line-height:1.3}
+p,li,dd,figcaption,blockquote,summary{text-wrap:pretty}
+strong,b{font-weight:500}
+/* registro e números que não podem quebrar (nem no hífen de CRM-SP) */
+.nobr{white-space:nowrap}
+
+.t-hero{font-family:var(--serif);font-weight:300;font-size:clamp(2.9rem,5.6vw,4.75rem);line-height:1.02;letter-spacing:-.01em;color:var(--cor-titulo)}
+.t-hero__2{display:block;color:var(--cor-destaque)}
+.t-cap{font-family:var(--serif);font-weight:400;font-size:clamp(2rem,3.4vw,2.75rem);line-height:1.08}
+.t-sub{font-family:var(--serif);font-weight:400;font-size:clamp(1.5rem,2vw,1.75rem);line-height:1.2}
+.t-lead{font-family:var(--sans);font-weight:300;font-size:1.25rem;line-height:1.55;color:var(--cor-titulo);max-width:52ch}
+.t-ui{font-family:var(--sans);font-weight:500;font-size:.9375rem;line-height:1}
+.legenda,figcaption{font-family:var(--serif);font-style:italic;font-weight:400;font-size:1.0625rem;line-height:1.3;color:var(--cor-texto)}
+.nota{font-size:.9375rem;line-height:1.55;color:var(--cor-suave);max-width:34ch}
+.pequeno{font-size:.875rem;line-height:1.5}
+.id-medico{font-family:var(--sans);font-weight:500;font-size:.75rem;line-height:1.4;letter-spacing:.12em;text-transform:uppercase;color:var(--cor-texto);text-wrap:balance}
+/* Marcação: <span>Dr. Pedro Sarzi · Médico</span><span class="id-medico__sep"> · </span><span>CRM-SP 183.332 · RQE 110447</span>.
+   No celular quebra entre o nome e os registros, sem ponto solto no fim da linha. */
+@media (max-width:599px){
+  .id-medico>.id-medico__sep{display:none}
+  .id-medico>span{display:block}
+}
+
+.prosa{max-width:68ch}
+.prosa>*+*{margin-top:1em}
+.prosa h3{margin-top:1.6em}
+.prosa a{color:var(--cor-destaque);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.3em}
+.prosa a:hover{text-decoration-thickness:2px}
+
+/* ---------- 4. Layout ---------- */
+.wrap{width:100%;max-width:calc(var(--largura) + var(--margem)*2);margin-inline:auto;padding-inline:var(--margem)}
+
+/* Capítulo de atlas: margem (cols 1–4) + corpo (cols 6–12); empilha no mobile. */
+.cap{position:relative;padding-block:var(--ritmo);background:var(--cor-fundo);color:var(--cor-texto)}
+.cap--compacto{padding-block:calc(var(--ritmo)*.6)}
+.cap__grade{display:grid;gap:32px}
+.cap__margem>*+*{margin-top:16px}
+.cap__titulo{font-family:var(--serif);font-weight:400;font-size:clamp(2rem,3.4vw,2.75rem);line-height:1.08}
+@media (min-width:900px){
+  .cap__grade{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--calha);row-gap:56px}
+  .cap__margem{grid-column:1 / 5}
+  .cap__corpo{grid-column:6 / 13}
+  .cap__inteiro{grid-column:1 / -1}
+  .cap__margem--fixa{position:sticky;top:calc(var(--hdr-h) + 40px);align-self:start}
+}
+.centro{text-align:center}
+.centro .nota,.centro .t-lead,.centro .prosa{margin-inline:auto}
+
+/* Capa (hero de cada página). A composição interna é de cada página. */
+.capa{position:relative;isolation:isolate;padding-block:40px 48px;background:var(--carvao)}
+.capa__grade{display:grid;gap:40px;align-items:center}
+.capa__texto>*+*{margin-top:24px}
+.capa__id{margin-top:48px;padding-top:20px;border-top:1px solid var(--cor-filete)}
+@media (min-width:900px){
+  .capa{padding-block:72px 64px}
+  .capa__grade{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--calha)}
+  .capa__texto{grid-column:1 / 7}
+  .capa__figura{grid-column:7 / 13}
+}
+
+.acoes{display:flex;flex-wrap:wrap;align-items:center;gap:12px 28px}
+@media (max-width:599px){
+  .acoes{flex-direction:column;align-items:stretch}
+  .acoes>.btn{width:100%}
+  .acoes>.link{align-self:flex-start}
+}
+
+/* ---------- 5. Botões e links ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:48px;padding:0 24px;border:1px solid transparent;border-radius:var(--raio);
+  font-family:var(--sans);font-weight:500;font-size:.9375rem;line-height:1.15;letter-spacing:0;text-transform:none;text-align:center;
+  background:var(--btn-fundo);color:var(--btn-texto);
+  transition:background-color var(--t-rapido) var(--ease),color var(--t-rapido) var(--ease),border-color var(--t-rapido) var(--ease);
+}
+.btn:hover{background:var(--btn-fundo-hover)}
+.btn:active{transform:translateY(1px)}
+/* .btn sozinho já é o primário; .btn--primario existe só como nome explícito. */
+.btn--fantasma,.btn--ghost{background:transparent;color:var(--cor-titulo);border-color:var(--cor-filete-forte)}
+.btn--fantasma:hover,.btn--ghost:hover{background:transparent;border-color:var(--cor-destaque);color:var(--cor-titulo)}
+.btn svg{width:18px;height:18px;flex:none}
+/* Sem seta no fim de botão ou link (docs/design.md). */
+.btn svg:has(use[href="#i-arrow"]),.ulink svg:has(use[href="#i-arrow"]),.link svg:has(use[href="#i-arrow"]){display:none}
+
+.link{
+  display:inline-flex;align-items:center;min-height:44px;gap:8px;
+  font-weight:500;font-size:.9375rem;color:var(--cor-titulo);
+  text-decoration:underline;text-decoration-color:var(--cor-destaque);text-decoration-thickness:1px;text-underline-offset:.3em;
+  transition:text-decoration-thickness var(--t-rapido);
+}
+.link:hover{text-decoration-thickness:2px}
+.link:active{text-decoration-thickness:2px;color:var(--cor-destaque)}
+
+/* ---------- 6. Pular para o conteúdo ---------- */
+.pular{position:absolute;left:var(--margem);top:-200px;z-index:var(--z-pular);padding:12px 16px;background:var(--champanhe);color:var(--carvao);font-weight:500;border-radius:var(--raio)}
+.pular:focus{top:8px}
+
+/* ---------- 7. Cabeçalho (um só sistema) ---------- */
+.cabecalho{
+  position:sticky;top:0;z-index:var(--z-cabecalho);
+  background:var(--carvao);color:var(--marfim);
+  border-bottom:1px solid transparent;
+  transition:transform 320ms var(--ease),border-color var(--t-rapido) var(--ease);
+}
+.cabecalho.stuck{border-bottom-color:var(--filete-escuro)}
+.cabecalho.hide{transform:translateY(-100%)}
+/* volta à tela quando algo dentro dele recebe foco pelo teclado */
+.cabecalho.hide:has(:focus-visible){transform:none}
+.cabecalho__in{display:flex;align-items:center;gap:28px;height:var(--hdr-h)}
+
+.assinatura{display:inline-flex;align-items:center;gap:12px;margin-right:auto;color:var(--marfim);min-height:44px}
+.assinatura__mono{height:34px;width:auto;flex:none;color:var(--champanhe)}
+.assinatura__txt{display:grid;gap:6px}
+.assinatura__nome{font-family:var(--serif);font-weight:500;font-size:1.1875rem;line-height:1;letter-spacing:.18em;text-transform:uppercase;color:var(--marfim);white-space:nowrap}
+.assinatura__desc{font-family:var(--sans);font-weight:500;font-size:.6875rem;line-height:1;letter-spacing:.2em;text-transform:uppercase;color:var(--texto-escuro);white-space:nowrap}
+@media (min-width:1100px){
+  .assinatura__mono{height:38px}
+  .assinatura__nome{font-size:1.3125rem}
+}
+
+.nav{display:none}
+.nav a{position:relative;display:inline-flex;align-items:center;min-height:44px;font-size:.9375rem;color:var(--texto-escuro);transition:color var(--t-rapido)}
+.nav a:hover,.nav a:active{color:var(--marfim)}
+.nav a.active,.nav a[aria-current="page"]{color:var(--marfim)}
+.nav a.active::after,.nav a[aria-current="page"]::after{content:"";position:absolute;left:0;right:0;bottom:8px;height:1px;background:var(--champanhe)}
+.cabecalho__cta{display:none}
+@media (min-width:600px){.cabecalho__cta{display:inline-flex;min-height:44px;padding-inline:20px}}
+@media (min-width:1000px){.nav{display:flex;gap:32px}.cabecalho__cta{min-height:48px;padding-inline:24px}}
+
+.burger{display:grid;place-items:center;width:44px;height:44px;margin-right:-10px;flex:none}
+.burger i{grid-area:1/1;display:block;width:22px;height:1px;background:var(--marfim);transition:transform 250ms var(--ease)}
+.burger i:first-child{transform:translateY(-4px)}
+.burger i:last-child{transform:translateY(4px)}
+body.menu-open .burger i:first-child{transform:rotate(45deg)}
+body.menu-open .burger i:last-child{transform:rotate(-45deg)}
+@media (min-width:1000px){.burger{display:none}}
+
+/* Gaveta do menu (mobile) */
+.gaveta{
+  position:fixed;inset:0;z-index:var(--z-gaveta);
+  display:flex;flex-direction:column;gap:32px;
+  padding:calc(var(--hdr-h) + 16px) var(--margem) 32px;
+  background:var(--carvao);color:var(--texto-escuro);
+  overflow-y:auto;overscroll-behavior:contain;
+  opacity:0;visibility:hidden;
+  transition:opacity 250ms var(--ease),visibility 0s linear 250ms;
+}
+body.menu-open .gaveta{opacity:1;visibility:visible;transition:opacity 250ms var(--ease)}
+/* assinatura institucional do manual (símbolo em cima, nome e descritor embaixo); o tracking
+   sobra à direita do texto, então a margem negativa devolve o eixo. Com o menu aberto, a
+   assinatura horizontal do cabeçalho sai, para a marca não aparecer duas vezes. */
+.gaveta__marca{display:flex;flex-direction:column;align-items:center;align-self:center;gap:0;padding:4px 12px 0;color:var(--marfim);text-align:center}
+.gaveta__mono{height:76px;width:auto;margin-bottom:18px;color:var(--champanhe)}
+.gaveta__nome{margin-right:-.18em;font-family:var(--serif);font-weight:500;font-size:2rem;line-height:1;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap}
+.gaveta__desc{margin-top:10px;margin-right:-.26em;font-family:var(--sans);font-weight:500;font-size:.75rem;line-height:1;letter-spacing:.26em;text-transform:uppercase;color:var(--texto-escuro);white-space:nowrap}
+.gaveta__marca:focus-visible{outline:2px solid var(--champanhe);outline-offset:6px}
+.cabecalho .assinatura{transition:opacity 200ms var(--ease)}
+body.menu-open .cabecalho .assinatura{opacity:0;pointer-events:none}
+@media (max-width:359px){.gaveta__nome{font-size:1.75rem}.gaveta__mono{height:64px}}
+.gaveta__nav{border-top:1px solid var(--filete-escuro)}
+.gaveta__nav a{display:block;padding-block:16px;border-bottom:1px solid var(--filete-escuro);font-family:var(--serif);font-size:2.125rem;line-height:1.1;color:var(--marfim)}
+.gaveta__nav a.active,.gaveta__nav a[aria-current="page"]{color:var(--champanhe)}
+.gaveta .btn{align-self:stretch}
+.gaveta__contato{margin-top:auto;display:grid;gap:6px;font-size:.9375rem}
+.gaveta__contato a{color:var(--marfim)}
+.gaveta__contato .id-medico{margin-top:16px}
+@media (min-width:600px){.gaveta .btn{align-self:flex-start}}
+@media (min-width:1000px){.gaveta{display:none}}
+
+/* ---------- 8. Rodapé (um só sistema) ---------- */
+.rodape{position:relative;isolation:isolate;overflow:clip;background:var(--carvao);color:var(--texto-escuro);border-top:1px solid var(--filete-escuro);padding-block:72px 84px}
+.rodape__mono{position:absolute;z-index:-1;right:-14%;bottom:-22%;height:118%;width:auto;color:var(--ouro);opacity:.07;pointer-events:none}
+.rodape__grade{display:grid;gap:44px}
+.rodape .assinatura__mono{height:52px}
+.rodape .assinatura__nome{font-size:1.5rem}
+.rodape__frase{margin-top:24px;max-width:30ch;font-size:.9375rem;color:var(--texto-escuro)}
+.rodape__titulo{font-family:var(--serif);font-weight:400;font-size:1.375rem;line-height:1.2;color:var(--marfim);margin-bottom:14px}
+.rodape__lista{display:grid;gap:0;font-size:.9375rem}
+.rodape__lista a,.rodape address a{display:inline-flex;align-items:center;min-height:44px;color:var(--texto-escuro);text-decoration:underline;text-decoration-color:transparent;text-underline-offset:.3em;transition:color var(--t-rapido),text-decoration-color var(--t-rapido)}
+.rodape__lista a:hover,.rodape address a:hover{color:var(--marfim);text-decoration-color:var(--champanhe)}
+.rodape__lista a[aria-current="page"]{color:var(--marfim)}
+.rodape__lista a{min-width:44px}
+.rodape address{display:grid;font-size:.9375rem;line-height:1.55}
+.rodape address>p{padding-block:10px}
+.rodape__base{display:grid;gap:10px;margin-top:64px;padding-top:22px;border-top:1px solid var(--filete-escuro);font-size:.8125rem;color:#8F8B82}
+.rodape__base .id-medico{color:var(--texto-escuro)}
+@media (min-width:900px){
+  .rodape{padding-block:96px 72px}
+  .rodape__grade{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--calha)}
+  .rodape__marca{grid-column:1 / 6}
+  .rodape__paginas{grid-column:7 / 9}
+  .rodape__atendimento{grid-column:9 / 13}
+  .rodape__base{grid-template-columns:auto 1fr auto;align-items:baseline;column-gap:40px}
+  .rodape__base p:nth-child(2){justify-self:center}
+  .rodape__mono{right:-4%;bottom:-30%;height:150%}
+}
+
+/* ---------- 9. Grão (textura fixa por cima de tudo) ---------- */
+body::after{
+  content:"";position:fixed;inset:0;z-index:var(--z-grao);pointer-events:none;opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size:200px 200px;
+}
+
+/* ---------- 10. Textura de digital ---------- */
+/* Grande, cortada pela borda, no máximo uma por tela. Ajuste com
+   --digital-tam, --digital-x (distância da borda direita) e --digital-y. */
+.tex-digital{position:relative;isolation:isolate;overflow:clip}
+.tex-digital::before{
+  content:"";position:absolute;z-index:-1;pointer-events:none;
+  width:var(--digital-tam,min(120vw,1100px));aspect-ratio:1;
+  right:var(--digital-x,-30%);top:var(--digital-y,-20%);
+  background-color:var(--digital-cor,var(--champanhe));opacity:var(--digital-opac,.065);
+  -webkit-mask:url("brand/digital.svg") center/contain no-repeat;mask:url("brand/digital.svg") center/contain no-repeat;
+}
+.tex-digital--esquerda::before{right:auto;left:var(--digital-x,-30%)}
+.cap--marfim.tex-digital,.cap--linho.tex-digital,.sup-clara.tex-digital{--digital-cor:var(--ouro-profundo);--digital-opac:.075}
+
+/* ---------- 11. Fotografia (duotone de sessão única) ---------- */
+.foto{position:relative;display:block;overflow:hidden;background:var(--grafite)}
+.foto>img{width:100%;height:100%;object-fit:cover}
+.foto-duotone{position:relative;display:block;overflow:hidden;isolation:isolate;background:var(--carvao)}
+.foto-duotone>img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.12) brightness(.96)}
+.foto-duotone::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:var(--marfim);mix-blend-mode:multiply}
+.foto-duotone::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:var(--champanhe);mix-blend-mode:color;opacity:.14}
+.foto-duotone--recorte{background:transparent}
+.foto-duotone--recorte::before,.foto-duotone--recorte::after{display:none}
+
+/* ---------- 12. Divisores, listas, ficha ---------- */
+.sutura{display:block;width:96px;height:1px;margin-block:40px;border:0;background:repeating-linear-gradient(90deg,rgba(172,149,89,.5) 0 6px,transparent 6px 12px)}
+.sutura--larga{width:100%}
+.filete{display:block;height:1px;border:0;background:var(--cor-filete)}
+
+.lista-filete{border-top:1px solid var(--cor-filete)}
+.lista-filete>li{padding-block:22px;border-bottom:1px solid var(--cor-filete)}
+.lista-filete h3{font-size:1.5rem;line-height:1.2}
+.lista-filete h3+p{margin-top:6px;max-width:62ch}
+
+.ficha{display:grid;border-top:1px solid var(--cor-filete)}
+.ficha>div{display:grid;gap:4px;padding-block:16px;border-bottom:1px solid var(--cor-filete)}
+.ficha dt{font-size:.875rem;color:var(--cor-suave)}
+.ficha dd{color:var(--cor-titulo)}
+/* links da ficha: área de toque de 44 px sem mudar a altura da linha */
+.ficha dd a{display:inline-block;padding-block:10px;margin-block:-10px}
+@media (min-width:600px){.ficha>div{grid-template-columns:minmax(10rem,1fr) 2fr;gap:24px}}
+
+/* ---------- 13. Acordeão (details nativo, altura animada pelo site.js) ---------- */
+.acordeao{border-top:1px solid var(--cor-filete)}
+.acordeao__item{border-bottom:1px solid var(--cor-filete);overflow:hidden}
+.acordeao__item>summary{
+  display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:64px;padding-block:18px;
+  list-style:none;cursor:pointer;font-family:var(--serif);font-size:1.5rem;line-height:1.2;color:var(--cor-titulo);
+}
+.acordeao__item>summary::-webkit-details-marker{display:none}
+.acordeao__item>summary::after{
+  content:"";flex:none;width:14px;height:14px;color:var(--cor-destaque);
+  background:linear-gradient(currentColor,currentColor) center/100% 1px no-repeat,linear-gradient(currentColor,currentColor) center/1px 100% no-repeat;
+  transition:transform 250ms var(--ease);
+}
+.acordeao__item[open]>summary::after{transform:rotate(45deg)}
+.acordeao__item>summary:hover{text-decoration:underline;text-decoration-color:var(--cor-filete-forte);text-decoration-thickness:1px;text-underline-offset:.22em}
+.acordeao__item>summary:hover::after{color:var(--cor-titulo)}
+.acordeao__corpo{padding-bottom:24px;max-width:68ch}
+.acordeao__corpo>*+*{margin-top:.8em}
+
+/* ---------- 14. Formulários e quiz ---------- */
+.campo{display:grid;gap:8px}
+.campo label{font-size:.9375rem;color:var(--cor-titulo)}
+.campo input,.campo select,.campo textarea{min-height:48px;padding:12px 14px;border:1px solid var(--cor-filete-forte);border-radius:var(--raio);background:transparent;color:var(--cor-titulo)}
+.campo input:focus-visible,.campo select:focus-visible,.campo textarea:focus-visible{outline:2px solid var(--cor-foco);outline-offset:1px}
+
+.opcoes{display:grid;border-top:1px solid var(--cor-filete)}
+.opcao{
+  position:relative;display:block;width:100%;min-height:56px;padding:16px 8px 16px 44px;
+  border-bottom:1px solid var(--cor-filete);text-align:left;color:var(--cor-titulo);
+  transition:background-color var(--t-rapido);
+}
+.opcao::before{content:"";position:absolute;left:12px;top:19px;width:18px;height:18px;border:1px solid var(--cor-destaque);border-radius:50%}
+.opcao:hover{background:color-mix(in srgb,var(--cor-destaque) 8%,transparent)}
+.opcao:active{background:color-mix(in srgb,var(--cor-destaque) 16%,transparent)}
+.opcao[aria-pressed="true"],.opcao.sel{background:color-mix(in srgb,var(--cor-destaque) 12%,transparent)}
+.opcao[aria-pressed="true"]::before,.opcao.sel::before{background:radial-gradient(circle,var(--cor-destaque) 0 4px,transparent 4.5px)}
+.opcao small{display:block;margin-top:2px;font-size:.875rem;color:var(--cor-suave)}
+.opcao:disabled{cursor:default}
+
+/* ---------- 15. Placa de atlas e gravura ---------- */
+.placa{position:relative;border:1px solid var(--cor-filete);padding:20px}
+.placa>figcaption,.placa .legenda{margin-top:14px}
+.gravura{color:var(--cor-deco)}
+.gravura :is(path,line,circle,ellipse,polyline){vector-effect:non-scaling-stroke}
+
+/* ---------- 16. Goniômetro ---------- */
+/* <div class="gonio" data-gonio data-gonio-valor="90" data-gonio-varrer></div>
+   O SVG é montado pelo site.js (PS.gonio). */
+.gonio{display:block;width:100%;max-width:320px;color:var(--cor-deco)}
+.gonio svg{display:block;width:100%;height:auto;overflow:visible}
+.gonio__arco,.gonio__base,.gonio__marca{fill:none;stroke:currentColor;stroke-width:1;vector-effect:non-scaling-stroke}
+.gonio__base{opacity:.55}
+.gonio__marca{opacity:.7}
+.gonio__marca--15{opacity:.9}
+.gonio__marca--45{opacity:1}
+.gonio__num{font-family:var(--serif);font-style:italic;font-size:13px;fill:var(--cor-texto)}
+.gonio__agulha{stroke:var(--cor-destaque);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linecap:round}
+.gonio__eixo{fill:var(--cor-fundo,var(--carvao));stroke:var(--cor-destaque);stroke-width:1;vector-effect:non-scaling-stroke}
+.gonio__centro{fill:var(--cor-destaque)}
+
+/* Controle fixo: indicador de rolagem e botão "Pausar animações". */
+.gonio-ctrl{
+  position:fixed;left:max(12px,env(safe-area-inset-left));bottom:max(12px,env(safe-area-inset-bottom));z-index:var(--z-controle);
+  display:grid;place-items:center;width:56px;height:44px;
+  background:rgba(8,8,10,.9);border:1px solid var(--filete-escuro);border-radius:var(--raio);
+  color:var(--ouro);transition:border-color var(--t-rapido);
+  --cor-destaque:var(--champanhe);--cor-fundo:var(--carvao);
+}
+.gonio-ctrl svg{width:42px;height:auto;overflow:visible}
+.gonio-ctrl:hover,.gonio-ctrl:focus-visible{border-color:rgba(216,192,138,.5)}
+.gonio__pausa{display:none;stroke:var(--champanhe);stroke-width:1.5;vector-effect:non-scaling-stroke}
+.gonio-ctrl[aria-pressed="true"]{border-color:var(--champanhe);background:#16150F}
+.gonio-ctrl[aria-pressed="true"] .gonio__pausa{display:inline}
+.gonio-ctrl[aria-pressed="true"] .gonio__agulha-g{opacity:.3}
+.gonio-ctrl__rotulo{
+  position:absolute;left:calc(100% + 8px);top:50%;padding:8px 12px;white-space:nowrap;pointer-events:none;
+  background:var(--carvao);border:1px solid var(--filete-escuro);border-radius:var(--raio);
+  font-size:.8125rem;line-height:1.2;color:var(--marfim);
+  opacity:0;transform:translate(-4px,-50%);transition:opacity var(--t-rapido),transform var(--t-rapido) var(--ease);
+}
+.gonio-ctrl:hover .gonio-ctrl__rotulo,.gonio-ctrl:focus-visible .gonio-ctrl__rotulo{opacity:1;transform:translate(0,-50%)}
+body.menu-open .gonio-ctrl{visibility:hidden}
+/* Abaixo de 1400 px o site.js põe o controle no cabeçalho, antes do botão de
+   agendar: some e volta com o cabeçalho e nunca cobre texto. */
+.cabecalho .gonio-ctrl{position:relative;left:auto;bottom:auto;flex:none;width:52px;margin-right:-12px;background:transparent;border-color:transparent}
+.cabecalho .gonio-ctrl:hover{border-color:var(--filete-escuro)}
+.cabecalho .gonio-ctrl[aria-pressed="true"]{background:#16150F;border-color:var(--champanhe)}
+.cabecalho .gonio-ctrl__rotulo{left:auto;right:0;top:calc(100% + 8px);transform:translateY(-4px)}
+.cabecalho .gonio-ctrl:hover .gonio-ctrl__rotulo,.cabecalho .gonio-ctrl:focus-visible .gonio-ctrl__rotulo{transform:none}
+@media (max-width:399px){.cabecalho .gonio-ctrl{width:44px}.cabecalho .gonio-ctrl svg{width:36px}}
+
+/* Agendar no celular: barra discreta no pé da tela, só abaixo de 600 px
+   (acima disso o botão do cabeçalho já está sempre à mão). O site.js mostra
+   depois de 700 px e esconde sobre o rodapé e enquanto outro botão
+   "Agendar avaliação" da página estiver visível. */
+.fab{
+  position:fixed;left:0;right:0;bottom:0;z-index:var(--z-controle);
+  display:flex;align-items:center;justify-content:center;width:100%;min-height:48px;
+  padding:0 16px env(safe-area-inset-bottom);border-top:1px solid var(--filete-escuro);
+  background:var(--carvao);color:var(--champanhe);font-weight:500;font-size:.9375rem;
+  transform:translateY(100%);visibility:hidden;
+  transition:transform 320ms var(--ease),visibility 0s linear 320ms,background-color var(--t-rapido);
+}
+.fab.show{transform:none;visibility:visible;transition:transform 320ms var(--ease),background-color var(--t-rapido)}
+.fab:hover,.fab:active{background:var(--grafite)}
+.fab:focus-visible{outline-offset:-4px}
+body.menu-open .fab{visibility:hidden}
+@media (min-width:600px){.fab{display:none}}
+
+/* ---------- 17. Movimento ---------- */
+/* Um único momento orquestrado: a abertura da capa. Conteúdo nasce visível;
+   a animação só acontece por cima (sem depender de classe adicionada por JS). */
+@keyframes abre{from{opacity:0;transform:translateY(14px)}}
+.abre{animation:abre 650ms var(--ease) both;animation-delay:var(--atraso,0ms)}
+@keyframes sobe{from{transform:translateY(105%)}}
+.rise{display:block;overflow:hidden;padding-block:.14em .06em;margin-block:-.14em -.06em}
+.rise>span{display:block;animation:sobe 900ms var(--ease) both}
+.rise:nth-child(2)>span{animation-delay:120ms}
+.rise:nth-child(3)>span{animation-delay:240ms}
+
+.motion-paused *,.motion-paused *::before,.motion-paused *::after,
+.lab-offscreen *,.lab-offscreen *::before,.lab-offscreen *::after{animation-play-state:paused!important}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition-duration:0s!important;transition-delay:0s!important}
+}
+
+/* ---------- 18. Utilitários ---------- */
+.sr-only,.sr{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* ---------- 19. Impressão ---------- */
+@media print{
+  body::after,.cabecalho,.gaveta,.gonio-ctrl,.fab,.pular,.rodape__mono,.tex-digital::before{display:none!important}
+  body,.cap,.capa,.rodape{background:#fff!important;color:#222!important}
+  h1,h2,h3,h4,.t-lead,.id-medico{color:#000!important}
+  .cap,.capa{padding-block:24px}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:.8em}
+  .foto-duotone::before,.foto-duotone::after{display:none}
+}
+
+/* ---------- 13. Celular: simetria (revisado em 320, 360, 390 e 430 px) ----------
+   Regra: título, frase curta e chamada ao centro; leitura (parágrafo longo,
+   lista, ficha) à esquerda, em blocos com margens iguais. Vale para todas as
+   páginas; a composição de cada uma fica em pages/<página>.css. */
+@media (max-width:599px){
+  /* capa: texto, chamadas e identificação ao centro */
+  .capa__texto{text-align:center}
+  .capa__texto .t-lead,.capa__texto .nota{margin-inline:auto}
+  .capa__id{text-align:center}
+  /* link abaixo de um botão de largura total fica no eixo dele */
+  .acoes>.link{align-self:center}
+}
+@media (max-width:899px){
+  /* cabeça de capítulo (margem do atlas): título e nota ao centro, nota no tamanho da linha fina */
+  .cap__margem>.cap__titulo{text-align:center}
+  .cap__margem>.nota{max-width:32ch;margin-inline:auto;text-align:center;font-weight:300;font-size:1.1875rem;line-height:1.55;color:var(--cor-titulo)}
+
+  /* rodapé ao centro: assinatura, páginas em linha, atendimento, identificação */
+  .rodape{text-align:center;padding-block:64px 88px}
+  .rodape__grade{justify-items:center;gap:40px}
+  .rodape .assinatura{margin-right:0}
+  .rodape__frase{margin-inline:auto}
+  .rodape__lista{display:flex;flex-wrap:wrap;justify-content:center;column-gap:28px}
+  .rodape address{justify-items:center}
+  .rodape__base{justify-items:center;text-align:center;margin-top:48px}
+  .rodape__mono{left:50%;right:auto;bottom:-8%;height:82%;transform:translateX(-50%)}
+}
+@media (max-width:599px){
+  /* menu aberto ao centro: páginas, agendar e contato no mesmo eixo */
+  .gaveta__nav a{text-align:center}
+  .gaveta__contato{justify-items:center;text-align:center}
+  .gaveta__contato a{display:inline-flex;align-items:center;min-height:44px}
+  .gaveta__contato .id-medico{margin-top:10px}
+}
+
+/* ==========================================================================
+   14. COMPONENTES COMPARTILHADOS (home, /dr/ e /prp/)
+   Saíram de pages/home.css quando /dr/ e /prp/ passaram a usar os mesmos.
+   Regra do celular: título, frase, leitura e chamada ao centro (pedido de
+   07/10/2026); a tabela da semana segue em duas colunas.
+   ========================================================================== */
+
+/* ---------- 14a. Cabeça de seção: título grande e uma frase de apoio ---------- */
+.secao__cabeca{max-width:760px;margin-bottom:clamp(40px,5vw,64px)}
+.secao__cabeca .t-lead{margin-top:16px;max-width:46ch}
+@media (max-width:899px){
+  .secao__cabeca{margin-inline:auto;margin-bottom:36px;text-align:center}
+  .secao__cabeca .t-lead{max-width:30ch;margin-inline:auto}
+}
+
+/* ==========================================================================
+   14b. FICHAS QUE VIRAM (home: sinais; /prp/: o que o PRP não é)
+   Frente: glifo em traço de gravura, nome e uma linha. Verso (carvão): o que
+   costuma acontecer e as condições ligadas, que abrem o atlas. No celular as
+   fichas deslizam na horizontal, com pontos (.pontos) logo abaixo da lista.
+   Comportamento em site.js (seção 10).
+   ========================================================================== */
+.sinais{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+@media (max-width:1099px){.sinais{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:699px){
+  /* ficha com 80% da tela, ao centro; as vizinhas aparecem nas laterais (10% cada) */
+  .sinais{grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:80vw;gap:12px;overflow-x:auto;overscroll-behavior-x:contain;
+    scroll-snap-type:x mandatory;margin-inline:calc(var(--margem) * -1);padding:6px 10vw 12px;scrollbar-width:none}
+  .sinais::-webkit-scrollbar{display:none}
+  .sinal{min-height:0;aspect-ratio:5 / 6;scroll-snap-align:center;scroll-snap-stop:always}
+}
+.sinal{position:relative;aspect-ratio:5 / 6;min-height:320px;perspective:1600px}
+.sinal__giro{position:absolute;inset:0;transform-style:preserve-3d;transition:transform 720ms cubic-bezier(.2,.75,.15,1)}
+.sinal.virado .sinal__giro{transform:rotateY(180deg)}
+.sinal__face{position:absolute;inset:0;display:flex;flex-direction:column;padding:28px 26px 24px;border-radius:3px;
+  -webkit-backface-visibility:hidden;backface-visibility:hidden}
+
+.sinal__frente{background:var(--marfim);color:var(--tinta);border:1px solid rgba(126,106,56,.26);
+  box-shadow:0 1px 0 rgba(126,106,56,.12),0 22px 40px -30px rgba(8,8,10,.5);transition:border-color 250ms,box-shadow 250ms}
+.sinal__frente::before{content:"";position:absolute;inset:8px;border:1px solid rgba(126,106,56,.16);border-radius:1px;pointer-events:none}
+.sinal__glifo{position:relative;z-index:1;width:64px;height:64px;margin-bottom:auto;padding:11px;border:1px solid rgba(126,106,56,.3);border-radius:50%;color:var(--ouro-profundo);
+  background:radial-gradient(circle at 50% 40%,rgba(255,255,255,.7),rgba(236,229,214,.5));transition:border-color 250ms,transform 400ms var(--ease)}
+@media (hover:hover){.sinal:hover .sinal__glifo{border-color:rgba(126,106,56,.6);transform:rotate(-6deg)}}
+/* mini mão: onde o sinal costuma aparecer (contorno #handGeo + zona do sinal) */
+.sinal__mapa{position:absolute;right:20px;top:56px;width:auto;height:54%;overflow:visible;pointer-events:none;
+  -webkit-mask:linear-gradient(180deg,#000 72%,transparent 96%);mask:linear-gradient(180deg,#000 72%,transparent 96%)}
+.sinal__mao{fill:rgba(126,106,56,.045);stroke:rgba(126,106,56,.42);stroke-width:2.2;stroke-linejoin:round}
+.sinal__mapa .z{fill:url(#sHach);stroke:var(--ouro-profundo);stroke-width:2;stroke-dasharray:4 4}
+.sinal__mapa .n{fill:none;stroke:var(--ouro-profundo);stroke-width:3.2;stroke-linecap:round;stroke-dasharray:.5 9}
+.sinal__mapa .d circle{fill:var(--ouro-profundo)}
+.sinal__mapa .f{fill:var(--ouro-profundo)}
+.sinal__mapa .s{fill:none;stroke:var(--ouro-profundo);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+@media (hover:hover){.sinal:hover .sinal__mapa .z,.sinal:hover .sinal__mapa .d{animation:zona 1.6s var(--ease) infinite alternate}}
+@keyframes zona{to{opacity:.45}}
+.sinal__titulo{position:relative;z-index:1;font-size:clamp(1.625rem,2.1vw,2rem);line-height:1.06;color:var(--tinta)}
+.sinal__sub{margin-top:8px;max-width:22ch;font-size:.9375rem;line-height:1.45;color:var(--texto-claro)}
+.sinal__virar{position:absolute;inset:0;z-index:2;border-radius:3px;cursor:pointer}
+.sinal__virar:focus-visible{outline:2px solid var(--ouro-profundo);outline-offset:-5px}
+.sinal__mais{position:absolute;top:18px;right:18px;width:34px;height:34px;border:1px solid rgba(126,106,56,.4);border-radius:50%;pointer-events:none;
+  transition:transform 320ms var(--ease),background-color 250ms,border-color 250ms}
+.sinal__mais::before,.sinal__mais::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:1px;background:var(--ouro-profundo);transform:translate(-50%,-50%)}
+.sinal__mais::after{transform:translate(-50%,-50%) rotate(90deg)}
+@media (hover:hover){
+  .sinal:hover .sinal__frente{border-color:rgba(126,106,56,.55);box-shadow:0 1px 0 rgba(126,106,56,.12),0 28px 48px -30px rgba(8,8,10,.55)}
+  .sinal:hover .sinal__mais{transform:rotate(90deg);background:rgba(126,106,56,.08);border-color:var(--ouro-profundo)}
+}
+
+.sinal__verso{transform:rotateY(180deg);color:var(--texto-escuro);border:1px solid rgba(216,192,138,.32);
+  background:radial-gradient(90% 70% at 100% 0%,rgba(216,192,138,.13),transparent 60%),var(--carvao);
+  --cor-titulo:var(--marfim);--cor-texto:var(--texto-escuro);--cor-destaque:var(--champanhe);--cor-foco:var(--champanhe)}
+.sinal__nome{padding-right:44px;font-family:var(--serif);font-style:italic;font-size:1.25rem;line-height:1.2;color:var(--champanhe)}
+.sinal__texto{margin-top:12px;font-weight:300;font-size:1.0625rem;line-height:1.5;color:var(--marfim)}
+.sinal__alerta{margin-top:12px;padding-left:12px;border-left:1px solid var(--champanhe);font-size:.8125rem;line-height:1.45;color:var(--texto-escuro)}
+.sinal__liga{margin-top:auto;padding-top:14px;font-size:.8125rem;color:#9A968C}
+.sinal__links{display:flex;flex-wrap:wrap;column-gap:20px}
+.sinal__links .link{min-height:44px;color:var(--marfim);text-decoration-color:var(--champanhe)}
+.sinal__voltar{position:absolute;top:10px;right:10px;width:44px;height:44px;border-radius:50%}
+.sinal__voltar::before,.sinal__voltar::after{content:"";position:absolute;left:50%;top:50%;width:14px;height:1px;background:var(--champanhe);transform:translate(-50%,-50%) rotate(45deg)}
+.sinal__voltar::after{transform:translate(-50%,-50%) rotate(-45deg)}
+.sinal__voltar:hover{background:rgba(216,192,138,.1)}
+
+/* pontos do carrossel (só no celular; criados pelo site.js) */
+.pontos{display:none}
+@media (max-width:699px){
+  .pontos{display:flex;justify-content:center;gap:0;margin-top:10px}
+  .pontos button{display:grid;place-items:center;width:30px;height:44px}
+  .pontos button::before{content:"";width:7px;height:7px;border-radius:50%;background:color-mix(in srgb,var(--cor-destaque) 32%,transparent);transition:background-color 250ms,transform 250ms var(--ease)}
+  .pontos button.on::before{background:var(--cor-destaque);transform:scale(1.3)}
+  /* mini mão no eixo do card */
+  .sinal__mapa{left:50%;right:auto;transform:translateX(-50%)}
+}
+@media (max-width:359px){.sinal__face{padding:24px 20px 20px}}
+@media (prefers-reduced-motion:reduce){
+  .sinal__giro{transition:none;transform:none!important}
+  .sinal__verso{transform:none;opacity:0;transition:opacity 180ms}
+  .sinal__frente{transition:opacity 180ms}
+  .sinal.virado .sinal__frente{opacity:0}
+  .sinal.virado .sinal__verso{opacity:1}
+}
+@media print{.sinal__verso{position:relative;transform:none}}
+
+/* ==========================================================================
+   14c. ONDE ATENDE em molduras (fim de /, /dr/ e /prp/)
+   Foto num quadro de galeria (filete solto e marcas de canto); endereço, horário e agendamento em
+   fichas com filete duplo; o mapa só carrega quando a pessoa pede.
+   ========================================================================== */
+.onde__grade{display:grid;gap:20px}
+@media (min-width:900px){
+  .onde__grade{grid-template-columns:repeat(12,minmax(0,1fr));gap:24px}
+  /* agenda da semana e locais lado a lado (alturas parecidas); foto, mapa e agendamento embaixo, em três */
+  .onde__horario{grid-column:1 / 8;grid-row:1}
+  .onde__locais{grid-column:8 / 13;grid-row:1}
+  .onde__foto{grid-column:1 / 5;grid-row:2}
+  .onde__mapa{grid-column:5 / 9;grid-row:2}
+  .onde__agenda{grid-column:9 / 13;grid-row:2}
+}
+.moldura{position:relative;padding:clamp(26px,3vw,38px);background:url("brand/papel.svg") 0 0/640px 640px,var(--marfim);
+  border:1px solid rgba(126,106,56,.32);box-shadow:0 24px 46px -34px rgba(8,8,10,.5)}
+.moldura::before{content:"";position:absolute;inset:7px;border:1px solid rgba(126,106,56,.17);pointer-events:none}
+.onde__card h3{font-size:1.75rem;line-height:1.1}
+.onde__card address{margin-top:14px;font-style:normal;font-size:1.0625rem;line-height:1.6;color:var(--tinta)}
+.onde__acoes{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;margin-top:24px}
+
+/* Agenda da semana: cada dia com um ou dois turnos (hora + local). Tabela, então
+   fica em duas colunas também no celular. O site.js marca o dia de hoje, escreve a
+   frase "Hoje" e apaga os turnos dos outros locais quando um local é escolhido. */
+.semana__agora{margin-top:14px;padding:14px 16px;border:1px solid rgba(126,106,56,.26);background:rgba(236,229,214,.55);
+  font-family:var(--serif);font-size:1.25rem;line-height:1.3;color:var(--tinta);text-wrap:balance}
+.semana__agora b{font-weight:500}
+.semana{display:grid;margin-top:16px}
+.semana>li{display:grid;grid-template-columns:7.5em minmax(0,1fr);gap:4px 16px;align-items:baseline;padding:12px 10px;
+  border-bottom:1px solid rgba(126,106,56,.16);transition:opacity 250ms var(--ease),background-color 250ms}
+.semana>li:last-child{border-bottom:0}
+.semana__dia{font-size:.9375rem;color:var(--tinta)}
+.semana>li.hoje{background:rgba(216,192,138,.16);box-shadow:inset 2px 0 0 var(--ouro-profundo)}
+.semana>li.hoje .semana__dia{font-weight:500}
+.semana__hoje{display:block;font-family:var(--serif);font-style:italic;font-weight:400;font-size:1.0625rem;line-height:1.1;color:var(--ouro-profundo)}
+.semana__turnos{display:grid;gap:6px}
+.semana__turnos li{display:grid;grid-template-columns:7.2em minmax(0,1fr);gap:12px;align-items:baseline;font-size:.9375rem;line-height:1.4;transition:opacity 250ms var(--ease)}
+.turno__hora{color:var(--tinta);font-variant-numeric:lining-nums tabular-nums}
+.turno__local{color:var(--texto-claro)}
+.turno--sem .turno__hora,.turno--sem .turno__local{font-style:italic;color:#6d6c70}
+.turno--sem .turno__hora:empty{display:none}
+.turno--sem .turno__hora:empty+.turno__local{grid-column:1 / -1}
+.semana .fora{opacity:.28}
+.semana>li.fora .fora{opacity:1}
+.semana__nota{margin-top:14px;font-size:.8125rem;line-height:1.45;color:var(--texto-claro)}
+
+/* Locais: o nome é um botão que filtra a agenda e troca o local do mapa. */
+.locais{display:grid;margin-top:8px}
+.local{padding:16px 0;border-bottom:1px solid rgba(126,106,56,.16)}
+.local:last-child{border-bottom:0;padding-bottom:4px}
+.local__filtro{display:flex;align-items:center;gap:12px;width:100%;min-height:44px;padding:0;border:0;background:none;text-align:left;cursor:pointer;color:var(--tinta)}
+.local__filtro::before{content:"";flex:none;width:12px;height:12px;border:1px solid var(--ouro-profundo);border-radius:50%;transition:background-color 200ms,box-shadow 200ms}
+.local__filtro[aria-pressed="true"]::before{background:var(--ouro-profundo);box-shadow:0 0 0 4px rgba(126,106,56,.14)}
+.local__nome{font-family:var(--serif);font-size:1.4375rem;line-height:1.15}
+.local__tipo{margin-left:auto;font-size:.8125rem;color:var(--texto-claro)}
+.local__filtro:hover .local__nome{text-decoration:underline;text-decoration-color:rgba(126,106,56,.5);text-underline-offset:.2em}
+.local__filtro:focus-visible{outline:2px solid var(--ouro-profundo);outline-offset:4px}
+.local__end,.local__dias{margin-top:2px;padding-left:24px;font-size:.9375rem;line-height:1.45;color:var(--texto-claro)}
+.local__dias{color:var(--tinta)}
+.local__links{display:flex;flex-wrap:wrap;gap:0 18px;padding-left:24px}
+.local__links .link{display:inline-flex;align-items:center;min-height:44px;font-size:.9375rem}
+.locais__dica{margin-top:12px;font-size:.8125rem;line-height:1.45;color:var(--texto-claro)}
+@media (prefers-reduced-motion:reduce){.semana>li,.semana__turnos li,.local__filtro::before{transition:none}}
+
+/* Quadro de galeria: a foto limpa, um filete fino solto a 12 px e marcas de
+   canto discretas, como numa prancha de atlas; sombra macia sob a foto.
+   .quadro--arco: retratos com o topo em arco (o mesmo da foto do médico na home). */
+.quadro{margin:0;display:flex;flex-direction:column;--q-linha:rgba(126,106,56,.48);--q-folga:12px;--q-marca:6px;--q-t:1px}
+.cap--carvao .quadro{--q-linha:rgba(216,192,138,.4)}
+.quadro__passe{position:relative;flex:1;display:flex;margin:var(--q-folga)}
+.quadro__passe::before{content:"";position:absolute;inset:calc(var(--q-folga) * -1);border:1px solid var(--q-linha);pointer-events:none}
+.quadro__passe::after{content:"";position:absolute;inset:calc(var(--q-folga) * -1 - var(--q-marca));pointer-events:none;
+  background:
+    linear-gradient(var(--q-linha),var(--q-linha)) 0 0/18px var(--q-t),linear-gradient(var(--q-linha),var(--q-linha)) 0 0/var(--q-t) 18px,
+    linear-gradient(var(--q-linha),var(--q-linha)) 100% 0/18px var(--q-t),linear-gradient(var(--q-linha),var(--q-linha)) 100% 0/var(--q-t) 18px,
+    linear-gradient(var(--q-linha),var(--q-linha)) 0 100%/18px var(--q-t),linear-gradient(var(--q-linha),var(--q-linha)) 0 100%/var(--q-t) 18px,
+    linear-gradient(var(--q-linha),var(--q-linha)) 100% 100%/18px var(--q-t),linear-gradient(var(--q-linha),var(--q-linha)) 100% 100%/var(--q-t) 18px;
+  background-repeat:no-repeat}
+.quadro__passe img{display:block;width:100%;min-height:280px;object-fit:cover;object-position:40% 35%;
+  box-shadow:0 34px 60px -36px rgba(8,8,10,.6);filter:sepia(.2) saturate(.86) contrast(1.03)}
+.quadro figcaption{margin-top:calc(var(--q-folga) + 16px);text-align:center;font-family:var(--serif);font-style:italic;font-size:1.125rem;line-height:1.3;color:var(--texto-claro)}
+.cap--carvao .quadro figcaption{color:var(--texto-escuro)}
+.quadro--arco .quadro__passe::before{border-radius:999px 999px 0 0}
+.quadro--arco .quadro__passe::after{display:none}
+.quadro--arco .quadro__passe img,.quadro--arco .quadro__passe svg{border-radius:999px 999px 0 0;clip-path:inset(0 round 999px 999px 0 0)}
+/* Celular: as marcas de canto assentam sobre o filete (2 px), sem passar da coluna dos cards. */
+@media (max-width:599px){.quadro{--q-marca:0px;--q-t:2px}}
+
+.onde__mapa{margin:0;padding:0;min-height:320px;overflow:hidden;display:flex}
+.mapa__capa{flex:1;display:grid;justify-items:center;align-content:center;gap:12px;padding:36px 28px;text-align:center;
+  background:
+    radial-gradient(60% 70% at 50% 45%,rgba(244,241,234,0),rgba(236,229,214,.9)),
+    repeating-linear-gradient(0deg,rgba(126,106,56,.08) 0 1px,transparent 1px 28px),
+    repeating-linear-gradient(90deg,rgba(126,106,56,.08) 0 1px,transparent 1px 28px),
+    var(--marfim)}
+.mapa__rosa{width:96px;height:96px;color:var(--ouro-profundo)}
+.mapa__texto{max-width:24ch;font-family:var(--serif);font-size:1.5rem;line-height:1.2;color:var(--tinta)}
+.mapa__nota{max-width:34ch;font-size:.8125rem;line-height:1.45;color:var(--texto-claro)}
+.onde__mapa iframe{display:block;flex:1;width:100%;min-height:340px;border:0;filter:sepia(.18) saturate(.85)}
+.onde__agenda>p{margin-top:12px;max-width:34ch;color:var(--texto-claro)}
+.onde__agenda .btn{margin-top:20px}
+.onde__contato{display:grid;margin-top:14px;font-size:.9375rem;line-height:1.4}
+.onde__contato li{display:flex;flex-wrap:wrap;align-items:center;column-gap:8px}
+.onde__contato span{color:var(--texto-claro)}
+.onde__contato a{display:inline-flex;align-items:center;min-height:44px;color:var(--tinta);text-decoration:underline;text-decoration-color:rgba(126,106,56,.5);text-underline-offset:.25em}
+.onde__contato a:hover{text-decoration-thickness:2px}
+@media (max-width:899px){
+  .onde__grade{gap:16px}
+  .onde__card{text-align:center}
+  .onde__acoes{flex-direction:column;align-items:stretch;gap:10px}
+  .semana>li{grid-template-columns:1fr;gap:6px;padding:12px 4px;text-align:left}
+  .semana__dia{display:flex;align-items:baseline;gap:10px}
+  .semana__hoje{display:inline}
+  .local__filtro{flex-wrap:wrap;justify-content:center;gap:0 10px;text-align:center}
+  .local__tipo{flex-basis:100%;margin-left:0}
+  .local__end,.local__dias,.local__links{padding-left:0}
+  .local__links{justify-content:center}
+  .onde__agenda>p{margin-inline:auto}
+  .onde__agenda .btn{width:100%}
+  .onde__contato li{justify-content:center}
+  .onde__mapa{min-height:300px}
+}

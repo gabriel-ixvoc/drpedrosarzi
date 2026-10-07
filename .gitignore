@@ -1,2 +1,33 @@
 tmp/
 node_modules/
+.obsidian/
+
+# Exportações do Instagram: PNG, MP4 e FLAC ficam fora do git (refazer com npm run exportar:*).
+# Os JPG de instagram/export/ (miniaturas de 360 px em thumbs/ e pôsteres) são versionados.
+instagram/export/**/*.png
+instagram/export/**/*.mp4
+instagram/export/**/*.flac
+
+# Vídeo de apresentação: img/, quadros/ e trilha.m4a são versionados (cerca de 16 MB; o player depende deles).
+# Refazer: node instagram/ferramentas/apresentacao-capturas.cjs (ver docs/apresentacao.md).
+
+# Manual da marca em PDF (7,5 MB): fica na pasta do OneDrive, fora do repositório e do site publicado.
+Dr-Pedro-Sarzi-Manual-da-Marca.pdf
+
+# Originais em PNG das imagens novas (as páginas usam os .webp); ficam só no computador
+imagensnovas/*.png
+
+# Só o site vai para o GitHub (o repositório inteiro é publicado). Contexto, kit do
+# Instagram, testes e ferramentas ficam só no computador (pasta do OneDrive).
+CLAUDE.md
+memory.md
+docs/
+instagram/
+scripts/
+package.json
+package-lock.json
+# Imagens novas que nenhuma página usa
+imagensnovas/hero-mao-01.webp
+imagensnovas/hero-mao-03-vertical.webp
+imagensnovas/hero-mao-04-closeup.webp
+imagensnovas/mao-anatomica-*.webp
