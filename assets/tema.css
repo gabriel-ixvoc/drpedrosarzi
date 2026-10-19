@@ -51,8 +51,8 @@
   background:url("platelets.webp") 60% 50%/cover no-repeat;opacity:.3;mix-blend-mode:screen;
   -webkit-mask:linear-gradient(90deg,transparent,#000 60%);mask:linear-gradient(90deg,transparent,#000 60%)}
 
-/* ---------- 6. O médico (/dr/): retrato em cor ---------- */
-.medico__retrato{filter:saturate(.9) contrast(1.03)}
+/* ---------- 6. O médico (/dr/): retrato em cor (o tom vivo já vem na foto) ---------- */
+.medico__retrato{filter:none}
 
 @media (max-width:899px){.nao-e::after{width:100%;opacity:.16}}
 @media print{

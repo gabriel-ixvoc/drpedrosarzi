@@ -6,7 +6,10 @@
    O "Onde atende" do fim é o componente do site.css. Comportamento em dr.js.
    ========================================================================== */
 
-/* ---------- 1. Capa: retrato recortado, digital e goniômetro ---------- */
+/* ---------- 1. Capa: retrato (foto inteira), digital e goniômetro ----------
+   A foto (sessão de 08/10/2026) já vem com o tom vivo: sem filtro aqui.
+   Celular: foto de ponta a ponta, fundida no carvão embaixo.
+   Computador: foto num quadro em arco com filete de ouro, sobre o goniômetro. */
 .medico{
   padding-block:0;
   /* digital centrada atrás da cabeça do retrato (centro do desenho em 50% 47%) */
@@ -18,9 +21,10 @@
 .medico__grade{row-gap:0}
 .medico__figura{position:relative;display:flex;justify-content:center;align-items:flex-start;overflow:hidden;height:min(50svh,400px);margin-inline:calc(var(--margem) * -1)}
 .medico__retrato{
-  position:relative;z-index:1;flex:none;
-  width:auto;max-width:none;height:140%;
-  filter:grayscale(1) sepia(.14) contrast(1.05) brightness(.9);
+  position:relative;z-index:1;display:block;flex:none;
+  width:100%;max-width:none;height:100%;
+  object-fit:cover;object-position:50% 12%;
+  filter:none;
 }
 /* fundido no carvão para o nome entrar por cima (celular) */
 .medico__figura::after{content:"";position:absolute;z-index:2;left:0;right:0;bottom:0;height:42%;pointer-events:none;background:linear-gradient(to bottom,rgba(8,8,10,0),var(--carvao) 92%)}
@@ -44,17 +48,24 @@
   .medico__figura,.medico__texto{grid-row:1}
   .medico__figura{
     grid-column:7 / 13;height:auto;margin:0;overflow:visible;
-    align-items:flex-end;padding-top:40px;
+    align-items:flex-end;padding-top:48px;padding-bottom:var(--retrato-base);
   }
   .medico__figura::after{display:none}
-  .medico{--retrato-h:min(calc(100svh - var(--hdr-h) - 40px),820px)}
-  .medico__retrato{height:var(--retrato-h)}
-  /* goniômetro grande atrás do retrato: o centro fica aos pés da figura,
-     e o arco aparece dos dois lados do corpo (raio ≈ metade da altura) */
+  .medico{--retrato-h:min(calc(100svh - var(--hdr-h) - 40px),820px);--retrato-base:56px}
+  /* quadro em arco (o mesmo dos quadros do relato): filete de ouro solto a 12 px.
+     2:3 é a proporção do arquivo: a foto entra inteira, da cabeça às mãos */
+  .medico__retrato{
+    width:auto;max-width:calc(100% - 26px);height:calc(var(--retrato-h) - 112px);aspect-ratio:2 / 3;
+    object-position:50% 18%;border-radius:999px 999px 0 0;
+    outline:1px solid rgba(216,192,138,.45);outline-offset:12px;
+    box-shadow:0 42px 70px -40px rgba(0,0,0,.9);
+  }
+  /* goniômetro grande atrás do retrato: o centro fica na base do quadro,
+     e o arco aparece dos dois lados (raio ≈ metade da altura) */
   .medico__gonio{
     display:block;position:absolute;z-index:0;max-width:none;
     --g:min(calc(var(--retrato-h) * 1.3),165%);
-    width:var(--g);left:calc(50% - var(--g) / 2);bottom:calc(var(--g) * -.041 + 20px);
+    width:var(--g);left:calc(50% - var(--g) / 2);bottom:calc(var(--g) * -.041 + var(--retrato-base) - 12px);
   }
   /* o SVG escala ~3,5×: números e marcas voltam ao tamanho de leitura */
   .medico__gonio .gonio__num{font-size:4.4px}
@@ -137,8 +148,10 @@
 .relato__foto .quadro__passe{aspect-ratio:4 / 5}
 .relato__foto img,.relato__foto svg{display:block;width:100%;height:100%;min-height:0;object-fit:cover;box-shadow:0 34px 60px -36px rgba(0,0,0,.8)}
 .relato__placa{display:block;background:#0D0D10}
-.relato__foto img[src*="consultorio"],.relato__cena[src*="consultorio"]{object-position:64% 30%}
-.relato__foto img[src*="829965"],.relato__cena[src*="829965"]{object-position:50% 18%}
+.relato__foto img[src*="dr-pedro-consulta"],.relato__cena[src*="dr-pedro-consulta"]{object-position:50% 20%}
+.relato__foto img[src*="centro-cirurgico"],.relato__cena[src*="centro-cirurgico"]{object-position:50% 0%}
+/* fotos da sessão de 08/10/2026: o tom vivo já vem na imagem */
+.relato__foto img[src*="dr-pedro-"],.relato__cenas .relato__cena[src*="dr-pedro-"]{filter:none}
 .relato__n{font-family:var(--serif);font-style:italic;font-size:2.25rem;line-height:1;color:var(--champanhe);font-variant-numeric:lining-nums}
 .relato__passo h3{margin-top:8px;font-size:clamp(1.75rem,2.6vw,2.375rem);line-height:1.1;color:var(--marfim)}
 .relato__passo h3+p{margin:12px auto 0;max-width:34ch;font-size:1.0625rem;line-height:1.65;color:var(--texto-escuro);text-wrap:pretty}

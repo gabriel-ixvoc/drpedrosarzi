@@ -7,8 +7,9 @@
 .indic__item::before{inset:7px;z-index:1}
 .indic__imagem{display:block;width:100%;height:clamp(150px,16vw,220px);grid-column:1;grid-row:1;object-fit:cover;filter:saturate(.78) contrast(1.04)}
 .indic__item:nth-child(1) .indic__imagem{object-position:50% 48%}
-.indic__item:nth-child(2) .indic__imagem{object-position:50% 45%}
-.indic__item:nth-child(3) .indic__imagem{object-position:50% 48%}
+/* menisco e coluna: o arquivo já vem sem o rosto de quem examina (não confundir com o Dr. Pedro) */
+.indic__item:nth-child(2) .indic__imagem{object-position:50% 40%}
+.indic__item:nth-child(3) .indic__imagem{object-position:50% 40%}
 .indic__item:nth-child(4) .indic__imagem{object-position:50% 42%}
 .indic__item .indic__glifo{display:none}
 .indic__regiao,.indic__item h3,.indic__desc,.indic__marca{position:relative;z-index:1;margin-inline:18px}

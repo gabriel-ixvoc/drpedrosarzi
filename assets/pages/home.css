@@ -285,7 +285,7 @@
   box-shadow:inset 0 0 0 1px rgba(216,192,138,.32);
 }
 #medico .medico__recorte::after{content:"";position:absolute;inset:auto 0 0;height:1px;background:rgba(216,192,138,.45)}
-#medico .medico__recorte>img{position:relative;width:100%;height:100%;object-fit:contain;object-position:50% 100%;filter:saturate(.9) contrast(1.03)}
+#medico .medico__recorte>img{position:relative;width:100%;height:100%;object-fit:cover;object-position:50% 30%;filter:none}
 
 /* ==========================================================================
    7. CAMINHOS DE CUIDADO: régua graduada
