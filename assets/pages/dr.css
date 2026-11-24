@@ -2,7 +2,7 @@
    O médico (/dr/) · estilos da página
    Base e componentes em site.css (docs/site.md). Aqui só a composição
    de cada capítulo: capa com retrato, formação (placas e o fio da
-   trajetória), como ele atende (relato na rolagem e citação) e áreas de
+   trajetória), como ele atende (tríptico e citação) e áreas de
    atuação (pranchas em dr-alt.css). O "Onde atende" do fim é o componente
    do site.css. Comportamento em dr.js.
    Tamanhos de letra pela escala do site.css (var(--t-…, reserva)); a capa
@@ -342,74 +342,98 @@
 .fio--vivo .fio__marco.on::after{background:var(--fio-claro-forte)}
 
 /* ==========================================================================
-   3. COMO ELE ATENDE: três momentos contados na rolagem
-   No computador, o quadro fica parado à esquerda e troca de cena quando o
-   passo ao lado chega ao meio da tela. No celular, cada passo traz a sua
-   imagem e tudo fica no eixo.
+   3. COMO ELE ATENDE: tríptico dos três momentos (24/11/2026)
+   Computador: três colunas no eixo ligadas por um fio com medalhões numerados.
+   Tablet: uma linha por momento. Celular: no eixo, ligados por sutura.
    ========================================================================== */
-.relato{display:grid;gap:40px}
-.relato__palco{display:none}
-.relato__passos{display:grid;gap:64px}
-.relato__passo{text-align:center}
-.relato__foto{margin:0 auto 24px;max-width:420px}
+.atende__cabeca{margin-inline:auto;text-align:center}
+.atende__cabeca .t-lead{margin-inline:auto}
+.relato{list-style:none;margin:0;padding:0;display:grid;--rel-gap:clamp(32px,3.6vw,64px)}
+.relato__passo{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center}
+.relato__foto{width:100%;max-width:380px;margin:0}
 /* min-height:0: a gravura (svg) não estica o quadro; os três ficam na mesma proporção */
-.relato__foto .quadro__passe{aspect-ratio:4 / 5;min-height:0}
+.relato__foto .quadro__passe{flex:none;aspect-ratio:4 / 5;min-height:0}
 .relato__foto img,.relato__foto svg{display:block;width:100%;height:100%;min-height:0;object-fit:cover}
 .relato__placa{display:block;background:#0D0D10}
-/* Fig. 1 no quadro do passo (abaixo de 900 px): o desenho sai a 0,5–0,8 do tamanho do
-   computador, então liga a versão dos rótulos para quadro pequeno (no #placaExplica), com a
+.relato__foto .relato__legenda{max-width:30ch;margin-inline:auto;font-size:var(--t-nota,.9375rem);line-height:1.4}
+/* marco numerado: medalhão de filete duplo (o da identidade) sobre o fio que liga os três momentos */
+.relato__marco{position:relative;align-self:stretch;display:flex;justify-content:center;margin:32px 0 20px}
+.relato__n{position:relative;z-index:1;display:grid;place-items:center;width:56px;height:56px;border:1px solid var(--fio-escuro-forte);border-radius:50%;background:var(--carvao);font-family:var(--serif);font-style:italic;font-weight:400;font-size:1.75rem;line-height:1;color:var(--champanhe);font-variant-numeric:lining-nums}
+.relato__n::after{content:"";position:absolute;inset:4px;border:1px solid var(--fio-escuro-suave);border-radius:50%}
+.relato__passo h3{font-size:var(--t-h3-ficha,1.75rem);line-height:1.15;color:var(--marfim);text-wrap:balance}
+.relato__texto{margin:12px auto 0;max-width:32ch;font-size:var(--t-corpo,1.0625rem);line-height:1.65;color:var(--texto-escuro);text-wrap:pretty}
+.relato__foto img[src*="dr-pedro-consulta"]{object-position:50% 20%}
+.relato__foto img[src*="centro-cirurgico"]{object-position:50% 0%}
+/* fotos da sessão de 08/10/2026: o tom vivo já vem na imagem */
+.relato__foto img{filter:none}
+/* Fig. 1 em quadro pequeno (abaixo de 900 px): a versão dos rótulos para quadro pequeno, com a
    letra e a linha-guia compensadas para o rótulo ficar com 12 px ou mais na tela */
 @media (max-width:899px){
   .relato__foto .relato__placa{--fig-rot-grande:none;--fig-rot-pequeno:inline;--fig-rotulo:21px;--fig-guia:1.6px}
 }
-/* letra do rótulo por faixa (escala do desenho medida: 0,56 em 320; 0,66 a 0,81 de 360 a 430;
-   0,49 a 0,59 de 600 a 699; 0,59 a 0,8 de 700 a 899): 12,2 a 16,7 px na tela */
-@media (min-width:600px) and (max-width:699px){
-  .relato__foto .relato__placa{--fig-rotulo:26px}
-}
-@media (max-width:599px){
-  .relato__foto .relato__placa{--fig-rotulo:19px}
-}
-@media (max-width:359px){
-  .relato__foto .relato__placa{--fig-rotulo:23px}
-}
-/* celular deitado: o quadro é medido pela altura e sai a 0,3–0,45; letra no teto da margem (32) */
+@media (min-width:600px) and (max-width:899px){.relato__foto .relato__placa{--fig-rotulo:24px}}
+@media (max-width:599px){.relato__foto .relato__placa{--fig-rotulo:19px}}
+@media (max-width:359px){.relato__foto .relato__placa{--fig-rotulo:23px}}
 @media (orientation:landscape) and (max-height:500px) and (max-width:899px){
-  .relato__foto .relato__placa{--fig-rotulo:32px;--fig-guia:2.2px}
-}
-.relato__foto img[src*="dr-pedro-consulta"],.relato__cena[src*="dr-pedro-consulta"]{object-position:50% 20%}
-.relato__foto img[src*="centro-cirurgico"],.relato__cena[src*="centro-cirurgico"]{object-position:50% 0%}
-/* fotos da sessão de 08/10/2026: o tom vivo já vem na imagem */
-.relato__foto img,.relato__cenas .relato__cena{filter:none}
-.relato__n{font-family:var(--serif);font-style:italic;font-weight:400;font-size:var(--t-h3,2.25rem);line-height:1;color:var(--champanhe);font-variant-numeric:lining-nums}
-.relato__passo h3{margin-top:8px;font-size:var(--t-h3,2.25rem);line-height:1.1;color:var(--marfim);text-wrap:balance}
-.relato__passo h3+p{margin:12px auto 0;max-width:34ch;font-size:var(--t-corpo,1.0625rem);line-height:1.65;color:var(--texto-escuro);text-wrap:pretty}
-@media (min-width:900px){
-  .relato{grid-template-columns:minmax(0,5fr) minmax(0,6fr);column-gap:clamp(48px,6vw,104px);align-items:start}
-  /* em tela alta, o quadro preso fica no meio da altura (não no alto, com a metade de baixo
-     vazia); --palco-h é a altura do quadro com a legenda, medida pelo dr.js */
-  .relato__palco{display:block;position:sticky;top:max(calc(var(--hdr-vis) + 36px),calc((var(--dr-tela) - var(--palco-h,0px)) / 2));transition:top 250ms var(--ease)}
-  .relato__cenas{--p:0px;position:relative;display:block;aspect-ratio:4 / 5;max-height:calc(100vh - var(--hdr-h) - 170px)}
-  .relato__cenas .relato__cena{position:absolute;top:var(--p);left:var(--p);width:calc(100% - var(--p) * 2);height:calc(100% - var(--p) * 2);min-height:0;object-fit:cover;opacity:0;transition:opacity 500ms var(--ease)}
-  .relato__cenas .relato__cena.on{opacity:1}
-  .relato__passos{gap:0}
-  /* passo ainda não alcançado: apagado, mas legível (título > 3:1, corpo > 4,5:1 sobre o carvão) */
-  .relato__passo{min-height:min(66vh,600px);min-height:min(66svh,600px);display:flex;flex-direction:column;justify-content:center;text-align:left;opacity:.66;transition:opacity 250ms var(--ease)}
-  .relato__passo.on{opacity:1}
-  .relato__foto{display:none}
-  .relato__passo h3+p{margin-inline:0;max-width:42ch}
+  .relato__foto .relato__placa{--fig-rotulo:30px;--fig-guia:2.2px}
 }
 
-/* citação do médico, no eixo, depois dos três momentos: a aspa de abertura em Cormorant
-   champanhe faz o papel do divisor; a assinatura em itálico, depois de um filete curto. */
-.atende__citacao{position:relative;max-width:920px;margin:clamp(72px,9vw,120px) auto 0;text-align:center}
-.atende__citacao blockquote::before{content:"\201C" / "";display:block;height:.46em;margin-bottom:.1em;font-family:var(--serif);font-weight:300;font-size:clamp(6.5rem,5rem + 5vw,10.5rem);line-height:.92;color:var(--champanhe)}
+/* Computador: tríptico. Três colunas iguais no eixo; os medalhões ficam na mesma linha
+   (legenda com altura de duas linhas) e um fio de ouro os liga de ponta a ponta. */
+@media (min-width:900px){
+  .relato{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--rel-gap);align-items:start}
+  .relato__foto{max-width:none}
+  .relato__foto .relato__legenda{min-height:2.8em}
+  .relato__foto .relato__placa{--fig-rotulo-grande:15px;--fig-guia-grande:.9px}
+  .relato__marco{margin:28px 0 22px}
+  .relato__marco::before{content:"";position:absolute;top:50%;left:calc(var(--rel-gap) / -2);right:calc(var(--rel-gap) / -2);height:1px;background:var(--fio-escuro)}
+  .relato__passo:first-child .relato__marco::before{left:50%}
+  .relato__passo:last-child .relato__marco::before{right:50%}
+}
+
+/* Tablet e celular deitado: cada momento numa linha, imagem à esquerda e texto à direita,
+   separados por filete; o medalhão abre o texto. */
+@media (min-width:600px) and (max-width:899px),(orientation:landscape) and (max-height:500px) and (max-width:899px){
+  .relato{row-gap:0}
+  .relato__passo{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);grid-template-rows:1fr auto auto auto 1fr;column-gap:clamp(28px,5vw,48px);align-items:start;text-align:left;padding-block:40px}
+  .relato__passo+.relato__passo{border-top:1px solid var(--fio-escuro-suave)}
+  .relato__passo:first-child{padding-top:0}
+  .relato__passo:last-child{padding-bottom:0}
+  .relato__foto{grid-column:1;grid-row:1 / -1;align-self:center;max-width:none}
+  .relato__marco{grid-column:2;grid-row:2;justify-content:flex-start;margin:0 0 16px}
+  .relato__passo h3{grid-column:2;grid-row:3}
+  .relato__texto{grid-column:2;grid-row:4;margin-inline:0;max-width:34ch}
+}
+@media (orientation:landscape) and (max-height:500px) and (max-width:899px){
+  .relato__passo{grid-template-columns:auto minmax(0,1fr)}
+  .relato__foto{width:calc((100vh - 150px) * .8);width:calc((100svh - 150px) * .8)}
+}
+
+/* Celular: tudo no eixo; uma sutura curta liga um momento ao seguinte */
+@media (max-width:599px){
+  .relato__foto{max-width:min(100%,380px)}
+  .relato__foto .quadro__passe{aspect-ratio:4 / 4.6}
+  .relato__marco{margin:24px 0 16px}
+  .relato__passo+.relato__passo{margin-top:20px;padding-top:68px}
+  .relato__passo+.relato__passo::before{content:"";position:absolute;top:0;left:50%;height:48px;border-left:1px dashed var(--fio-escuro-forte)}
+  .relato__texto{max-width:28ch;text-wrap:balance}
+}
+@media (max-width:359px){
+  .relato__foto .quadro__passe{aspect-ratio:1 / 1.12}
+}
+
+/* citação do médico, no eixo, depois dos três momentos: um filete atravessa a largura
+   do capítulo e a aspa de abertura, em Cormorant champanhe, assenta no vão do meio dele. */
+.atende__citacao{position:relative;display:flow-root;max-width:none;margin:clamp(88px,9vw,128px) 0 0;text-align:center;
+  background:linear-gradient(var(--fio-escuro),var(--fio-escuro)) left top / calc(50% - 64px) 1px no-repeat,
+             linear-gradient(var(--fio-escuro),var(--fio-escuro)) right top / calc(50% - 64px) 1px no-repeat}
+.atende__citacao blockquote::before{content:"\201C" / "";display:block;height:.42em;margin:-.27em 0 .42em;font-family:var(--serif);font-weight:300;font-size:clamp(5.5rem,4.5rem + 3vw,8rem);line-height:.92;color:var(--champanhe)}
+
 .atende__citacao blockquote p{max-width:28ch;margin-inline:auto;font-family:var(--serif);font-weight:300;font-size:calc(var(--t-h2,3.25rem) * .92);line-height:1.16;letter-spacing:var(--trk-titulo,-.01em);color:var(--marfim);text-wrap:balance}
 .atende__citacao figcaption{display:inline-flex;align-items:center;gap:14px;margin-top:32px;font-family:var(--serif);font-style:italic;font-weight:400;font-size:var(--t-lead,1.3125rem);line-height:1.2;color:var(--champanhe)}
 .atende__citacao figcaption::before{content:"";width:32px;height:1px;background:var(--fio-escuro-forte)}
 /* computador: quatro linhas por sentido, como foram ditas */
 @media (min-width:1100px){
-  .atende__citacao{max-width:min(100%,1000px)}
   .atende__citacao blockquote p{max-width:none}
   .atende__citacao blockquote p>span{display:block}
 }
@@ -427,8 +451,6 @@
    Tablet (600 a 899 px): faixa própria, nunca o celular esticado
    · Formação: de 700 a 899 px, o zigue-zague do computador, mais estreito (nó de 48 px);
      de 600 a 699 px, o fio passa à esquerda e as fichas ficam à direita dele.
-   · Como ele atende: cada passo com a imagem ao lado do texto (imagem à esquerda, como o
-     quadro do computador). Vale também no celular deitado, com a imagem medida pela altura.
    ========================================================================== */
 @media (min-width:700px) and (max-width:899px){
   .fio__marco{grid-template-columns:minmax(0,1fr) 48px minmax(0,1fr);column-gap:20px}
@@ -448,19 +470,6 @@
   .fio__marco:nth-child(n) .fio__ficha{grid-column:2}
   .fio__marco:nth-child(n)::after{top:24px;left:48px;right:auto;width:20px}
 }
-@media (min-width:600px) and (max-width:899px),(orientation:landscape) and (max-height:500px) and (max-width:899px){
-  .relato__passo{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);grid-template-rows:1fr auto auto auto 1fr;column-gap:clamp(24px,4vw,40px);text-align:left}
-  .relato__foto{grid-column:1;grid-row:1 / -1;align-self:center;width:100%;max-width:none;margin:0}
-  .relato__n{grid-column:2;grid-row:2}
-  .relato__passo h3{grid-column:2;grid-row:3}
-  .relato__passo h3+p{grid-column:2;grid-row:4;margin-inline:0;max-width:34ch}
-}
-@media (orientation:landscape) and (max-height:500px) and (max-width:899px){
-  /* deitado: o quadro cabe na altura útil (tela menos cabeçalho e respiro) */
-  .relato__passo{grid-template-columns:auto minmax(0,1fr)}
-  .relato__foto{width:calc((100vh - 120px) * .8);width:calc((100svh - 120px) * .8)}
-}
-
 /* ==========================================================================
    Celular: tudo no eixo (regra de 07/10/2026)
    ========================================================================== */
@@ -483,7 +492,7 @@
   /* parágrafo de leitura no eixo com até 34 caracteres por linha (o ch do Ubuntu é o "0",
      mais largo que a letra média: 28ch dão até 34 caracteres a 17 px; contado em 320 a 430 px).
      Formação em pretty: há texto de 7 a 10 linhas, onde o balance do Chrome não age. */
-  .fio__ficha h3+p,.relato__passo h3+p{max-width:28ch;text-wrap:balance}
+  .fio__ficha h3+p{max-width:28ch;text-wrap:balance}
   .fio__ficha h3+p{text-wrap:pretty}
   .placas__conferir{max-width:30ch}
 }
@@ -498,7 +507,7 @@
   .placa-reg__rotulo{grid-column:2;grid-row:1 / 3;align-self:stretch;display:flex;align-items:center;max-width:none;padding-left:18px;border-left:1px solid var(--fio-claro-suave);font-size:max(12px,var(--t-nota,.9375rem));text-wrap:balance}
 }
 @media (prefers-reduced-motion:reduce){
-  .fio::after,.fio__ficha,.fio__no,.relato__cena,.relato__passo,.relato__palco{transition:none}
+  .fio::after,.fio__ficha,.fio__no{transition:none}
   .fio--vivo .fio__ficha{transform:none}
 }
 

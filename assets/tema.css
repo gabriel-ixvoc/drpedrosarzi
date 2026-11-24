@@ -35,7 +35,6 @@
 @media (min-width:900px){
   /* no vazio da coluna da margem, abaixo do lead (antes ficava atrás do título e do lead) */
   #faq.marca-dagua{--marca-pos:left 3% bottom -96px;--marca-tam:min(440px,52%)}
-  #consulta.marca-dagua{--marca-pos:right -36px top 48px;--marca-tam:clamp(260px,33vh + 66px,440px)}
 }
 /* Celular e tablet: sem marca-d'água (não há vazio real; ela cairia atrás do texto). */
 @media (max-width:899px){.marca-dagua::before{display:none}}

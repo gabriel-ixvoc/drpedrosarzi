@@ -1,7 +1,7 @@
 /* ==========================================================================
    O médico (/dr/) · componentes da página
-   Carregado depois de site.js (window.PS). Fio da trajetória (#fio) e
-   relato do atendimento (#relato). Ganchos em docs/site.md.
+   Carregado depois de site.js (window.PS). Fio da trajetória (#fio) e vão das áreas (#areas).
+   Ganchos em docs/site.md.
    ========================================================================== */
 (function () {
 'use strict';
@@ -41,44 +41,8 @@ const parado = () => PS.RM || PS.motion.paused;
   document.addEventListener('motionchange', pinta);
 })();
 
-/* ---------- 2. Relato: três momentos da consulta ----------
-   O passo que cruza o meio da tela fica aceso e troca a cena do quadro
-   parado (.relato__cena[data-i]) e a legenda (#relatoLegenda). */
-(function relato () {
-  const raiz = $('#relato');
-  if (!raiz) return;
-  const passos = $$('.relato__passo', raiz), cenas = $$('.relato__cena', raiz), legenda = $('#relatoLegenda');
-  let atual = 0;
-  function set (i) {
-    if (i < 0 || i === atual) return;
-    atual = i;
-    passos.forEach((p, k) => p.classList.toggle('on', k === i));
-    cenas.forEach(c => c.classList.toggle('on', +c.dataset.i === i));
-    if (legenda) legenda.textContent = passos[i].dataset.legenda || '';
-  }
-  /* Altura do quadro preso com a legenda (--palco-h): o dr.css centra o quadro na altura da tela.
-     Na mesma medida, os rótulos da Fig. 1 (#placaExplica): em tela baixa ou estreita o desenho sai
-     menor que 1:1, e a letra (13 a 16,5 unidades) e a linha-guia crescem para o rótulo ficar com
-     12,5 px na tela. Sem JS, ficam nas 13 unidades de sempre. */
-  const palco = $('.relato__palco', raiz), placa = $('.relato__cenas .relato__placa', raiz);
-  function mede () {
-    raiz.style.setProperty('--palco-h', palco.offsetHeight + 'px');
-    if (!placa || !placa.viewBox) return;
-    const b = placa.getBoundingClientRect(), vb = placa.viewBox.baseVal;
-    if (!b.width || !vb.width) return;
-    const k = Math.min(b.width / vb.width, b.height / vb.height), pequeno = k < .76;
-    placa.style.setProperty('--fig-rot-grande', pequeno ? 'none' : 'inline');
-    placa.style.setProperty('--fig-rot-pequeno', pequeno ? 'inline' : 'none');
-    placa.style.setProperty('--fig-rotulo-grande', clamp(12.5 / k, 13, 16.5).toFixed(1) + 'px');
-    placa.style.setProperty('--fig-guia-grande', clamp(.9 / k, .7, 1.2).toFixed(2) + 'px');
-    placa.style.setProperty('--fig-rotulo', clamp(12.5 / k, 19, 32).toFixed(1) + 'px');
-    placa.style.setProperty('--fig-guia', clamp(.9 / k, 1.4, 2.4).toFixed(2) + 'px');
-  }
-  if (palco && 'ResizeObserver' in window) new ResizeObserver(mede).observe(palco);
-  if (!('IntersectionObserver' in window)) return;
-  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) set(passos.indexOf(e.target)); }), { rootMargin: '-48% 0px -48% 0px' });
-  passos.forEach(p => io.observe(p));
-})();
+/* ---------- 2. Como ele atende ----------
+   Desde 24/11/2026 é um tríptico estático (só CSS, em dr.css seção 3): sem JS. */
 
 /* ---------- 3. Áreas: a mão pequena do verso só onde há vão ----------
    .sinal__vao ocupa o espaço que sobra entre o texto e os links (flex 1 1 0:
