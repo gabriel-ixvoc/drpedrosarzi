@@ -1,32 +1,9 @@
-/* Acabamento do /dr/ sobre o dr.css; preserva fio e relato de dr.js.
+/* Acabamento do /dr/ sobre o dr.css; preserva o fio de dr.js.
    Carregado antes do alt.css: as regras das pranchas usam .sinais--foto.sinais--prancha
    para passar na frente das da ficha com foto. */
 .medico__figura{isolation:isolate}
 .atende{isolation:isolate}
-/* A marca-d'água do "Como ele atende" (no vazio ao lado da cabeça do capítulo, acima do
-   passo 1) mora no tema.css desde 23/11/2026. */
-.relato{column-gap:clamp(42px,5vw,84px)}
-.relato__passo{position:relative}
-.relato__passo::before{content:"";position:absolute;left:-22px;top:50%;width:8px;height:8px;border:1px solid var(--champanhe);border-radius:50%;transform:translateY(-50%);opacity:.5;transition:opacity 250ms var(--ease),background-color 250ms var(--ease)}
-.relato__passo.on::before{background:var(--champanhe);opacity:1}
-@media(min-width:900px){
-  .relato__passo{padding-inline:14px}
-  .relato__passo::before{left:-18px}
-}
-@media(max-width:899px){
-  .relato__passo::before{display:none}
-}
-@media(max-width:599px){
-  .relato__passos{gap:58px}
-  .relato__foto{max-width:min(100%,400px)}
-  .relato__foto .quadro__passe{aspect-ratio:4 / 4.6}
-}
-/* tablet e celular deitado: imagem ao lado do texto (dr.css), passos mais próximos */
-@media(min-width:600px) and (max-width:899px),(orientation:landscape) and (max-height:500px) and (max-width:899px){
-  .relato__passos{gap:48px}
-}
 @media(max-width:359px){
-  .relato__foto .quadro__passe{aspect-ratio:1 / 1.12}
   .fio__ficha{padding:20px 16px}
 }
 
@@ -94,5 +71,5 @@
   .sinais--foto.sinais--prancha .sinal__giro{min-height:140cqi}
 }
 @media (prefers-reduced-motion:reduce){
-  .relato__passo::before,.sinais--prancha .sinal__prancha{transition:none}
+  .sinais--prancha .sinal__prancha{transition:none}
 }

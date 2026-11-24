@@ -311,51 +311,41 @@
      No computador, o quadro fica parado à esquerda e troca de cena conforme o
      passo ao lado chega ao meio da tela (dr.js). No celular, cada passo traz a
      sua imagem. -->
-<section class="cap cap--carvao atende marca-dagua" id="consulta" aria-labelledby="atende-titulo">
+<section class="cap cap--carvao atende" id="consulta" aria-labelledby="atende-titulo">
   <div class="wrap">
-    <header class="secao__cabeca">
+    <header class="secao__cabeca atende__cabeca">
       <h2 class="cap__titulo" id="atende-titulo">Como ele atende</h2>
       <p class="t-lead">Em toda consulta, três momentos: ouvir, explicar e combinar o plano.</p>
     </header>
-    <div class="relato" id="relato">
-      <div class="relato__palco">
-        <figure class="quadro quadro--arco relato__quadro">
-          <div class="quadro__passe relato__cenas">
-            <img class="relato__cena on" data-i="0" src="../assets/fotos/dr-pedro-consulta.webp" srcset="../assets/fotos/dr-pedro-consulta-720.webp 720w, ../assets/fotos/dr-pedro-consulta.webp 1100w" sizes="(min-width:900px) 38vw, 400px" width="1100" height="1376" alt="Dr. Pedro Sarzi, de terno cinza, sentado à mesa do consultório, com a caneta na mão, olha para quem fala e ouve" loading="lazy" decoding="async">
-            <svg class="relato__cena relato__placa" data-i="1" viewBox="-34 -56 328 532" role="img" aria-label="Gravura da mão com o nervo mediano passando sob o ligamento do punho"><use href="#placaExplica" width="260" height="420"/></svg>
-            <img class="relato__cena" data-i="2" src="../assets/fotos/dr-pedro-centro-cirurgico.webp" srcset="../assets/fotos/dr-pedro-centro-cirurgico-720.webp 720w, ../assets/fotos/dr-pedro-centro-cirurgico.webp 1100w" sizes="(min-width:900px) 38vw, 400px" width="1100" height="1376" alt="Dr. Pedro Sarzi, de touca, máscara e roupa cirúrgica, lava as mãos e os antebraços antes de operar, no centro cirúrgico" loading="lazy" decoding="async">
-          </div>
-          <figcaption id="relatoLegenda">No consultório, na Clínica Fares.</figcaption>
+    <ol class="relato" id="relato">
+      <li class="relato__passo" data-i="0">
+        <figure class="quadro quadro--arco relato__foto">
+          <div class="quadro__passe"><img src="../assets/fotos/dr-pedro-consulta.webp" srcset="../assets/fotos/dr-pedro-consulta-720.webp 720w, ../assets/fotos/dr-pedro-consulta.webp 1100w" sizes="(min-width:900px) 30vw, (min-width:600px) 40vw, 400px" width="1100" height="1376" alt="Dr. Pedro Sarzi, de terno cinza, sentado à mesa do consultório, com a caneta na mão, olha para quem fala e ouve" loading="lazy" decoding="async"></div>
+          <figcaption class="relato__legenda">No consultório, na Clínica&nbsp;Fares.</figcaption>
         </figure>
-      </div>
-      <ol class="relato__passos">
-        <li class="relato__passo on" data-i="0" data-legenda="No consultório, na Clínica Fares.">
-          <figure class="quadro quadro--arco relato__foto">
-            <div class="quadro__passe"><img src="../assets/fotos/dr-pedro-consulta.webp" srcset="../assets/fotos/dr-pedro-consulta-720.webp 720w, ../assets/fotos/dr-pedro-consulta.webp 1100w" sizes="(min-width:900px) 38vw, 400px" width="1100" height="1376" alt="Dr. Pedro Sarzi, de terno cinza, sentado à mesa do consultório, com a caneta na mão, olha para quem fala e ouve" loading="lazy" decoding="async"></div>
-          </figure>
-          <p class="relato__n" aria-hidden="true">1</p>
-          <h3>Primeiro, a conversa</h3>
-          <p>Você conta o que sente, quando começou e o que mudou na sua rotina. O exame da mão parte dessa conversa.</p>
-        </li>
-        <li class="relato__passo" data-i="1" data-legenda="Fig. 1. O nervo mediano no túnel do carpo. Ilustração esquemática.">
-          <figure class="quadro quadro--arco relato__foto">
-            <div class="quadro__passe"><svg class="relato__placa" viewBox="-34 -56 328 532" role="img" aria-label="Gravura da mão com o nervo mediano passando sob o ligamento do punho"><use href="#placaExplica" width="260" height="420"/></svg></div>
-            <figcaption>Fig. 1. O nervo mediano no túnel do carpo. Ilustração esquemática.</figcaption>
-          </figure>
-          <p class="relato__n" aria-hidden="true">2</p>
-          <h3>Depois, a explicação</h3>
-          <p>O diagnóstico é explicado em palavras simples, junto com o que cada opção de tratamento envolve.</p>
-        </li>
-        <li class="relato__passo" data-i="2" data-legenda="No centro cirúrgico.">
-          <figure class="quadro quadro--arco relato__foto">
-            <div class="quadro__passe"><img src="../assets/fotos/dr-pedro-centro-cirurgico.webp" srcset="../assets/fotos/dr-pedro-centro-cirurgico-720.webp 720w, ../assets/fotos/dr-pedro-centro-cirurgico.webp 1100w" sizes="(min-width:900px) 38vw, 400px" width="1100" height="1376" alt="Dr. Pedro Sarzi, de touca, máscara e roupa cirúrgica, lava as mãos e os antebraços antes de operar, no centro cirúrgico" loading="lazy" decoding="async"></div>
-          </figure>
-          <p class="relato__n" aria-hidden="true">3</p>
-          <h3>Então, o plano</h3>
-          <p>O plano leva em conta o seu trabalho e o que você precisa voltar a fazer com as mãos. Nem todo caso pede cirurgia; quando ela é indicada, você entende o porquê.</p>
-        </li>
-      </ol>
-    </div>
+        <p class="relato__marco" aria-hidden="true"><span class="relato__n">1</span></p>
+        <h3>Primeiro, a conversa</h3>
+        <p class="relato__texto">Você conta o que sente, quando começou e o que mudou na sua rotina. O exame da mão parte dessa conversa.</p>
+      </li>
+      <li class="relato__passo" data-i="1">
+        <figure class="quadro quadro--arco relato__foto">
+          <div class="quadro__passe"><svg class="relato__placa" viewBox="-34 -56 328 532" role="img" aria-label="Gravura da mão com o nervo mediano passando sob o ligamento do punho"><use href="#placaExplica" width="260" height="420"/></svg></div>
+          <figcaption class="relato__legenda">Fig. 1. O nervo mediano no túnel do&nbsp;carpo. Ilustração esquemática.</figcaption>
+        </figure>
+        <p class="relato__marco" aria-hidden="true"><span class="relato__n">2</span></p>
+        <h3>Depois, a explicação</h3>
+        <p class="relato__texto">O diagnóstico é explicado em palavras simples, junto com o que cada opção de tratamento envolve.</p>
+      </li>
+      <li class="relato__passo" data-i="2">
+        <figure class="quadro quadro--arco relato__foto">
+          <div class="quadro__passe"><img src="../assets/fotos/dr-pedro-centro-cirurgico.webp" srcset="../assets/fotos/dr-pedro-centro-cirurgico-720.webp 720w, ../assets/fotos/dr-pedro-centro-cirurgico.webp 1100w" sizes="(min-width:900px) 30vw, (min-width:600px) 40vw, 400px" width="1100" height="1376" alt="Dr. Pedro Sarzi, de touca, máscara e roupa cirúrgica, lava as mãos e os antebraços antes de operar, no centro cirúrgico" loading="lazy" decoding="async"></div>
+          <figcaption class="relato__legenda">No centro cirúrgico.</figcaption>
+        </figure>
+        <p class="relato__marco" aria-hidden="true"><span class="relato__n">3</span></p>
+        <h3>Então, o plano</h3>
+        <p class="relato__texto">O plano leva em conta o seu trabalho e o que você precisa voltar a fazer com as mãos. Nem todo caso pede cirurgia; quando ela é indicada, você entende o porquê.</p>
+      </li>
+    </ol>
     <figure class="atende__citacao">
       <blockquote>
         <p><span>Usar o que aprendi e&nbsp;as minhas mãos</span> <span>para ajudar a&nbsp;aliviar a&nbsp;dor,</span> <span>recuperar movimentos e&nbsp;devolver autonomia,</span> <span>dentro do que cada caso permite.</span></p>
