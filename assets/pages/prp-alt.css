@@ -1,67 +1,318 @@
-/* Acabamento da alternativa PRP; interações e conteúdo seguem os arquivos-base. */
-.prp-capa .t-hero{max-width:11ch;text-wrap:balance}
-.prp-capa__figura .lab-card.lab-placa{border-radius:2px;box-shadow:0 28px 64px -42px rgba(0,0,0,.9)}
-.prp-capa__figura .lab-fig{font-size:1.1rem}
-.indic{align-items:stretch;gap:18px}
-.indic__item{display:grid;grid-template-columns:1fr;grid-template-rows:auto auto auto 1fr auto;align-content:start;min-width:0;overflow:hidden;padding:0 0 22px}
-.indic__item::before{inset:7px;z-index:1}
-.indic__imagem{display:block;width:100%;height:clamp(150px,16vw,220px);grid-column:1;grid-row:1;object-fit:cover;filter:saturate(.78) contrast(1.04)}
-.indic__item:nth-child(1) .indic__imagem{object-position:50% 48%}
-/* menisco e coluna: o arquivo já vem sem o rosto de quem examina (não confundir com o Dr. Pedro) */
-.indic__item:nth-child(2) .indic__imagem{object-position:50% 40%}
-.indic__item:nth-child(3) .indic__imagem{object-position:50% 40%}
-.indic__item:nth-child(4) .indic__imagem{object-position:50% 42%}
-.indic__item .indic__glifo{display:none}
-.indic__regiao,.indic__item h3,.indic__desc,.indic__marca{position:relative;z-index:1;margin-inline:18px}
-.indic__regiao{margin-top:18px}
-.indic__item h3{margin-top:6px;font-size:clamp(1.35rem,1.7vw,1.65rem)}
-.indic__desc{margin-top:8px}
-/* a descrição tem largura máxima (30ch): margem automática para ficar no eixo do card */
-.indic__item .indic__desc{margin-inline:auto;max-width:min(30ch,calc(100% - 36px))}
-.indic__marca{margin-top:12px;padding-top:0}
-.indic__item--membro{box-shadow:inset 0 0 0 1px var(--ouro-profundo),0 26px 46px -30px rgba(8,8,10,.55)}
-.indic__fora{position:relative;overflow:hidden;justify-content:flex-start;min-height:180px;margin-top:24px;padding:0;gap:0;border-style:solid;border-color:rgba(126,106,56,.35);background:url("../brand/papel.svg") 0 0/640px 640px,var(--linho)}
-.indic__fora .indic__imagem{align-self:stretch;flex:none;width:210px;min-height:180px;object-fit:cover;object-position:50% 46%;filter:saturate(.72)}
-.indic__fora .indic__glifo{display:none}
-.indic__fora-texto{padding:24px clamp(22px,4vw,48px)}
-.indic__fora .indic__regiao,.indic__fora h3,.indic__fora .indic__desc{margin-inline:0}
-.indic__fora .indic__regiao{margin-top:0}
-.indic__fora h3{font-style:normal}
-.indic__fora .indic__desc{margin-top:8px}
-.lab-placa #processScene{padding:14px clamp(10px,2vw,24px) 0}
-.lab-placa .lab-art{filter:drop-shadow(0 14px 18px rgba(0,0,0,.2))}
-.lab-placa .lab-bottom{padding-inline:clamp(16px,2.5vw,28px)}
-.lab-placa .lab-tabs{gap:0 clamp(14px,2vw,26px)}
-.process-illus-inner.lab-card{border-radius:2px;box-shadow:0 28px 64px -42px rgba(8,8,10,.58)}
-.processo__placa{align-self:start}
-@media(max-width:899px){
-  .indic{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .indic__item{grid-template-columns:1fr;grid-template-rows:auto auto auto 1fr auto}
-  .indic__imagem{height:clamp(145px,28vw,205px)}
+/* Acabamento do PRP; interações e conteúdo seguem os arquivos-base (prp.css, lab.css).
+   As figuras seguem a ordem de leitura: Fig. 1 (explorador do sangue) na capa e Fig. 2 no player. */
+
+/* ---------- Capa ---------- */
+/* h1 em duas linhas: "PRP: o que é" / "e quando é indicado." (itálico champanhe, 7,0 em).
+   Na tela deitada, a partir de 900 px, a fonte também respeita a largura da coluna do texto. */
+.prp-capa .t-hero{text-wrap:balance}
+/* o itálico do Cormorant só existe em 400 (sem síntese de fonte, site.css): a segunda linha pede o peso real */
+.prp-capa .t-hero__2{font-weight:400}
+@media (min-width:900px) and (orientation:landscape){
+  .prp-capa .capa__texto{container:prp-texto / inline-size}
+  .prp-capa .t-hero{font-size:min(var(--t-display),13.4cqi)}
 }
-@media(max-width:599px){
+/* linha de identificação sem ponto solto no fim da linha: em coluna estreita (a linha inteira mede
+   405 px), quebra entre o nome e os registros, como no celular */
+@container prp-texto (max-width:419px){
+  .prp-capa .capa__id>.id-medico__sep{display:none}
+  .prp-capa .capa__id>span{display:block}
+}
+/* Fig. 1 estreita (menos de 460 px de desenho, fora do celular: notebook baixo, tablet pequeno, celular
+   deitado): os rótulos do desenho crescem e a linha de baixo de cada um sai, como no celular (lab.css);
+   o texto da parte escolhida, embaixo, explica cada uma */
+.prp-capa__figura{container:prp-fig / inline-size}
+@container prp-fig (max-width:459px){
+  .prp-capa__figura #tubeView .lab-art .rot{font-size:27px}
+  .prp-capa__figura #tubeView .lab-art .sub{display:none}
+}
+/* o texto da parte escolhida tem caixa de três linhas: trocar de aba não muda a altura da placa
+   (nem a da capa, que assenta o conteúdo no meio). Na placa com menos de 390 px fora do celular (a base
+   tem mais respiro), "Plaquetas" vai a quatro linhas: a caixa também, e a da placa antes do lab.js
+   acompanha. */
+.prp-capa__figura .lab-description{min-height:4.65em}
+@media (min-width:601px){
+  @container prp-fig (max-width:389px){
+    .prp-capa__figura .lab-description{min-height:6.2em}
+    .js .prp-capa__figura #tubeOuter:not(.prp-tube-outer){padding-bottom:339px}
+  }
+}
+/* a legenda da Fig. 1 vai sempre em duas linhas equilibradas ("Fig. 1. Desenho esquemático, fora de
+   escala." / "As proporções variam conforme o preparo."), numa caixa de duas linhas com o texto
+   assentado no pé: a fonte de reserva também cabe nela, e a placa não muda de altura quando o
+   Cormorant chega (sem salto na capa) */
+.prp-capa__figura .lab-note{display:flex;align-items:flex-end;max-width:28em;min-height:2.7em}
+/* sobre o carvão da capa a prancha não leva sombra (ela some no escuro) */
+.prp-capa__figura .lab-card.lab-placa{border-radius:var(--raio);box-shadow:none}
+
+/* ---------- Celular, tablet e tela em pé: capa no eixo, na ordem texto, Fig. 1, identificação ----------
+   (no celular em pé, a identificação vem antes da Fig. 1: ver "Celular")
+   Vale até 899 px e em toda tela em pé (iPad Pro, monitor vertical): na tela em pé a capa enche a
+   primeira dobra sem teto, como a home e o /dr/, e a Fig. 1 vem logo abaixo das chamadas. */
+@media (max-width:899px),(orientation:portrait){
   .prp-capa .capa__texto{text-align:center}
-  .prp-capa .t-hero{max-width:none;margin-inline:auto}
-  .prp-capa .t-lead{margin-inline:auto}
+  .prp-capa .t-hero{margin-inline:auto}
+  .prp-capa .t-lead{margin-inline:auto;text-wrap:balance}
   .prp-capa .acoes{justify-content:center}
-  .prp-capa .capa__id{justify-content:center;text-align:center}
-  /* indicações: carrossel com pontos, como as fichas das outras seções; ficha ao centro */
-  .indic{grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:80vw;gap:12px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;margin-inline:calc(var(--margem) * -1);padding:6px 10vw 12px;scrollbar-width:none}
-  .indic::-webkit-scrollbar{display:none}
-  .indic__item{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;scroll-snap-align:center;scroll-snap-stop:always;text-align:center}
-  .indic__marca{margin-top:auto;padding-top:12px}
-  .indic__imagem{height:clamp(170px,52vw,220px)}
-  .indic__item .indic__desc{max-width:min(30ch,calc(100% - 44px))}
-  .indic__fora{display:flex;flex-direction:column;min-height:0;text-align:center}
-  .indic__fora .indic__imagem{width:100%;min-height:0;height:clamp(150px,44vw,190px)}
-  .indic__fora-texto{padding:20px 22px 24px}
+  .prp-capa .capa__grade{row-gap:0}
+  .prp-capa .capa__texto{display:contents}
+  .prp-capa .capa__texto>.t-hero{order:1}
+  .prp-capa .capa__texto>.t-lead{order:2;margin-top:20px}
+  .prp-capa .capa__texto>.acoes{order:3;margin-top:28px;justify-self:stretch}
+  .prp-capa__figura{order:4;margin-top:40px}
+  /* a faixa de base da capa: o mesmo filete contínuo da home e do /dr/ (site.css), na largura da coluna */
+  .prp-capa .capa__texto>.capa__id{order:5;margin-top:32px;padding-top:20px;border-top:1px solid var(--cor-filete);text-align:center}
+}
+/* Tela em pé a partir de 600 px (iPad em pé, iPad Pro com a barra do Safari): a base da capa (a
+   identificação) cabe na primeira dobra, como na home e no /dr/. O lead vai em três linhas (não
+   quatro), os respiros encolhem e, em tela alta (1180 px ou mais), a Fig. 1 em pé é medida pela altura
+   útil: a altura da tela (--prp-tela, prp.css) menos o cabeçalho e o resto da capa (respiros, título, lead, ações, base da placa e
+   identificação, ~830 px), com 440 px no mínimo. Confere em 1024 × 1292, 1024 × 1366, 912 × 1368,
+   834 × 1194 e 820 × 1180. Abaixo de 1180 px de altura (iPad em pé, iPad mini e Air com a barra do
+   Safari) a placa em pé não cabe: ela deita (ver "Placa deitada", abaixo). */
+@media (min-width:600px) and (orientation:portrait){
+  .prp-capa{padding-block:32px 40px}
+  .prp-capa .capa__texto>.t-lead{max-width:56ch}
+  .prp-capa__figura{margin-top:32px}
+  .prp-capa .capa__texto>.capa__id{margin-top:28px}
+}
+@media (min-width:600px) and (orientation:portrait) and (min-height:1100px){
+  .prp-capa__figura{width:min(100%,max(440px,calc((var(--prp-tela) - var(--hdr-h) - 830px) * 568 / 412)))}
+}
+@media (min-width:900px) and (orientation:portrait){
+  .prp-capa{min-height:calc(var(--prp-tela) - var(--hdr-h));padding-block:36px 44px}
+  .prp-capa .capa__grade{grid-template-columns:minmax(0,1fr)}
+  .prp-capa__figura{grid-column:1;justify-self:center}
+}
+
+/* ---------- Celular ---------- */
+@media (max-width:599px){
+  .prp-capa{padding-block:28px 32px}
+  .prp-capa__figura{margin-top:36px}
+}
+/* celular em pé: título, lead, chamadas e a identificação na primeira dobra, como na home e no /dr/, e a
+   Fig. 1 logo depois, já começando na dobra, como no celular deitado (design.md, "Primeira dobra") */
+@media (max-width:599px) and (orientation:portrait){
+  .prp-capa .capa__texto>.capa__id{order:4;margin-top:28px}
+  .prp-capa__figura{order:6;margin-top:32px}
+}
+@media (max-width:599px){
+  /* notas curtas da cabeça no eixo, em linhas equilibradas */
+  .indicacoes__fonte,#limites .sinais__nota{max-width:34ch;margin-inline:auto;text-wrap:balance}
+
   .lab-placa .lab-topline{align-items:flex-start;gap:8px;padding:14px}
-  .lab-placa .lab-status{font-size:.74rem}
+  .lab-placa .lab-status{font-size:var(--t-micro,.8125rem)}
   .lab-placa .lab-tabs{justify-content:space-between;gap:8px}
   .lab-placa .lab-tabs button{font-size:.875rem}
-  .processo__passos{gap:8px}
 }
-@media(prefers-reduced-motion:reduce){.indic__imagem,.lab-placa .lab-art{transition:none;animation:none}}
-/* O que o PRP não é, com foto: pergunta em até três linhas; sem o "?" de ornamento da versão sem foto. */
+
+/* ---------- Placas (Fig. 1 e Fig. 2): régua de qualidade, só o acabamento ---------- */
+.lab-placa #processScene{padding:14px clamp(10px,2vw,24px) 0}
+.lab-placa .lab-bottom{padding-inline:clamp(16px,2.5vw,28px)}
+.lab-placa .lab-tabs{gap:0 clamp(14px,2vw,26px)}
+/* o player é a prancha escura pousada no marfim: leva a única sombra do site */
+.process-illus-inner.lab-card{border-radius:var(--raio);box-shadow:var(--sombra-prancha)}
+.processo__placa{align-self:start}
+/* botões do player numa linha: na placa estreita fora do celular (menos de 540 px, de 900 a 999 px de
+   largura), o complemento sai, como no celular de 360 px ("Reproduzir", "Pausar", "Próxima"); o lab.js
+   mantém o <span> nos dois estados */
+.processo__placa{container:prp-player / inline-size}
+@media (min-width:601px){
+  @container prp-player (max-width:539px){.process-illus-inner .lab-button span{display:none}}
+}
+/* reserva sem container query (Safari 15): pela largura da tela, na faixa em que a placa tem menos de 540 px
+   (de 900 a 1023 px: em 1000 × 700 a placa ainda tem 536 px) */
+@supports not (container-type:inline-size){
+  @media (min-width:900px) and (max-width:1023px){.process-illus-inner .lab-button span{display:none}}
+}
+@media(prefers-reduced-motion:reduce){.lab-placa .lab-art{transition:none;animation:none}}
+
+/* ---------- O que o PRP não é, com foto ---------- */
+/* pergunta em até três linhas; sem o "?" de ornamento da versão sem foto. A arte de IA leva o
+   tratamento único (.arte-ia, alt.css); a foto real do Dr. Pedro, não. */
 .mitos.sinais--foto .sinal__titulo{max-width:15ch}
 .mitos.sinais--foto .sinal__frente::after{display:none}
+
+/* ---------- Computador de tela baixa (notebook: 1440 × 789, 1536 × 730, 1366 × 657, 1280 × 689) ----------
+   A capa inteira cabe na primeira dobra: título pela altura da tela, respiros menores, a identificação
+   no pé da coluna do texto e a Fig. 1 inteira, medida pela altura útil (o desenho de 568 × 412 mais a
+   base da placa, de 320 px com o texto em três linhas). Vale até 860 px de altura: de 821 a 860 px a
+   placa cheia, com o respiro de 64 px, passava da dobra de 1133 a 1199 px de largura (iPad Pro 11"
+   deitado, 1194 × 834). Ganchos (#tubeOuter, #prpExplorer, [data-fraction]) intactos: só mudam o
+   tamanho e o arranjo da caixa. */
+@media (min-width:900px) and (orientation:landscape) and (min-height:501px) and (max-height:860px){
+  .prp-capa{padding-block:20px}
+  .prp-capa .t-hero{font-size:min(var(--t-display),13.4cqi,calc(var(--prp-tela) * .11))}
+  .prp-capa .capa__texto>*+*{margin-top:18px}
+  .prp-capa .capa__id{margin-top:32px}
+  .prp-capa__figura{width:min(100%,calc((var(--prp-tela) - var(--hdr-h) - 40px - 320px) * 568 / 412))}
+}
+/* ---------- Placa deitada (Fig. 1) ----------
+   Onde a placa em pé não cabe na primeira dobra, ela deita: o desenho à esquerda e as abas, o texto e o
+   controle à direita, depois de um filete. O desenho fica com os rótulos do celular (maiores, sem a linha
+   de baixo) e o texto da parte escolhida, com caixa de quatro linhas: a placa não muda de altura ao
+   trocar de aba (351 px, a altura da caixa antes do lab.js). Vale em duas faixas:
+   - tela deitada a partir de 1024 px com até 752 px de altura (notebook baixo, iPad deitado com a barra do
+     Safari, notebook com escala de 125 a 150 %, janela não maximizada): ao lado do texto. De 900 a 1023 px
+     a placa ao lado do texto deixava o desenho com menos de 250 px e os rótulos com 8 a 11 px: ali vale o
+     arranjo de "Celular deitado e janelas baixas" (só o texto na dobra, a placa deitada logo depois);
+   - tela em pé a partir de 600 px com 850 a 1179 px de altura (iPad em pé, iPad mini e iPad Air com a
+     barra do Safari): no eixo, abaixo das chamadas e acima da identificação, que fica na dobra. Abaixo de
+     850 px de altura, até 899 px de largura, a pilha não cabe: vale o mesmo arranjo das janelas baixas.
+   Ganchos (#tubeOuter, #prpExplorer, [data-fraction]) intactos: só mudam o tamanho e o arranjo da caixa. */
+@media (min-width:1024px) and (orientation:landscape) and (min-height:501px) and (max-height:752px),
+       (min-width:600px) and (orientation:portrait) and (max-height:1179px){
+  .prp-capa{--painel:320px}
+  .prp-capa__figura #prpExplorer{display:grid;grid-template-columns:minmax(0,1fr) var(--painel);align-items:center}
+  .prp-capa__figura #tubeView{grid-column:1;grid-row:1}
+  .prp-capa__figura #tubeView .lab-art .rot{font-size:27px}
+  .prp-capa__figura #tubeView .lab-art .sub{display:none}
+  .prp-capa__figura .lab-bottom{grid-column:2;grid-row:1;align-self:stretch;display:flex;flex-direction:column;justify-content:center;
+    padding:16px 22px 18px;border-left:1px solid var(--filete-escuro)}
+  .prp-capa__figura .lab-description{min-height:6.2em}
+  .prp-capa__figura .lab-note{min-height:0}
+  .js .prp-capa__figura #tubeOuter:not(.prp-tube-outer){padding-bottom:0;min-height:351px}
+  .js .prp-capa__figura #tubeOuter:not(.prp-tube-outer)::before{width:calc(100% - var(--painel))}
+}
+/* deitada: a coluna do texto fica com cinco colunas e a placa com sete */
+@media (min-width:1024px) and (orientation:landscape) and (min-height:501px) and (max-height:752px){
+  .prp-capa .capa__texto{grid-column:1 / 6}
+  .prp-capa__figura{grid-column:6 / 13;width:100%;max-width:none;justify-self:stretch}
+}
+/* de 1024 a 1199 px a placa tem de 550 a 680 px: o painel fica com 300 px, com respiro lateral menor (o
+   texto da parte mantém a caixa de quatro linhas e a placa, os 351 px) e o desenho com o resto */
+@media (min-width:1024px) and (max-width:1199px) and (orientation:landscape) and (min-height:501px) and (max-height:752px){
+  .prp-capa{--painel:300px}
+  .prp-capa__figura .lab-bottom{padding-inline:18px}
+}
+/* de 1024 a 1199 px com até 560 px de altura (notebook de 1366 × 768 a 125 %, janela não maximizada):
+   o lead vai a cinco linhas na coluna estreita e a identificação passava da dobra. Respiros e título
+   menores: a identificação entra inteira (1093 × 505: base em 490) */
+@media (min-width:1024px) and (max-width:1199px) and (orientation:landscape) and (min-height:501px) and (max-height:560px){
+  .prp-capa{padding-block:10px}
+  .prp-capa .t-hero{font-size:min(var(--t-display),13.4cqi,calc(var(--prp-tela) * .1))}
+  .prp-capa .capa__texto>*+*{margin-top:12px}
+  .prp-capa .capa__id{margin-top:16px}
+}
+/* em pé: a placa no eixo, na largura da coluna, até a largura em que o desenho tem a altura do painel */
+@media (min-width:600px) and (orientation:portrait) and (max-height:1179px){
+  .prp-capa__figura{width:100%;max-width:calc(351px * 568 / 412 + var(--painel))}
+}
+
+/* ---------- Celular deitado e janelas baixas ----------
+   Vale na tela deitada até 500 px de altura, em toda tela deitada até 899 px de largura (Split View do
+   iPad, janela de 800 × 600 ou de 880 × 800), na deitada de 900 a 1023 px com até 752 px de altura
+   (janela de 960 × 515, notebook de 1440 × 900 a 150 %) e na tela em pé de 600 a 899 px com até 849 px
+   de altura (Galaxy Z Fold aberto, janela em pé): a placa em pé não cabe ao lado do texto nem abaixo dele
+   na primeira dobra, e a placa deitada ao lado do texto deixaria o desenho pequeno demais.
+   A primeira dobra é só a capa: título, lead, ações em linha e a identificação na base, à esquerda.
+   A Fig. 1 vem logo depois da dobra, na largura do conteúdo, como placa deitada (o arranjo do
+   notebook baixo): o desenho à esquerda, na altura da tela, e as abas, o texto e o controle à direita,
+   depois de um filete. Tubo e controle ficam na mesma tela: quem arrasta vê o sangue se separar.
+   Ganchos (#tubeOuter, #prpExplorer, [data-fraction]) intactos: só mudam o lugar e o arranjo da caixa. */
+@media (orientation:landscape) and (max-height:500px),
+       (orientation:landscape) and (max-width:899px),
+       (orientation:landscape) and (min-width:900px) and (max-width:1023px) and (max-height:752px),
+       (orientation:portrait) and (min-width:600px) and (max-width:899px) and (max-height:849px){
+  .prp-capa{--painel:300px;display:block;min-height:0;padding-block:0 32px}
+  .prp-capa .capa__grade{display:grid;grid-template-columns:minmax(0,1fr);gap:0;align-items:start}
+  .prp-capa .capa__texto{display:flex;flex-direction:column;justify-content:center;grid-column:1;grid-row:1;
+    min-height:calc(100vh - var(--hdr-h));padding-block:min(16px,3svh) min(18px,3.4svh);text-align:left}
+  @supports (height:1svh){.prp-capa .capa__texto{min-height:calc(100svh - var(--hdr-h))}}
+  .prp-capa .capa__texto>.t-hero{margin:auto 0 0;font-size:min(3.2rem,9.5vh,8.5vw)}
+  @supports (height:1svh){.prp-capa .capa__texto>.t-hero{font-size:min(3.2rem,9.5svh,8.5vw)}}
+  .prp-capa .capa__texto>.t-lead{max-width:62ch;margin:min(12px,2.6svh) 0 0;font-size:.9375rem;line-height:1.45;text-wrap:pretty}
+  .prp-capa .capa__texto>.acoes{flex-direction:row;align-items:center;justify-content:flex-start;gap:12px 22px;margin-block:min(18px,3.6svh)}
+  .prp-capa .acoes>.btn{width:auto}
+  .prp-capa .acoes>.link{align-self:center}
+  .prp-capa .capa__texto>.capa__id{margin-top:auto;padding-top:min(14px,3svh);border-top:1px solid var(--cor-filete);text-align:left}
+  /* identificação em duas linhas, sem ponto solto */
+  .prp-capa .capa__id>.id-medico__sep{display:none}
+  .prp-capa .capa__id>span{display:block}
+  /* Fig. 1 deitada: o desenho (568 × 412) com a altura da tela menos 40 px, ou o que sobra da largura
+     ao lado do painel de 300 px (as duas pontas do controle cabem numa linha cada). O cabeçalho só some
+     depois de 420 px de rolagem (site.js): a placa começa abaixo disso, para caber inteira na tela sem
+     ele por cima (respiro de 8 px na tela de 430 px, até 78 px na de 360 px). */
+  .prp-capa__figura{grid-column:1;grid-row:2;justify-self:center;max-width:none;margin-top:max(8px,calc(438px - 100vh));
+    width:min(100%,calc((100vh - 40px) * 568 / 412 + var(--painel)))}
+  @supports (height:1svh){.prp-capa__figura{margin-top:max(8px,calc(438px - 100svh));width:min(100%,calc((100svh - 40px) * 568 / 412 + var(--painel)))}}
+  .prp-capa__figura #prpExplorer{display:grid;grid-template-columns:minmax(0,1fr) var(--painel);align-items:center}
+  .prp-capa__figura #tubeView{grid-column:1;grid-row:1}
+  .prp-capa__figura #tubeView .lab-art .rot{font-size:27px}
+  .prp-capa__figura #tubeView .lab-art .sub{display:none}
+  .prp-capa__figura .lab-bottom{grid-column:2;grid-row:1;align-self:stretch;display:flex;flex-direction:column;justify-content:center;
+    padding:6px 18px 14px;border-left:1px solid var(--filete-escuro)}
+  .prp-capa__figura .lab-tabs{justify-content:space-between;gap:0 12px}
+  .prp-capa__figura .lab-description{margin-top:10px;min-height:6em;font-size:var(--t-nota,.9375rem);line-height:1.5}
+  .prp-capa__figura .lab-range{margin-top:10px}
+  .prp-capa__figura .lab-note{min-height:0;margin-top:8px;font-size:var(--t-nota,.9375rem)}
+  /* antes do lab.js: a caixa já tem a altura da placa deitada (o desenho ou o painel, de 313 px) */
+  .js .prp-capa__figura #tubeOuter:not(.prp-tube-outer){padding-bottom:0;min-height:313px}
+  .js .prp-capa__figura #tubeOuter:not(.prp-tube-outer)::before{width:calc(100% - var(--painel))}
+  /* placa de 800 px ou mais (desenho de 500 px ou mais, de 880 a 1023 px de largura): os rótulos do
+     computador, com a linha de baixo, em vez dos do celular, que passariam de 25 px */
+  @container prp-fig (min-width:800px){
+    .prp-capa__figura #tubeView .lab-art .rot{font-size:20px}
+    .prp-capa__figura #tubeView .lab-art .sub{display:inline}
+  }
+}
+
+/* tela deitada com mais de 500 px de altura até 899 px de largura (Split View do iPad, janela de
+   800 × 600), deitada de 900 a 1023 px até 752 px de altura e em pé de 600 a 899 px até 849 px de
+   altura: a dobra é a mesma (só o texto, a Fig. 1 deitada logo depois), mas a capa não é o celular
+   esticado: título, lead e ações no eixo, como no tablet em pé, com o título e o lead na escala do
+   tablet e a identificação numa linha só, centrada na base */
+@media (orientation:landscape) and (min-height:501px) and (max-width:899px),
+       (orientation:landscape) and (min-height:501px) and (min-width:900px) and (max-width:1023px) and (max-height:752px),
+       (orientation:portrait) and (min-width:600px) and (max-width:899px) and (max-height:849px){
+  .prp-capa .capa__texto{text-align:center;padding-block:min(24px,3svh) min(28px,3.6svh)}
+  .prp-capa .capa__texto>.t-hero{margin:auto auto 0;font-size:min(var(--t-display),10vh,10vw)}
+  @supports (height:1svh){.prp-capa .capa__texto>.t-hero{font-size:min(var(--t-display),10svh,10vw)}}
+  .prp-capa .capa__texto>.t-lead{max-width:56ch;margin:20px auto 0;font-size:var(--t-lead);line-height:1.55;text-wrap:balance}
+  .prp-capa .capa__texto>.acoes{justify-content:center;margin-block:28px 40px}
+  .prp-capa .capa__texto>.capa__id{text-align:center}
+  .prp-capa .capa__id>.id-medico__sep{display:inline}
+  .prp-capa .capa__id>span{display:inline}
+}
+
+/* placa deitada estreita (em pé de 600 a 699 px, até 1179 px de altura; deitada de 1024 a 1099 px, ao
+   lado do texto): com o painel de 300 px o desenho ficava com 234 a 248 px e os rótulos com 11 a 11,8 px.
+   O painel não estreita além de 288 px: com menos de 263 px úteis, o texto de Plaquetas vai a cinco
+   linhas e as pontas do controle a duas (a placa mudaria de altura ao trocar de aba). Ganham o respiro
+   lateral menor e o rótulo maior no viewBox (28 px: "Camada intermediária" ainda termina dentro do
+   desenho): de 12 a 17 px na tela. Com o rótulo de 28 px, "Camada intermediária" terminava a 2 ou 3 px
+   do filete: o desenho anda 7 px para a esquerda (a folga esquerda era de 18 a 24 px) e o rótulo fica a
+   9 ou 10 px do filete, como nas outras faixas */
+@media (orientation:portrait) and (min-width:600px) and (max-width:699px) and (max-height:1179px),
+       (orientation:landscape) and (min-width:1024px) and (max-width:1099px) and (min-height:501px) and (max-height:752px){
+  .prp-capa{--painel:288px}
+  .prp-capa__figura .lab-bottom{padding-inline:12px}
+  .prp-capa__figura #tubeView .lab-art{position:relative;left:-7px}
+  .prp-capa__figura #tubeView .lab-art .rot{font-size:28px}
+}
+
+/* Fig. 2 no celular deitado e na tela deitada de até 899 × 750 px (daí para cima o player fica ao lado
+   das etapas): a placa
+   deita como a Fig. 1. A linha "Fig. 2 … 01 / 04" vai por cima; a cena fica à esquerda, medida pela
+   altura da tela, e o título e o texto da etapa, o progresso, os dois botões e a nota ficam numa
+   coluna à direita. Placa inteira na tela: quem avança a etapa vê a cena mudar. A cena fica sem os
+   rótulos (pequenos demais nessa escala), como no celular: a coluna traz título e texto da etapa.
+   Ganchos (#processScene, #processStatus, #processPlay, #processNext, [data-scene]) intactos. */
+@media (orientation:landscape) and (max-width:899px) and (max-height:750px){
+  .process-illus-inner.lab-card{display:grid;grid-template-columns:minmax(0,1fr) clamp(260px,38vw,300px);grid-template-rows:auto auto minmax(0,1fr)}
+  .process-illus-inner .lab-topline{grid-column:1 / -1;grid-row:1;padding:10px 16px}
+  .lab-placa.process-illus-inner #processScene{grid-column:1;grid-row:2 / 4;align-self:center;justify-self:center;box-sizing:border-box;
+    width:min(100%,calc((100vh - 84px) * 640 / 430 + 24px));padding:10px 12px}
+  @supports (height:1svh){.lab-placa.process-illus-inner #processScene{width:min(100%,calc((100svh - 84px) * 640 / 430 + 24px))}}
+  .process-illus-inner #processScene .lab-art :is(.rot,.sub,.guia,.ponto-guia){display:none}
+  .process-illus-inner .lab-caption{grid-column:2;grid-row:2;min-height:0;padding:14px 16px 0;border-left:1px solid var(--filete-escuro)}
+  .process-illus-inner .lab-caption__titulo{font-size:var(--t-lead,1.3125rem)}
+  /* texto da etapa com caixa de quatro linhas (o mais longo, "Aplicação"): a placa não muda de altura
+     ao trocar de etapa */
+  .process-illus-inner .lab-caption p+p{min-height:5.8em;font-size:var(--t-nota,.9375rem);line-height:1.45}
+  .process-illus-inner .lab-bottom{grid-column:2;grid-row:3;display:flex;flex-direction:column;padding:0 16px 12px;border-left:1px solid var(--filete-escuro)}
+  .process-illus-inner .lab-controls{display:grid;grid-template-columns:1fr 1fr;gap:0 8px;margin-top:10px;padding-top:4px}
+  .process-illus-inner .lab-progress{grid-column:1 / -1;grid-row:1;justify-content:center}
+  .process-illus-inner .lab-controls .lab-button{grid-row:2;width:100%;padding:0 8px}
+  .process-illus-inner .lab-button span{display:none}
+  .process-illus-inner .lab-note{margin-top:auto;padding-top:10px;font-size:var(--t-nota,.9375rem);line-height:1.3}
+}

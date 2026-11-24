@@ -17,49 +17,31 @@
 /* Cabeça de seção: título grande e uma frase de apoio, sem sobrelinha */
 
 /* ==========================================================================
-   1. CAPA: foto do manual (p. 14) em tela cheia
+   1. CAPA: a composição inteira fica em home-alt.css (seção 1), que carrega
+   depois e é a única fonte das regras de .inicio.
    ========================================================================== */
-.inicio{display:grid;align-items:end;min-height:min(94svh,880px);padding-block:0;overflow:clip;background:var(--carvao)}
-.inicio__foto{position:absolute;inset:0;z-index:-2}
-.inicio__foto img{width:100%;height:100%;object-fit:cover;object-position:68% 40%}
-.inicio::after{
-  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
-  background:
-    linear-gradient(90deg,rgba(8,8,10,.94) 0%,rgba(8,8,10,.82) 32%,rgba(8,8,10,.35) 62%,rgba(8,8,10,.05) 85%),
-    linear-gradient(0deg,rgba(8,8,10,.85) 0%,rgba(8,8,10,0) 34%);
-}
-.inicio .capa__grade{padding-block:calc(var(--hdr-h) + 64px) 72px}
-.inicio__texto{max-width:620px}
-.inicio .t-hero{font-size:clamp(2.875rem,5.4vw,4.75rem);line-height:1.02}
-.inicio .t-lead{max-width:34ch}
-.inicio .acoes{margin-top:36px}
-.inicio .capa__id{margin-top:72px}
-.inicio .t-lead.abre{--atraso:420ms}
-.inicio .acoes.abre{--atraso:520ms}
-@media (min-width:900px){.inicio__texto{grid-column:1 / 8}}
-@media (max-width:899px){
-  .inicio{display:block;min-height:0}
-  .inicio__foto{position:relative;inset:auto;height:62vw;max-height:440px}
-  .inicio::after{background:linear-gradient(0deg,var(--carvao) 0%,rgba(8,8,10,.4) 22%,rgba(8,8,10,0) 50%);height:min(62vw,440px)}
-  .inicio .capa__grade{padding-block:8px 48px}
-}
 
 /* ==========================================================================
    2. FRASE DA MARCA: o arco do movimento
    Cena presa à tela durante a rolagem (home.js): o ponteiro do goniômetro
    varre de 0° a 180°, a frase ganha tinta palavra por palavra e os três
-   valores aparecem quando o ponteiro passa por eles. Com movimento reduzido
-   ou pausado, a cena fica parada no estado final.
+   valores aparecem quando o ponteiro passa por eles. Com movimento reduzido,
+   pausado ou em tela baixa (até 500 px de altura), a cena fica parada no
+   estado final. A frase fica acima do arco em todas as larguras; o arco é só
+   desenho (sem o PS: o logo não vai sob hachura nem sob o ponteiro).
    ========================================================================== */
 .manifesto{position:relative;background:url("../brand/papel.svg") 0 0/640px 640px,var(--marfim);color:var(--tinta);
   --cor-titulo:var(--tinta);--cor-texto:var(--texto-claro);--cor-foco:var(--ouro-profundo)}
-.manifesto__trilho{height:250vh}
-@supports (height:1svh){.manifesto__trilho{height:250svh}}
-.manifesto__palco{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:calc(var(--hdr-h) + 20px) var(--margem) 32px;overflow:hidden}
-@supports (height:1svh){.manifesto__palco{height:100svh}}
-.manifesto__peca{position:relative;width:min(100%,1000px,calc((100vh - 330px) * 1.8))}
-@supports (height:1svh){.manifesto__peca{width:min(100%,1000px,calc((100svh - 330px) * 1.8))}}
+.manifesto__trilho{height:210vh}
+@supports (height:1svh){.manifesto__trilho{height:210svh}}
+.manifesto__palco{position:sticky;top:0;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:calc(var(--hdr-h) + 20px) var(--margem) 32px;overflow-x:hidden;overflow-x:clip}
+@supports (height:1svh){.manifesto__palco{min-height:100svh}}
+/* altura mínima (não fixa) e sem corte vertical: com fonte ou espaçamento de texto maiores (WCAG 1.4.4 e
+   1.4.12) a cena cresce em vez de cortar a frase de apoio dos valores */
+.manifesto__peca{position:relative;display:flex;flex-direction:column;align-items:center;width:100%}
+.manifesto__arco{width:max(280px,min(100%,1000px,calc((100vh - 470px) * 1.8)))}
+@supports (height:1svh){.manifesto__arco{width:max(280px,min(100%,1000px,calc((100svh - 470px) * 1.8)))}}
 .manifesto__arco{color:var(--ouro-profundo)}
 .manifesto__arco svg{display:block;width:100%;height:auto;overflow:visible}
 .manifesto__arco .gonio__arco{fill:none;stroke:currentColor;stroke-width:1.3;opacity:.55}
@@ -74,29 +56,45 @@
 .manifesto__setor{fill:url(#mHach);stroke:none}
 .manifesto__setor-borda{fill:none;stroke:var(--ouro-profundo);stroke-width:2.4;stroke-linecap:round}
 
-.manifesto__frase{position:absolute;left:50%;top:47%;width:62%;transform:translate(-50%,-50%);text-align:center;
-  font-family:var(--serif);font-weight:300;font-size:clamp(1.75rem,3.9vw,3.4rem);line-height:1.12;color:var(--tinta);text-wrap:balance}
-.mw{opacity:.16;transition:opacity 450ms var(--ease)}
+.manifesto__frase{order:-1;max-width:14em;margin:0 0 40px;text-align:center;
+  font-family:var(--serif);font-weight:300;font-size:var(--t-h2,3.25rem);line-height:1.12;letter-spacing:var(--trk-titulo);color:var(--tinta);text-wrap:balance}
+/* palavra sem tinta ainda: .5 (3,2:1 sobre o marfim), nunca abaixo de 3:1 */
+.mw{opacity:.5;transition:opacity 450ms var(--ease)}
 .mw.on{opacity:1}
 .manifesto__graus{position:absolute;left:50%;top:100%;margin-top:14px;transform:translateX(-50%);
-  font-family:var(--serif);font-style:italic;font-size:1.375rem;line-height:1;color:var(--ouro-profundo);font-variant-numeric:lining-nums tabular-nums}
-.manifesto__valores{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,4vw,56px);width:min(100%,960px);margin-top:64px}
-.manifesto__valores li{display:grid;align-content:start;gap:6px;padding-top:16px;border-top:1px solid rgba(126,106,56,.3);text-align:center;
-  opacity:.25;transform:translateY(8px);transition:opacity 550ms var(--ease),transform 550ms var(--ease),border-color 550ms}
-.manifesto__valores li.on{opacity:1;transform:none;border-color:var(--ouro-profundo)}
-.manifesto__valores strong{font-family:var(--serif);font-weight:400;font-size:clamp(1.25rem,2vw,1.75rem);line-height:1.1;color:var(--tinta)}
-.manifesto__valores span{font-size:.9375rem;line-height:1.45;color:var(--texto-claro)}
+  font-family:var(--serif);font-style:italic;font-size:var(--t-lead,1.3125rem);line-height:1;color:var(--ouro-profundo);font-variant-numeric:lining-nums tabular-nums}
+.manifesto__valores{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,4vw,56px);width:min(100%,960px);margin-top:64px}
+.manifesto__valores li{display:grid;align-content:start;gap:6px;padding-top:16px;border-top:1px solid var(--fio-claro);text-align:center;
+  transform:translateY(8px);transition:transform 550ms var(--ease),border-color 550ms}
+/* valor ainda não alcançado: nome a .5 (3:1); a frase de apoio só aparece quando ele acende */
+.manifesto__valores strong{font-family:var(--serif);font-weight:400;font-size:var(--t-h3-ficha,1.75rem);line-height:1.1;color:var(--tinta);opacity:.5;transition:opacity 550ms var(--ease)}
+.manifesto__valores span{font-size:var(--t-nota,.9375rem);line-height:1.45;color:var(--texto-claro);text-wrap:balance;opacity:0;transition:opacity 550ms var(--ease)}
+.manifesto__valores li.on{transform:none;border-color:var(--ouro-profundo)}
+.manifesto__valores li.on strong,.manifesto__valores li.on span{opacity:1}
+/* abaixo de 900 px o nome do valor ainda não alcançado fica a .66 (5:1 sobre o marfim): em 18 a 21 px
+   o Cormorant pede 4,5:1; o filete em ouro profundo do valor aceso continua marcando a diferença */
+@media (max-width:899px){.manifesto__valores strong{opacity:.66}}
 @media (max-width:699px){
-  .manifesto__peca{display:flex;flex-direction:column;width:100%}
-  .manifesto__frase{position:static;order:-1;transform:none;width:auto;margin-bottom:28px;font-size:clamp(1.875rem,8.4vw,2.375rem)}
+  .manifesto__frase{max-width:none;margin-bottom:28px;letter-spacing:0}
+  .manifesto__arco{width:100%}
   .manifesto__valores{margin-top:56px;gap:12px}
-  .manifesto__valores span{font-size:.8125rem}
+  .manifesto__valores span{font-size:var(--t-micro,.8125rem)}
 }
-/* estado parado (movimento reduzido ou pausado): sem trilho, tudo com tinta */
+/* estado parado (movimento reduzido, pausado ou tela baixa): sem trilho, tudo com tinta */
 .manifesto--estatico .manifesto__trilho{height:auto}
-.manifesto--estatico .manifesto__palco{position:relative;height:auto;padding-block:clamp(88px,10vw,140px)}
+.manifesto--estatico .manifesto__palco{position:relative;height:auto;min-height:0;padding-block:clamp(88px,10vw,140px)}
 .manifesto--estatico .mw{opacity:1}
-.manifesto--estatico .manifesto__valores li{opacity:1;transform:none;border-color:var(--ouro-profundo)}
+.manifesto--estatico .manifesto__valores li{transform:none;border-color:var(--ouro-profundo)}
+.manifesto--estatico .manifesto__valores strong,.manifesto--estatico .manifesto__valores span{opacity:1}
+/* tela baixa (celular deitado, janela de 480 px): cena parada e compacta, valores numa linha só */
+@media (max-height:500px){
+  .manifesto--estatico .manifesto__palco{padding-block:48px}
+  .manifesto--estatico .manifesto__frase{max-width:16em;margin-bottom:24px;font-size:var(--t-h3,2.25rem)}
+  .manifesto--estatico .manifesto__arco{width:min(100%,300px)}
+  .manifesto--estatico .manifesto__arco .gonio__num{display:none}
+  .manifesto--estatico .manifesto__valores{margin-top:48px;gap:16px}
+  .manifesto--estatico .manifesto__valores span{display:none}
+}
 
 
 /* ==========================================================================
@@ -195,9 +193,32 @@
 .tab-btn.on{color:var(--marfim)}
 .tab-btn.on::before{background:var(--champanhe)}
 @media (max-width:359px){.atlas__indice{grid-template-columns:1fr}}
+/* 360 a 374 px: calha e margens menores para "Dedo em gatilho" e "Lesões de tendão" caberem numa linha */
+@media (min-width:360px) and (max-width:374px){.atlas__indice{column-gap:14px;margin-inline:14px}.tab-btn{gap:8px}}
+
+/* celular deitado (até 999 px de largura): a placa cabe na altura da tela. Mão à esquerda,
+   com Lupa/Ossos/Nervos ao lado dela, e a lista de condições com a legenda à direita.
+   A mão é medida pela altura: padding do alto (.13 da mão + 20) + mão (1,25) + dica. */
+@media (orientation:landscape) and (max-height:500px) and (max-width:999px){
+  .mao{--mao:min(330px,calc((100vh - 56px) * .72));display:grid;grid-template-columns:calc(var(--mao) + 60px) minmax(0,1fr);grid-template-rows:1fr auto auto 1fr}
+  @supports (height:1svh){.mao{--mao:min(330px,calc((100svh - 56px) * .72))}}
+  .mao>.mao__col{display:contents}
+  .mao #xray{grid-column:1;grid-row:1 / -1;border-right:1px solid var(--filete-escuro)}
+  .mao .atlas__indice{grid-column:2;grid-row:2;column-gap:12px;margin:0 12px}
+  .mao .tab-btn{gap:8px}
+  .atlas__mao.mao>.mao__legenda{grid-column:2;grid-row:3;margin:0 12px;padding:16px 0 0;border-top:0;text-align:left;text-wrap:balance}
+  .lab-hand{display:block;height:100%}
+  .mao__camadas{position:absolute;left:4px;bottom:32px;display:grid;gap:0;margin:0}
+  .handbox{margin-left:calc(100% - var(--mao) - 4px)}
+  .hand-hint{max-width:calc(var(--mao) * .88);font-size:var(--t-nota,.9375rem);text-wrap:balance}
+}
+/* janela baixa com cursor: a dica "Passe o cursor..." não cabe sob a mão; a lista ao lado já guia */
+@media (orientation:landscape) and (max-height:500px) and (max-width:999px) and (hover:hover){.hand-hint{display:none}}
 
 /* ficha da condição */
-@media (min-width:1000px){.atlas__textos{position:sticky;top:calc(var(--hdr-h) + 28px)}}
+@media (min-width:1000px){.atlas__textos{position:sticky;top:calc(var(--hdr-vis,76px) + 28px);transition:top var(--t-camada,240ms) var(--ease)}}
+/* abaixo de 1000 px o toque num ponto ou numa aba rola até o título da ficha (home.js), sem esconder a mão */
+@media (max-width:999px){.pane h3{scroll-margin-bottom:72px}}
 .js .pane:not(.on){display:none}
 .pane.on{animation:folha 380ms var(--ease)}
 .pane+.pane{margin-top:56px}
@@ -229,7 +250,8 @@
 .pane__lista li{position:relative;padding:10px 0 10px 22px;border-bottom:1px solid var(--cor-filete);font-size:1rem;line-height:1.5;color:var(--cor-texto)}
 .pane__lista li::before{content:"";position:absolute;left:0;top:1.3em;width:10px;height:1px;background:var(--cor-deco)}
 
-.atlas__rodape{margin-top:48px;padding-top:24px;border-top:1px solid var(--cor-filete)}
+/* link do PRP no pé da seção, fora da ficha (o PRP não é caminho para mão e punho): filete curto no alto */
+.atlas__rodape{margin-top:64px;padding-top:24px;background:linear-gradient(var(--fio-escuro),var(--fio-escuro)) top left/48px 1px no-repeat}
 
 /* ==========================================================================
    5. ENTENDA SEUS SINTOMAS (questionário)
@@ -237,24 +259,23 @@
 .quiz{max-width:720px}
 .quiz__topo{display:flex;align-items:flex-end;gap:20px;padding-bottom:18px}
 .quiz__gonio{width:132px;flex:none}
-.quiz__passo{padding-bottom:4px;font-size:.9375rem;color:var(--cor-suave)}
+.quiz__passo{padding-bottom:4px;font-size:var(--t-nota,.9375rem);color:var(--cor-suave)}
 .quiz__passo b{font-weight:500;color:var(--cor-titulo)}
 .quiz__corpo{min-height:420px}
 @media (max-width:599px){.quiz__corpo{min-height:0}}
-.quiz__pergunta{font-size:clamp(1.75rem,2.4vw,2.125rem);line-height:1.15;outline:none}
+.quiz__pergunta{font-size:var(--t-h3,2.25rem);line-height:1.15;outline:none}
 .quiz__ajuda{margin-top:8px;color:var(--cor-texto)}
 .qopts{margin-top:24px}
-.qopt{font-size:1.0625rem;line-height:1.35}
-.qopt small{font-size:.9rem}
+.qopt{font-size:var(--t-corpo,1.0625rem);line-height:1.35}
+.qopt small{font-size:var(--t-nota,.9375rem)}
 .qstep.on{animation:folha 260ms var(--ease)}
 .quiz__pe{min-height:52px;padding-top:12px}
-.quiz__voltar{min-height:44px;font-size:.9375rem;font-weight:500;color:var(--cor-titulo);text-decoration:underline;text-decoration-color:var(--cor-destaque);text-underline-offset:.3em}
+.quiz__voltar{min-height:44px;font-size:var(--t-nota,.9375rem);font-weight:500;color:var(--cor-titulo);text-decoration:underline;text-decoration-color:var(--cor-destaque);text-underline-offset:.3em}
 .quiz__voltar:hover{text-decoration-thickness:2px}
-.quiz__voltar:disabled{opacity:.5}
 .qres__pre{font-family:var(--serif);font-style:italic;font-size:1.25rem;line-height:1.2;color:var(--cor-destaque)}
 .qres__nome{margin-top:6px;font-size:clamp(2rem,3vw,2.5rem);line-height:1.1;outline:none}
 .qres__texto{margin-top:14px;max-width:58ch}
-.qres__alerta{margin-top:16px;padding:14px 16px;border:1px solid var(--cor-filete-forte);border-radius:var(--raio);max-width:58ch;color:var(--cor-titulo)}
+.qres__alerta{margin-top:16px;padding:14px 16px;border:1px solid var(--fio-claro-forte);border-radius:var(--raio);max-width:58ch;color:var(--cor-titulo)}
 .qres .pane__lista{margin-top:10px}
 .qres__resumo{margin-top:0;border-top:0}
 .qres__resumo>summary{font-size:1.25rem;min-height:56px;padding-block:12px}
@@ -331,7 +352,7 @@
 .trilha__nav{display:flex;justify-content:space-between;gap:16px;margin-top:16px}
 .trilha__seta{min-height:44px;font-size:.9375rem;font-weight:500;color:var(--tinta);text-decoration:underline;text-decoration-color:rgba(126,106,56,.55);text-underline-offset:.3em}
 .trilha__seta:hover{text-decoration-thickness:2px}
-.trilha__seta:disabled{opacity:.35;text-decoration:none;cursor:default}
+.trilha__seta:disabled{text-decoration:none;cursor:default}
 @media (min-width:700px) and (max-width:1099px){
   .trilha__painel{grid-template-columns:auto minmax(0,1fr)}
   .trilha__seguinte{grid-column:2;padding:18px 0 0;border-left:0;border-top:1px solid rgba(126,106,56,.25)}
@@ -347,30 +368,8 @@
 }
 
 /* ==========================================================================
-   8. COMO É A CONSULTA (régua com quatro marcas)
+   8. COMO É A CONSULTA e ONDE ATENDE: em home-alt.css, seção 6.
    ========================================================================== */
-.consulta__passos{counter-reset:passo;display:grid;gap:28px}
-.consulta__passos>li{position:relative;padding-left:56px}
-.consulta__passos>li::before{content:counter(passo);counter-increment:passo;position:absolute;left:0;top:-4px;
-  font-family:var(--serif);font-style:italic;font-size:2.125rem;line-height:1;color:var(--cor-destaque)}
-.consulta__passos h3{font-size:1.5rem;line-height:1.2}
-.consulta__passos h3+p{margin-top:6px;max-width:34ch}
-.steps-line{display:none}
-@media (min-width:900px){
-  .steps{margin-top:16px}
-  .steps-line{display:block;position:relative;height:18px;margin-bottom:28px;border-bottom:1px solid var(--cor-filete-forte);
-    background:repeating-linear-gradient(90deg,var(--cor-filete-forte) 0 1px,transparent 1px 16px) left bottom/100% 7px no-repeat}
-  .steps-line i{position:absolute;left:0;bottom:-1px;width:100%;height:1px;background:var(--cor-destaque)}
-  .consulta__passos{grid-template-columns:repeat(4,minmax(0,1fr));column-gap:var(--calha)}
-  .consulta__passos>li{padding-left:0;padding-top:52px}
-  .consulta__passos>li::before{top:0}
-  .consulta__passos>li::after{content:"";position:absolute;left:0;top:-46px;width:1px;height:18px;background:var(--cor-destaque)}
-}
-
-
-
-/* "Onde atende" (componente do site.css) vem depois da consulta, no mesmo capítulo */
-#atendimento .onde{margin-top:clamp(80px,10vw,136px)}
 
 /* ==========================================================================
    Movimento reduzido: fichas trocam de face sem girar; nada desliza sozinho
@@ -384,8 +383,8 @@
 }
 html.motion-paused .hs.on b::after{animation:none}
 @media print{
-  .inicio__foto,.inicio::after{display:none}
-  .manifesto__trilho{height:auto}.manifesto__palco{position:relative;height:auto}
+  .inicio__foto{display:none}
+  .manifesto__trilho{height:auto}.manifesto__palco{position:relative;height:auto;min-height:0}
 }
 
 /* ==========================================================================
@@ -396,21 +395,14 @@ html.motion-paused .hs.on b::after{animation:none}
    ========================================================================== */
 @media (max-width:699px){
 
-  /* capa: duas linhas exatas ("Cuidado para os gestos" / "que fazem sua vida.") */
-  .inicio .t-hero{font-size:min(calc((100vw - 32px) / 9.25),2.875rem)}
-  .inicio .capa__grade{padding-block:6px 44px}
-  .inicio .t-lead{text-wrap:balance}
-  .inicio .acoes{margin-top:28px}
-  .inicio .capa__id{margin-top:36px}
-
   /* frase da marca: cena centrada entre o topo e a barra de agendar */
   .manifesto__palco{padding:24px var(--margem) 84px}
   .manifesto__arco .gonio__num{display:none}
   .manifesto__frase{margin-bottom:40px}
   .manifesto__graus{margin-top:10px}
   .manifesto__valores{margin-top:48px;gap:10px}
-  .manifesto__valores strong{font-size:1.3125rem}
-  .manifesto__valores span{font-size:.875rem;line-height:1.4}
+  .manifesto__valores strong{font-size:var(--t-lead,1.3125rem)}
+  .manifesto__valores span{font-size:var(--t-micro,.8125rem);line-height:1.4;text-wrap:balance}
   .manifesto--estatico .manifesto__palco{padding-block:80px}
 
   /* onde dói: legenda ao centro, ficha da condição como folha emoldurada */
@@ -422,7 +414,7 @@ html.motion-paused .hs.on b::after{animation:none}
   .pane__oque{margin-top:20px;font-size:1.0625rem}
   .pane h4{margin-top:28px}
   .pane__mais{margin-inline:-22px;padding-inline:22px;border-bottom:0}
-  .atlas__rodape{margin-top:32px;padding-top:0;border-top:0;text-align:center}
+  .atlas__rodape{margin-top:40px;text-align:center;background-position:top center}
 
   /* questionário: progresso e pergunta ao centro, opções como fichas */
   .quiz{margin-inline:auto}
@@ -432,10 +424,11 @@ html.motion-paused .hs.on b::after{animation:none}
   .quiz__pergunta,.quiz__ajuda{text-align:center}
   .quiz__ajuda{max-width:30ch;margin-inline:auto}
   .qopts{display:grid;gap:10px;margin-top:22px;border-top:0}
-  .qopt{border:1px solid rgba(126,106,56,.26);border-radius:2px;background:rgba(255,255,255,.42)}
+  .qopt{border:1px solid var(--fio-claro);border-radius:2px;background:rgba(236,229,214,.55)}
   .quiz__pe{display:flex;justify-content:center}
-  .qres__pre,.qres__nome,.qres__texto{text-align:center}
-  .qres__texto{margin-inline:auto}
+  .qres__pre,.qres__nome,.qres__texto,.qres h4,.qres__nota{text-align:center}
+  .qres__texto,.qres__nota{margin-inline:auto;text-wrap:balance}
+  .qres__alerta{margin-inline:auto;text-align:center;text-wrap:balance}
   .qres__acoes{align-items:stretch}
 
   /* caminhos: painel ao centro */
@@ -456,27 +449,18 @@ html.motion-paused .hs.on b::after{animation:none}
   .medico__texto>.t-lead::after{content:"";display:block;width:32px;height:1px;margin:24px auto 4px;background:var(--champanhe)}
   .medico__texto>.link{display:flex;width:fit-content;margin-inline:auto}
 
-  /* como é a consulta: passos ao centro, ligados por um ponto de sutura */
-  .consulta__passos{gap:0}
-  .consulta__passos>li{padding:0;text-align:center}
-  .consulta__passos>li::before{position:static;display:block;margin-bottom:10px}
-  .consulta__passos>li:not(:last-child)::after{content:"";display:block;width:1px;height:30px;margin:20px auto;
-    background:repeating-linear-gradient(180deg,rgba(126,106,56,.55) 0 4px,transparent 4px 8px)}
-  .consulta__passos h3+p{max-width:30ch;margin-inline:auto}
-
-  /* onde atende vem logo depois da consulta, no mesmo capítulo */
-  #atendimento .onde{margin-top:80px}
+  /* textos curtos centrados: sem última linha curta */
+  .quiz__ajuda,.mao>.mao__legenda,.atlas__rodape{text-wrap:balance}
 }
 @media (max-width:359px){
   .manifesto__valores{gap:8px}
-  .manifesto__valores strong{font-size:1.125rem}
-  .manifesto__valores span{font-size:.8125rem}
+  .manifesto__valores strong{font-size:var(--t-legenda,1.125rem)}
 }
 @media (max-width:699px) and (max-height:720px){
   /* tela baixa (iPhone SE): a cena da frase cabe sem cortar */
-  .manifesto__peca{width:min(100%,300px);margin-inline:auto}
+  .manifesto__arco{width:min(100%,300px)}
   .manifesto__frase{margin-bottom:28px}
-  .manifesto__valores{margin-top:32px}
+  .manifesto__valores{margin-top:44px}
   .manifesto__valores span{display:none}
 }
 
@@ -494,6 +478,9 @@ html.motion-paused .hs.on b::after{animation:none}
   .pane__sinais li::before{position:relative;left:auto;top:auto;display:inline-block;margin-right:10px;vertical-align:.08em}
   .pane__conforme{text-align:center;text-wrap:balance}
   .pane__nota{margin-inline:auto;padding:14px 0 0;border-left:0;border-top:1px solid var(--champanhe);text-align:center;text-wrap:balance}
+  .pane__mais>summary{justify-content:center;text-align:center}
+  .pane__lista li{padding:12px 4px;text-align:center;text-wrap:balance}
+  .pane__lista li::before{position:relative;left:auto;top:auto;display:inline-block;margin-right:10px;vertical-align:.3em}
 }
 @media (max-width:599px){
   /* trilha da condição: etapas empilhadas no eixo, ligadas por um ponto de sutura */

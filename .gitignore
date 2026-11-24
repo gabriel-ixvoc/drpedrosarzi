@@ -27,3 +27,9 @@ Gravacoes/
 
 # Logo em PNG de alta resolução: só para os geradores locais (OG, kit); o site usa o simbolo-ouro.webp
 assets/brand/simbolo-ouro.png
+
+# Gestão do consultório (indicadores da clínica, análises para o Dr.): dados internos, nunca vão para o GitHub
+gestao/
+
+# Configuração local do Claude Code (launch.json): fora do GitHub
+.claude/

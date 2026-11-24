@@ -1,29 +1,98 @@
-/* Acabamento da alternativa de perfil; preserva fio e relato de dr.js. */
+/* Acabamento do /dr/ sobre o dr.css; preserva fio e relato de dr.js.
+   Carregado antes do alt.css: as regras das pranchas usam .sinais--foto.sinais--prancha
+   para passar na frente das da ficha com foto. */
 .medico__figura{isolation:isolate}
-.placa-reg,.fio__ficha{background-image:url("../brand/papel.svg");background-color:var(--marfim)}
-.fio__ficha{padding:clamp(24px,3vw,38px)}
-.fio__no{box-shadow:0 0 0 5px rgba(126,106,56,.08)}
-.fio__marco.on .fio__no{box-shadow:0 0 0 7px rgba(126,106,56,.13),0 8px 22px -18px var(--ouro-profundo)}
 .atende{isolation:isolate}
+/* A marca-d'água do "Como ele atende" (no vazio ao lado da cabeça do capítulo, acima do
+   passo 1) mora no tema.css desde 23/11/2026. */
 .relato{column-gap:clamp(42px,5vw,84px)}
-.relato__cenas .relato__cena{filter:saturate(.82) contrast(1.035)}
-.relato__legenda{padding:12px 4px 2px;font-family:var(--serif);font-style:italic;font-size:1.05rem;color:var(--texto-escuro)}
 .relato__passo{position:relative}
-.relato__passo::before{content:"";position:absolute;left:-22px;top:50%;width:8px;height:8px;border:1px solid var(--champanhe);border-radius:50%;transform:translateY(-50%);opacity:.35;transition:opacity .3s,background-color .3s}
+.relato__passo::before{content:"";position:absolute;left:-22px;top:50%;width:8px;height:8px;border:1px solid var(--champanhe);border-radius:50%;transform:translateY(-50%);opacity:.5;transition:opacity 250ms var(--ease),background-color 250ms var(--ease)}
 .relato__passo.on::before{background:var(--champanhe);opacity:1}
-.atende__citacao{max-width:800px}
 @media(min-width:900px){
   .relato__passo{padding-inline:14px}
   .relato__passo::before{left:-18px}
 }
 @media(max-width:899px){
+  .relato__passo::before{display:none}
+}
+@media(max-width:599px){
   .relato__passos{gap:58px}
   .relato__foto{max-width:min(100%,400px)}
   .relato__foto .quadro__passe{aspect-ratio:4 / 4.6}
-  .relato__passo::before{display:none}
+}
+/* tablet e celular deitado: imagem ao lado do texto (dr.css), passos mais próximos */
+@media(min-width:600px) and (max-width:899px),(orientation:landscape) and (max-height:500px) and (max-width:899px){
+  .relato__passos{gap:48px}
 }
 @media(max-width:359px){
   .relato__foto .quadro__passe{aspect-ratio:1 / 1.12}
   .fio__ficha{padding:20px 16px}
 }
-@media(prefers-reduced-motion:reduce){.fio__no,.relato__passo::before{transition:none}}
+
+/* ==========================================================================
+   Áreas de atuação: pranchas de gravura (.sinais--prancha, 23/11/2026)
+   Filetes, escala do verso e hover da ficha vêm do alt.css (a mesma peça nas três páginas);
+   aqui só o que é da gravura. A frente ganha a trama e a luz quente no alto do carvão, com a
+   mão inteira em traço champanhe e, em hachura, a região onde a queixa aparece (desenhos no
+   sprite da página: #pmNervo, #pmDedo, #pmPunho, #pmCaroco, #pmQueda, #pmCorte; sem nervo,
+   tendão, osso ou articulação desenhados até o Dr. Pedro conferir: a versão com esses
+   detalhes está em tmp/arquivo-morto/site/dr/). "Fig. 2" a "Fig. 7" seguem a Fig. 1 do
+   relato. O verso repete a mão, pequena, só quando sobra vão de verdade (dr.js marca
+   .sinal__vao--curto em todas quando o vão de alguma fica pequeno demais).
+   ========================================================================== */
+.sinais--foto.sinais--prancha .sinal__frente{
+  background:radial-gradient(120% 70% at 50% 18%,rgba(216,192,138,.075),rgba(216,192,138,0) 62%),url("../brand/carvao.svg") 0 0/320px 320px,var(--carvao)}
+.sinais--foto.sinais--prancha .sinal__media::after{display:none}
+.sinais--prancha .sinal__prancha{position:absolute;left:0;right:0;top:9%;width:100%;height:calc(88% - 8.5rem);overflow:visible;
+  -webkit-mask:linear-gradient(180deg,#000 66%,transparent 97%);mask:linear-gradient(180deg,#000 66%,transparent 97%);
+  transform-origin:50% 45%;transition:transform 250ms var(--ease)}
+.sinais--prancha .sinal__fig{position:absolute;top:20px;left:24px;pointer-events:none;font-family:var(--serif);font-style:italic;font-weight:400;font-size:var(--t-legenda,1.125rem);line-height:1;color:var(--champanhe)}
+/* Traços do desenho (classes no sprite do dr/index.html). --k = 1 / aumento: dentro da lupa
+   o desenho cresce, mas a linha, o pontilhado e a hachura ficam na espessura da prancha. */
+.pm-mao{stroke-width:calc(1.6px * var(--k,1))}
+.pm-zona{stroke-width:calc(1.5px * var(--k,1));stroke-dasharray:calc(4px * var(--k,1))}
+.pm-contorno{stroke-width:calc(1.5px * var(--k,1))}
+.pm-traco-fino{stroke-width:calc(1.4px * var(--k,1))}
+.pm-traco{stroke-width:calc(2px * var(--k,1))}
+.pm-traco-forte{stroke-width:calc(2.2px * var(--k,1))}
+.pm-hach{fill:var(--hach,url(#pmHach))}
+/* Lupa de detalhe (Fig. 2 a 7, só na frente): marca fina na mão, linha-guia e o círculo com
+   filete duplo, como a prancha (champanhe .9 por fora, .16 por dentro). */
+.pm-lupa__marca{fill:none;stroke:var(--champanhe);stroke-width:1;opacity:.7}
+.pm-lupa__guia{fill:none;stroke:var(--champanhe);stroke-width:1;opacity:.55}
+.pm-lupa__fundo{fill:var(--carvao)}
+.pm-lupa__aro{fill:none;stroke:var(--champanhe);stroke-width:1.5;opacity:.9}
+.pm-lupa__aro2{fill:none;stroke:var(--champanhe);stroke-width:1;opacity:.16}
+/* sem foto atrás: o subtítulo não reserva altura e o + não precisa de fundo */
+.sinais--foto.sinais--prancha .sinal__sub{min-height:0}
+.sinais--foto.sinais--prancha .sinal__mais{background:transparent}
+/* verso: a mão pequena ocupa o vão entre o texto e os links */
+.sinais--prancha .sinal__vao{display:flex;flex:1 1 0;align-items:center;justify-content:center;min-height:0;margin-block:14px 4px}
+.sinais--prancha .sinal__vao svg{display:block;width:100%;height:var(--vao-h,0px);max-height:100%;overflow:visible;opacity:.78;
+  -webkit-mask:linear-gradient(180deg,#000 62%,transparent 96%);mask:linear-gradient(180deg,#000 62%,transparent 96%)}
+.sinais--prancha .sinal__vao--curto{visibility:hidden}
+.sinais--prancha .sinal__vao+.sinal__liga{margin-top:0}
+@media (hover:hover){
+  .sinais--foto.sinais--prancha .sinal:hover .sinal__mais{background:rgba(216,192,138,.08);border-color:var(--champanhe)}
+}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  html:not(.motion-paused) .sinais--prancha .sinal:hover .sinal__prancha{transform:scale(1.03)}
+}
+/* as colunas (três a partir de 900 px, duas de 600 a 899) vêm do site.css e do alt.css */
+@media (min-width:900px) and (max-width:1199px){
+  .sinais--foto.sinais--prancha .sinal__frente{padding:22px 18px}
+}
+/* carrossel do celular (em pé e deitado): Fig. no eixo, como o título */
+@media (max-width:599px),(orientation:landscape) and (max-height:500px) and (max-width:899px){
+  .sinais--prancha .sinal__fig{left:50%;transform:translateX(-50%);top:18px}
+  .sinais--prancha .sinal__prancha{top:12%;height:calc(86% - 8.5rem)}
+}
+/* 320 a 359 px: a ficha fica um pouco mais alta, para nada transbordar (o verso mais justo
+   vem do alt.css, igual nas três páginas) */
+@media (max-width:359px){
+  .sinais--foto.sinais--prancha .sinal__giro{min-height:140cqi}
+}
+@media (prefers-reduced-motion:reduce){
+  .relato__passo::before,.sinais--prancha .sinal__prancha{transition:none}
+}

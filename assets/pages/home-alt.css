@@ -1,189 +1,435 @@
 /* ==========================================================================
-   Home, camada da versão 2 (out/2026), carregada depois de home.css. Peças em
-   comum com /dr/ e /prp/ em alt.css. Contexto em docs/site.md, seção "Versão 2 (out/2026)".
+   Home, camada final (carregada depois de home.css e tema.css; alt.css vem por
+   último com as peças das três páginas). Aqui ficam a capa, a composição de
+   cada capítulo e a régua da consulta. Revisão "Atlas da mão, edição de luxo
+   contido" (23/11/2026): uma regra por peça, sem sobrescrita repetida.
+   Escala e superfícies vêm do site.css (--t-*, --ritmo, --fio-*, .moldura).
+   Contexto em docs/site.md ("Versão 2" e "Páginas e seções").
    ========================================================================== */
-/* Direcao visual da home alternativa; o restante do site usa os estilos originais. */
-.inicio{min-height:min(90svh,850px)}
-.inicio__foto img{object-position:62% 50%}
-.inicio::after{background:linear-gradient(90deg,rgba(8,8,10,.94),rgba(8,8,10,.78) 30%,rgba(8,8,10,.2) 63%,rgba(8,8,10,0) 86%),linear-gradient(0deg,rgba(8,8,10,.8),transparent 32%)}
-.inicio .t-hero{max-width:17ch;line-height:1.04}
-.inicio .inicio__frase{max-width:32ch;font-family:var(--serif);font-size:clamp(1.55rem,2.2vw,1.9rem);line-height:1.2;color:var(--champanhe)}
-.inicio .t-lead{max-width:41ch}
-.inicio .capa__id{margin-top:56px}
-.manifesto__trilho{height:210svh}
-#sinais{background:url("../brand/papel.svg") 0 0/640px 640px,#dddcd6}
-#atendimento{background:#f1f0ed}
-#sinais,#tratamentos,#diagnostico,#medico,#caminhos,#atendimento{padding-block:clamp(84px,9vw,128px)}
-#sinais .secao__cabeca{margin-bottom:44px}
-#sinais .secao__cabeca .t-lead{max-width:45ch}
-  #sinais [data-sinal="caroco"] .sinal__media img{object-position:center 10%}
-#tratamentos{isolation:isolate}
-#tratamentos::before{content:"";position:absolute;inset:0 0 auto;height:min(35vw,380px);background:url("../../imagensnovas/hero-mao-05-panoramica.webp") right center/cover no-repeat;opacity:.3;pointer-events:none;-webkit-mask-image:linear-gradient(#000 0%,transparent 100%);mask-image:linear-gradient(#000 0%,transparent 100%)}
-#tratamentos>.wrap{position:relative;z-index:1}
-#diagnostico .cap__margem .quiz__imagem{position:relative;width:100%;max-width:340px;aspect-ratio:5 / 4;margin:24px 0 0;overflow:hidden;border:1px solid rgba(126,106,56,.32);background:var(--linho)}
-#diagnostico .quiz__imagem img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 70%}
-#diagnostico .quiz__imagem figcaption{position:absolute;inset:auto 0 0;margin:0;padding:24px 18px 12px;background:linear-gradient(0deg,rgba(8,8,10,.82),transparent);font-family:var(--serif);font-size:1.05rem;font-style:italic;line-height:1.3;color:var(--marfim)}
+
+/* ==========================================================================
+   1. CAPA: foto da mão, frase da marca e uma base só
+   Primeira dobra cheia: min(100svh − cabeçalho, 1240 px), conteúdo assentado
+   na base (o teto era 1000 px; em janela deitada com mais de 1077 px de altura,
+   como 2560 × 1305, ele deixava uma faixa marfim no pé da tela). A base é a
+   linha de identificação com as credenciais, parada.
+   Foto no <picture>: hero-mao-02 (1672 × 941, o maior original que existe) e,
+   no celular em retrato, o recorte hero-mao-02-cel (1240 × 893, pixel a pixel
+   do original). A foto nunca é ampliada além de 1×: fica numa caixa de no
+   máximo 1672 × 941 presa no alto, à direita, e onde a capa é maior (janela com
+   1690 px de largura ou mais de 1006 px de altura) ela se funde no carvão pela
+   esquerda e pela base, por máscara, em vez de crescer.
+   ========================================================================== */
+.inicio{display:grid;align-items:end;min-height:min(calc(100vh - var(--hdr-h)),1240px);padding-block:0;overflow:hidden;overflow:clip;background:var(--carvao)}
+@supports (height:1svh){.inicio{min-height:min(calc(100svh - var(--hdr-h)),1240px)}}
+.inicio__foto{position:absolute;inset:0;z-index:-1;overflow:hidden}
+.inicio__foto picture{position:absolute;top:0;right:0;display:block;width:min(100%,1672px);height:min(100%,941px)}
+.inicio__foto img{display:block;width:100%;height:100%;object-fit:cover;object-position:62% 50%;filter:var(--trato-ilustracao,saturate(.9) contrast(1.02))}
+/* rótulo da arte (é ilustração conceitual gerada, como os sinais): legenda de figura do atlas, no
+   canto inferior direito da área da foto, na linha da identificação */
+.inicio__rotulo{position:absolute;right:max(var(--margem),(100% - var(--largura)) / 2);bottom:56px;z-index:1;
+  font-family:var(--serif);font-style:italic;font-weight:400;font-size:var(--t-legenda,1.125rem);line-height:1.2;color:var(--texto-escuro);white-space:nowrap}
+/* onde a capa é maior que a foto, ela se funde no carvão: o comprimento do degradê acompanha a
+   sobra (some quando ela é pequena, como os 6 px de 1366 × 1024) e chega a 38% da largura e a 24% da
+   altura da foto */
+@media (min-width:1690px),(min-width:900px) and (min-height:1007px){
+  .inicio__foto picture{
+    --fade-x:clamp(0px,(100vw - 1672px) * 3,38%);
+    --fade-y:clamp(0px,(min(100vh - var(--hdr-h),1240px) - 941px) * 3,24%);
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 var(--fade-x)),linear-gradient(0deg,transparent,#000 var(--fade-y));
+    -webkit-mask-composite:source-in;
+    mask-image:linear-gradient(90deg,transparent,#000 var(--fade-x)),linear-gradient(0deg,transparent,#000 var(--fade-y));
+    mask-composite:intersect}
+  @supports (height:1svh){.inicio__foto picture{--fade-y:clamp(0px,(min(100svh - var(--hdr-h),1240px) - 941px) * 3,24%)}}
+}
+/* véu: escuro à esquerda (texto), aberto sobre a mão, base escura para a identificação */
+.inicio__foto::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(8,8,10,.94) 0%,rgba(8,8,10,.8) 30%,rgba(8,8,10,.22) 63%,rgba(8,8,10,0) 86%),
+    linear-gradient(0deg,rgba(8,8,10,.82) 0%,rgba(8,8,10,0) 32%)}
+.inicio .capa__grade{padding-block:64px 56px}
+.inicio__texto{min-width:0;max-width:620px}
+.inicio #inicio-titulo{max-width:none;margin:0;font-weight:300;font-size:var(--t-display,4.875rem);line-height:1;letter-spacing:var(--trk-display);color:var(--marfim)}
+.inicio #inicio-titulo .rise{display:block;overflow:visible}
+/* cada linha é um bloco (a quebra desenhada); white-space normal deixa a linha quebrar em vez de sair
+   da tela quando o leitor aumenta a fonte ou o espaçamento (WCAG 1.4.4 e 1.4.12) */
+.inicio #inicio-titulo .rise>span{display:inline-block;max-width:100%;white-space:normal}
+.inicio #inicio-titulo .inicio__destaque{font-weight:400;font-style:italic;color:var(--champanhe)}
+.inicio .t-lead{max-width:44ch;margin-top:24px;text-wrap:balance}
+.inicio .acoes{margin-top:40px}
+.inicio .t-lead.abre{--atraso:420ms}
+.inicio .acoes.abre{--atraso:520ms}
+.inicio .inicio__base.abre{--atraso:640ms}
+
+/* base: um filete na largura do bloco de texto; credenciais e identificação */
+.inicio__base{width:min(100%,35rem);margin-top:64px;padding-top:20px;border-top:1px solid var(--cor-filete)}
+.inicio__base .capa__id{margin-top:12px;padding-top:0;border-top:0}
+.inicio__cred{display:flex;flex-wrap:wrap;row-gap:6px;margin:0;padding:0;list-style:none;
+  font-family:var(--sans);font-weight:400;font-size:var(--t-micro,.8125rem);line-height:1.3;color:var(--marfim)}
+.inicio__cred li{white-space:nowrap}
+.inicio__cred li+li{margin-left:16px;padding-left:16px;border-left:1px solid var(--fio-escuro)}
+@media (min-width:900px){
+  .inicio__texto{grid-column:1 / 8}
+}
+/* notebook (janela deitada de até 820 px de altura, como 1366 × 657 ou 1280 × 689): o título
+   acompanha a altura e os respiros encolhem em proporção (os valores de sempre em 820 px e os
+   mínimos em 600 px), para a base, com credenciais e identificação, caber na primeira dobra */
+@media (min-width:900px) and (orientation:landscape) and (max-height:820px){
+  .inicio .capa__grade{padding-block:clamp(24px,18.2vh - 85px,64px) clamp(20px,16.4vh - 78px,56px)}
+  .inicio #inicio-titulo{font-size:min(var(--t-display,4.875rem),11vh)}
+  .inicio .t-lead{margin-top:clamp(12px,5.45vh - 20px,24px)}
+  .inicio .acoes{margin-top:clamp(20px,9.1vh - 34px,40px)}
+  .inicio__base{margin-top:clamp(24px,18.2vh - 85px,64px);padding-top:clamp(12px,3.64vh - 10px,20px)}
+  .inicio__base .capa__id{margin-top:clamp(8px,1.82vh - 3px,12px)}
+  @supports (height:1svh){
+    .inicio .capa__grade{padding-block:clamp(24px,18.2svh - 85px,64px) clamp(20px,16.4svh - 78px,56px)}
+    .inicio #inicio-titulo{font-size:min(var(--t-display,4.875rem),11svh)}
+    .inicio .t-lead{margin-top:clamp(12px,5.45svh - 20px,24px)}
+    .inicio .acoes{margin-top:clamp(20px,9.1svh - 34px,40px)}
+    .inicio__base{margin-top:clamp(24px,18.2svh - 85px,64px);padding-top:clamp(12px,3.64svh - 10px,20px)}
+    .inicio__base .capa__id{margin-top:clamp(8px,1.82svh - 3px,12px)}
+  }
+}
+
+/* Faixa: celular e tablet em pé (e o computador em retrato até 1199 px, como o iPad Pro em pé).
+   Janela deitada nunca empilha: de 600 a 899 px com mais de 500 px de altura ela usa a composição
+   do celular deitado, mais adiante.
+   A foto vem numa faixa no alto e o texto no eixo logo abaixo; a capa enche a primeira dobra e a
+   faixa cresce até o texto assentar no pé (nunca encolhe abaixo do mínimo). A foto se funde no
+   carvão com trama do fundo da capa (máscara), sem a emenda de um degradê para o carvão liso. */
+@media (max-width:1199px) and (orientation:portrait){
+  .inicio{display:flex;flex-direction:column;align-items:stretch;min-height:calc(100vh - var(--hdr-h))}
+  @supports (height:1svh){.inicio{min-height:calc(100svh - var(--hdr-h))}}
+  /* a faixa da foto também respeita a altura: o texto e a base (cerca de 446 px + 13,9vw, medidos de
+     744 a 1199 px) cabem na primeira dobra em janelas em pé baixas, como 900 × 900 ou 768 × 954 */
+  .inicio__foto{position:relative;inset:auto;z-index:0;flex:1 0 auto;min-height:max(200px,min(62vw,440px,100vh - var(--hdr-h) - 446px - 13.9vw))}
+  @supports (height:1svh){.inicio__foto{min-height:max(200px,min(62vw,440px,100svh - var(--hdr-h) - 446px - 13.9vw))}}
+  .inicio__foto picture{width:100%;height:min(100%,941px);
+    -webkit-mask-image:linear-gradient(0deg,transparent 0%,rgba(0,0,0,.6) 22%,#000 50%);
+    -webkit-mask-composite:source-over;
+    mask-image:linear-gradient(0deg,transparent 0%,rgba(0,0,0,.6) 22%,#000 50%);mask-composite:add}
+  .inicio__foto::after{display:none}
+  .inicio .capa__grade{flex:none;padding-block:8px 56px}
+  .inicio__texto{grid-column:1 / -1;max-width:none;text-align:center}
+  .inicio #inicio-titulo{font-size:calc(var(--t-display,2.5rem) * 1.1);line-height:1.02;text-align:center}
+  .inicio .t-lead{max-width:34ch;margin-inline:auto;text-wrap:balance}
+  .inicio .acoes{justify-content:center;margin-top:32px}
+  .inicio__base{width:100%;margin-top:40px;padding-top:20px}
+  .inicio__cred{justify-content:center}
+  .inicio__base .capa__id{text-align:center}
+}
+/* celular em pé: só a identificação na base (as credenciais estão no menu e no "O médico") */
+@media (max-width:599px){
+  .inicio__cred{display:none}
+  .inicio__base .capa__id{margin-top:0}
+}
+/* celular e tablet pequeno em pé: o recorte do celular (hero-mao-02-cel) */
+@media (max-width:699px) and (orientation:portrait){
+  .inicio__foto img{object-position:50% 50%}
+}
+@media (max-width:599px) and (orientation:portrait){
+  /* a faixa também cede à altura: título, lead, chamadas e identificação (cerca de 490 px, mais um
+     respiro) cabem na primeira dobra de 721 a 900 px de altura útil (430 × 746, 412 × 830) */
+  .inicio__foto{min-height:max(160px,min(72vw,460px,100vh - var(--hdr-h) - 506px))}
+  @supports (height:1svh){.inicio__foto{min-height:max(160px,min(72vw,460px,100svh - var(--hdr-h) - 506px))}}
+  /* com a faixa cedendo à altura (160 a 220 px de 721 a ~790 px), o recorte do meio mostrava só o
+     dorso: o mesmo recorte baixo do celular baixo mantém os dedos apoiados na faixa */
+  .inicio__foto img{object-position:50% 88%}
+  .inicio .t-lead{max-width:32ch;margin-top:18px}
+}
+/* de 540 a 599 px o título cresce com a largura e o texto passa a cerca de 515 px: reserva maior
+   para a identificação entrar inteira (599 × 900, 580 × 820) */
+@media (min-width:540px) and (max-width:599px) and (orientation:portrait){
+  .inicio__foto{min-height:max(160px,min(72vw,460px,100vh - var(--hdr-h) - 532px))}
+  @supports (height:1svh){.inicio__foto{min-height:max(160px,min(72vw,460px,100svh - var(--hdr-h) - 532px))}}
+}
+/* celular baixo (iPhone SE e telas de até 720 px de altura útil, como 430 × 704): a faixa encolhe
+   para o botão entrar na primeira tela */
+@media (max-width:599px) and (orientation:portrait) and (max-height:720px){
+  .inicio__foto{min-height:28vh}
+  @supports (height:1svh){.inicio__foto{min-height:28svh}}
+  .inicio__foto img{object-position:50% 88%}
+  .inicio .capa__grade{padding-top:4px}
+  .inicio .t-lead{margin-top:16px}
+  .inicio .acoes{margin-top:24px}
+}
+/* de 695 a 720 px de altura a faixa de 28svh deixava a identificação cortada pela borda da tela
+   (360 × 700, 412 × 710): aqui a faixa cede o que falta para ela entrar inteira (texto compacto,
+   cerca de 470 px); abaixo de 695 px ela fica toda depois da dobra, com o botão e o link à vista */
+@media (max-width:599px) and (orientation:portrait) and (min-height:695px) and (max-height:720px){
+  .inicio__foto{min-height:calc(100vh - var(--hdr-h) - 490px)}
+  @supports (height:1svh){.inicio__foto{min-height:calc(100svh - var(--hdr-h) - 490px)}}
+}
+@media (min-width:540px) and (max-width:599px) and (orientation:portrait) and (min-height:695px) and (max-height:720px){
+  .inicio__foto{min-height:calc(100vh - var(--hdr-h) - 514px)}
+  @supports (height:1svh){.inicio__foto{min-height:calc(100svh - var(--hdr-h) - 514px)}}
+}
+/* 320 × 568 (iPhone SE de 1ª geração): faixa de 24svh para o link "Entenda seus sintomas" entrar
+   inteiro sob o botão */
+@media (max-width:359px) and (orientation:portrait) and (max-height:600px){
+  .inicio__foto{min-height:24vh}
+  @supports (height:1svh){.inicio__foto{min-height:24svh}}
+}
+/* celular deitado e janela deitada estreita (até 899 px de largura com mais de 500 px de altura, como
+   a meia tela de 683 × 650 ou 800 × 600): a composição do computador (texto sobre a foto, véu à
+   esquerda), medida pela altura para o título, o lead, as chamadas e a identificação caberem na
+   dobra (a mesma faixa em que o /prp/ tem o arranjo próprio da capa) */
+@media (orientation:landscape) and (max-height:500px),(orientation:landscape) and (min-height:501px) and (max-width:899px){
+  .inicio{min-height:calc(100vh - var(--hdr-h))}
+  @supports (height:1svh){.inicio{min-height:calc(100svh - var(--hdr-h))}}
+  .inicio__foto::after{background:
+    linear-gradient(90deg,rgba(8,8,10,.94) 0%,rgba(8,8,10,.82) 34%,rgba(8,8,10,.3) 66%,rgba(8,8,10,0) 90%),
+    linear-gradient(0deg,rgba(8,8,10,.8) 0%,rgba(8,8,10,0) 36%)}
+  .inicio .capa__grade{padding-block:12px 14px}
+  .inicio__texto{grid-column:1 / -1;max-width:min(560px,64%);text-align:left}
+  .inicio #inicio-titulo{font-size:min(3.6rem,9.6vh);text-align:left}
+  @supports (height:1svh){.inicio #inicio-titulo{font-size:min(3.6rem,9.6svh)}}
+  .inicio .t-lead{max-width:50ch;margin:10px 0 0;font-size:1rem;text-wrap:pretty}
+  .inicio .acoes{flex-direction:row;align-items:center;justify-content:flex-start;margin-top:14px}
+  .inicio .acoes>.btn{width:auto}
+  .inicio .acoes>.link{align-self:center}
+  .inicio__base{width:min(100%,35rem);margin-top:16px;padding-top:10px}
+  .inicio__cred{display:none}
+  .inicio__base .capa__id{margin-top:0;text-align:left}
+}
+/* janela deitada estreita com mais de 500 px de altura: há altura para o título no degrau do display
+   (medido pela altura e pela largura, como o do /prp/), o lead na escala do token e as credenciais de
+   volta na base. O bloco tem no mínimo 30rem (credenciais e identificação numa linha cada, sem o
+   filete solto de uma quebra) e o lead fica em 36ch, balanceado; o véu escurece até 42% e abre sobre a mão.
+   Respiros medidos pela altura: os de sempre em 650 px e os mínimos em 501 px (600 × 501, 640 × 520) */
+@media (orientation:landscape) and (min-height:501px) and (max-width:899px){
+  .inicio__foto::after{background:
+    linear-gradient(90deg,rgba(8,8,10,.94) 0%,rgba(8,8,10,.86) 42%,rgba(8,8,10,.4) 70%,rgba(8,8,10,0) 92%),
+    linear-gradient(0deg,rgba(8,8,10,.86) 0%,rgba(8,8,10,0) 42%)}
+  .inicio__texto{max-width:min(560px,max(64%,30rem))}
+  .inicio .capa__grade{padding-block:clamp(12px,6vh - 12px,24px) clamp(16px,4vh,32px)}
+  .inicio #inicio-titulo{font-size:min(var(--t-display),10vh,10vw)}
+  .inicio .t-lead{max-width:36ch;margin-top:clamp(10px,4vh - 10px,16px);font-size:var(--t-lead);text-wrap:balance}
+  .inicio .acoes{margin-top:clamp(16px,5.4vh - 11px,24px)}
+  .inicio__base{margin-top:clamp(16px,5.4vh - 9px,40px);padding-top:clamp(10px,2.7vh - 3px,14px)}
+  .inicio__cred{display:flex}
+  .inicio__base .capa__id{margin-top:8px}
+  @supports (height:1svh){
+    .inicio .capa__grade{padding-block:clamp(12px,6svh - 12px,24px) clamp(16px,4svh,32px)}
+    .inicio #inicio-titulo{font-size:min(var(--t-display),10svh,10vw)}
+    .inicio .t-lead{margin-top:clamp(10px,4svh - 10px,16px)}
+    .inicio .acoes{margin-top:clamp(16px,5.4svh - 11px,24px)}
+    .inicio__base{margin-top:clamp(16px,5.4svh - 9px,40px);padding-top:clamp(10px,2.7svh - 3px,14px)}
+  }
+}
+/* rótulo da arte: no notebook acompanha o respiro da base; na faixa (celular e tablet em pé) fica
+   sob o recorte, à direita, como legenda de figura (fora do eixo do título); deitado até 899 px, na base */
+@media (min-width:900px) and (orientation:landscape) and (max-height:820px){
+  .inicio__rotulo{bottom:clamp(20px,16.4vh - 78px,56px)}
+  @supports (height:1svh){.inicio__rotulo{bottom:clamp(20px,16.4svh - 78px,56px)}}
+}
+@media (max-width:1199px) and (orientation:portrait){
+  .inicio__rotulo{right:var(--margem);bottom:4px}
+}
+@media (orientation:landscape) and (max-height:500px){
+  .inicio__rotulo{bottom:14px;font-size:var(--t-nota,.9375rem)}
+}
+@media (orientation:landscape) and (min-height:501px) and (max-width:899px){
+  .inicio__rotulo{right:var(--margem);bottom:clamp(16px,4vh,32px);font-size:var(--t-nota,.9375rem)}
+  @supports (height:1svh){.inicio__rotulo{bottom:clamp(16px,4svh,32px)}}
+}
+/* até 719 px a identificação chega a 14 px do rótulo na mesma linha (600 × 501): ele sobe para o
+   canto de cima da foto, como legenda de figura, longe do texto */
+@media (orientation:landscape) and (min-height:501px) and (max-width:719px){
+  .inicio__rotulo{top:16px;bottom:auto}
+}
+
+/* ==========================================================================
+   2. RECONHEÇA O SINAL (areia com linho: a .cap--linho do HTML)
+   ========================================================================== */
+#sinais .secao__cabeca{margin-bottom:40px}
+#sinais [data-sinal="caroco"] .sinal__media img{object-position:center 10%}
+/* "Estalo": a ponta do indicador encostava no "+" do canto; a arte desce e vai para a esquerda
+   (as bordas de cima e da direita se fundem, por máscara, ao carvão da ficha, sem emenda) e o zoom do hover continua valendo */
+#sinais [data-sinal="estalo"] .sinal__media img{transform:translate(-8%,8%);
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 9%),linear-gradient(270deg,transparent,#000 7%);-webkit-mask-composite:source-in;
+  mask-image:linear-gradient(180deg,transparent,#000 9%),linear-gradient(270deg,transparent,#000 7%);mask-composite:intersect}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  html:not(.motion-paused) #sinais .sinais--foto [data-sinal="estalo"]:hover .sinal__media img{transform:translate(-8%,8%) scale(1.03)}
+}
+/* verso de "Depois de queda ou corte": o alerta nunca encosta no filete de "Pode estar ligado a"
+   (é a ficha mais longa e a que dá a altura da fileira: o respiro sai do vão entre o texto e o
+   alerta, e a ficha cresce só 2 px, para ficar em 1,4:1 em 1100 px) */
+#sinais .sinal__alerta{margin-bottom:6px}
+@container (max-width:319px){#sinais .sinal__alerta{margin-top:6px}}
+/* nota da seção: no eixo (abaixo de 900 px), uma frase por linha */
+@media (max-width:899px){#sinais .sinais__nota{text-wrap:balance}#sinais .sinais__nota span{display:block}}
+@media (max-width:599px),(orientation:landscape) and (max-height:500px) and (max-width:899px){#sinais .secao__cabeca{margin-bottom:24px}}
+
+/* ==========================================================================
+   3. ENTENDA SEUS SINTOMAS: coluna de margem (título e lead) e questionário
+   ========================================================================== */
+#diagnostico .cap__grade{align-items:start;column-gap:clamp(48px,8vw,112px)}
+#diagnostico .cap__margem{grid-column:1 / 6;align-self:start;padding:40px 0;border-block:1px solid var(--fio-claro-suave)}
+#diagnostico .cap__margem .cap__titulo{max-width:13ch;text-wrap:balance}
+#diagnostico .cap__corpo{grid-column:7 / 13;width:100%;max-width:670px}
 #diagnostico .quiz{max-width:670px}
 #diagnostico .qopt{transition:background-color 200ms var(--ease),border-color 200ms var(--ease),transform 200ms var(--ease)}
-#diagnostico .qopt:hover{transform:translateX(3px)}
-#medico .medico__foto{max-width:460px}
-#medico .medico__recorte{border:1px solid rgba(216,192,138,.42);background:radial-gradient(ellipse at 50% 36%,rgba(216,192,138,.12),transparent 54%),#111216}
-#medico .medico__recorte::before{inset:8px;border:1px solid rgba(216,192,138,.2);border-radius:0;background:none;box-shadow:none}
-#medico .medico__recorte::after{inset:8px;border:1px solid rgba(216,192,138,.34);background:none}
-#medico .medico__recorte>img{z-index:1;width:calc(100% - 20px);height:calc(100% - 20px);margin:10px;object-fit:cover}
-#medico .medico__texto{max-width:66ch}
-#caminhos .trilha__painel{background:var(--marfim);border-color:rgba(126,106,56,.2)}
-#caminhos .trilha__painel::before{display:none}
-#atendimento .consulta__passos{gap:0;border-block:1px solid rgba(126,106,56,.25)}
-#atendimento .consulta__passos>li{min-height:190px;padding:22px 20px 14px;border-left:1px solid rgba(126,106,56,.18)}
-#atendimento .consulta__passos>li:first-child{border-left:0;padding-left:0}
-#atendimento .consulta__passos>li::before{display:grid;place-items:center;width:44px;height:44px;top:0;border:1px solid rgba(126,106,56,.48);border-radius:50%;background:var(--linho);font-size:1.5rem;font-style:normal;color:var(--ouro-profundo)}
-#atendimento .consulta__passos>li::after{top:-46px;height:18px}
-#atendimento .consulta__passos h3{margin-top:18px;font-size:1.55rem}
-#atendimento .consulta__passos h3+p{max-width:30ch}
-#atendimento .moldura{background:#fff;border:1px solid rgba(28,29,33,.12)}
-#atendimento .moldura::before{display:none}
-/* Timeline interativa da consulta. */
-#atendimento .consulta{position:relative;z-index:0;isolation:isolate;padding-block:clamp(76px,9vw,120px);color:var(--marfim)}
-#atendimento .consulta::before{content:"";position:absolute;z-index:-1;inset:0 auto 0 50%;width:100vw;transform:translateX(-50%);background:url("../brand/carvao.svg") 0 0/320px 320px,radial-gradient(70% 70% at 82% 0%,rgba(216,192,138,.09),transparent 65%),var(--carvao)}
-#atendimento .consulta .cap__margem{grid-column:1/-1;text-align:center;margin-bottom:clamp(36px,6vw,72px)}
-#atendimento .consulta .cap__margem .nota{max-width:44ch;margin-inline:auto;color:#c5c0b4}
-#atendimento .consulta .cap__titulo{color:var(--marfim)}
-#atendimento .consulta .steps{grid-column:1/-1;display:grid;grid-template-columns:minmax(220px,.72fr) minmax(0,1.28fr);gap:clamp(36px,7vw,104px);align-items:start}
-#atendimento .consulta__nav{grid-column:1;grid-row:1}
-#atendimento .consulta__passos{grid-column:2;grid-row:1}
-#atendimento .steps-line{display:none}
-#atendimento .consulta__nav{position:sticky;top:calc(var(--hdr-h, 76px) + 28px);padding:24px 0;border-block:1px solid rgba(216,192,138,.26)}
-#atendimento .consulta__nav ol{display:grid;gap:4px;margin:0;padding:0;list-style:none}
-#atendimento .consulta__nav button{display:grid;grid-template-columns:38px 1fr;align-items:center;gap:14px;width:100%;min-height:54px;padding:8px 12px;border:0;border-left:1px solid rgba(216,192,138,.22);background:transparent;text-align:left;color:#bdb8ac;cursor:pointer;transition:color 180ms var(--ease),border-color 180ms var(--ease),background-color 180ms var(--ease)}
-#atendimento .consulta__nav button span:first-child{font:italic 1.5rem/1 var(--serif);color:#9f8b5b}
-#atendimento .consulta__nav button[aria-current="step"]{border-left:2px solid var(--champanhe);background:linear-gradient(90deg,rgba(216,192,138,.09),transparent 80%);color:var(--marfim)}
-#atendimento .consulta__nav button[aria-current="step"] span:first-child{color:var(--champanhe)}
-#atendimento .consulta__nav button:hover{color:var(--marfim)}
-#atendimento .consulta__passos{display:grid;grid-template-columns:1fr;gap:0;margin:0;padding:0;list-style:none}
-#atendimento .consulta__passos>li{position:relative;min-height:clamp(300px,44svh,430px);display:flex;flex-direction:column;justify-content:center;padding:44px 0 48px 42px;border-left:1px solid rgba(216,192,138,.28);scroll-margin-top:calc(var(--hdr-h, 76px) + 24px)}
-#atendimento .consulta__passos>li::before{content:attr(data-numero);position:absolute;top:50%;left:-1px;width:1px;height:68px;transform:translate(-50%,-50%);background:var(--champanhe);color:transparent}
-#atendimento .consulta__passos>li::after{content:"";position:absolute;top:50%;left:-5px;width:9px;height:9px;border:1px solid var(--champanhe);border-radius:50%;background:var(--carvao);transform:translateY(-50%);transition:background-color 180ms var(--ease),box-shadow 180ms var(--ease)}
-#atendimento .consulta__passos>li.is-active::after{background:var(--champanhe);box-shadow:0 0 0 6px rgba(216,192,138,.12)}
-#atendimento .consulta__passos h3{max-width:17ch;margin:0 0 12px;font:400 clamp(2rem,3.3vw,3rem)/1.08 var(--serif);color:var(--marfim)}
-#atendimento .consulta__passos p{max-width:45ch;margin:0;font-size:1rem;line-height:1.65;color:#d1cec6}
-#atendimento .consulta__passos .consulta__detalhe{margin-top:20px;padding-top:14px;border-top:1px solid rgba(216,192,138,.22);font-size:.875rem;color:#aaa69b}
-#atendimento .consulta__passos .consulta__detalhe strong{font-weight:500;color:var(--champanhe)}
-#atendimento .onde{margin-top:clamp(64px,9vw,120px)}
-#manifesto{--marca-pos:right -2% center;--marca-tam:min(92%,760px);--marca-opac:.09}
-#manifesto.marca-dagua::before{z-index:0}
-#manifesto .manifesto__palco>*{position:relative;z-index:1}
-.credenciais-ticker{position:relative;z-index:2;overflow:hidden;border-block:1px solid rgba(216,192,138,.2);background:url("../brand/carvao.svg") 0 0/320px 320px,#101114;color:var(--marfim)}
-.credenciais-ticker__faixa{display:flex;width:max-content;animation:credenciais-deslize 42s linear infinite}
-.credenciais-ticker__grupo{display:flex;align-items:center;flex:none;min-height:56px}
-.credenciais-ticker__grupo span{display:inline-flex;align-items:center;gap:22px;padding:0 26px;font-size:.84rem;line-height:1.2;white-space:nowrap}
-.credenciais-ticker__grupo span::after{content:"";width:5px;height:5px;border:1px solid var(--champanhe);transform:rotate(45deg)}
-@keyframes credenciais-deslize{to{transform:translateX(-50%)}}
-html.motion-paused .credenciais-ticker__faixa{animation-play-state:paused}
+@media (hover:hover){#diagnostico .qopt:not(:disabled):hover{transform:translateX(3px)}}
 @media (max-width:899px){
-  #diagnostico .cap__margem .quiz__imagem{max-width:440px}
-  #atendimento .consulta .steps{grid-template-columns:1fr;gap:28px}
-  #atendimento .consulta__nav{top:var(--hdr-h, 68px);z-index:5;padding:9px 0;background:rgba(8,8,10,.96);backdrop-filter:blur(12px);border-block:1px solid rgba(216,192,138,.28)}
-  #atendimento .consulta__nav>p{display:none}
-  #atendimento .consulta__nav ol{grid-template-columns:repeat(4,minmax(0,1fr));gap:2px}
-  #atendimento .consulta__nav button{grid-template-columns:1fr;justify-items:center;gap:4px;min-height:58px;padding:6px 2px;border-left:0;border-bottom:1px solid rgba(216,192,138,.2);text-align:center;font-size:.7rem;line-height:1.2}
-  #atendimento .consulta__nav button span:first-child{font-size:1.2rem}
-  #atendimento .consulta__nav button[aria-current="step"]{border-left:0;border-bottom:2px solid var(--champanhe);background:linear-gradient(180deg,transparent,rgba(216,192,138,.08))}
-  #atendimento .consulta__passos>li{min-height:280px;padding:38px 0 38px 30px}
-}
-@media (max-width:899px){
-  .inicio{min-height:0}
-  .inicio::after{height:min(62vw,440px);background:linear-gradient(0deg,var(--carvao),rgba(8,8,10,.15) 26%,transparent 60%)}
-  #diagnostico .quiz__imagem{aspect-ratio:2.15 / 1;margin-bottom:26px}
-  #atendimento .consulta__passos{border-block:0}
-  #atendimento .consulta__passos>li{min-height:0;padding:0 12px;border-left:0}
-  #atendimento .consulta__passos>li:first-child{padding-left:0}
-  #atendimento .consulta__passos>li::before{position:static;display:grid;margin-inline:auto;margin-bottom:10px}
-  #atendimento .consulta__passos h3{margin-top:0}
-}
-@media (max-width:699px){
-  .manifesto__trilho{height:190svh}
-  #sinais,#tratamentos,#diagnostico,#medico,#caminhos,#atendimento{padding-block:78px}
-  #sinais .secao__cabeca{margin-bottom:28px}
-  #diagnostico .quiz__imagem{aspect-ratio:1.75 / 1;margin-bottom:22px}
-  #diagnostico .quiz__imagem figcaption{padding:26px 12px 9px;font-size:1rem}
-  #atendimento .consulta__passos>li{border-left:0;padding:0}
-  #atendimento .consulta__passos>li::before{margin-bottom:10px}
+  #diagnostico .cap__grade{gap:24px}
+  #diagnostico .cap__margem{grid-column:1 / -1;width:min(100%,620px);margin-inline:auto;padding:0;border:0}
+  #diagnostico .cap__margem .cap__titulo{max-width:none}
+  #diagnostico .cap__corpo{grid-column:1 / -1;width:min(100%,720px);min-width:0;margin-inline:auto}
 }
 @media (prefers-reduced-motion:reduce){#diagnostico .qopt{transition:none}#diagnostico .qopt:hover{transform:none}}
-@media (max-width:899px){
-  #atendimento .consulta .steps{grid-template-columns:1fr;gap:28px}
-  #atendimento .consulta__nav{grid-column:1;grid-row:1;top:var(--hdr-h, 68px);z-index:5;padding:9px 0;background:rgba(8,8,10,.96);backdrop-filter:blur(12px);border-block:1px solid rgba(216,192,138,.28)}
-  #atendimento .consulta__nav>p{display:none}
-  #atendimento .consulta__nav ol{grid-template-columns:repeat(4,minmax(0,1fr));gap:2px}
-  #atendimento .consulta__nav button{grid-template-columns:1fr;justify-items:center;gap:4px;min-height:58px;padding:6px 2px;border-left:0;border-bottom:1px solid rgba(216,192,138,.2);text-align:center;font-size:.7rem;line-height:1.2}
-  #atendimento .consulta__nav button span:first-child{font-size:1.2rem}
-  #atendimento .consulta__nav button[aria-current="step"]{border-left:0;border-bottom:2px solid var(--champanhe);background:linear-gradient(180deg,transparent,rgba(216,192,138,.08))}
-  #atendimento .consulta__passos{grid-column:1;grid-row:2}
-  #atendimento .consulta__passos>li{min-height:280px;padding:38px 0 38px 30px;border-left:1px solid rgba(216,192,138,.28)}
-  #atendimento .consulta__passos h3{margin:0 0 12px}
-}
-@media (max-width:699px){
-  .inicio .capa__texto,.inicio .capa__id{text-align:center}
-  .inicio .t-hero,.inicio .inicio__frase,.inicio .t-lead{margin-inline:auto;text-align:center;text-wrap:balance}
-  .inicio .t-lead{max-width:34ch}
-  .inicio .acoes{justify-content:center}
-  #sinais .secao__cabeca,#tratamentos .cap__margem,#diagnostico .cap__margem,#medico .medico__texto,#caminhos .cap__margem,#atendimento .consulta .cap__margem,#atendimento .onde .secao__cabeca{text-align:center}
-  #diagnostico .cap__margem .quiz__imagem{max-width:440px;margin:22px auto 0}
-  #atendimento .consulta__passos>li{min-height:250px;padding:38px 0 38px 22px;border-left:1px solid rgba(216,192,138,.28)}
-  #atendimento .consulta__passos>li::before{position:absolute;top:50%;left:-1px;display:block;margin:0}
-  #atendimento .consulta__passos>li::after{position:absolute;top:50%;left:-5px;margin:0}
-  #atendimento .consulta__passos h3,#atendimento .consulta__passos p{text-align:left}
-  .credenciais-ticker__grupo{min-height:50px}
-  .credenciais-ticker__grupo span{padding-inline:19px;font-size:.78rem}
-}
-@media (prefers-reduced-motion:reduce){.credenciais-ticker__faixa{animation:none}}
 
-/* Ajustes finais de hierarquia e responsividade da home alternativa. */
-#hdr.hide{transform:none}
-.inicio .capa__texto{max-width:760px}
-.inicio #inicio-titulo{max-width:none;margin:0;font:300 clamp(3.4rem,5.4vw,4.9rem)/1 var(--serif);letter-spacing:-.01em;color:var(--marfim)}
-.inicio #inicio-titulo .rise{display:block;overflow:visible}
-.inicio #inicio-titulo .rise>span{display:inline-block;white-space:nowrap}
-.inicio #inicio-titulo .inicio__destaque{font-weight:400;font-style:italic;color:var(--champanhe)}
-.inicio .t-lead{max-width:38ch;margin-top:24px}
-#manifesto .manifesto__arco{position:relative;isolation:isolate}
-#manifesto .manifesto__arco::before{content:"";position:absolute;z-index:0;left:50%;top:22%;width:min(26%,260px);aspect-ratio:562/765;transform:translateX(-50%);background:url("../brand/simbolo-ouro.webp") center/contain no-repeat;opacity:.3;pointer-events:none}
-#manifesto .manifesto__arco svg{position:relative;z-index:1}
-#diagnostico .cap__grade{align-items:center;column-gap:clamp(48px,8vw,112px)}
-#diagnostico .cap__margem{grid-column:1/6;align-self:center;padding:clamp(24px,4vw,52px) 0;border-block:1px solid rgba(126,106,56,.22)}
-#diagnostico .cap__margem .cap__titulo{max-width:8ch}
-#diagnostico .cap__margem .nota{max-width:33ch;line-height:1.7}
-#diagnostico .cap__corpo{grid-column:7/13;width:100%;max-width:670px}
-#atendimento .consulta{padding-block:clamp(60px,7vw,96px)}
-#atendimento .consulta .cap__margem{margin-bottom:clamp(26px,4vw,48px)}
-#atendimento .consulta__passos>li{min-height:clamp(280px,38svh,380px);padding-left:42px;padding-right:28px}
-#atendimento .consulta__passos>li:first-child{padding-left:42px;border-left:1px solid rgba(216,192,138,.28)}
-#atendimento .consulta__nota-fixa{max-width:32ch;margin:4px 0 0!important;padding:16px 12px 0;border-top:1px solid rgba(216,192,138,.2);font:italic 1.2rem/1.4 var(--serif);letter-spacing:0!important;text-transform:none!important;color:#d1cec6!important}
+/* ==========================================================================
+   4. O MÉDICO: retrato em cor na moldura dupla de ouro, ficha ao lado
+   ========================================================================== */
+#medico .medico__foto{max-width:460px}
+#medico .medico__recorte{border:1px solid rgba(216,192,138,.42);background:radial-gradient(ellipse at 50% 36%,rgba(216,192,138,.12),transparent 54%),#111216}
+#medico .medico__recorte::before{inset:8px;border:1px solid var(--fio-escuro-suave);border-radius:0;background:none;box-shadow:none}
+#medico .medico__recorte::after{inset:8px;border:1px solid rgba(216,192,138,.34);background:none}
+#medico .medico__recorte>img{z-index:1;width:calc(100% - 20px);height:calc(100% - 20px);margin:10px;object-fit:cover}
 @media (min-width:900px){
-  .inicio .capa__grade{padding-top:calc(var(--hdr-h) + 56px);padding-bottom:64px}
-  #atendimento .consulta .steps{grid-template-columns:minmax(260px,.78fr) minmax(0,1.22fr);gap:clamp(42px,6vw,84px)}
+  /* lead e corpo na mesma medida; a foto acompanha a ficha e sobe junto com o cabeçalho */
+  #medico .medico__texto>.t-lead{max-width:46ch}
+  #medico .medico__texto>.prosa{max-width:58ch}
+  #medico .medico__foto{position:sticky;top:calc(var(--hdr-vis,76px) + 32px);transition:top var(--t-camada,240ms) var(--ease)}
 }
+/* tablet: o parágrafo fica no eixo, como o nome e o lead (a ficha segue como tabela) */
+@media (min-width:600px) and (max-width:899px){
+  #medico .medico__texto>.prosa{max-width:54ch;margin-inline:auto;text-align:center;text-wrap:pretty}
+}
+/* tablet (600 a 899 px) e celular deitado: faixa própria, não o celular esticado. Cabeça no eixo
+   (nome, lead e parágrafo) e, embaixo, duas colunas: o retrato à esquerda (5 de 12) e a ficha à
+   direita (7 de 12), com "Conheça o Dr. Pedro" sob ela. O .medico__texto vira display:contents,
+   sem mudar o HTML. Deitado, o retrato é medido pela altura da tela para caber inteiro. */
+@media (min-width:600px) and (max-width:899px),(orientation:landscape) and (max-height:500px) and (max-width:899px){
+  #medico .cap__grade{grid-template-columns:minmax(0,5fr) minmax(0,7fr);column-gap:clamp(24px,4.5vw,40px);row-gap:0;align-items:start}
+  #medico .medico__texto{display:contents}
+  #medico .medico__texto>.cap__titulo{grid-column:1 / -1;grid-row:1;margin-top:0}
+  #medico .medico__texto>.t-lead{grid-column:1 / -1;grid-row:2}
+  #medico .medico__texto>.prosa{grid-column:1 / -1;grid-row:3;max-width:54ch;margin-inline:auto;text-align:center;text-wrap:pretty}
+  #medico .medico__foto{grid-column:1;grid-row:4 / 6;width:100%;max-width:none;margin:40px 0 0}
+  #medico .medico__ficha{grid-column:2;grid-row:4;margin-top:40px}
+  #medico .medico__ficha>div{grid-template-columns:1fr;gap:4px;justify-items:start;text-align:left}
+  #medico .medico__ficha dd{max-width:none;text-wrap:pretty}
+  #medico .medico__texto>.link{grid-column:2;grid-row:5;align-self:start;margin:24px 0 0}
+}
+@media (orientation:landscape) and (max-height:500px) and (max-width:899px){
+  #medico .cap__grade{grid-template-columns:auto minmax(0,1fr)}
+  #medico .medico__foto{width:min(40vw,(100vh - 96px) * .8)}
+  @supports (height:1svh){#medico .medico__foto{width:min(40vw,(100svh - 96px) * .8)}}
+}
+
+/* ==========================================================================
+   5. CAMINHOS DE CUIDADO (régua de qualidade: não mexer)
+   ========================================================================== */
+#caminhos .trilha__painel{background:var(--marfim);border-color:rgba(126,106,56,.2)}
+#caminhos .trilha__painel::before{display:none}
+
+/* ==========================================================================
+   6. COMO É A CONSULTA: faixa carvão colada em "Caminhos", depois "Onde atende"
+   no linho. #steps: passos [data-consulta-etapa] e navegação [data-consulta-ir]
+   (home-alt.js). A partir de 600 px (tablet e computador) a navegação fica presa
+   ao lado e cada passo acende na régua ao cruzar o meio da tela; no tablet as
+   duas colunas são mais estreitas e, no celular deitado, a navegação é compacta.
+   No celular em pé a navegação vira barra presa sob o cabeçalho e os passos
+   ficam no eixo, ligados por sutura.
+   ========================================================================== */
+#atendimento{padding-top:0}
+#atendimento .consulta{position:relative;z-index:0;isolation:isolate;padding-block:var(--ritmo);row-gap:64px}
+#atendimento .consulta::before{content:"";position:absolute;z-index:-1;inset:0 auto 0 50%;width:100vw;transform:translateX(-50%);
+  background:url("../brand/carvao.svg") 0 0/320px 320px,radial-gradient(70% 70% at 82% 0%,var(--luz-quente,rgba(216,192,138,.1)),transparent 65%),var(--carvao)}
+#atendimento .consulta .cap__margem{grid-column:1 / -1;max-width:760px}
+#atendimento .onde{margin-top:var(--ritmo)}
+
+#atendimento .steps{display:grid;grid-template-columns:minmax(0,1fr)}
+#atendimento .consulta__passos{display:grid;grid-template-columns:minmax(0,1fr);gap:0;margin:0;padding:0;list-style:none}
+#atendimento .consulta__passos>li{position:relative;display:flex;flex-direction:column;justify-content:center}
+#atendimento .consulta__passos h3{max-width:20ch;margin:0 0 16px;font-family:var(--serif);font-weight:400;font-size:var(--t-h3,2.25rem);line-height:1.1;letter-spacing:var(--trk-titulo);color:var(--marfim);text-wrap:balance}
+#atendimento .consulta__passos p{max-width:52ch;margin:0;font-size:var(--t-corpo,1.0625rem);line-height:1.65;color:var(--cor-texto)}
+#atendimento .consulta__passos .consulta__detalhe{margin-top:24px;text-wrap:balance;padding-top:16px;border-top:1px solid var(--fio-escuro-suave);font-size:var(--t-nota,.9375rem);line-height:1.55;color:var(--cor-suave)}
+#atendimento .consulta__passos .consulta__detalhe strong{font-weight:500;color:var(--champanhe)}
+/* telefone da central: link sobre o escuro (o do rodapé), sem mudar a altura da linha; o toque de
+   44 px vem do ::before, centrado no número */
+#atendimento .consulta__tel{position:relative;white-space:nowrap;color:var(--marfim);
+  text-decoration:underline;text-decoration-color:rgba(216,192,138,.4);text-decoration-thickness:1px;text-underline-offset:.3em;
+  transition:text-decoration-color var(--t-rapido),text-decoration-thickness var(--t-rapido)}
+#atendimento .consulta__tel::before{content:"";position:absolute;left:-4px;right:-4px;top:50%;height:44px;transform:translateY(-50%)}
+#atendimento .consulta__tel:hover,#atendimento .consulta__tel:active{text-decoration-color:var(--champanhe);text-decoration-thickness:2px}
+
+/* navegação das etapas */
+#atendimento .consulta__nav ol{display:grid;gap:4px;margin:0;padding:0;list-style:none}
+#atendimento .consulta__nav button{display:grid;grid-template-columns:40px 1fr;align-items:center;gap:16px;width:100%;min-height:56px;padding:8px 16px;
+  border:0;border-left:1px solid var(--fio-escuro);background:transparent;text-align:left;font-size:var(--t-nota,.9375rem);line-height:1.25;color:var(--cor-texto);cursor:pointer;
+  transition:color 200ms var(--ease),border-color 200ms var(--ease),background-color 200ms var(--ease)}
+/* numeral: texto do escuro em repouso, champanhe no passo da vez (o ouro fica só no desenho) */
+#atendimento .consulta__nav button span:first-child{font-family:var(--serif);font-style:italic;font-weight:400;font-size:var(--t-h3-ficha,1.5rem);line-height:1;color:var(--texto-escuro);transition:color 200ms var(--ease)}
+#atendimento .consulta__nav button:hover{color:var(--marfim);border-left-color:var(--fio-escuro-forte)}
+#atendimento .consulta__nav button:active{background-color:rgba(216,192,138,.12)}
+#atendimento .consulta__nav button[aria-current="step"]{border-left:2px solid var(--champanhe);padding-left:15px;background:rgba(216,192,138,.06);color:var(--marfim)}
+#atendimento .consulta__nav button[aria-current="step"] span:first-child{color:var(--champanhe)}
+/* o filete vai na largura toda da navegação; a medida de 30ch fica no texto */
+#atendimento .consulta__nav .consulta__nota-fixa>span{display:block;max-width:30ch}
+#atendimento .consulta__nav .consulta__nota-fixa{margin:16px 0 0;padding:16px 16px 0;border-top:1px solid var(--fio-escuro-suave);
+  font-family:var(--serif);font-style:italic;font-size:var(--t-legenda,1.125rem);line-height:1.4;letter-spacing:0;text-transform:none;color:var(--cor-texto)}
+
+@media (min-width:600px){
+  #atendimento .steps{grid-template-columns:minmax(260px,.78fr) minmax(0,1.22fr);gap:clamp(40px,6vw,88px);align-items:start}
+  #atendimento .consulta__nav{grid-column:1;grid-row:1;position:sticky;top:calc(var(--hdr-vis,76px) + 28px);padding:24px 0;
+    border-block:1px solid var(--fio-escuro);transition:top var(--t-camada,240ms) var(--ease)}
+  #atendimento .consulta__passos{grid-column:2;grid-row:1}
+  #atendimento .consulta__passos>li{min-height:clamp(220px,30vh,300px);padding:40px 0 40px 40px;border-left:1px solid var(--fio-escuro);
+    scroll-margin-top:calc(var(--hdr-h) + 24px)}
+  /* marca do passo na régua: traço champanhe e ponto que acende no passo da vez */
+  #atendimento .consulta__passos>li::before{content:"";position:absolute;top:50%;left:-1px;width:1px;height:64px;transform:translate(-50%,-50%);background:var(--champanhe)}
+  #atendimento .consulta__passos>li::after{content:"";position:absolute;top:50%;left:-5px;width:9px;height:9px;border:1px solid var(--champanhe);border-radius:50%;
+    background:var(--carvao);transform:translateY(-50%);transition:background-color 200ms var(--ease),box-shadow 200ms var(--ease)}
+  #atendimento .consulta__passos>li.is-active::after{background:var(--champanhe);box-shadow:0 0 0 6px rgba(216,192,138,.12)}
+}
+/* tablet (600 a 899 px): as mesmas duas colunas, mais estreitas; a navegação ocupa um terço */
+@media (min-width:600px) and (max-width:899px){
+  #atendimento .steps{grid-template-columns:minmax(168px,.64fr) minmax(0,1.36fr);gap:clamp(24px,4.6vw,40px)}
+  #atendimento .consulta__nav{top:calc(var(--hdr-vis,64px) + 24px);padding:16px 0}
+  #atendimento .consulta__nav button{grid-template-columns:30px 1fr;gap:12px;min-height:52px;padding:8px 12px}
+  #atendimento .consulta__nav button[aria-current="step"]{padding-left:11px}
+  #atendimento .consulta__nav button span:first-child{font-size:var(--t-lead,1.375rem)}
+  #atendimento .consulta__nav .consulta__nota-fixa{margin-top:12px;padding:12px 12px 0;font-size:1.0625rem}
+  #atendimento .consulta__passos>li{min-height:clamp(200px,24vh,260px);padding:32px 0 32px 32px}
+}
+/* celular deitado: navegação compacta, para caber inteira sob o cabeçalho */
+@media (orientation:landscape) and (max-height:500px) and (min-width:600px) and (max-width:899px){
+  #atendimento .consulta__nav{top:calc(var(--hdr-vis,64px) + 12px);padding:8px 0}
+  #atendimento .consulta__nav ol{gap:2px}
+  #atendimento .consulta__nav button{min-height:44px;padding-block:4px}
+  #atendimento .consulta__nav .consulta__nota-fixa{display:none}
+  #atendimento .consulta__passos>li{min-height:0;padding:28px 0 28px 28px}
+}
+
+/* abaixo de 900 px a cabeça do capítulo fica no eixo */
 @media (max-width:899px){
-  .inicio #inicio-titulo{font-size:3.6rem;line-height:1.02}
-  #diagnostico .cap__grade{gap:26px}
-  #diagnostico .cap__margem{grid-column:1/-1;width:min(100%,620px);margin-inline:auto;padding:0;border:0}
-  #diagnostico .cap__margem .cap__titulo{max-width:none}
-  #diagnostico .cap__margem .nota{max-width:48ch;margin-inline:auto}
-  #diagnostico .cap__corpo{grid-column:1/-1;width:min(100%,720px);margin-inline:auto}
-  #atendimento .consulta__nota-fixa{display:none}
-  #atendimento .consulta__passos>li{min-height:280px;padding:38px 0 38px 30px;border-left:1px solid rgba(216,192,138,.28)}
-  #atendimento .consulta__passos>li:first-child{padding-left:30px}
+  #atendimento .consulta{row-gap:40px}
+  #atendimento .consulta .cap__margem{margin-inline:auto;text-align:center}
 }
-@media (max-width:699px){
-  .inicio #inicio-titulo{font-size:2.75rem;line-height:1.02}
-  .inicio #inicio-titulo .rise>span{white-space:nowrap}
-  .inicio .t-lead{max-width:32ch;margin-top:18px}
-  #manifesto .manifesto__arco::before{width:min(26%,140px);top:22%;opacity:.24}
-  #diagnostico .cap__corpo{min-width:0}
-  #atendimento .consulta{padding-block:62px}
-  #atendimento .consulta .cap__margem{margin-bottom:24px}
-  #atendimento .consulta__passos>li{min-height:250px;padding:38px 0 38px 22px;border-left:1px solid rgba(216,192,138,.28)}
-  #atendimento .consulta__passos>li:first-child{padding-left:22px}
+/* celular em pé (até 599 px) */
+@media (max-width:599px){
+  #atendimento .steps{gap:24px}
+  /* barra presa sob o cabeçalho (sobe junto quando ele some) */
+  #atendimento .consulta__nav{grid-row:1;position:sticky;top:var(--hdr-vis,64px);z-index:5;margin-inline:calc(var(--margem) * -1);padding:8px var(--margem);
+    background:rgba(8,8,10,.96);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-block:1px solid var(--fio-escuro);transition:top var(--t-camada,240ms) var(--ease)}
+  #atendimento .consulta__nav .consulta__nota-fixa{display:none}
+  #atendimento .consulta__nav ol{grid-template-columns:repeat(4,minmax(0,1fr));gap:2px;max-width:640px;margin-inline:auto}
+  #atendimento .consulta__nav button{grid-template-columns:1fr;justify-items:center;gap:4px;min-height:56px;padding:6px 2px;border-left:0;border-bottom:1px solid var(--fio-escuro-suave);
+    text-align:center;font-size:var(--t-micro,.8125rem);line-height:1.2}
+  #atendimento .consulta__nav button span:first-child{font-size:var(--t-lead,1.25rem)}
+  #atendimento .consulta__nav button:hover{border-left-color:transparent}
+  #atendimento .consulta__nav button[aria-current="step"]{padding-left:2px;border-left:0;border-bottom:2px solid var(--champanhe);background:linear-gradient(180deg,transparent,rgba(216,192,138,.08))}
+  #atendimento .consulta__passos{grid-row:2}
+  /* passos no eixo: numeral, título, texto e dica ao centro; sutura entre um passo e o seguinte */
+  #atendimento .consulta__passos>li{align-items:center;padding:0;text-align:center;scroll-margin-top:calc(var(--hdr-h) + 88px)}
+  #atendimento .consulta__passos>li::before{content:attr(data-numero);display:block;margin-bottom:16px;font-family:var(--serif);font-style:italic;font-weight:400;font-size:var(--t-h3-ficha,1.75rem);line-height:1;color:var(--texto-escuro);transition:color 200ms var(--ease)}
+  #atendimento .consulta__passos>li.is-active::before{color:var(--champanhe)}
+  #atendimento .consulta__passos>li:not(:last-child)::after{content:"";display:block;width:1px;height:48px;margin:32px auto;
+    background:repeating-linear-gradient(180deg,rgba(172,149,89,.5) 0 6px,transparent 6px 12px)}
+  #atendimento .consulta__passos h3{margin-inline:auto;font-size:var(--t-h3-ficha,1.75rem)}
+  #atendimento .consulta__passos p{max-width:34ch;margin-inline:auto;text-wrap:pretty}
+  #atendimento .consulta__passos .consulta__detalhe{max-width:32ch;border-top:0;background:linear-gradient(var(--fio-escuro),var(--fio-escuro)) top center/32px 1px no-repeat;text-wrap:balance}
 }
-@media (max-width:360px){.inicio #inicio-titulo{font-size:2.4rem}}
