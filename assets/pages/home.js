@@ -187,8 +187,26 @@ const mao = handExperience();
     const h = hots.find(x => +x.dataset.i === i);
     if (mao && h) { mao.ativo = { x: +h.dataset.x, y: +h.dataset.y }; mao.aim(h.dataset.x, h.dataset.y, !instantaneo); }
   }
-  btns.forEach(b => b.addEventListener('click', () => set(b.dataset.i)));
-  hots.forEach(h => h.addEventListener('click', () => set(h.dataset.i)));
+  /* Abaixo de 1000 px a ficha fica embaixo da placa: depois do toque num ponto ou
+     numa aba, se o título da ficha escolhida estiver fora da tela, a página rola
+     só o necessário para ele aparecer (block 'nearest' + scroll-margin-bottom do
+     home.css), sem tirar a mão de vista. Só nesses cliques: [data-goto], ?atlas=
+     e o 'Ver no atlas' do questionário têm a rolagem deles. */
+  const estreito = matchMedia('(max-width:999px)');
+  function mostraFicha (i) {
+    if (!estreito.matches) return;
+    const p = panes[clamp(+i || 0, 0, panes.length - 1)];
+    const h = p && $('h3', p);
+    if (!h) return;
+    requestAnimationFrame(() => {
+      const r = h.getBoundingClientRect();
+      const topo = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+      if (r.top >= topo && r.bottom <= innerHeight - 72) return;
+      h.scrollIntoView({ behavior: parado() ? 'auto' : 'smooth', block: 'nearest' });
+    });
+  }
+  btns.forEach(b => b.addEventListener('click', () => { set(b.dataset.i); mostraFicha(b.dataset.i); }));
+  hots.forEach(h => h.addEventListener('click', () => { set(h.dataset.i); mostraFicha(h.dataset.i); }));
   document.addEventListener('click', e => {
     const a = e.target.closest && e.target.closest('[data-goto]');
     if (!a) return;
@@ -358,9 +376,17 @@ const mao = handExperience();
       const aba = $$('.tab-btn')[r.tab];
       if (aba) aba.focus({ preventScroll: true });
     });
+    /* Refazer: volta à pergunta 1 e, se o alto do questionário (goniômetro e
+       contador) ficou fora da tela, rola até ele, descontando o cabeçalho. */
     $('#qAgain').addEventListener('click', () => {
       step = 0; ans.fill(null); renderStep();
       $('h3', body).focus({ preventScroll: true });
+      const topo = $('.quiz__topo');
+      if (!topo) return;
+      const r = topo.getBoundingClientRect();
+      const cab = $('#hdr');
+      const hdr = document.documentElement.classList.contains('hdr-oculto') || !cab ? 0 : cab.getBoundingClientRect().bottom;
+      if (r.top < hdr || r.top > innerHeight - 120) topo.scrollIntoView({ behavior: parado() ? 'instant' : 'smooth', block: 'start' });
     });
   }
 
@@ -380,7 +406,7 @@ const mao = handExperience();
   const trilho = $('.manifesto__trilho', sec), arco = $('#mArco'), graus = $('#mGraus'),
         palavras = $$('.mw', sec), valores = $$('.manifesto__valores li', sec);
   const C = { cx: 500, cy: 500, r: 460 };
-  const g = PS.gonio(arco, { vb: '-40 -54 1080 610', cx: C.cx, cy: C.cy, r: C.r, passo: 5, l5: 10, l15: 18, l45: 30, numeros: true, base: 36, cauda: 0, folga: 44, eixo: 9, centro: 3.5 });
+  const g = PS.gonio(arco, { vb: '-40 -54 1080 610', cx: C.cx, cy: C.cy, r: C.r, passo: 5, l5: 10, l15: 18, l45: 30, numeros: true, pontas: true, base: 36, cauda: 0, folga: 44, eixo: 9, centro: 3.5 });
   const svg = $('svg', arco);
   svg.insertAdjacentHTML('afterbegin', '<defs><pattern id="mHach" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(38)"><line x1="0" y1="0" x2="0" y2="9" stroke="#7E6A38" stroke-width=".9" opacity=".38"/></pattern></defs>');
   const agulha = $('.gonio__agulha-g', svg);
@@ -409,14 +435,18 @@ const mao = handExperience();
     const r = trilho.getBoundingClientRect(), curso = r.height - innerHeight;
     pinta(curso > 0 ? clamp(-r.top / curso, 0, 1) : 1);
   }
+  /* tela baixa (celular deitado, janela de até 500 px de altura): a cena presa
+     não cabe; fica parada e compacta (home.css). Fora do parado() geral, que a mão também usa. */
+  const baixa = matchMedia('(max-height:500px)');
   function modo () {
-    const estatico = parado();
+    const estatico = parado() || baixa.matches;
     sec.classList.toggle('manifesto--estatico', estatico);
     if (estatico) pinta(1); else onScroll();
   }
   addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(onScroll); } }, { passive: true });
   addEventListener('resize', onScroll, { passive: true });
   document.addEventListener('motionchange', modo);
+  if (baixa.addEventListener) baixa.addEventListener('change', modo); else if (baixa.addListener) baixa.addListener(modo);
   modo();
 })();
 

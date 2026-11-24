@@ -1,46 +1,85 @@
 /* ==========================================================================
    PRP (/prp/) · estilos da página
    Base em site.css (capa, capítulos, tipografia, botões). Aqui só o que é
-   desta página: capa com a Fig. 1, fichas das indicações da Resolução CFM
+   desta página: capa com a Fig. 1, o quadro das indicações da Resolução CFM
    2.464/2026, o que o PRP não é (fichas que viram, site.css), player de
    etapas e perguntas. O "Onde atende" do fim é o componente do site.css.
-   As placas (Fig. 1 e Fig. 2) ficam em pages/lab.css.
+   As placas (Fig. 1 e Fig. 2) ficam em pages/lab.css; o acabamento da capa
+   e das placas, em pages/prp-alt.css. Tamanhos só pela escala (--t-…).
    ========================================================================== */
 
+/* altura da tela para as contas com var() (prp.css e prp-alt.css): svh onde o navegador conhece, vh no
+   Safari 15.0 a 15.3. Repetir a declaração (vh e depois svh) não serve de reserva quando ela tem var():
+   a versão svh passa na leitura e só falha no cálculo, e a propriedade cai no valor inicial (como no /dr/,
+   --dr-tela). */
+:root{--prp-tela:100vh}
+@supports (height:1svh){:root{--prp-tela:100svh}}
+
 /* ---------- 1. Capa ---------- */
+/* Primeira dobra cheia: a capa ocupa a tela menos o cabeçalho e o conteúdo assenta no meio. Teto de
+   1240 px na tela deitada: 1920 × 1080 e o QHD com a barra do navegador (2560 × 1305) ficam sem faixa
+   de marfim no pé. Na tela em pé a capa empilha e fica sem teto (prp-alt.css). */
+.prp-capa{display:grid;align-content:center;min-height:min(calc(var(--prp-tela) - var(--hdr-h)),1240px)}
 .prp-capa__figura{width:100%;max-width:560px;justify-self:center}
 .prp-capa .t-lead{max-width:44ch}
-@media (min-width:900px){
+@media (min-width:900px) and (orientation:landscape){
   .prp-capa .capa__texto{grid-column:1 / 7}
   .prp-capa__figura{grid-column:8 / 13;justify-self:end}
 }
-@media (min-width:900px) and (max-width:1199px){
+@media (min-width:900px) and (max-width:1199px) and (orientation:landscape){
   .prp-capa__figura{grid-column:7 / 13}
 }
 @media (min-width:1100px){
   .prp-capa{padding-block:64px 72px}
 }
 
+/* Fig. 1 sem salto: antes do lab.js montar a placa (só com JS), a caixa já tem o tamanho
+   da placa montada: o desenho (viewBox 568 × 412) mais a base com abas, texto e controle.
+   O lab.js põe .prp-tube-outer e o conteúdo na mesma tarefa; sem JS, fica só a legenda.
+   As alturas da base acompanham prp-alt.css: texto da parte com caixa de três linhas e legenda com
+   duas (316 px; 312 px no celular, com a base mais justa do lab.css; placa deitada do notebook baixo,
+   351 px, em prp-alt.css). */
+.js #tubeOuter:not(.prp-tube-outer){position:relative;border:1px solid var(--filete-escuro);border-radius:var(--raio);background:#0B0B0E;padding-bottom:316px}
+.js #tubeOuter:not(.prp-tube-outer)::before{content:"";display:block;aspect-ratio:568 / 412}
+.js #tubeOuter:not(.prp-tube-outer)>*{visibility:hidden;position:absolute}
+@media (max-width:600px){.js #tubeOuter:not(.prp-tube-outer){padding-bottom:312px}}
+
 /* ---------- 2. Como é preparado (marfim; a placa escura fica embutida) ---------- */
-.processo__passos{border-top:1px solid var(--cor-filete)}
+.processo__passos{border-top:1px solid var(--filete-padrao)}
 .process-step{
-  display:grid;grid-template-columns:32px 1fr;gap:4px 12px;padding-block:18px;
-  border-bottom:1px solid var(--cor-filete);cursor:pointer;
+  position:relative;display:grid;grid-template-columns:36px 1fr;gap:4px 12px;padding-block:20px;
+  border-bottom:1px solid var(--filete-padrao);cursor:pointer;
   -webkit-tap-highlight-color:transparent;
 }
-.process-step-num{font-family:var(--serif);font-style:italic;font-size:1.375rem;line-height:1.1;color:var(--cor-suave);transition:color var(--t-rapido)}
-.process-step h3{font-size:1.5rem;line-height:1.15;color:var(--cor-texto);transition:color var(--t-rapido)}
-.process-step p{margin-top:6px;max-width:40ch;font-size:.9375rem;line-height:1.55;color:var(--cor-suave)}
+/* a etapa escolhida: o filete de cima se desenha em ouro profundo */
+.process-step::before{content:"";position:absolute;left:0;top:-1px;width:100%;height:1px;background:var(--ouro-profundo);
+  transform:scaleX(0);transform-origin:left;transition:transform 250ms var(--ease)}
+.process-step.active::before{transform:scaleX(1)}
+.process-step-num{font-family:var(--serif);font-style:italic;font-size:var(--t-lead,1.3125rem);line-height:1.3;color:var(--cor-suave);transition:color var(--t-rapido) var(--ease)}
+.process-step h3{font-size:var(--t-h3-ficha,1.75rem);line-height:1.12;color:var(--cor-texto);transition:color var(--t-rapido) var(--ease)}
+.process-step p{margin-top:6px;max-width:40ch;font-size:var(--t-nota,.9375rem);line-height:1.55;color:var(--cor-suave);transition:color var(--t-rapido) var(--ease)}
 .process-step:hover h3{color:var(--cor-titulo)}
+.process-step:hover .process-step-num{color:var(--cor-texto)}
+.process-step:active h3{color:var(--cor-destaque)}
 .process-step.active .process-step-num{color:var(--cor-destaque)}
 .process-step.active h3{color:var(--cor-titulo)}
 .process-step.active p{color:var(--cor-texto)}
-.process-step:focus-visible{outline:2px solid var(--cor-foco);outline-offset:2px}
+.process-step:focus-visible{outline:2px solid var(--cor-foco);outline-offset:3px}
 @media (max-width:899px){
   .processo__margem{order:1}
   .processo__placa{order:2}
   .processo__passos{order:3}
   .process-step p{display:none}
+  /* celular e tablet: número e nome da etapa no eixo */
+  .process-step{display:flex;justify-content:center;align-items:baseline;gap:14px;padding-block:16px;text-align:center}
+  .process-step::before{transform-origin:center}
+}
+/* tablet: as quatro etapas em duas colunas sob a placa (1 e 2 em cima, 3 e 4 embaixo), não a lista
+   do celular esticada */
+@media (min-width:600px) and (max-width:899px){
+  .processo__passos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--calha);border-top:0}
+  .process-step{border-top:1px solid var(--filete-padrao);border-bottom:0}
+  .process-step:nth-child(n+3){border-bottom:1px solid var(--filete-padrao)}
 }
 @media (min-width:900px){
   .processo__grade{grid-template-rows:auto 1fr;row-gap:40px}
@@ -48,79 +87,155 @@
   .processo__passos{grid-column:1 / 5;grid-row:2;align-self:start}
   .processo__placa{grid-column:6 / 13;grid-row:1 / 3}
 }
-
-/* ---------- 3. Quando o CFM autoriza: quatro fichas e a que fica fora ---------- */
-.indicacoes__fonte{margin-top:12px;font-size:.9375rem;color:var(--texto-claro)}
-.indicacoes__fonte a,.indicacoes__nota a{color:var(--ouro-profundo);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.25em}
-.indicacoes__fonte a:hover,.indicacoes__nota a:hover{text-decoration-thickness:2px}
-.indic{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
-@media (max-width:1099px){.indic{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:599px){.indic{grid-template-columns:1fr;gap:14px}}
-.indic__item{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;padding:30px 22px 26px;
-  background:url("../brand/papel.svg") 0 0/640px 640px,var(--marfim);border:1px solid rgba(126,106,56,.28);
-  box-shadow:0 22px 40px -30px rgba(8,8,10,.45)}
-.indic__item::before{content:"";position:absolute;inset:8px;border:1px solid rgba(126,106,56,.15);pointer-events:none}
-.indic__glifo{width:76px;height:76px;padding:12px;margin-bottom:16px;border:1px solid rgba(126,106,56,.32);border-radius:50%;
-  color:var(--ouro-profundo);background:radial-gradient(circle at 50% 40%,rgba(255,255,255,.7),rgba(236,229,214,.5));overflow:visible}
-/* o ponto que a indicação trata: em tinta, sobre o desenho em ouro */
-.indic__glifo .g-real{stroke:var(--tinta)}
-.indic__glifo circle.g-real{fill:rgba(126,106,56,.2)}
-.indic__regiao{font-size:.8125rem;font-weight:500;letter-spacing:.04em;color:var(--ouro-profundo)}
-.indic__item h3,.indic__fora h3{margin-top:4px;font-size:clamp(1.5rem,1.9vw,1.75rem);line-height:1.1;color:var(--tinta);text-wrap:balance}
-.indic__desc{margin-top:10px;max-width:30ch;font-size:.9375rem;line-height:1.55;color:var(--texto-claro);text-wrap:balance}
-/* a do membro superior: moldura em ouro profundo */
-.indic__item--membro{border-color:var(--ouro-profundo);box-shadow:0 0 0 1px var(--ouro-profundo),0 26px 46px -30px rgba(8,8,10,.55)}
-.indic__item--membro::before{border-color:rgba(126,106,56,.42)}
-.indic__marca{margin-top:auto;padding-top:14px;font-size:.875rem;font-weight:500;line-height:1.4;color:var(--tinta);text-wrap:balance}
-/* mão e punho: a ficha que falta, com filete tracejado (ponto de sutura) */
-.indic__fora{display:flex;align-items:center;justify-content:center;gap:28px;margin-top:20px;padding:26px 30px;
-  border:1px dashed rgba(126,106,56,.6);background:rgba(244,241,234,.55)}
-.indic__fora .indic__glifo{flex:none;margin:0;color:var(--texto-claro);background:none}
-.indic__fora h3{font-style:italic}
-.indic__fora .indic__desc{max-width:62ch;color:var(--tinta);font-size:1rem}
-.indicacoes__nota{margin-top:24px;text-align:center;font-size:.9375rem;color:var(--texto-claro)}
-@media (max-width:699px){
-  .indic__fora{flex-direction:column;gap:14px;text-align:center;padding:26px 20px}
-  .indic__fora .indic__desc{margin-inline:auto}
+/* tablet deitado e notebook pequeno (900 a 1199 px): com a cabeça ao lado, a lista de etapas ficava
+   numa coluna de ~280 px, mais alta que a placa, com um vão sob ela. Aqui a cabeça vai por cima, à
+   esquerda, e as etapas (cinco colunas) ficam ao lado da placa (sete), com os topos alinhados e alturas parecidas (até ~35 px de diferença): quem toca
+   na última etapa vê a cena trocar. */
+@media (min-width:900px) and (max-width:1199px){
+  .processo__grade{grid-template-rows:auto auto}
+  .processo__margem{grid-column:1 / -1}
+  .processo__passos{grid-column:1 / 6;grid-row:2;align-self:start}
+  .processo__placa{grid-column:6 / 13;grid-row:2}
 }
 
-/* ---------- 4. O que o PRP não é: fichas que viram (componente do site.css) ---------- */
-/* interrogação grande e clara no meio da frente: diz "pergunta" sem texto a mais */
-.mitos .sinal__frente::after{content:"?";position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);
-  font-family:var(--serif);font-weight:300;font-size:9rem;line-height:1;color:rgba(126,106,56,.14);pointer-events:none}
-.mitos .sinal__titulo{font-size:clamp(1.5rem,1.9vw,1.875rem);text-wrap:balance}
-.mito__nao{margin-top:8px;font-family:var(--serif);font-style:italic;font-weight:400;font-size:2.75rem;line-height:1;color:var(--champanhe)}
-.mitos .sinal__texto{margin-top:14px}
-@media (max-width:699px){
-  .mitos .sinal__frente,.mitos .sinal__verso{align-items:center;text-align:center}
-  .mitos .sinal__nome{padding-inline:44px}
+/* ---------- 3. Quando o CFM autoriza: o quadro das quatro situações e a que fica fora ----------
+   O quadro é a moldura clara (marfim com papel e filete duplo de ouro profundo, site.css), com uma
+   linha por situação autorizada: a região em Cormorant itálico (ouro profundo, 4,6:1 sobre o marfim),
+   o nome em h3 de ficha e o que é. Mão e punho fica fora da moldura, numa caixa em sutura (o
+   tracejado diz "fora"), com as mesmas colunas e o mesmo respiro. Sem desenho anatômico.
+   Celular: cada linha no eixo. Do tablet para cima: região e nome à esquerda e o que é à direita,
+   com a 1ª linha do texto na linha de base do nome; a partir de 1100 px, três colunas. */
+.indicacoes__fonte{margin-top:16px;font-size:var(--t-nota,.9375rem);line-height:1.55;color:var(--texto-claro)}
+/* links do texto: sem quebra dentro deles, o anel de foco abraça o texto e o toque cresce pelo ::before,
+   sem mexer na linha ("A&nbsp;" no HTML segura o artigo junto do link) */
+.indicacoes__fonte a{position:relative;white-space:nowrap;color:var(--ouro-profundo);
+  text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.25em;transition:color var(--t-rapido) var(--ease)}
+.indicacoes__fonte a::before{content:"";position:absolute;inset:-11px -4px}
+.indicacoes__fonte a:hover{color:var(--tinta);text-decoration-thickness:2px}
+.indicacoes__fonte a:active{color:var(--tinta)}
+.indicacoes__fonte a:focus-visible{outline:2px solid var(--ouro-profundo);outline-offset:3px}
+/* abaixo de 900 px a cabeça fica no eixo: a nota da fonte vai em linhas equilibradas, com os dois links
+   em linhas não vizinhas (1ª e 3ª), e o toque deles cresce para 45 px (17 + 2 × 14) sem as áreas se
+   cruzarem. Acima disso, com mouse, os links podem cair em linhas vizinhas. */
+@media (max-width:899px){
+  .indicacoes__fonte{max-width:52ch;margin-inline:auto;text-wrap:balance}
+  .indicacoes__fonte a::before{inset:-14px -4px}
+}
+/* tela de toque a partir de 900 px (celular grande deitado, iPad deitado): a 2ª frase da nota, com o
+   2º link, vai para uma linha própria, 22 px abaixo: as linhas dos dois links ficam a 45 px e o
+   toque de cada um cresce para 45 px sem as áreas se cruzarem */
+@media (min-width:900px) and (any-pointer:coarse){
+  .indicacoes__fonte-2{display:block;margin-top:22px}
+  .indicacoes__fonte a::before{inset:-14px -4px}
+}
+
+.indic{display:grid}
+.indic__item,.indic__fora{display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center}
+.indic__item{padding-block:24px;border-top:1px solid var(--fio-claro-suave)}
+.indic__item:first-child{padding-top:0;border-top:0}
+.indic__item:last-child{padding-bottom:0}
+.indic__regiao{font-family:var(--serif);font-style:italic;font-weight:400;font-size:var(--t-legenda,1.125rem);line-height:1.3;color:var(--ouro-profundo)}
+.indic h3,.indic__fora h3{margin-top:2px;font-size:var(--t-h3-ficha,1.75rem);line-height:1.1;color:var(--tinta);text-wrap:balance}
+.indic__desc{margin-top:10px;max-width:32ch;font-size:var(--t-nota,.9375rem);line-height:1.55;color:var(--texto-claro);text-wrap:balance}
+/* a do membro superior: a nota vem depois de um filete curto em ouro profundo (no eixo no celular) */
+.indic__marca{margin-top:14px;max-width:30ch;font-family:var(--serif);font-style:italic;font-weight:400;font-size:var(--t-legenda,1.125rem);line-height:1.3;color:var(--tinta);text-wrap:balance}
+.indic__marca::before{content:"";display:block;width:32px;height:1px;margin:0 auto 12px;background:var(--ouro-profundo)}
+/* fora da lista: marfim liso e borda em sutura (traço de 6 px, intervalo de 6 px, ouro profundo .5) */
+.indic__fora{--sut:rgba(126,106,56,.5);position:relative;margin-top:var(--calha);padding:clamp(26px,3vw,38px);border:1px solid transparent;background:var(--marfim)}
+.indic__fora::after{content:"";position:absolute;inset:-1px;pointer-events:none;
+  background:
+    repeating-linear-gradient(90deg,var(--sut) 0 6px,transparent 6px 12px) left top/100% 1px no-repeat,
+    repeating-linear-gradient(90deg,var(--sut) 0 6px,transparent 6px 12px) left bottom/100% 1px no-repeat,
+    repeating-linear-gradient(180deg,var(--sut) 0 6px,transparent 6px 12px) left top/1px 100% no-repeat,
+    repeating-linear-gradient(180deg,var(--sut) 0 6px,transparent 6px 12px) right top/1px 100% no-repeat}
+.indic__fora .indic__desc{color:var(--tinta)}
+@media (min-width:600px){
+  .indic__item,.indic__fora{grid-template-columns:minmax(0,5fr) minmax(0,7fr);column-gap:calc(var(--calha) * 1.5);
+    align-items:baseline;justify-items:start;text-align:left}
+  .indic__regiao{grid-column:1;grid-row:1}
+  .indic h3,.indic__fora h3{grid-column:1;grid-row:2}
+  .indic__desc{grid-column:2;grid-row:2;margin-top:0;max-width:52ch;text-wrap:pretty}
+  .indic__marca{grid-column:2;grid-row:3;max-width:none}
+  .indic__marca::before{margin-inline:0}
+}
+/* tablet pequeno: duas metades iguais, para o nome não quebrar em três linhas */
+@media (min-width:600px) and (max-width:767px){
+  .indic__item,.indic__fora{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+}
+@media (min-width:1100px){
+  /* três colunas: região, nome e o que é, na mesma linha de base */
+  .indic__item,.indic__fora{grid-template-columns:minmax(0,2.4fr) minmax(0,4fr) minmax(0,5.6fr)}
+  .indic__regiao{grid-column:1;grid-row:1}
+  .indic h3,.indic__fora h3{grid-column:2;grid-row:1;margin-top:0}
+  .indic__desc{grid-column:3;grid-row:1;font-size:var(--t-corpo,1.0625rem)}
+  .indic__marca{grid-column:3;grid-row:2}
+}
+
+/* ---------- 4. O que o PRP não é: fichas que viram (componente do site.css) ----------
+   No carrossel (celular em pé e deitado), frente e verso ficam no eixo pelo alt.css; de 600 px para
+   cima a grade é de tablet, alinhada à esquerda, como nas outras páginas. */
+.mitos .sinal__titulo{font-size:var(--t-h3-ficha,1.75rem);text-wrap:balance}
+/* Verso: a pergunta no alto (como o nome nas outras páginas); o "Não." e a resposta assentam no pé,
+   espelhando a frente (pergunta embaixo), e fecham com a fonte, no mesmo fecho das fichas da home
+   e do /dr/ (filete, rótulo e link, alt.css). O alt.css vem depois deste arquivo: os seletores
+   levam .mitos.sinais--foto para valer sobre ele. */
+.mito__nao{margin-top:8px;font-family:var(--serif);font-style:italic;font-weight:400;font-size:var(--t-h3,2.25rem);line-height:1;color:var(--champanhe)}
+.mitos.sinais--foto .mito__nao{margin-top:auto;padding-top:18px}
+.mitos.sinais--foto .sinal__texto{margin-top:10px}
+.mitos.sinais--foto .sinal__liga{margin-top:20px}
+/* o nome da resolução não quebra; na ficha mais estreita (quatro por linha de 1100 a 1199 px, ~240 px)
+   ele desce um degrau (--t-micro) */
+.mitos.sinais--foto .sinal__links .link{white-space:nowrap}
+@container (max-width:249px){.mitos.sinais--foto .sinal__links .link{font-size:var(--t-micro,.8125rem)}}
+/* ficha estreita fora do carrossel (quatro por linha de 1100 a 1279 px): "Não." no degrau de ficha e
+   respiros menores, para o verso caber sem esticar a frente além da das outras páginas */
+@media (min-width:1100px){
+  @container (max-width:289px){
+    .mitos.sinais--foto .mito__nao{padding-top:12px;font-size:var(--t-h3-ficha,1.75rem)}
+    .mitos.sinais--foto .sinal__texto{margin-top:8px}
+    .mitos.sinais--foto .sinal__liga{margin-top:14px;padding-top:8px}
+    .mitos.sinais--foto .sinal__links{margin-top:4px}
+  }
+}
+/* iPad deitado e notebook pequeno (900 a 1099 px, duas fichas por linha, ficha de ~470 × 590):
+   o "Não." e a resposta sobem um degrau */
+@media (min-width:900px) and (max-width:1099px) and (min-height:501px){
+  .mitos.sinais--foto .mito__nao{font-size:var(--t-h2,3.25rem)}
+  .mitos.sinais--foto .sinal__texto{font-size:var(--t-lead,1.3125rem);line-height:1.45}
 }
 
 /* ---------- 5. Perguntas frequentes (mesmo desenho do acordeão) ---------- */
-.faq-list{border-top:1px solid var(--cor-filete)}
-.faq-item{border-bottom:1px solid var(--cor-filete)}
+/* a lista não serve de âncora de rolagem do navegador: quem segura a pergunta tocada no
+   lugar é o prp.js, quadro a quadro */
+.faq-list{border-top:1px solid var(--filete-padrao);overflow-anchor:none}
+.faq-item{border-bottom:1px solid var(--filete-padrao)}
 .faq-q{
-  display:flex;align-items:center;justify-content:space-between;gap:24px;width:100%;min-height:64px;padding-block:18px;
-  font-family:var(--serif);font-size:1.5rem;line-height:1.2;color:var(--cor-titulo);text-align:left;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;width:100%;min-height:64px;padding-block:20px;
+  font-family:var(--serif);font-size:var(--t-h3-ficha,1.75rem);line-height:1.2;color:var(--cor-titulo);text-align:left;text-wrap:balance;
+  transition:color var(--t-rapido) var(--ease);
 }
+/* "+" que vira "×" ao girar */
 .faq-q::after{
   content:"";flex:none;width:14px;height:14px;color:var(--cor-destaque);
   background:linear-gradient(currentColor,currentColor) center/100% 1px no-repeat,linear-gradient(currentColor,currentColor) center/1px 100% no-repeat;
-  transition:transform 250ms var(--ease);
+  transition:transform 250ms var(--ease),color var(--t-rapido) var(--ease);
 }
 .faq-item.open .faq-q::after{transform:rotate(45deg)}
-.faq-q:hover{text-decoration:underline;text-decoration-color:var(--cor-filete-forte);text-decoration-thickness:1px;text-underline-offset:.22em}
-.faq-q:hover::after,.faq-q:active::after{color:var(--cor-titulo)}
-.faq-q:focus-visible{outline-offset:-2px}
-.faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows 260ms var(--ease)}
-.faq-item.open .faq-a{grid-template-rows:1fr}
+.faq-q:hover{text-decoration:underline;text-decoration-color:var(--filete-forte);text-decoration-thickness:1px;text-underline-offset:.22em}
+.faq-q:hover::after{color:var(--cor-titulo)}
+.faq-q:active{color:var(--cor-destaque)}
+.faq-q:focus-visible{outline:2px solid var(--cor-foco);outline-offset:3px}
+/* fechada só com JS: sem JS, todas as respostas ficam à vista */
+.faq-a{display:grid;grid-template-rows:1fr;transition:grid-template-rows 250ms var(--ease)}
+.js .faq-a{grid-template-rows:0fr}
+.js .faq-item.open .faq-a{grid-template-rows:1fr}
 .faq-a-inner{overflow:hidden;min-height:0}
-.faq-a-inner p{max-width:62ch;padding-bottom:24px;color:var(--cor-texto)}
-.faq-a-inner a{color:var(--cor-destaque);text-decoration:underline;text-underline-offset:.25em;white-space:nowrap}
-@media (max-width:599px){.faq-q{font-size:1.3125rem}}
+.faq-a-inner p{max-width:62ch;padding-bottom:24px;font-size:var(--t-corpo,1.0625rem);line-height:1.6;color:var(--cor-texto)}
+.faq-a-inner a{display:inline-block;padding-block:10px;margin-block:-10px;color:var(--cor-destaque);text-decoration:underline;text-underline-offset:.25em;white-space:nowrap}
+/* celular: a pergunta fica no h3 de ficha (26 px em 320), acima do corpo da resposta */
 
 /* ---------- Celular: título da capa em duas linhas exatas ----------
-   "e quando é indicado." mede 7,99 em; a fonte acompanha a largura da tela. */
+   "e quando é indicado." em itálico mede 7,0 em; a fonte acompanha a largura da tela. */
 @media (max-width:599px){
-  .prp-capa .t-hero{font-size:min(calc((100vw - 32px) / 8.3),2.875rem)}
+  .prp-capa .t-hero{font-size:min(calc((100vw - 32px) / 7.4),2.875rem)}
 }

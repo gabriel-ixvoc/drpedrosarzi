@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Ortopedista e Cirurgião da Mão em Alphaville e Osasco | Dr. Pedro Sarzi</title>
-<meta name="description" content="Ortopedista e cirurgião da mão em Alphaville e Osasco, com atendimento em Barueri e região. Tratamento para dor, formigamento e perda de força, da imobilização à microcirurgia.">
+<title>Dr. Pedro Sarzi | Cirurgia da mão em Alphaville e Osasco</title>
+<meta name="description" content="Cirurgia da mão e do punho em Alphaville e Osasco, com formação em ortopedia. Tratamento de dor, formigamento e perda de força, da imobilização à microcirurgia.">
 <meta name="theme-color" content="#08080A">
 <meta property="og:title" content="Dr. Pedro Sarzi | Cirurgia da mão e do punho">
-<meta property="og:description" content="Entenda seus sintomas e conheça o cuidado especializado para mão e punho. Em Alphaville e Osasco/SP.">
+<meta property="og:description" content="Entenda seus sintomas e conheça o cuidado da mão e do punho em Alphaville e Osasco/SP.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.drpedrosarzi.com.br/">
 <meta property="og:image" content="https://www.drpedrosarzi.com.br/assets/brand/og.jpg">
@@ -26,13 +26,13 @@
 </script>
 <link rel="stylesheet" href="assets/site.css">
 <link rel="stylesheet" href="assets/pages/home.css">
+<link rel="stylesheet" href="assets/pages/home-alt.css">
+<link rel="stylesheet" href="assets/pages/alt.css">
+<link rel="stylesheet" href="assets/tema.css">
 <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
 <script src="assets/site.js" defer></script>
 <script src="assets/pages/home.js" defer></script>
 <script src="assets/pages/home-alt.js" defer></script>
-<link rel="stylesheet" href="assets/tema.css">
-<link rel="stylesheet" href="assets/pages/home-alt.css">
-<link rel="stylesheet" href="assets/pages/alt.css">
 </head>
 <body>
 
@@ -74,9 +74,17 @@
 
 <main id="conteudo">
 
-<!-- ===== 1. CAPA: frase da marca + placa da mão em camadas ===== -->
+<!-- ===== 1. CAPA: foto da mão, frase da marca e base (credenciais e identificação) ===== -->
 <section class="capa inicio" aria-labelledby="inicio-titulo">
-  <div class="inicio__foto" aria-hidden="true"><img src="imagensnovas/hero-mao-02.webp" width="1672" height="941" alt="" fetchpriority="high" decoding="async"></div>
+  <div class="inicio__foto" aria-hidden="true">
+    <picture>
+      <source media="(max-width:699px) and (orientation:portrait)" type="image/avif" srcset="imagensnovas/hero-mao-02-cel.avif" width="1240" height="893">
+      <source media="(max-width:699px) and (orientation:portrait)" type="image/webp" srcset="imagensnovas/hero-mao-02-cel.webp" width="1240" height="893">
+      <source type="image/avif" srcset="imagensnovas/hero-mao-02.avif">
+      <img class="arte-ia" src="imagensnovas/hero-mao-02.webp" width="1672" height="941" alt="" fetchpriority="high" decoding="async">
+    </picture>
+    <span class="inicio__rotulo">Ilustração conceitual</span>
+  </div>
   <div class="wrap capa__grade">
 
     <div class="capa__texto inicio__texto">
@@ -85,25 +93,23 @@
         <span class="rise"><span>tudo por você.</span></span>
         <span class="rise"><span class="inicio__destaque">Retribua.</span></span>
       </h1>
-      <p class="t-lead abre">Ortopedista e cirurgião da mão em Alphaville e Osasco, com atendimento em Barueri e região.</p>
+      <p class="t-lead abre">Cirurgião da mão e do punho em <span class="nobr">Alphaville e Osasco</span>, com atendimento em Barueri e região.</p>
       <div class="acoes abre">
         <a class="btn" href="https://ig.me/m/pedro_sarzi" data-agendar target="_blank" rel="noopener">Agendar avaliação</a>
         <a class="link" href="#diagnostico">Entenda seus sintomas</a>
       </div>
-      <p class="id-medico capa__id"><span>Dr. Pedro Sarzi · Médico</span><span class="id-medico__sep"> · </span><span>CRM-SP 183.332 · RQE 110447</span></p>
+      <div class="inicio__base abre">
+        <ul class="inicio__cred" aria-label="Formação e locais de atendimento">
+          <li>Especialização pela UNESP</li>
+          <li>São&nbsp;Luiz Alphaville</li>
+          <li>Clínica&nbsp;Fares, Osasco</li>
+        </ul>
+        <p class="id-medico capa__id"><span>Dr. Pedro Sarzi · Médico</span><span class="id-medico__sep"> · </span><span>CRM-SP 183.332 · RQE 110447</span></p>
+      </div>
     </div>
-
-
-
   </div>
 </section>
 
-<div class="credenciais-ticker" aria-label="Formação e atendimento do Dr. Pedro Sarzi">
-  <div class="credenciais-ticker__faixa">
-    <div class="credenciais-ticker__grupo"><span>Cirurgia da mão e do punho</span><span>Especialização pela UNESP</span><span>CRM-SP 183.332</span><span>RQE 110447</span><span>São Luiz · Alphaville</span><span>Clínica Fares · Osasco</span></div>
-    <div class="credenciais-ticker__grupo" aria-hidden="true"><span>Cirurgia da mão e do punho</span><span>Especialização pela UNESP</span><span>CRM-SP 183.332</span><span>RQE 110447</span><span>São Luiz · Alphaville</span><span>Clínica Fares · Osasco</span></div>
-  </div>
-</div>
 
 <!-- ===== 1b. FRASE DA MARCA: o arco do movimento (cena presa durante a rolagem; home.js) ===== -->
 <section class="manifesto" id="manifesto" aria-labelledby="manifesto-titulo">
@@ -115,7 +121,7 @@
         <p class="manifesto__graus" aria-hidden="true"><span id="mGraus">0</span>°</p>
       </div>
       <ul class="manifesto__valores">
-        <li data-limiar="60"><strong>Movimento</strong><span>Os gestos do dia a dia, do trabalho e da vida.</span></li>
+        <li data-limiar="60"><strong>Movimento</strong><span>Os gestos do dia&nbsp;a&nbsp;dia, do trabalho e da vida.</span></li>
         <li data-limiar="120"><strong>Precisão</strong><span>Decisões explicadas com calma e clareza.</span></li>
         <li data-limiar="172"><strong>Vida plena</strong><span>Cuidado que considera a sua rotina.</span></li>
       </ul>
@@ -129,14 +135,14 @@
     <header class="secao__cabeca">
       <h2 class="cap__titulo" id="sinais-titulo">Reconheça o sinal</h2>
       <p class="t-lead">Toque no que você sente para ver o que pode estar por trás.</p>
-      <p class="sinais__nota">Imagens conceituais ilustrativas.</p>
+      <p class="sinais__nota">Imagens conceituais ilustrativas. <span>Conteúdo educativo; a avaliação considera o seu caso.</span></p>
     </header>
     <svg class="sr-only" width="0" height="0" aria-hidden="true" focusable="false"><defs><pattern id="sHach" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(38)"><line x1="0" y1="0" x2="0" y2="5" stroke="#7E6A38" stroke-width="1.1" opacity=".55"/></pattern></defs></svg>
     <ul class="sinais sinais--foto">
       <li class="sinal" data-sinal="dor">
         <div class="sinal__giro">
           <div class="sinal__face sinal__frente">
-            <span class="sinal__media" aria-hidden="true"><img src="imagensnovas/sinal-dor.webp" alt="" loading="lazy" decoding="async"></span>
+            <span class="sinal__media" aria-hidden="true"><img class="arte-ia" src="imagensnovas/sinal-dor.webp" srcset="imagensnovas/sinal-dor.webp 760w, imagensnovas/sinal-dor-1122.webp 1122w" sizes="(orientation:landscape) and (max-height:500px) and (max-width:899px) 300px, (max-width:599px) 80vw, (max-width:899px) calc(50vw - 41px), (max-width:1099px) calc(33.3vw - 33px), 320px" width="760" height="950" alt="" loading="lazy" decoding="async"></span>
             <svg class="sinal__glifo" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="24" cy="24" r="2.4" fill="currentColor" stroke="none"/><path d="M18.5 18.5a8 8 0 0 0 0 11M29.5 18.5a8 8 0 0 1 0 11M13.5 13.5a15 15 0 0 0 0 21M34.5 13.5a15 15 0 0 1 0 21"/></svg>
             <svg class="sinal__mapa" viewBox="48 84 240 412" aria-hidden="true" focusable="false"><use href="#handGeo" class="sinal__mao"/><circle class="z" cx="158" cy="398" r="17"/><circle class="z" cx="140" cy="350" r="15"/></svg>
             <h3 class="sinal__titulo">Dor</h3>
@@ -150,15 +156,14 @@
             <p class="sinal__texto">Piora ao torcer o punho, fazer pinça ou pegar peso.</p>
             <p class="sinal__liga">Pode estar ligado a</p>
             <p class="sinal__links"><a class="link" href="#tratamentos" data-goto="2">De Quervain</a><a class="link" href="#tratamentos" data-goto="3">Rizartrose</a></p>
-            <p class="sinal__nota">Conteúdo educativo; a avaliação considera o seu caso.</p>
-            <button class="sinal__voltar" type="button" aria-label="Voltar ao card Dor"></button>
+            <button class="sinal__voltar" type="button" aria-label="Voltar à ficha Dor"></button>
           </div>
         </div>
       </li>
       <li class="sinal" data-sinal="formigamento">
         <div class="sinal__giro">
           <div class="sinal__face sinal__frente">
-            <span class="sinal__media" aria-hidden="true"><img src="imagensnovas/sinal-formigamento.webp" alt="" loading="lazy" decoding="async"></span>
+            <span class="sinal__media" aria-hidden="true"><img class="arte-ia" src="imagensnovas/sinal-formigamento.webp" srcset="imagensnovas/sinal-formigamento.webp 760w, imagensnovas/sinal-formigamento-1122.webp 1122w" sizes="(orientation:landscape) and (max-height:500px) and (max-width:899px) 300px, (max-width:599px) 80vw, (max-width:899px) calc(50vw - 41px), (max-width:1099px) calc(33.3vw - 33px), 320px" width="760" height="950" alt="" loading="lazy" decoding="async"></span>
             <svg class="sinal__glifo" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 17l3.75-3 3.75 3 3.75-3 3.75 3 3.75-3 3.75 3 3.75-3 3.75 3M9 25l3.75-3 3.75 3 3.75-3 3.75 3 3.75-3 3.75 3 3.75-3 3.75 3M13 33l3.75-3 3.75 3 3.75-3 3.75 3 3.75-3 3.75 3"/></svg>
             <svg class="sinal__mapa" viewBox="48 84 240 412" aria-hidden="true" focusable="false"><use href="#handGeo" class="sinal__mao"/><path class="n" d="M194 452C193 426 192 404 192 390C191.6 383 191.6 374 192 366C186 340 176 296 167 232M192 366C182 352 168 342 154 334C130 318 104 302 84 288M193 366C194 330 192 290 188 214M193 366C204 330 214 288 220 230"/><g class="d"><circle cx="72" cy="272" r="5.5"/><circle cx="139" cy="120" r="5.5"/><circle cx="184" cy="101" r="5.5"/><circle cx="226" cy="118" r="5.5"/></g></svg>
             <h3 class="sinal__titulo">Formigamento</h3>
@@ -172,15 +177,14 @@
             <p class="sinal__texto">Costuma piorar à noite ou ao segurar o celular e o volante.</p>
             <p class="sinal__liga">Pode estar ligado a</p>
             <p class="sinal__links"><a class="link" href="#tratamentos" data-goto="0">Túnel do carpo</a></p>
-            <p class="sinal__nota">Conteúdo educativo; a avaliação considera o seu caso.</p>
-            <button class="sinal__voltar" type="button" aria-label="Voltar ao card Formigamento"></button>
+            <button class="sinal__voltar" type="button" aria-label="Voltar à ficha Formigamento"></button>
           </div>
         </div>
       </li>
       <li class="sinal" data-sinal="dormencia">
         <div class="sinal__giro">
           <div class="sinal__face sinal__frente">
-            <span class="sinal__media" aria-hidden="true"><img src="imagensnovas/sinal-dormencia.webp" alt="" loading="lazy" decoding="async"></span>
+            <span class="sinal__media" aria-hidden="true"><img class="arte-ia" src="imagensnovas/sinal-dormencia.webp" srcset="imagensnovas/sinal-dormencia.webp 760w, imagensnovas/sinal-dormencia-1122.webp 1122w" sizes="(orientation:landscape) and (max-height:500px) and (max-width:899px) 300px, (max-width:599px) 80vw, (max-width:899px) calc(50vw - 41px), (max-width:1099px) calc(33.3vw - 33px), 320px" width="760" height="950" alt="" loading="lazy" decoding="async"></span>
             <svg class="sinal__glifo" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><g fill="currentColor" stroke="none"><circle cx="11" cy="18" r="1.7"/><circle cx="17.5" cy="18" r="1.7" opacity=".8"/><circle cx="24" cy="18" r="1.7" opacity=".6"/><circle cx="30.5" cy="18" r="1.7" opacity=".4"/><circle cx="37" cy="18" r="1.7" opacity=".2"/><circle cx="11" cy="25" r="1.7" opacity=".85"/><circle cx="17.5" cy="25" r="1.7" opacity=".65"/><circle cx="24" cy="25" r="1.7" opacity=".45"/><circle cx="30.5" cy="25" r="1.7" opacity=".25"/><circle cx="37" cy="25" r="1.7" opacity=".1"/><circle cx="11" cy="32" r="1.7" opacity=".7"/><circle cx="17.5" cy="32" r="1.7" opacity=".5"/><circle cx="24" cy="32" r="1.7" opacity=".3"/><circle cx="30.5" cy="32" r="1.7" opacity=".15"/></g></svg>
             <svg class="sinal__mapa" viewBox="48 84 240 412" aria-hidden="true" focusable="false"><use href="#handGeo" class="sinal__mao"/><g class="d"><circle cx="72" cy="272" r="5"/><circle cx="139" cy="120" r="5"/><circle cx="184" cy="101" r="5"/><circle cx="226" cy="118" r="5"/><circle cx="262" cy="160" r="5" opacity=".45"/><circle cx="148" cy="190" r="4" opacity=".7"/><circle cx="186" cy="170" r="4" opacity=".7"/><circle cx="222" cy="180" r="4" opacity=".6"/><circle cx="96" cy="300" r="4" opacity=".7"/><circle cx="170" cy="300" r="3.5" opacity=".45"/><circle cx="204" cy="310" r="3.5" opacity=".35"/></g></svg>
             <h3 class="sinal__titulo">Dormência</h3>
@@ -194,15 +198,14 @@
             <p class="sinal__texto">Você sacode a mão para voltar ao normal. Depois de um corte, um dedo pode ficar dormente.</p>
             <p class="sinal__liga">Pode estar ligado a</p>
             <p class="sinal__links"><a class="link" href="#tratamentos" data-goto="0">Túnel do carpo</a><a class="link" href="#tratamentos" data-goto="7">Lesões de tendão</a></p>
-            <p class="sinal__nota">Conteúdo educativo; a avaliação considera o seu caso.</p>
-            <button class="sinal__voltar" type="button" aria-label="Voltar ao card Dormência"></button>
+            <button class="sinal__voltar" type="button" aria-label="Voltar à ficha Dormência"></button>
           </div>
         </div>
       </li>
       <li class="sinal" data-sinal="forca">
         <div class="sinal__giro">
           <div class="sinal__face sinal__frente">
-            <span class="sinal__media" aria-hidden="true"><img src="imagensnovas/sinal-forca.webp" alt="" loading="lazy" decoding="async"></span>
+            <span class="sinal__media" aria-hidden="true"><img class="arte-ia" src="imagensnovas/sinal-forca.webp" srcset="imagensnovas/sinal-forca.webp 760w, imagensnovas/sinal-forca-1122.webp 1122w" sizes="(orientation:landscape) and (max-height:500px) and (max-width:899px) 300px, (max-width:599px) 80vw, (max-width:899px) calc(50vw - 41px), (max-width:1099px) calc(33.3vw - 33px), 320px" width="760" height="950" alt="" loading="lazy" decoding="async"></span>
             <svg class="sinal__glifo" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 37h30M14 37V13M24 37V20M34 37V29"/><path d="M12 13h4M22 20h4M32 29h4" opacity=".55"/></svg>
             <svg class="sinal__mapa" viewBox="48 84 240 412" aria-hidden="true" focusable="false"><use href="#handGeo" class="sinal__mao"/><ellipse class="z" cx="192" cy="318" rx="44" ry="28"/><circle class="z" cx="104" cy="304" r="13"/></svg>
             <h3 class="sinal__titulo">Perda de força</h3>
@@ -216,15 +219,14 @@
             <p class="sinal__texto">Abrir potes, girar a chave ou segurar a xícara fica difícil.</p>
             <p class="sinal__liga">Pode estar ligado a</p>
             <p class="sinal__links"><a class="link" href="#tratamentos" data-goto="0">Túnel do carpo</a><a class="link" href="#tratamentos" data-goto="3">Rizartrose</a></p>
-            <p class="sinal__nota">Conteúdo educativo; a avaliação considera o seu caso.</p>
-            <button class="sinal__voltar" type="button" aria-label="Voltar ao card Perda de força"></button>
+            <button class="sinal__voltar" type="button" aria-label="Voltar à ficha Perda de força"></button>
           </div>
         </div>
       </li>
       <li class="sinal" data-sinal="travamento">
         <div class="sinal__giro">
           <div class="sinal__face sinal__frente">
-            <span class="sinal__media" aria-hidden="true"><img src="imagensnovas/sinal-travamento.webp" alt="" loading="lazy" decoding="async"></span>
+            <span class="sinal__media" aria-hidden="true"><img class="arte-ia" src="imagensnovas/sinal-travamento.webp" srcset="imagensnovas/sinal-travamento.webp 760w, imagensnovas/sinal-travamento-1122.webp 1122w" sizes="(orientation:landscape) and (max-height:500px) and (max-width:899px) 300px, (max-width:599px) 80vw, (max-width:899px) calc(50vw - 41px), (max-width:1099px) calc(33.3vw - 33px), 320px" width="760" height="950" alt="" loading="lazy" decoding="async"></span>
             <svg class="sinal__glifo" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 39V22a8 8 0 0 1 8-8h4a7 7 0 0 1 7 7v3a5 5 0 0 1-5 5h-1"/><path d="M27 9v9" stroke-width="2.2"/></svg>
             <svg class="sinal__mapa" viewBox="48 84 240 412" aria-hidden="true" focusable="false"><use href="#handGeo" class="sinal__mao"/><path class="n" d="M214 352Q218 300 222 196"/><rect class="f" x="205" y="257" width="25" height="12" rx="6"/><ellipse class="z" cx="216" cy="285" rx="9" ry="12"/></svg>
             <h3 class="sinal__titulo">Travamento</h3>
@@ -238,15 +240,14 @@
             <p class="sinal__texto">O dedo pode travar dobrado e precisar da outra mão para esticar; às vezes, estala ao soltar.</p>
             <p class="sinal__liga">Pode estar ligado a</p>
             <p class="sinal__links"><a class="link" href="#tratamentos" data-goto="1">Dedo em gatilho</a></p>
-            <p class="sinal__nota">Conteúdo educativo; a avaliação considera o seu caso.</p>
-            <button class="sinal__voltar" type="button" aria-label="Voltar ao card Travamento"></button>
+            <button class="sinal__voltar" type="button" aria-label="Voltar à ficha Travamento"></button>
           </div>
         </div>
       </li>
       <li class="sinal" data-sinal="estalo">
         <div class="sinal__giro">
           <div class="sinal__face sinal__frente">
-            <span class="sinal__media" aria-hidden="true"><img src="imagensnovas/sinal-estalo.webp" alt="" loading="lazy" decoding="async"></span>
+            <span class="sinal__media" aria-hidden="true"><img class="arte-ia" src="imagensnovas/sinal-estalo.webp" srcset="imagensnovas/sinal-estalo.webp 760w, imagensnovas/sinal-estalo-1122.webp 1122w" sizes="(orientation:landscape) and (max-height:500px) and (max-width:899px) 300px, (max-width:599px) 80vw, (max-width:899px) calc(50vw - 41px), (max-width:1099px) calc(33.3vw - 33px), 320px" width="760" height="950" alt="" loading="lazy" decoding="async"></span>
             <svg class="sinal__glifo" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="24" cy="24" r="2.2" fill="currentColor" stroke="none"/><path d="M24 9v7M24 32v7M9 24h7M32 24h7M13.5 13.5l4.5 4.5M30 30l4.5 4.5M34.5 13.5L30 18M18 30l-4.5 4.5"/></svg>
             <svg class="sinal__mapa" viewBox="48 84 240 412" aria-hidden="true" focusable="false"><use href="#handGeo" class="sinal__mao"/><path class="n" d="M214 352Q218 300 222 196"/><rect class="f" x="205" y="257" width="25" height="12" rx="6"/><path class="s" d="M236 252l12-6M238 266h14M236 279l12 6M200 252l-12-6M198 266h-14"/></svg>
             <h3 class="sinal__titulo">Estalo</h3>
@@ -260,15 +261,14 @@
             <p class="sinal__texto">O clique pode vir com travamento e dor na base do dedo, às vezes mais forte ao acordar.</p>
             <p class="sinal__liga">Pode estar ligado a</p>
             <p class="sinal__links"><a class="link" href="#tratamentos" data-goto="1">Dedo em gatilho</a></p>
-            <p class="sinal__nota">Conteúdo educativo; a avaliação considera o seu caso.</p>
-            <button class="sinal__voltar" type="button" aria-label="Voltar ao card Estalo"></button>
+            <button class="sinal__voltar" type="button" aria-label="Voltar à ficha Estalo"></button>
           </div>
         </div>
       </li>
       <li class="sinal" data-sinal="caroco">
         <div class="sinal__giro">
           <div class="sinal__face sinal__frente">
-            <span class="sinal__media" aria-hidden="true"><img src="imagensnovas/sinal-caroco.webp" alt="" loading="lazy" decoding="async"></span>
+            <span class="sinal__media" aria-hidden="true"><img class="arte-ia" src="imagensnovas/sinal-caroco.webp" srcset="imagensnovas/sinal-caroco.webp 760w, imagensnovas/sinal-caroco-1122.webp 1122w" sizes="(orientation:landscape) and (max-height:500px) and (max-width:899px) 300px, (max-width:599px) 80vw, (max-width:899px) calc(50vw - 41px), (max-width:1099px) calc(33.3vw - 33px), 320px" width="760" height="950" alt="" loading="lazy" decoding="async"></span>
             <svg class="sinal__glifo" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 33h10a7 7 0 0 1 14 0h10"/><path d="M19 30.5a5 5 0 0 1 10 0" opacity=".45"/></svg>
             <svg class="sinal__mapa" viewBox="48 84 240 412" aria-hidden="true" focusable="false"><use href="#handGeo" class="sinal__mao"/><circle class="z" cx="232" cy="398" r="14"/><path class="n" d="M209 352C213 324 216 292 219 252"/><circle class="f" cx="211" cy="330" r="6"/></svg>
             <h3 class="sinal__titulo">Caroço</h3>
@@ -282,15 +282,14 @@
             <p class="sinal__texto">Um caroço macio no punho ou um nódulo firme na palma da mão.</p>
             <p class="sinal__liga">Pode estar ligado a</p>
             <p class="sinal__links"><a class="link" href="#tratamentos" data-goto="4">Cisto sinovial</a><a class="link" href="#tratamentos" data-goto="5">Dupuytren</a></p>
-            <p class="sinal__nota">Conteúdo educativo; a avaliação considera o seu caso.</p>
-            <button class="sinal__voltar" type="button" aria-label="Voltar ao card Caroço"></button>
+            <button class="sinal__voltar" type="button" aria-label="Voltar à ficha Caroço"></button>
           </div>
         </div>
       </li>
       <li class="sinal" data-sinal="trauma">
         <div class="sinal__giro">
           <div class="sinal__face sinal__frente">
-            <span class="sinal__media" aria-hidden="true"><img src="imagensnovas/sinal-trauma.webp" alt="" loading="lazy" decoding="async"></span>
+            <span class="sinal__media" aria-hidden="true"><img class="arte-ia" src="imagensnovas/sinal-trauma.webp" srcset="imagensnovas/sinal-trauma.webp 760w, imagensnovas/sinal-trauma-1122.webp 1122w" sizes="(orientation:landscape) and (max-height:500px) and (max-width:899px) 300px, (max-width:599px) 80vw, (max-width:899px) calc(50vw - 41px), (max-width:1099px) calc(33.3vw - 33px), 320px" width="760" height="950" alt="" loading="lazy" decoding="async"></span>
             <svg class="sinal__glifo" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 25h11l3.2-6 3.6 11 3.2-6H41"/><path d="M15 15l3 3M33 15l-3 3" opacity=".55"/></svg>
             <svg class="sinal__mapa" viewBox="48 84 240 412" aria-hidden="true" focusable="false"><use href="#handGeo" class="sinal__mao"/><path class="s" d="M158 422l7-6 6 8 7-7 8 4"/><path class="s" d="M134 258l29-6"/><ellipse class="z" cx="172" cy="412" rx="22" ry="16"/></svg>
             <h3 class="sinal__titulo">Depois de queda ou corte</h3>
@@ -305,8 +304,7 @@
             <p class="sinal__alerta">Corte com dedo que não dobra ou dormente: procure atendimento no mesmo dia.</p>
             <p class="sinal__liga">Pode estar ligado a</p>
             <p class="sinal__links"><a class="link" href="#tratamentos" data-goto="6">Fraturas</a><a class="link" href="#tratamentos" data-goto="7">Lesões de tendão</a></p>
-            <p class="sinal__nota">Conteúdo educativo; a avaliação considera o seu caso.</p>
-            <button class="sinal__voltar" type="button" aria-label="Voltar ao card Depois de queda ou corte"></button>
+            <button class="sinal__voltar" type="button" aria-label="Voltar à ficha Depois de queda ou corte"></button>
           </div>
         </div>
       </li>
@@ -690,13 +688,12 @@
     <div class="medico__texto">
       <h2 class="cap__titulo" id="medico-titulo">Dr. Pedro Sarzi</h2>
       <p class="t-lead">Cirurgia da mão, com especialização pela UNESP e formação em ortopedia e traumatologia.</p>
-      <p class="prosa">Há 10 anos na medicina, atende em Alphaville e em Osasco pessoas com dor, formigamento, travamento e lesões da mão e do punho. Em cada consulta, explica o que encontrou e os caminhos possíveis, para que a decisão seja tomada junto com você.</p>
+      <p class="prosa">Há 10 anos na medicina, atende em Alphaville e em Osasco pessoas com dor, formigamento, travamento e lesões da mão e do punho. Em cada consulta, explica o que encontrou e os caminhos possíveis, para que a decisão seja tomada junto&nbsp;com&nbsp;você.</p>
       <dl class="ficha medico__ficha">
         <div><dt>Registro</dt><dd><span class="nobr">CRM-SP 183.332</span> e RQE&nbsp;110447</dd></div>
-        <div><dt>Medicina</dt><dd>Universidade de Mogi das Cruzes (UMC)</dd></div>
-        <div><dt>Residência</dt><dd>Ortopedia e traumatologia, Servidores Municipais de Piracicaba. Título TEOT&nbsp;17.744</dd></div>
-        <div><dt>Especialização</dt><dd>Cirurgia da mão, Universidade Estadual Paulista (UNESP)</dd></div>
-        <div><dt>Sociedades</dt><dd>Membro titular da Sociedade Brasileira de Cirurgia da Mão (SBCM) e membro da Sociedade Brasileira de Ortopedia e Traumatologia (SBOT)</dd></div>
+        <div><dt>Formação</dt><dd>Ortopedia e traumatologia. Título <span class="nobr">TEOT 17.744</span></dd></div>
+        <div><dt>Especialização</dt><dd>Cirurgia da mão e microcirurgia, Universidade Estadual Paulista (UNESP)</dd></div>
+        <div><dt>Sociedade</dt><dd>Membro titular da Sociedade Brasileira de Cirurgia da Mão (SBCM)</dd></div>
       </dl>
       <a class="link" href="dr/">Conheça o Dr. Pedro</a>
     </div>
@@ -775,18 +772,18 @@
 </section>
 
 <!-- ===== 7. CONSULTA E ENDEREÇO: régua da consulta, depois onde atende ===== -->
-<section class="cap cap--linho local" id="atendimento" aria-labelledby="consulta-titulo">
-  <div class="wrap cap__grade consulta" id="consulta">
+<section class="cap cap--linho" id="atendimento" aria-labelledby="consulta-titulo">
+  <div class="wrap cap__grade consulta sup-escura" id="consulta">
     <div class="cap__margem">
       <h2 class="cap__titulo" id="consulta-titulo">Como é a consulta</h2>
       <p class="nota">Do primeiro contato ao plano de cuidado, em quatro passos.</p>
     </div>
     <div class="cap__inteiro steps" id="steps">
       <ol class="consulta__passos">
-        <li id="consulta-etapa-1" data-consulta-etapa data-numero="01"><h3>Agende sua avaliação</h3><p>Escolha um horário pelo botão de agendamento ou ligue para a central da Clínica Fares.</p><p class="consulta__detalhe"><strong>Central da clínica</strong> · (11)&nbsp;3851-4000</p></li>
-        <li id="consulta-etapa-2" data-consulta-etapa data-numero="02"><h3>Traga o que já sabe</h3><p>Se tiver, reúna exames de imagem, laudos e a lista de medicamentos. Se não tiver exames, tudo bem: a avaliação começa pela conversa e pelo exame físico.</p><p class="consulta__detalhe"><strong>Uma dica</strong> · Anote quando o sintoma aparece e o que costuma piorá-lo.</p></li>
-        <li id="consulta-etapa-3" data-consulta-etapa data-numero="03"><h3>Conte sua história</h3><p>O Dr. Pedro escuta o que mudou na sua rotina, examina a mão e o punho e explica os achados com clareza.</p><p class="consulta__detalhe"><strong>Com atenção</strong> · Sintomas, movimento, sensibilidade e força.</p></li>
-        <li id="consulta-etapa-4" data-consulta-etapa data-numero="04"><h3>Decidam juntos o caminho</h3><p>Você entende as opções indicadas para o seu caso, o que cada uma envolve e como seguir, sem pular etapas.</p><p class="consulta__detalhe"><strong>Plano individual</strong> · Exames, tratamento e retorno, conforme a avaliação.</p></li>
+        <li id="consulta-etapa-1" data-consulta-etapa data-numero="01"><h3>Agende sua avaliação</h3><p>Escolha um horário pelo botão de agendamento ou ligue para a central da Clínica Fares.</p><p class="consulta__detalhe"><strong>Central da clínica:</strong> <a class="consulta__tel" href="tel:+551138514000">(11)&nbsp;3851-4000</a></p></li>
+        <li id="consulta-etapa-2" data-consulta-etapa data-numero="02"><h3>Traga o que já sabe</h3><p>Se tiver, reúna exames de imagem, laudos e a lista de medicamentos. Se não tiver exames, tudo bem: a avaliação começa pela conversa e pelo exame físico.</p><p class="consulta__detalhe"><strong>Uma dica:</strong> anote quando o sintoma aparece e o que costuma&nbsp;piorá-lo.</p></li>
+        <li id="consulta-etapa-3" data-consulta-etapa data-numero="03"><h3>Conte sua história</h3><p>O Dr. Pedro escuta o que mudou na sua rotina, examina a mão e o punho e explica os achados com clareza.</p><p class="consulta__detalhe"><strong>Com atenção:</strong> sintomas, movimento, sensibilidade e força.</p></li>
+        <li id="consulta-etapa-4" data-consulta-etapa data-numero="04"><h3>Decidam juntos o caminho</h3><p>Você entende as opções indicadas para o seu caso, o que cada uma envolve e como seguir, sem pular etapas.</p><p class="consulta__detalhe"><strong>Plano individual:</strong> exames, tratamento e retorno, conforme a avaliação.</p></li>
       </ol>
       <nav class="consulta__nav" aria-label="Navegue pelas etapas da consulta">
         <ol>
@@ -795,7 +792,7 @@
           <li><button type="button" data-consulta-ir="2"><span>03</span><span>Avaliar</span></button></li>
           <li><button type="button" data-consulta-ir="3"><span>04</span><span>Plano</span></button></li>
         </ol>
-        <p class="consulta__nota-fixa">Cada etapa é explicada com clareza. O plano é combinado com você.</p>
+        <p class="consulta__nota-fixa"><span>Cada etapa é explicada com clareza. O plano é combinado com você.</span></p>
       </nav>
     </div>
   </div>
@@ -809,23 +806,23 @@
         <article class="moldura onde__card onde__horario">
           <h3>Dias e horários</h3>
           <p class="semana__agora" id="semanaAgora" aria-live="polite" hidden></p>
-          <ol class="semana" id="semana"><li data-dia="1"><span class="semana__dia">Segunda</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 16h</span><span class="turno__local">Clínica Fares</span></li><li data-local="alphaville"><span class="turno__hora">17h às 19h</span><span class="turno__local">São Luiz Alphaville</span></li></ul></li><li data-dia="2" data-agora="Hoje é dia de hospital, sem consultas. Na quarta ele atende na <b>Clínica Fares</b>, das 8h às 17h."><span class="semana__dia">Terça</span><ul class="semana__turnos"><li class="turno--sem"><span class="turno__hora"></span><span class="turno__local">Dia de hospital, sem consultas</span></li></ul></li><li data-dia="3"><span class="semana__dia">Quarta</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 17h</span><span class="turno__local">Clínica Fares</span></li></ul></li><li data-dia="4"><span class="semana__dia">Quinta</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 17h</span><span class="turno__local">Clínica Fares</span></li><li data-local="osasco"><span class="turno__hora">17h às 20h</span><span class="turno__local">São Luiz Osasco</span></li></ul></li><li data-dia="5"><span class="semana__dia">Sexta</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 12h30</span><span class="turno__local">Clínica Fares</span></li><li class="turno--sem"><span class="turno__hora">Tarde</span><span class="turno__local">Cirurgias</span></li></ul></li><li data-dia="6" data-agora="Hoje é sábado: a <b>Clínica Fares</b> abre das 8h às 16h em dois sábados por mês. Confirme a data ao agendar."><span class="semana__dia">Sábado</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 16h</span><span class="turno__local">Clínica Fares, dois por mês</span></li></ul></li><li data-dia="0" data-agora="Hoje é domingo, sem atendimento. Na segunda ele atende na <b>Clínica Fares</b>, das 8h às 16h."><span class="semana__dia">Domingo</span><ul class="semana__turnos"><li class="turno--sem"><span class="turno__hora"></span><span class="turno__local">Sem atendimento</span></li></ul></li></ol>
+          <ol class="semana" id="semana"><li data-dia="1"><span class="semana__dia">Segunda</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 16h</span><span class="turno__local">Clínica Fares</span></li><li data-local="alphaville"><span class="turno__hora">17h às 19h</span><span class="turno__local">São Luiz Alphaville</span></li></ul></li><li data-dia="2" data-agora="Hoje é dia de hospital, sem consultas. Na quarta ele atende na <b>Clínica Fares</b>, das 8h às 17h."><span class="semana__dia">Terça</span><ul class="semana__turnos"><li class="turno--sem"><span class="turno__hora"></span><span class="turno__local">Dia de hospital, sem consultas</span></li></ul></li><li data-dia="3"><span class="semana__dia">Quarta</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 17h</span><span class="turno__local">Clínica Fares</span></li></ul></li><li data-dia="4"><span class="semana__dia">Quinta</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 17h</span><span class="turno__local">Clínica Fares</span></li><li data-local="osasco"><span class="turno__hora">17h às 20h</span><span class="turno__local">São Luiz Osasco</span></li></ul></li><li data-dia="5"><span class="semana__dia">Sexta</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 12h30</span><span class="turno__local">Clínica Fares</span></li><li class="turno--sem"><span class="turno__hora">Tarde</span><span class="turno__local">Cirurgias</span></li></ul></li><li data-dia="6" data-agora="Hoje é sábado: ele atende na <b>Clínica Fares</b>, das 8h às 16h, em dois sábados por mês. Confirme a data ao agendar."><span class="semana__dia">Sábado</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 16h</span><span class="turno__local">Clínica Fares, dois por mês</span></li></ul></li><li data-dia="0" data-agora="Hoje é domingo, sem atendimento. Na segunda ele atende na <b>Clínica Fares</b>, das 8h às 16h."><span class="semana__dia">Domingo</span><ul class="semana__turnos"><li class="turno--sem"><span class="turno__hora"></span><span class="turno__local">Sem atendimento</span></li></ul></li></ol>
           <p class="semana__nota">Os sábados de atendimento são dois por mês: confirme a data ao agendar.</p>
         </article>
         <article class="moldura onde__card onde__locais">
           <h3>Locais</h3>
           <ul class="locais">
-            <li class="local" data-local="fares" data-nome="Clínica Fares, Rua Antônio Agú, 630, Centro, Osasco" data-mapa="Clínica Fares, Rua Antônio Agú, 630, Osasco SP">
-              <button class="local__filtro" type="button" aria-pressed="false" aria-controls="semana"><span class="local__nome">Clínica Fares</span><span class="local__tipo">consultório</span></button>
-              <p class="local__end">Rua Antônio Agú, 630, Centro, Osasco</p>
-              <p class="local__dias">Segunda, quarta, quinta, sexta e dois sábados por mês</p>
-              <p class="local__links"><a class="link" href="https://www.google.com/maps/search/?api=1&amp;query=Cl%C3%ADnica%20Fares%2C%20Rua%20Ant%C3%B4nio%20Ag%C3%BA%20630%2C%20Osasco%20SP" target="_blank" rel="noopener">Google Maps</a><a class="link" href="https://waze.com/ul?q=Rua%20Ant%C3%B4nio%20Ag%C3%BA%2C%20630%2C%20Osasco&amp;navigate=yes" target="_blank" rel="noopener">Waze</a></p>
-            </li>
             <li class="local" data-local="alphaville" data-nome="São Luiz Alphaville" data-mapa="Hospital São Luiz Alphaville">
               <button class="local__filtro" type="button" aria-pressed="false" aria-controls="semana"><span class="local__nome">São Luiz Alphaville</span><span class="local__tipo">ambulatório</span></button>
               <p class="local__end">Alphaville</p>
               <p class="local__dias">Segunda, das 17h às 19h</p>
               <p class="local__links"><a class="link" href="https://www.google.com/maps/search/?api=1&amp;query=Hospital%20S%C3%A3o%20Luiz%20Alphaville" target="_blank" rel="noopener">Google Maps</a></p>
+            </li>
+            <li class="local" data-local="fares" data-nome="Clínica Fares, Rua Antônio Agú, 630, Centro, Osasco" data-mapa="Clínica Fares, Rua Antônio Agú, 630, Osasco SP">
+              <button class="local__filtro" type="button" aria-pressed="false" aria-controls="semana"><span class="local__nome">Clínica Fares</span><span class="local__tipo">consultório</span></button>
+              <p class="local__end">Rua Antônio Agú, 630, Centro, Osasco</p>
+              <p class="local__dias">Segunda, quarta, quinta, sexta e dois sábados por mês</p>
+              <p class="local__links"><a class="link" href="https://www.google.com/maps/search/?api=1&amp;query=Cl%C3%ADnica%20Fares%2C%20Rua%20Ant%C3%B4nio%20Ag%C3%BA%20630%2C%20Osasco%20SP" target="_blank" rel="noopener">Google Maps</a><a class="link" href="https://waze.com/ul?q=Rua%20Ant%C3%B4nio%20Ag%C3%BA%2C%20630%2C%20Osasco&amp;navigate=yes" target="_blank" rel="noopener">Waze</a></p>
             </li>
             <li class="local" data-local="osasco" data-nome="São Luiz Osasco, centro médico" data-mapa="Hospital São Luiz Osasco centro médico">
               <button class="local__filtro" type="button" aria-pressed="false" aria-controls="semana"><span class="local__nome">São Luiz Osasco</span><span class="local__tipo">centro médico</span></button>
@@ -846,7 +843,7 @@
           </ul>
         </article>
         <figure class="quadro onde__foto">
-          <div class="quadro__passe"><img src="assets/image-be927f6d3d.webp" width="1100" height="825" alt="Fachada da Clínica Fares, com a entrada e a calçada, em Osasco" loading="lazy" decoding="async"></div>
+          <div class="quadro__passe"><img src="assets/image-be927f6d3d.webp" width="960" height="720" alt="Fachada da Clínica Fares, com a entrada e a calçada, em Osasco" loading="lazy" decoding="async"></div>
           <figcaption>Clínica Fares, Rua Antônio Agú, 630, Centro de Osasco</figcaption>
         </figure>
         <figure class="moldura onde__mapa" id="mapa">
@@ -864,7 +861,7 @@
 
 </main>
 
-<!-- Agendar no celular: barra fixa só abaixo de 600 px (site.js mostra depois de 700 px e esconde sobre o rodapé e quando outro botão de agendar está na tela) -->
+<!-- Agendar no celular: barra fixa só abaixo de 600 px (site.js mostra quando nenhum botão de agendar do conteúdo está na tela e esconde sobre o rodapé) -->
 <a class="fab" id="fab" href="https://ig.me/m/pedro_sarzi" data-agendar target="_blank" rel="noopener">Agendar avaliação</a>
 
 <!-- ===== RODAPÉ (sistema único: docs/site.md) ===== -->
@@ -891,9 +888,9 @@
       <div class="rodape__atendimento">
         <h2 class="rodape__titulo">Atendimento</h2>
         <address>
+          <p>São Luiz Alphaville, Clínica Fares e São Luiz Osasco</p>
           <p>Clínica Fares<br>Rua Antônio Agú, 630, Centro<br>Osasco/SP</p>
           <a href="https://www.google.com/maps/search/?api=1&amp;query=Cl%C3%ADnica%20Fares%2C%20Rua%20Ant%C3%B4nio%20Ag%C3%BA%20630%2C%20Osasco%20SP" target="_blank" rel="noopener">Ver no mapa</a>
-          <p>Também no São Luiz Alphaville e no São Luiz Osasco</p>
           <a href="#onde">Dias e horários de cada local</a>
           <a href="tel:+551138514000">(11) 3851-4000, central da Clínica Fares</a>
           <a href="mailto:contato.pedrosarzi@gmail.com">contato.pedrosarzi@gmail.com</a>

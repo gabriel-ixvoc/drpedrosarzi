@@ -79,7 +79,7 @@
         <div class="lab-tabs" role="group" aria-label="Partes do sangue"><button type="button" data-fraction="0" aria-pressed="true">Plasma</button><button type="button" data-fraction="1" aria-pressed="false">Hemácias</button><button type="button" data-fraction="2" aria-pressed="false">Plaquetas</button></div>
         <p class="lab-description" id="fractionText" aria-live="polite"></p>
         <label class="lab-range" for="separation"><span>Simule a centrifugação <output id="separationValue" for="separation">100%</output></span><input id="separation" type="range" min="0" max="100" value="100"><small><span>Sangue coletado</span><span>Depois da centrifugação</span></small></label>
-        <p class="lab-note">Fig. 1. Desenho esquemático. As proporções variam conforme o preparo.</p>
+        <p class="lab-note">Fig. 1. Desenho esquemático, fora de escala. As&nbsp;proporções variam conforme o&nbsp;preparo.</p>
       </div></div>`;
     const descriptions = [
       'A parte líquida e amarelada do sangue. É dela, junto com a camada intermediária, que se prepara o PRP.',
@@ -128,6 +128,8 @@
     /* Braço na dobra do cotovelo, cortado pelas bordas (máscara de esmaecimento). */
     const BRACO = 'M0 170C80 160 170 166 240 184C300 199 380 206 490 204L490 272C380 276 300 286 240 300C180 314 90 322 0 322Z';
     const TUBO_COLETA = 'M364 216C412 192 436 112 492 92S562 70 582 93';
+    /* Tecido em corte, genérico: a pele em cima, cortado pelas bordas (máscara de esmaecimento). */
+    const CORTE = 'M70 282C170 270 250 266 320 266C390 266 470 270 570 280L570 366C470 372 390 374 320 374C250 374 170 372 70 366Z';
     const scenes = [
       () => stage('collect', `
         <defs>
@@ -184,34 +186,38 @@
         <path d="M150 266H204" class="guia"/>${rot(28, 236, 'Camada de plasma', 'com mais plaquetas')}
         <path d="M300 82H455V146" class="guia"/>${rot(432, 172, 'PRP', 'plasma rico em plaquetas')}
       `, 'Seringa estéril retirando a camada de plasma com mais plaquetas do tubo centrifugado'),
+      /* Aplicação: pele e tecido em corte genérico (sem osso, articulação nem tendão), o transdutor do
+         exame de imagem apoiado na pele, o feixe e a agulha chegando ao alvo dentro dele. */
       () => stage('apply', `
-        <defs><linearGradient id="apply-fade" gradientUnits="userSpaceOnUse" x1="83" x2="557"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".16" stop-color="#fff"/><stop offset=".84" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><mask id="apply-m" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="430"><rect width="640" height="430" fill="url(#apply-fade)"/></mask></defs>
+        <defs>
+          <linearGradient id="apply-fade" gradientUnits="userSpaceOnUse" x1="70" x2="570"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".16" stop-color="#fff"/><stop offset=".84" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+          <mask id="apply-m" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="430"><rect width="640" height="430" fill="url(#apply-fade)"/></mask>
+          <clipPath id="apply-corpo"><path d="${CORTE}"/></clipPath>
+        </defs>
         <g mask="url(#apply-m)">
-        <path d="M83 301C131 264 168 258 214 263C267 269 304 254 342 263C389 274 439 276 547 262L557 324C455 343 416 337 351 322C288 304 266 327 221 326C164 325 143 320 83 343Z" class="corpo ln-s"/>
-        <path d="M92 302C159 283 190 281 225 288C251 294 265 282 275 282Q300 284 291 299Q281 312 260 308C209 312 176 300 93 322Z" fill="url(#apply-h)"/>
-        <path d="M92 302C159 283 190 281 225 288C251 294 265 282 275 282Q300 284 291 299Q281 312 260 308C209 312 176 300 93 322Z" class="ln-m"/>
-        <path d="M339 285Q315 284 316 298Q322 313 345 307C408 320 466 326 549 307L547 284C457 302 399 286 339 285Z" fill="url(#apply-h)"/>
-        <path d="M339 285Q315 284 316 298Q322 313 345 307C408 320 466 326 549 307L547 284C457 302 399 286 339 285Z" class="ln-m"/>
-        <path d="M285 282Q303 294 286 308M324 282Q307 294 325 309" class="ln-s"/>
-        <path d="M112 270C211 239 252 256 305 255S431 271 518 250" class="tendao"/>
-        <path d="M112 270C211 239 252 256 305 255S431 271 518 250" class="ln"/>
+          <path d="${CORTE}" class="corpo"/>
+          <rect x="70" y="332" width="500" height="44" fill="url(#apply-h)" clip-path="url(#apply-corpo)"/>
+          <path d="M70 296C170 284 250 280 320 280C390 280 470 284 570 294" class="ln-s"/>
+          <path d="M570 366C470 372 390 374 320 374C250 374 170 372 70 366" class="ln-s"/>
+          <path d="M70 282C170 270 250 266 320 266C390 266 470 270 570 280" class="ln"/>
         </g>
-        <path d="M374 192L281 312L443 325Z" class="feixe beam"/>
-        <g transform="translate(363 157) rotate(15)"><path d="M24 0V-30Q24 -64 67 -62" class="ln-s"/><rect width="48" height="44" rx="6" class="corpo ln"/><rect x="3" y="34" width="42" height="12" rx="3" class="corpo ln-m"/></g>
-        <g transform="translate(218 122) rotate(-35)"><path d="M0 79V169" class="ln-m"/><rect x="-18" width="36" height="77" rx="4" class="corpo"/><rect x="-13" y="12" width="26" height="59" class="plasma"/><rect x="-18" width="36" height="77" rx="4" class="ln-m"/><rect x="-5" y="-28" width="10" height="31" class="corpo ln-s"/><path d="M-24 -29H24M-25 2H25" class="ln-m"/></g>
-        <circle cx="315" cy="258" r="20" class="alvo"/><circle cx="315" cy="258" r="2.5" class="ponto-guia"/>
+        <path d="M386 267L414 267L444 358L356 358Z" class="feixe beam"/>
+        <g transform="translate(376 220)"><path d="M24 0V-30Q24 -64 67 -62" class="ln-s"/><rect width="48" height="44" rx="6" class="corpo ln"/><rect x="3" y="34" width="42" height="12" rx="3" class="corpo ln-m"/></g>
+        <g transform="translate(303 180) rotate(-35)"><path d="M0 79V169" class="ln-m"/><rect x="-18" width="36" height="77" rx="4" class="corpo"/><rect x="-13" y="12" width="26" height="59" class="plasma"/><rect x="-18" width="36" height="77" rx="4" class="ln-m"/><rect x="-5" y="-28" width="10" height="31" class="corpo ln-s"/><path d="M-24 -29H24M-25 2H25" class="ln-m"/></g>
+        <circle cx="400" cy="318" r="16" class="alvo"/><circle cx="400" cy="318" r="2.5" class="ponto-guia"/>
         ${rot(40, 58, 'Aplicação', 'no ponto definido na avaliação')}
-        <path d="M430 160H468" class="guia"/>${rot(476, 156, 'Guiada por imagem', 'quando necessário')}
-        <text x="320" y="392" class="sub" text-anchor="middle">Exemplo no cotovelo, em corte simplificado.</text>
-      `, 'Aplicação do preparo no cotovelo, em corte simplificado, guiada por exame de imagem quando necessário')
+        <path d="M428 228H468" class="guia"/>${rot(476, 224, 'Guiada por imagem', 'quando necessário')}
+      `, 'Aplicação do preparo com agulha fina no ponto definido na avaliação, guiada por exame de imagem quando necessário')
     ];
     /* Texto de cada etapa: um só lugar, o h3 e o p de cada .process-step. */
     const steps = $$('.process-step');
     const copy = steps.map(s => [$('h3', s).textContent.trim(), $('p', s).textContent.trim()]);
     root.classList.add('lab-card', 'lab-placa', 'sup-escura');
-    root.innerHTML = `<div class="lab-topline"><span class="lab-fig">Fig. 2. Do sangue ao preparo</span><span class="lab-status" id="processStatus">01 / 04</span></div><div id="processScene"></div><div class="lab-caption" aria-live="polite"><p class="lab-caption__titulo" id="processTitle"></p><p id="processDescription"></p></div><div class="lab-bottom"><div class="lab-controls"><button type="button" class="lab-button" id="processPlay" aria-pressed="false">Reproduzir<span> etapas</span></button><div class="lab-progress" role="group" aria-label="Escolha uma etapa">${copy.map((c, i) => `<button type="button" data-scene="${i}" aria-label="Etapa ${i + 1}: ${c[0]}"></button>`).join('')}</div><button type="button" class="lab-button" id="processNext">Próxima<span> etapa</span></button></div><p class="lab-note">Desenho esquemático. O preparo e a técnica variam conforme o caso.</p></div>`;
+    root.innerHTML = `<div class="lab-topline"><span class="lab-fig">Fig. 2. Do sangue ao preparo</span><span class="lab-status" id="processStatus">01 / 04</span></div><div id="processScene"></div><div class="lab-caption" aria-live="polite"><p class="lab-caption__titulo" id="processTitle"></p><p id="processDescription"></p></div><div class="lab-bottom"><div class="lab-controls"><button type="button" class="lab-button" id="processPlay" aria-pressed="false">Reproduzir<span> etapas</span></button><div class="lab-progress" role="group" aria-label="Escolha uma etapa">${copy.map((c, i) => `<button type="button" data-scene="${i}" tabindex="-1" aria-label="Etapa ${i + 1}: ${c[0]}"></button>`).join('')}</div><button type="button" class="lab-button" id="processNext">Próxima<span> etapa</span></button></div><p class="lab-note">Desenho esquemático, fora de escala. O&nbsp;preparo e a&nbsp;técnica variam conforme o&nbsp;caso.</p></div>`;
     let active = 0, playing = false, timer = null, visible = true;
     steps.forEach((s, i) => { s.setAttribute('role', 'button'); s.tabIndex = 0; s.setAttribute('aria-controls', 'processScene'); s.addEventListener('click', () => select(i, true)); s.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); s.click(); } }); });
+    /* Teclado: uma parada por etapa (a lista de passos). Os traços [data-scene] ficam fora da
+       ordem do Tab (tabindex -1) e continuam clicáveis com o mouse e o toque. */
     /* Avanço automático só depois de "Reproduzir". O controle global "Pausar animações"
        também para o player; com movimento reduzido, "Reproduzir" avança as etapas sem
        religar as animações do site (as cenas ficam paradas). */
@@ -225,7 +231,11 @@
       $('#processTitle').textContent = copy[i][0]; $('#processDescription').textContent = copy[i][1];
       $$('[data-scene]', root).forEach((b, j) => { if (i === j) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current'); });
       $('#processNext').innerHTML = i === 3 ? 'Recomeçar' : 'Próxima<span> etapa</span>';
-      if (manual && matchMedia('(max-width:900px)').matches) root.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'center' });
+      /* No celular e no tablet, a escolha feita na lista de etapas (abaixo da placa) traz a placa à
+         tela. Com a placa já inteira na tela (o "Próxima" dela, ou o celular deitado), não rola:
+         a rolagem para cima traria o cabeçalho de volta por cima da placa. */
+      const r = root.getBoundingClientRect();
+      if (manual && matchMedia('(max-width:900px)').matches && (r.top < 0 || r.bottom > innerHeight)) root.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'center' });
     }
     $$('[data-scene]', root).forEach(b => b.addEventListener('click', () => select(+b.dataset.scene, true)));
     $('#processNext').addEventListener('click', () => select((active + 1) % 4, true));

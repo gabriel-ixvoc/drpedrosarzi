@@ -71,8 +71,16 @@ function gonioSVG (o) {
   }
   let nums = '';
   if (numeros) [0, 45, 90, 135, 180].forEach(a => {
+    /* o.pontas: 0 e 180 ficam fora do arco, com o mesmo afastamento (.4em) dos dois lados,
+       assentados .3em acima da linha de base (opção do manifesto; as outras peças guardam o desenho) */
+    if (o.pontas && a % 180 === 0) {
+      const [x] = pt(a, r);
+      nums += `<text class="gonio__num" x="${x}" y="${cy}" dx="${a ? '.4em' : '-.4em'}" dy="-.3em" text-anchor="${a ? 'start' : 'end'}">${a}</text>`;
+      return;
+    }
     const [x, y] = pt(a, r + 13);
-    nums += `<text class="gonio__num" x="${x}" y="${(+y + (a % 180 === 0 ? -9 : 0)).toFixed(2)}" text-anchor="middle" dominant-baseline="central">${a}</text>`;
+    /* 45, 90 e 135 levam data-a: o criarGonio os afasta do arco pelo tamanho real da letra */
+    nums += `<text class="gonio__num"${a % 180 ? ` data-a="${a}"` : ''} x="${x}" y="${(+y + (a % 180 === 0 ? -9 : 0)).toFixed(2)}" text-anchor="middle" dominant-baseline="central">${a}</text>`;
   });
   const [ax, ay] = pt(0, r), [bx, by] = pt(180, r);
   return `<svg viewBox="${o.vb}" aria-hidden="true" focusable="false">
@@ -86,9 +94,43 @@ function gonioSVG (o) {
 const GONIO_GRANDE = { vb: '-26 -28 292 160', cx: 120, cy: 120, r: 112, passo: 5, l5: 5, l15: 9, l45: 14, numeros: true, base: 10, cauda: 14, folga: 8, eixo: 5, centro: 2 };
 const GONIO_MINI = { vb: '0 0 56 32', cx: 28, cy: 29, r: 25, passo: 15, l5: 0, l15: 3, l45: 5.5, numeros: false, base: 0, cauda: 0, folga: 4, eixo: 3.2, centro: 1.4 };
 
+/* Números 45, 90 e 135 assentados fora do arco conforme a letra que o CSS deu a cada peça
+   (13 a 24 unidades): o centro vai para r + meio traço + meia caixa na direção do ângulo + folga
+   (no mínimo 5 px de tela), nunca mais perto que os r + 13 do desenho original. Mede com getBBox;
+   com a peça escondida (caixa zerada), estima pela fonte e refaz quando ela aparece (resize) e
+   quando a Cormorant termina de carregar. O 0 e o 180 não se mexem. */
+const gonios = [];
+function assentarNumeros (el, o) {
+  const svg = $('svg', el), nums = $$('.gonio__num[data-a]', el);
+  if (!svg || !nums.length) return;
+  const arco = $('.gonio__arco', svg);
+  const traco = arco ? parseFloat(getComputedStyle(arco).strokeWidth) || 1 : 1;
+  let escala = 0;
+  try { const m = svg.getScreenCTM(); escala = m ? Math.hypot(m.a, m.b) : 0; } catch (e) {}
+  nums.forEach(t => {
+    const a = +t.dataset.a, th = a * Math.PI / 180, c = Math.cos(th), s = Math.sin(th);
+    const fs = parseFloat(getComputedStyle(t).fontSize) || 13;
+    let w = 0, h = 0, ox = 0, oy = 0;
+    try {
+      const b = t.getBBox();
+      if (b.width) { w = b.width / 2; h = b.height / 2; ox = b.x + w - (+t.getAttribute('x')); oy = b.y + h - (+t.getAttribute('y')); }
+    } catch (e) {}
+    if (!w) { w = fs * .27 * t.textContent.length; h = fs * .6; }
+    const folga = Math.max(fs * .25, escala ? 5 / escala : 4);
+    const d = Math.max(o.r + 13, o.r + traco / 2 + w * Math.abs(c) + h * s + folga);
+    t.setAttribute('x', (o.cx - d * c - ox).toFixed(2));
+    t.setAttribute('y', (o.cy - d * s - oy).toFixed(2));
+  });
+}
+let reassentar = 0;
+const reassentarTodos = () => { cancelAnimationFrame(reassentar); reassentar = requestAnimationFrame(() => gonios.forEach(([el, o]) => assentarNumeros(el, o))); };
+addEventListener('resize', reassentarTodos, { passive: true });
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(reassentarTodos);
+
 function criarGonio (el, opts) {
   const o = Object.assign({}, el.dataset.gonioNumeros === 'false' ? Object.assign({}, GONIO_GRANDE, { numeros: false }) : GONIO_GRANDE, opts);
   el.innerHTML = gonioSVG(o);
+  if (o.numeros) { assentarNumeros(el, o); gonios.push([el, o]); }
   const g = $('.gonio__agulha-g', el);
   let atual = 0, anim = 0;
   const api = {
@@ -137,17 +179,48 @@ syncMotion();
   };
   estreito.addEventListener('change', mover);
   mover();
+
+  /* Fixo (a partir de 1400 px), o controle acompanha a superfície que está
+     sob ele: sobre capítulo claro vira marfim (.gonio-ctrl--claro). Testa o
+     ponto central uma vez por quadro, só durante a rolagem e no resize. */
+  /* .manifesto (home) é marfim sem a classe de capítulo: entra na lista */
+  const CLARO = '.cap--marfim,.cap--linho,.sup-clara,.manifesto';
+  const SUPERFICIE = CLARO + ',.cap,.capa,.rodape,.sup-escura,.gaveta';
+  let pedido = 0;
+  const conferir = () => {
+    pedido = 0;
+    let claro = false;
+    if (!estreito.matches && motionBtn.isConnected && !motionBtn.closest('#hdr')) {
+      const r = motionBtn.getBoundingClientRect();
+      const pilha = document.elementsFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+      for (const el of pilha) {
+        if (motionBtn.contains(el)) continue;
+        const sup = el.closest(SUPERFICIE);
+        if (sup) { claro = sup.matches(CLARO); break; }
+      }
+    }
+    motionBtn.classList.toggle('gonio-ctrl--claro', claro);
+  };
+  const agendar = () => { if (!pedido) pedido = requestAnimationFrame(conferir); };
+  addEventListener('scroll', agendar, { passive: true });
+  addEventListener('resize', agendar, { passive: true });
+  estreito.addEventListener('change', agendar);
+  agendar();
 })();
 
 /* ---------- 3. Cabeçalho, página atual, rolagem ---------- */
 (function header () {
-  const hdr = $('#hdr'), fab = $('#fab'), rodape = $('.rodape');
-  /* A barra de agendar (#fab) some enquanto outro botão "Agendar avaliação"
-     da página está na tela: nunca dois iguais ao mesmo tempo. */
+  const hdr = $('#hdr'), fab = $('#fab'), rodape = $('.rodape'), raiz = document.documentElement;
+  /* A barra de agendar (#fab) aparece assim que nenhum botão "Agendar avaliação"
+     da página está na tela (o da capa saiu) e some enquanto outro está: nunca
+     dois iguais ao mesmo tempo. Só existe abaixo de 600 px (site.css). */
   const ctasVisiveis = new Set();
+  const fabMQ = matchMedia('(max-width:599px)');
+  let ctasProntos = !('IntersectionObserver' in window);
   if (fab && 'IntersectionObserver' in window) {
     const io = new IntersectionObserver(es => {
       es.forEach(e => { if (e.isIntersecting) ctasVisiveis.add(e.target); else ctasVisiveis.delete(e.target); });
+      ctasProntos = true;
       syncFab();
     });
     const observar = () => $$('main .btn[data-agendar]').forEach(b => io.observe(b));
@@ -155,6 +228,26 @@ syncMotion();
     /* o resultado do questionário cria um botão novo */
     new MutationObserver(() => { ctasVisiveis.forEach(b => { if (!b.isConnected) ctasVisiveis.delete(b); }); observar(); })
       .observe($('main') || document.body, { childList: true, subtree: true });
+  }
+  /* Um bloco dourado sólido por tela: enquanto o botão de agendar da capa está à
+     vista, o do cabeçalho fica fantasma (html.cta-capa-visivel, site.css).
+     "À vista" desconta a faixa do cabeçalho: botão da capa escondido sob ele
+     não conta, e o do cabeçalho volta a ser sólido. A margem segue a altura
+     real do cabeçalho (muda em 1100 px), refeita só quando ela muda. */
+  const ctaCapa = $('main .capa .btn[data-agendar]');
+  if (ctaCapa && 'IntersectionObserver' in window) {
+    let ioCta = null, alturaCta = -1;
+    const observarCta = () => {
+      const h = hdr ? Math.round(hdr.getBoundingClientRect().height) : 0;
+      if (h === alturaCta) return;
+      alturaCta = h;
+      if (ioCta) ioCta.disconnect();
+      ioCta = new IntersectionObserver(([e]) => raiz.classList.toggle('cta-capa-visivel', e.isIntersecting),
+        { rootMargin: `-${h}px 0px 0px 0px`, threshold: .5 });
+      ioCta.observe(ctaCapa);
+    };
+    observarCta();
+    addEventListener('resize', observarCta, { passive: true });
   }
   const norm = p => p.replace(/index\.html$/, '').replace(/\/?$/, '/');
   const aqui = norm(location.pathname);
@@ -172,14 +265,21 @@ syncMotion();
   ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach(t => addEventListener(t, () => { auto = false; }, { passive: true, capture: true }));
   document.addEventListener('click', e => { if (e.target.closest && e.target.closest('a[href^="#"]')) auto = true; }, true);
   function syncFab () {
-    if (fab) fab.classList.toggle('show', scrollY > 700 && !ctasVisiveis.size && !(rodape && rodape.getBoundingClientRect().top < innerHeight));
+    if (!fab) return;
+    const on = ctasProntos && !ctasVisiveis.size && !(rodape && rodape.getBoundingClientRect().top < innerHeight);
+    fab.classList.toggle('show', on);
+    /* com a barra na tela, o foco e as âncoras param acima dela (scroll-padding-bottom) */
+    raiz.classList.toggle('fab-visivel', on && fabMQ.matches);
   }
   function onScroll () {
     tick = false;
     const y = scrollY, max = document.documentElement.scrollHeight - innerHeight;
     if (hdr) {
       hdr.classList.toggle('stuck', y > 12);
-      hdr.classList.toggle('hide', !auto && y > 420 && y > last && !document.body.classList.contains('menu-open'));
+      const oculto = !auto && y > 420 && y > last && !document.body.classList.contains('menu-open');
+      hdr.classList.toggle('hide', oculto);
+      /* espelho no html: o que fica preso abaixo do cabeçalho sobe junto (--hdr-vis) */
+      raiz.classList.toggle('hdr-oculto', oculto);
     }
     syncFab();
     dial.set(max > 0 ? (y / max) * 180 : 0);
@@ -188,6 +288,20 @@ syncMotion();
   addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(onScroll); } }, { passive: true });
   addEventListener('resize', onScroll, { passive: true });
   onScroll();
+
+  /* Página aberta com #âncora: o navegador já salta para o destino, mas fontes e
+     imagens que chegam depois podem empurrá-lo. Uma vez só, depois das fontes e
+     do load, e só se a pessoa ainda não rolou, recoloca o destino no lugar. */
+  if (location.hash.length > 1) {
+    let alvo = null;
+    try { alvo = document.getElementById(decodeURIComponent(location.hash.slice(1))); } catch (e) { alvo = null; }
+    if (alvo) {
+      const pronto = () => new Promise(r => { if (document.readyState === 'complete') r(); else addEventListener('load', r, { once: true }); });
+      Promise.all([document.fonts ? document.fonts.ready : null, pronto()]).then(() => requestAnimationFrame(() => {
+        if (auto) alvo.scrollIntoView({ block: 'start', behavior: 'instant' });
+      }));
+    }
+  }
 })();
 
 /* ---------- 4. Menu mobile ---------- */
@@ -236,17 +350,21 @@ syncMotion();
   $$('details.acordeao__item').forEach(d => {
     const s = $('summary', d);
     if (!s) return;
-    let anim = null, fechando = false;
+    /* estado-alvo explícito: cliques rápidos seguidos alternam o alvo, e a
+       animação sempre parte da altura atual (três cliques terminam aberto) */
+    let anim = null, alvo = d.open;
+    d.addEventListener('toggle', () => { if (!anim) alvo = d.open; });
     s.addEventListener('click', e => {
-      if (RM || !d.animate) return;
+      /* com movimento reduzido ou "Pausar animações", abre e fecha sem animar */
+      if (RM || paused || !d.animate) return;
       e.preventDefault();
       const ini = d.offsetHeight;
-      if (anim) anim.cancel();
-      fechando = d.open && !fechando;
-      if (!fechando) d.open = true;
-      const fim = fechando ? s.offsetHeight : d.offsetHeight;
-      anim = d.animate({ height: [ini + 'px', fim + 'px'] }, { duration: 260, easing: 'cubic-bezier(.2,.7,.1,1)' });
-      anim.onfinish = () => { anim = null; if (fechando) { d.open = false; fechando = false; } };
+      if (anim) { anim.onfinish = null; anim.cancel(); anim = null; }
+      alvo = !alvo;
+      d.open = true;
+      const fim = alvo ? d.offsetHeight : s.offsetHeight;
+      const a = anim = d.animate({ height: [ini + 'px', fim + 'px'] }, { duration: 250, easing: 'cubic-bezier(.2,.7,.1,1)' });
+      a.onfinish = () => { if (anim !== a) return; anim = null; d.open = alvo; };
     });
   });
 })();
@@ -273,18 +391,32 @@ $$('#yr').forEach(el => { el.textContent = new Date().getFullYear(); });
 
 /* ---------- 10. COMPONENTES COMPARTILHADOS (home, /dr/ e /prp/) ---------- */
 /* Fichas que viram: .sinal > .sinal__giro > .sinal__frente (.sinal__virar,
-   aria-expanded) + .sinal__verso (inert enquanto fechado, .sinal__voltar).
+   aria-expanded) + .sinal__verso (inert enquanto fechado, .sinal__voltar; o site.css também
+   esconde a face fechada com visibility, para navegador sem inert).
    Uma ficha aberta por lista; Esc fecha; o foco vai para o verso e volta. */
 (function fichasQueViram () {
   $$('.sinal').forEach(ficha => {
     const virar = $('.sinal__virar', ficha), voltar = $('.sinal__voltar', ficha);
     if (!virar || !voltar) return;
+    /* o × fica no canto de cima (posição absoluta): vai para o começo do verso no DOM para a
+       ordem do Tab seguir a ordem visual (× antes dos links das condições); o lugar na tela não muda */
+    if (voltar.parentElement && voltar.parentElement.firstElementChild !== voltar) voltar.parentElement.prepend(voltar);
+    let trava = 0;
     function vira (aberta, foco) {
       const frente = $('.sinal__frente', ficha), verso = $('.sinal__verso', ficha);
+      /* trava de toque duplo (.sinal--virando, site.css): por 520 ms (o giro inteiro) nenhuma face
+         recebe toque, para o 2º toque não abrir um link do verso nem desvirar.
+         Vale também com movimento reduzido. */
+      if (aberta !== ficha.classList.contains('virado')) {
+        ficha.classList.add('sinal--virando');
+        clearTimeout(trava);
+        trava = setTimeout(() => ficha.classList.remove('sinal--virando'), 520);
+      }
       ficha.classList.toggle('virado', aberta);
       virar.setAttribute('aria-expanded', String(aberta));
       verso.inert = !aberta; frente.inert = aberta;
-      if (foco) (aberta ? $('a, .sinal__voltar', verso) : virar).focus({ preventScroll: true });
+      /* ao abrir, o foco vai ao primeiro link das condições (o conteúdo do verso); Shift+Tab chega ao × */
+      if (foco) (aberta ? ($('a', verso) || voltar) : virar).focus({ preventScroll: true });
     }
     ficha.vira = vira;
     virar.addEventListener('click', () => {
@@ -297,25 +429,62 @@ $$('#yr').forEach(el => { el.textContent = new Date().getFullYear(); });
 })();
 
 /* Pontos de carrossel: <div class="pontos" aria-hidden="true"> logo depois de
-   uma lista que vira carrossel no celular. O item ao centro marca o seu ponto;
-   tocar num ponto centraliza o item. */
+   uma lista que vira carrossel (celular em pé e deitado). Os pontos aparecem só
+   enquanto a lista rola de lado e mostra uma ficha por vez (deitado, com três à
+   vista, a ficha cortada na borda já diz que há mais); o item mais perto do
+   centro marca o seu ponto; tocar num ponto leva o item ao encaixe; o foco do
+   teclado numa ficha fora da tela leva o carrossel até ela. */
 (function pontos () {
   $$('.pontos').forEach(el => {
     const lista = el.previousElementSibling;
-    if (!lista) return;
+    if (!lista || !lista.children.length) return;
     const itens = Array.from(lista.children);
+    el.style.setProperty('--n', itens.length);
     el.innerHTML = itens.map((x, i) => `<button type="button" tabindex="-1" data-i="${i}"></button>`).join('');
     const bs = $$('button', el);
-    const marca = i => bs.forEach((b, k) => b.classList.toggle('on', k === i));
-    bs.forEach(b => b.addEventListener('click', () => {
-      const f = itens[+b.dataset.i], fr = f.getBoundingClientRect(), lr = lista.getBoundingClientRect();
-      lista.scrollBy({ left: (fr.left + fr.width / 2) - (lr.left + lista.clientWidth / 2), behavior: RM || paused ? 'auto' : 'smooth' });
-    }));
-    if ('IntersectionObserver' in window) {
-      const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) marca(itens.indexOf(e.target)); }), { root: lista, threshold: .6 });
-      itens.forEach(f => io.observe(f));
-    }
-    marca(0);
+    let atual = -1;
+    const marca = i => { if (i === atual) return; atual = i; bs.forEach((b, k) => b.classList.toggle('on', k === i)); };
+    const modo = () => RM || paused ? 'auto' : 'smooth';
+    const rola = () => lista.scrollWidth > lista.clientWidth + 1;
+    /* encaixe pelo centro (em pé) ou pelo começo, na margem (deitado) */
+    const peloInicio = () => /start/.test(getComputedStyle(itens[0]).scrollSnapAlign);
+    /* scrollTo (posição final), não scrollBy: com scroll-snap-stop:always, a rolagem relativa
+       parava na ficha seguinte e o 4º ponto levava só à 2ª ficha */
+    const ir = (i, behavior) => {
+      const fr = itens[i].getBoundingClientRect(), lr = lista.getBoundingClientRect();
+      const dx = peloInicio() ? fr.left - lr.left - (parseFloat(getComputedStyle(lista).scrollPaddingLeft) || 0)
+        : (fr.left + fr.width / 2) - (lr.left + lista.clientWidth / 2);
+      lista.scrollTo({ left: lista.scrollLeft + dx, behavior });
+    };
+    bs.forEach(b => b.addEventListener('click', () => ir(+b.dataset.i, modo())));
+    let pedido = 0;
+    const conferir = () => {
+      pedido = 0;
+      const lr = lista.getBoundingClientRect(), meio = lr.left + lista.clientWidth / 2;
+      let perto = 0, menor = Infinity;
+      itens.forEach((f, i) => { const r = f.getBoundingClientRect(), d = Math.abs(r.left + r.width / 2 - meio); if (d < menor) { menor = d; perto = i; } });
+      marca(perto);
+    };
+    lista.addEventListener('scroll', () => { if (!pedido) pedido = requestAnimationFrame(conferir); }, { passive: true });
+    /* em grade (tablet e computador) a lista não rola de lado e os pontos somem */
+    const medir = () => { el.hidden = !rola() || itens[0].getBoundingClientRect().width * 2 <= lista.clientWidth; conferir(); };
+    if ('ResizeObserver' in window) new ResizeObserver(medir).observe(lista);
+    else addEventListener('resize', medir, { passive: true });
+    medir();
+    /* Tab numa ficha fora da tela: o encaixe obrigatório devolvia o carrossel à ficha anterior e o
+       anel de foco ficava fora da vista. Depois da rolagem do próprio navegador (próximo quadro),
+       a ficha focada vai ao encaixe (se ainda não estiver inteira à vista) e marca o seu ponto. */
+    lista.addEventListener('focusin', e => {
+      if (!rola()) return;
+      const i = itens.findIndex(f => f.contains(e.target));
+      if (i < 0) return;
+      marca(i);
+      requestAnimationFrame(() => {
+        const fr = itens[i].getBoundingClientRect(), lr = lista.getBoundingClientRect();
+        const inteira = fr.left >= lr.left - 1 && fr.right <= lr.left + lista.clientWidth + 1;
+        if (!peloInicio() || !inteira) ir(i, modo());
+      });
+    });
   });
 })();
 
@@ -325,6 +494,20 @@ $$('#yr').forEach(el => { el.textContent = new Date().getFullYear(); });
    só carrega quando a pessoa toca em "Mostrar o mapa aqui" (#mapaBtn).
    Dados de cada local no próprio HTML: data-local, data-mapa (busca) e data-nome. */
 (function ondeAtende () {
+  /* Nomes de local e endereço não quebram no meio ("São Luiz / Alphaville", "Agú, / 630"), nem a
+     faixa de horário da frase "Hoje" ("das 8h / às 16h"), nem a frequência do sábado na agenda
+     ("dois / por mês": a quebra cai depois da vírgula): troca o espaço por espaço sem quebra no
+     "Onde atende", no rodapé e no menu. */
+  const NOMES = /(São Luiz Alphaville|São Luiz Osasco|Clínica Fares|Centro de Osasco|Rua Antônio Agú(?:, 630)?|dois por mês|das\s\d{1,2}h(?:\d{2})?\sàs\s\d{1,2}h(?:\d{2})?)/g;
+  const semQuebra = raiz => {
+    const w = document.createTreeWalker(raiz, NodeFilter.SHOW_TEXT);
+    for (let n; (n = w.nextNode());) {
+      if (NOMES.test(n.nodeValue)) n.nodeValue = n.nodeValue.replace(NOMES, m => m.replace(/ /g, ' '));
+      NOMES.lastIndex = 0;
+    }
+  };
+  $$('#onde, .rodape__frase, .rodape address, .gaveta__contato').forEach(semQuebra);
+
   const semana = $('#semana');
   const hoje = semana && $(`:scope > li[data-dia="${new Date().getDay()}"]`, semana);
   if (hoje) {
@@ -335,27 +518,87 @@ $$('#yr').forEach(el => { el.textContent = new Date().getFullYear(); });
       const turnos = $$('.semana__turnos > li', hoje).map(t => {
         const hora = $('.turno__hora', t).textContent.trim(), onde = $('.turno__local', t).textContent.trim();
         if (!t.dataset.local) return onde.charAt(0).toLowerCase() + onde.slice(1);
-        return `<b>${onde}</b>, das ${hora}`;
+        return `<b>${onde.replace(/ /g, ' ')}</b>, das ${hora}`;
       });
       agora.innerHTML = hoje.dataset.agora || ('Hoje: ' + turnos.join('; ') + '.');
+      semQuebra(agora);
       agora.hidden = false;
     }
   }
 
   const btn = $('#mapaBtn'), quadro = $('#mapa');
   const locais = $$('.local[data-local]');
-  let escolhido = locais[0];
+  /* mapa padrão: a Clínica Fares (endereço confirmado e local da foto da fachada), pelo
+     data-local, e não pela ordem da lista (que começa pelo São Luiz Alphaville) */
+  const padrao = locais.find(l => l.dataset.local === 'fares') || locais[0];
+  let escolhido = padrao;
+  /* Mapa sob demanda: "Carregando o mapa…" até o load do iframe, e o link
+     "Abrir no Google Maps" sempre embaixo (o iframe de outra origem não avisa
+     quando falha). O botão some com a troca: se o foco estava nele, vai para o
+     iframe ("Mapa: <local>"), para não cair no <body>. O aviso para leitor de tela
+     sai num status fixo, fora do #mapa (que fica aria-busy), criado vazio e
+     escrito depois, para ser anunciado; o texto visível fica aria-hidden. */
+  let aviso = null;
+  if (btn && quadro) {
+    aviso = document.createElement('p');
+    aviso.className = 'sr-only'; aviso.setAttribute('role', 'status'); aviso.setAttribute('aria-live', 'polite');
+    quadro.after(aviso);
+  }
+  const anunciar = texto => { if (!aviso) return; aviso.textContent = ''; setTimeout(() => { aviso.textContent = texto; }, 120); };
   const mostrarMapa = () => {
     const busca = escolhido ? escolhido.dataset.mapa : 'Clínica Fares, Rua Antônio Agú, 630, Osasco SP';
     const nome = escolhido ? escolhido.dataset.nome : 'Clínica Fares';
+    const devolver = !!btn && document.activeElement === btn;
+    const anel = devolver && btn.matches(':focus-visible');
+    const caixa = document.createElement('div');
+    caixa.className = 'mapa__quadro';
+    caixa.innerHTML = '<p class="mapa__carregando" aria-hidden="true">Carregando o mapa…</p>';
     const f = document.createElement('iframe');
-    f.src = 'https://www.google.com/maps?q=' + encodeURIComponent(busca) + '&output=embed';
     f.title = 'Mapa: ' + nome;
     f.loading = 'lazy'; f.referrerPolicy = 'no-referrer-when-downgrade';
-    quadro.textContent = ''; quadro.append(f);
+    f.addEventListener('load', () => { const c = $('.mapa__carregando', caixa); if (c) c.remove(); quadro.removeAttribute('aria-busy'); anunciar('Mapa carregado.'); }, { once: true });
+    f.src = 'https://www.google.com/maps?q=' + encodeURIComponent(busca) + '&output=embed';
+    caixa.prepend(f);
+    const abrir = document.createElement('p');
+    abrir.className = 'mapa__abrir';
+    abrir.innerHTML = '<a class="link" target="_blank" rel="noopener">Abrir no Google Maps<span class="sr-only"> (abre em nova aba)</span></a>';
+    $('a', abrir).href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(busca);
+    quadro.textContent = ''; quadro.append(caixa, abrir);
+    quadro.setAttribute('aria-busy', 'true');
     quadro.dataset.carregado = '';
+    anunciar('Carregando o mapa: ' + nome + '…');
+    if (devolver) {
+      /* o Chrome não dá :focus-visible a um iframe: o anel vai no quadro, por classe, só
+         quando o botão foi acionado pelo teclado, e sai quando o foco deixa o mapa */
+      if (anel) {
+        caixa.classList.add('mapa__quadro--foco');
+        f.addEventListener('blur', () => caixa.classList.remove('mapa__quadro--foco'), { once: true });
+      }
+      f.focus({ preventScroll: true });
+    }
   };
   if (btn && quadro) btn.addEventListener('click', mostrarMapa);
+
+  /* A dica sob os locais vira um status (aria-live): diz qual local filtra a
+     agenda e, no celular, oferece "Ver na agenda", que rola só quando tocado. */
+  const dica = $('.locais__dica');
+  const dicaOriginal = dica ? dica.innerHTML : '';
+  if (dica) { dica.setAttribute('role', 'status'); dica.setAttribute('aria-live', 'polite'); }
+  const avisar = local => {
+    if (!dica) return;
+    if (!local) { dica.innerHTML = dicaOriginal; dica.classList.remove('filtrada'); return; }
+    const nome = ($('.local__nome', local) || local).textContent.trim();
+    const art = /^(clínica|casa|unidade)/i.test(nome) ? 'da' : 'do';
+    dica.innerHTML = `Agenda filtrada: só os dias ${art} <b>${nome.replace(/ /g, ' ')}</b>.`;
+    const ver = document.createElement('button');
+    ver.type = 'button'; ver.className = 'locais__ver'; ver.textContent = 'Ver na agenda';
+    ver.addEventListener('click', () => {
+      const alvo = $('.onde__horario') || semana;
+      if (alvo) alvo.scrollIntoView({ behavior: RM || paused ? 'auto' : 'smooth', block: 'start' });
+    });
+    dica.append(' ', ver);
+    dica.classList.add('filtrada');
+  };
 
   locais.forEach(local => {
     const b = $('.local__filtro', local);
@@ -369,7 +612,8 @@ $$('#yr').forEach(el => { el.textContent = new Date().getFullYear(); });
         $$('.semana__turnos > li', semana).forEach(t => t.classList.toggle('fora', !!id && t.dataset.local !== id));
         $$(':scope > li', semana).forEach(d => d.classList.toggle('fora', !!id && !$(`[data-local="${id}"]`, d)));
       }
-      escolhido = ligar ? local : locais[0];
+      avisar(ligar ? local : null);
+      escolhido = ligar ? local : padrao;
       if (quadro && 'carregado' in quadro.dataset) mostrarMapa();
     });
   });
@@ -394,7 +638,7 @@ function accessibility () {
       if (e.key === 'Escape') { burger.focus(); return; }
       if (e.key === 'Tab') {
         const f = [burger, ...$$('a,button', drawer)], i = f.indexOf(document.activeElement);
-        if (e.shiftKey && i <= 0) { e.preventDefault(); f.at(-1).focus(); }
+        if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); }
         else if (!e.shiftKey && (i === f.length - 1 || i < 0)) { e.preventDefault(); burger.focus(); }
       }
     });
@@ -429,6 +673,13 @@ function accessibility () {
   });
   $$('a').filter(a => !a.textContent.trim() && !a.getAttribute('aria-label') && a.href.includes('instagram'))
     .forEach(a => a.setAttribute('aria-label', 'Instagram do Dr. Pedro Sarzi'));
+  /* Link que abre em nova aba avisa o leitor de tela (o /links/ já traz o aviso no HTML). */
+  $$('a[target="_blank"]').forEach(a => {
+    const rotulo = a.getAttribute('aria-label');
+    if (rotulo) { if (!/nova aba/i.test(rotulo)) a.setAttribute('aria-label', rotulo + ' (abre em nova aba)'); return; }
+    if (/nova aba/i.test(a.textContent)) return;
+    a.insertAdjacentHTML('beforeend', '<span class="sr-only"> (abre em nova aba)</span>');
+  });
 }
 
 function offscreen () {
