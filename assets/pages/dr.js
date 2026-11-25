@@ -1,6 +1,6 @@
 /* ==========================================================================
    O médico (/dr/) · componentes da página
-   Carregado depois de site.js (window.PS). Fio da trajetória (#fio) e vão das áreas (#areas).
+   Carregado depois de site.js (window.PS). Fio da trajetória (#fio).
    Ganchos em docs/site.md.
    ========================================================================== */
 (function () {
@@ -43,22 +43,5 @@ const parado = () => PS.RM || PS.motion.paused;
 
 /* ---------- 2. Como ele atende ----------
    Desde 24/11/2026 é um tríptico estático (só CSS, em dr.css seção 3): sem JS. */
-
-/* ---------- 3. Áreas: a mão pequena do verso só onde há vão ----------
-   .sinal__vao ocupa o espaço que sobra entre o texto e os links (flex 1 1 0:
-   nunca aumenta a ficha). O desenho de dentro tem a mesma altura em todas as
-   fichas (--vao-h: o menor vão, até 180 px). Se o menor vão tiver menos de
-   90 px, a mão sai de todas (.sinal__vao--curto): nada de rabisco espremido. */
-(function vao () {
-  const lista = $('#areas .sinais'), vaos = $$('#areas .sinal__vao');
-  if (!lista || !vaos.length || !('ResizeObserver' in window)) return;
-  const ro = new ResizeObserver(() => {
-    const menor = Math.min(...vaos.map(v => v.getBoundingClientRect().height));
-    const curto = menor < 90;
-    vaos.forEach(v => v.classList.toggle('sinal__vao--curto', curto));
-    lista.style.setProperty('--vao-h', curto ? '0px' : Math.min(menor, 180).toFixed(0) + 'px');
-  });
-  vaos.forEach(v => ro.observe(v));
-})();
 
 })();
