@@ -44,7 +44,7 @@
 ]}
 ]}
 </script>
-<link rel="preload" as="image" href="../assets/fotos/dr-pedro-operando-720.avif" imagesrcset="../assets/fotos/dr-pedro-operando-720.avif 720w, ../assets/fotos/dr-pedro-operando.avif 1122w" imagesizes="(min-width:1100px) 440px, (min-width:600px) 400px, 82vw" type="image/avif" fetchpriority="high">
+<link rel="preload" as="image" href="../assets/fotos/dr-pedro-operando-720.avif" imagesrcset="../assets/fotos/dr-pedro-operando-720.avif 720w, ../assets/fotos/dr-pedro-operando.avif 1122w" imagesizes="(orientation:landscape) min(80vh, 70vw), 100vw" type="image/avif" fetchpriority="high">
 <link rel="stylesheet" href="../assets/site.css">
 <link rel="stylesheet" href="../assets/pages/cirurgias.css">
 <link rel="stylesheet" href="../assets/pages/alt.css">
@@ -163,30 +163,33 @@
 
 <main id="conteudo">
 
-<!-- ===== 1. CAPA: o tema e a foto real do Dr. Pedro no centro cirúrgico (captação de 08/10, #65) ===== -->
+<!-- ===== 1. CAPA: foto real do Dr. Pedro no centro cirúrgico (captação de 08/10, #65), fundida no carvão como a do /dr/ ===== -->
 <section class="capa cir-capa" aria-labelledby="cir-titulo">
-  <div class="wrap capa__grade">
-    <div class="capa__texto">
-      <h1 class="t-hero" id="cir-titulo">
-        <span class="rise"><span>Cirurgias da mão</span></span>
-        <span class="rise"><span>e do punho</span></span>
+  <figure class="cir-capa__foto">
+    <picture>
+      <source type="image/avif" srcset="../assets/fotos/dr-pedro-operando-720.avif 720w, ../assets/fotos/dr-pedro-operando.avif 1122w" sizes="(orientation:landscape) min(80vh, 70vw), 100vw">
+      <img class="cir-capa__img" src="../assets/fotos/dr-pedro-operando.webp" srcset="../assets/fotos/dr-pedro-operando-720.webp 720w, ../assets/fotos/dr-pedro-operando.webp 1122w" sizes="(orientation:landscape) min(80vh, 70vw), 100vw" width="1122" height="1402" alt="Dr. Pedro Sarzi opera a mão de um paciente no centro cirúrgico, de touca com o nome bordado, máscara e avental azul" fetchpriority="high" decoding="async">
+    </picture>
+  </figure>
+  <div class="wrap capa__grade cir-capa__grade">
+    <div class="capa__texto cir-capa__texto">
+      <h1 class="cir-capa__titulo" id="cir-titulo">
+        <span class="rise t-hero"><span>Cirurgias da&nbsp;mão<br> e&nbsp;do&nbsp;punho</span></span>
+        <span class="rise cir-capa__funcao"><span>Quando entram no tratamento e como é a&nbsp;recuperação.</span></span>
       </h1>
-      <p class="t-lead abre" style="--atraso:250ms">Quando a cirurgia entra no tratamento, como é o dia e quanto tempo leva para voltar à&nbsp;rotina.</p>
-      <div class="acoes abre" style="--atraso:380ms">
-        <a class="btn btn--fantasma" href="#onde">Ver onde ele atende</a>
+      <p class="t-lead abre">Como é o dia da cirurgia, os cuidados em casa e o tempo para voltar à&nbsp;rotina.</p>
+      <div class="acoes abre">
+        <a class="link" href="#onde">Ver onde ele atende</a>
         <a class="link" href="#cirurgias">Ver as cirurgias</a>
       </div>
-      <p class="id-medico capa__id abre" style="--atraso:480ms"><span>Dr. Pedro Sarzi · Médico</span><span class="id-medico__sep"> · </span><span>CRM-SP 183.332 · RQE 110447</span></p>
-    </div>
-    <figure class="quadro quadro--arco cir-capa__foto abre" style="--atraso:150ms">
-      <div class="quadro__passe">
-        <picture>
-          <source type="image/avif" srcset="../assets/fotos/dr-pedro-operando-720.avif 720w, ../assets/fotos/dr-pedro-operando.avif 1122w" sizes="(min-width:1100px) 440px, (min-width:600px) 400px, 82vw">
-          <img src="../assets/fotos/dr-pedro-operando.webp" srcset="../assets/fotos/dr-pedro-operando-720.webp 720w, ../assets/fotos/dr-pedro-operando.webp 1122w" sizes="(min-width:1100px) 440px, (min-width:600px) 400px, 82vw" width="1122" height="1402" alt="Dr. Pedro Sarzi opera a mão de um paciente no centro cirúrgico, de touca com o nome bordado, máscara e avental azul" fetchpriority="high" decoding="async">
-        </picture>
+      <div class="cir-capa__base abre">
+        <ul class="cir-capa__cred" aria-label="Formação">
+          <li>Especialização pela UNESP</li>
+          <li>Membro titular da SBCM</li>
+        </ul>
+        <p class="id-medico capa__id"><span>Dr. Pedro Sarzi · Médico</span><span class="id-medico__sep"> · </span><span>CRM-SP 183.332 · RQE 110447</span></p>
       </div>
-      <figcaption>No centro cirúrgico</figcaption>
-    </figure>
+    </div>
   </div>
 </section>
 

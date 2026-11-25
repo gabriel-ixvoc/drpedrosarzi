@@ -24,7 +24,7 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[{"@type":"MedicalWebPage","@id":"https://www.drpedrosarzi.com.br/infiltracoes/#pagina","url":"https://www.drpedrosarzi.com.br/infiltracoes/","name":"Infiltração intra-articular: joelho, ombro, quadril, tornozelo, mão e punho","description":"Infiltração intra-articular no joelho, no ombro, no quadril, no tornozelo, na mão e no punho: medicações, como é e cuidados. Dr. Pedro Sarzi, Alphaville e Osasco.","inLanguage":"pt-BR","dateModified":"2026-11-25","isPartOf":{"@id":"https://www.drpedrosarzi.com.br/#site"},"breadcrumb":{"@id":"https://www.drpedrosarzi.com.br/infiltracoes/#migalhas"},"audience":"https://schema.org/Patient","specialty":"https://schema.org/Musculoskeletal","publisher":{"@id":"https://www.drpedrosarzi.com.br/#medico"},"author":{"@id":"https://www.drpedrosarzi.com.br/#medico"},"primaryImageOfPage":"https://www.drpedrosarzi.com.br/imagensnovas/series/infil-capa.webp","about":{"@id":"https://www.drpedrosarzi.com.br/infiltracoes/#procedimento"},"mainEntity":{"@id":"https://www.drpedrosarzi.com.br/infiltracoes/#procedimento"}},{"@type":"MedicalProcedure","@id":"https://www.drpedrosarzi.com.br/infiltracoes/#procedimento","name":"Infiltração intra-articular","alternateName":"Injeção intra-articular","url":"https://www.drpedrosarzi.com.br/infiltracoes/","procedureType":"https://schema.org/PercutaneousProcedure","description":"Medicação aplicada dentro da articulação, com agulha fina, para aliviar a dor e a inflamação. Pode ser indicada no joelho, no ombro, no quadril, no tornozelo, na mão e no punho, sobretudo na artrose e na inflamação da articulação.","bodyLocation":"Joelho, ombro, quadril, tornozelo, mão e punho","howPerformed":"Depois da consulta e do exame, a pele é limpa com antisséptico e a medicação (corticoide, ácido hialurônico ou anestésico, sozinhos ou juntos) é aplicada dentro da articulação com agulha fina, em poucos minutos.","followup":"Atividades leves nos primeiros dias e gelo se houver desconforto.","relevantSpecialty":"https://schema.org/Musculoskeletal"},{"@type":"Physician","@id":"https://www.drpedrosarzi.com.br/#medico","name":"Dr. Pedro Sarzi","url":"https://www.drpedrosarzi.com.br/"},{"@type":"BreadcrumbList","@id":"https://www.drpedrosarzi.com.br/infiltracoes/#migalhas","itemListElement":[{"@type":"ListItem","position":1,"name":"Início","item":"https://www.drpedrosarzi.com.br/"},{"@type":"ListItem","position":2,"name":"Infiltrações","item":"https://www.drpedrosarzi.com.br/infiltracoes/"}]},{"@type":"FAQPage","@id":"https://www.drpedrosarzi.com.br/infiltracoes/#duvidas","mainEntity":[{"@type":"Question","name":"Infiltração dói?","acceptedAnswer":{"@type":"Answer","text":"A agulha é fina. Pode haver pressão ou ardor por instantes, e muitas vezes se usa anestésico. Um desconforto nos dias seguintes pode acontecer e costuma passar."}},{"@type":"Question","name":"Quanto tempo dura o efeito?","acceptedAnswer":{"@type":"Answer","text":"Varia com a medicação, a articulação e a pessoa: de semanas a meses. A infiltração alivia a dor e a inflamação, mas não refaz a cartilagem desgastada. Não há garantia de resultado."}},{"@type":"Question","name":"Quantas vezes posso fazer?","acceptedAnswer":{"@type":"Answer","text":"Com corticoide, poucas vezes por ano na mesma articulação, com intervalo entre elas. Se não houve melhora, o caso é reavaliado antes de outra aplicação."}},{"@type":"Question","name":"Tenho diabetes ou uso remédio que afina o sangue. Posso fazer?","acceptedAnswer":{"@type":"Answer","text":"Em geral, sim, com cuidado. Avise na consulta e não suspenda nenhum remédio por conta própria. O corticoide pode subir a glicose por alguns dias."}},{"@type":"Question","name":"A infiltração substitui a cirurgia?","acceptedAnswer":{"@type":"Answer","text":"Não quando a cirurgia é indicada. Muitos casos começam sem cirurgia, e a avaliação mostra qual é o caminho. Veja quando a cirurgia é indicada."}},{"@type":"Question","name":"O plano de saúde cobre?","acceptedAnswer":{"@type":"Answer","text":"Cobertura, valores e formas de pagamento variam conforme o plano e o local de atendimento."}}]}]}
 </script>
-<link rel="preload" as="image" type="image/avif" imagesrcset="../imagensnovas/series/infil-capa-720.avif 720w, ../imagensnovas/series/infil-capa.avif 1122w" imagesizes="(min-width:1100px) 500px, (min-width:600px) 42vw, calc(100vw - 32px)" fetchpriority="high">
+<link rel="preload" as="image" type="image/avif" imagesrcset="../imagensnovas/series/infil-capa-720.avif 720w, ../imagensnovas/series/infil-capa.avif 1122w" imagesizes="(orientation:landscape) min(80vh, 70vw), 100vw" fetchpriority="high">
 <link rel="stylesheet" href="../assets/site.css">
 <link rel="stylesheet" href="../assets/pages/alt.css">
 <link rel="stylesheet" href="../assets/pages/infiltracoes.css">
@@ -141,25 +141,32 @@
 
 <main id="conteudo">
 
-<!-- ===== 1. CAPA: o que é, com a arte infil-capa (padrão dos sinais da home) ===== -->
+<!-- ===== 1. CAPA: o que é, com a arte infil-capa fundida no carvão à direita (modelo da capa do /dr/) ===== -->
 <section class="capa if-capa" aria-labelledby="if-titulo">
-  <div class="wrap capa__grade">
-    <div class="capa__texto">
-      <h1 class="t-hero" id="if-titulo">
-        <span class="rise"><span>Infiltração</span></span>
-        <span class="rise"><span>intra-articular</span></span>
+  <figure class="if-capa__foto">
+    <picture>
+      <source type="image/avif" srcset="../imagensnovas/series/infil-capa-720.avif 720w, ../imagensnovas/series/infil-capa.avif 1122w" sizes="(orientation:landscape) min(80vh, 70vw), 100vw">
+      <source type="image/webp" srcset="../imagensnovas/series/infil-capa-720.webp 720w, ../imagensnovas/series/infil-capa.webp 1122w" sizes="(orientation:landscape) min(80vh, 70vw), 100vw">
+      <img class="if-capa__img arte-ia" src="../imagensnovas/series/infil-capa.webp" width="1122" height="1402" alt="Ilustração de um joelho dobrado, com os ossos da articulação acesos em dourado e uma agulha fina chegando ao espaço entre eles." fetchpriority="high" decoding="async">
+    </picture>
+    <figcaption class="if-capa__legenda">Ilustração conceitual.</figcaption>
+  </figure>
+  <div class="wrap capa__grade if-capa__grade">
+    <div class="capa__texto if-capa__texto">
+      <h1 class="if-capa__titulo" id="if-titulo">
+        <span class="rise t-hero"><span><span class="nobr">Infiltração</span><br> <span class="nobr">intra-articular</span></span></span>
+        <span class="rise if-capa__funcao"><span>Medicação dentro da articulação, para aliviar a dor e a&nbsp;inflamação.</span></span>
       </h1>
-      <p class="t-lead abre" style="--atraso:250ms">Medicação aplicada dentro da articulação para aliviar a dor e a inflamação. Pode ser indicada no joelho, no ombro, no quadril, no tornozelo, na mão e no&nbsp;punho.</p>
-      <div class="acoes abre" style="--atraso:380ms">
-        <a class="btn btn--fantasma" href="#onde">Ver onde ele atende</a>
-        <a class="link" href="#onde-se-faz">Ver onde se faz</a>
+      <p class="t-lead abre">Pode ser indicada no joelho, no ombro, no quadril, no tornozelo, na mão e no&nbsp;punho.</p>
+      <div class="acoes abre">
+        <a class="link" href="#onde">Ver onde ele atende</a>
+        <a class="link" href="#onde-se-faz">Ver as articulações</a>
       </div>
-      <p class="id-medico capa__id abre" style="--atraso:480ms"><span>Dr. Pedro Sarzi · Médico</span><span class="id-medico__sep"> · </span><span>CRM-SP 183.332 · RQE 110447</span></p>
+      <div class="if-capa__base abre">
+        <p class="if-capa__cred">Cirurgião da mão, com título em ortopedia e&nbsp;traumatologia (<span class="nobr">TEOT 17.744</span>)</p>
+        <p class="id-medico capa__id"><span>Dr. Pedro Sarzi · Médico</span><span class="id-medico__sep"> · </span><span>CRM-SP 183.332 · RQE 110447</span></p>
+      </div>
     </div>
-    <figure class="capa__figura if-capa__figura abre" style="--atraso:150ms">
-      <div class="if-capa__arte"><picture><source type="image/avif" srcset="../imagensnovas/series/infil-capa-720.avif 720w, ../imagensnovas/series/infil-capa.avif 1122w" sizes="(min-width:1100px) 500px, (min-width:600px) 42vw, calc(100vw - 32px)"><source type="image/webp" srcset="../imagensnovas/series/infil-capa-720.webp 720w, ../imagensnovas/series/infil-capa.webp 1122w" sizes="(min-width:1100px) 500px, (min-width:600px) 42vw, calc(100vw - 32px)"><img class="arte-ia" src="../imagensnovas/series/infil-capa-720.webp" width="1122" height="1402" alt="Ilustração de um joelho dobrado, com os ossos da articulação acesos em dourado e uma agulha fina chegando ao espaço entre eles." fetchpriority="high" decoding="async"></picture></div>
-      <figcaption class="if-capa__legenda">Ilustração conceitual</figcaption>
-    </figure>
   </div>
 </section>
 
