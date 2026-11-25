@@ -33,3 +33,13 @@ gestao/
 
 # Configuração local do Claude Code (launch.json): fora do GitHub
 .claude/
+
+# Laboratório: testes isolados (mão 3D etc.), fora do site publicado
+laboratorio/
+
+# Sobras de teste na raiz (capturas e medições dos agentes): nunca vão para o site
+/cap_*.jpg
+/full_*.jpg
+/r_*.jpg
+/res.txt
+/*.png

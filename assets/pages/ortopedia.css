@@ -1,0 +1,424 @@
+/* ==========================================================================
+   /ortopedia/: ortopedia e traumatologia
+   Capa com a prancha do goniômetro, o que a área cuida (moldura), mapa do
+   corpo (prancha com a Fig. 2 e a ficha da região), consulta ou pronto-socorro,
+   consulta e exames, opções de tratamento, mão e punho (o foco), dúvidas e
+   "Onde atende" (site.css). Faixas: celular até 599, tablet de 600 a 1099,
+   computador a partir de 1100 px. Tamanhos só pela escala --t-* do site.css.
+   ========================================================================== */
+
+:root{--orto-tela:100vh}
+/* texto pequeno em ouro sobre superfície clara: o #7E6A38 cai a 4,45:1 no marfim com grão.
+   Usa o --ouro-texto do site.css (por superfície); o --ouro-profundo fica nos filetes. */
+.cap--marfim,.cap--linho,.sup-clara,.moldura{--cor-destaque:var(--ouro-texto,#74612F)}
+.semana__hoje{color:var(--ouro-texto,#74612F)}
+@supports (height:1svh){:root{--orto-tela:100svh}}
+
+/* ---------- 1. Capa ---------- */
+.orto-capa{display:grid;align-content:center;min-height:min(calc(var(--orto-tela) - var(--hdr-h)),1000px)}
+.orto-capa__texto{container:orto-texto / inline-size}
+.orto-capa__titulo{display:block}
+.orto-capa__titulo .t-hero{display:block;text-wrap:balance}
+.orto-capa__funcao{display:block;margin-top:18px;font-family:var(--serif);font-weight:400;font-size:var(--t-h3,2.25rem);line-height:1.15;color:var(--champanhe);text-wrap:balance}
+.orto-capa .t-lead{max-width:44ch}
+/* linha de identificação sem ponto solto: em coluna estreita (a linha inteira mede cerca de
+   405 px) quebra entre o nome e os registros, como no /infiltracoes/ */
+@container orto-texto (max-width:419px){
+  .orto-capa .capa__id>.id-medico__sep{display:none}
+  .orto-capa .capa__id>span{display:block}
+}
+@container orto-texto (min-width:420px){
+  .orto-capa .capa__id{white-space:nowrap}
+}
+/* Prancha da capa: goniômetro em traço champanhe (a foto do médico fica só na home) */
+.orto-placa{margin:0;width:100%;max-width:440px;justify-self:center;padding:clamp(22px,2.4vw,34px);display:grid;justify-items:center;gap:18px}
+.orto-placa__arte{width:100%;max-width:340px}
+.orto-placa__svg{display:block;width:100%;height:auto;overflow:visible}
+.orto-placa__svg :is(rect,circle,line,path){vector-effect:non-scaling-stroke}
+.orto-placa__braco{fill:var(--carvao);stroke:var(--champanhe);stroke-width:var(--traco-gravura,1.25px)}
+.orto-placa__disco{fill:var(--carvao);stroke:var(--champanhe);stroke-width:var(--traco-gravura,1.25px)}
+.orto-placa__fio{fill:none;stroke:rgba(216,192,138,.3);stroke-width:1}
+.orto-placa__marcas{fill:none;stroke:rgba(216,192,138,.7);stroke-width:1}
+.orto-placa__num text{font-family:var(--serif);font-style:italic;font-size:13px;fill:var(--texto-escuro);text-anchor:middle}
+.orto-placa__guia{stroke:rgba(216,192,138,.45);stroke-width:1;stroke-dasharray:2 4}
+.orto-placa__eixo{stroke:rgba(216,192,138,.3);stroke-width:1;stroke-dasharray:2 6}
+.orto-placa__ponteiro{stroke:var(--champanhe);stroke-width:1.6}
+.orto-placa__eixo-c{fill:var(--carvao);stroke:var(--champanhe);stroke-width:1.25}
+.orto-placa__rebite{fill:var(--champanhe)}
+.orto-placa__arco{fill:none;stroke:var(--champanhe);stroke-width:1.1}
+.orto-placa__grau{font-family:var(--serif);font-style:italic;font-size:19px;fill:var(--marfim)}
+.orto-placa__legenda{justify-self:stretch;padding-top:14px;border-top:1px solid var(--fio-escuro-suave);font-size:var(--t-corpo,1.0625rem);color:var(--texto-escuro);text-align:center;text-wrap:balance}
+@media (min-width:600px) and (max-width:899px){
+  .orto-capa__grade{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);column-gap:32px}
+  .orto-placa{max-width:none;padding:20px}
+  .orto-capa .t-hero{font-size:min(var(--t-display),7.2vw)}
+}
+@media (min-width:900px){
+  .orto-capa__texto{grid-column:1 / 7}
+  .orto-placa{grid-column:8 / 13;justify-self:end}
+}
+/* celular: texto no eixo, linha do CFM logo abaixo das chamadas, prancha embaixo e menor */
+@media (max-width:599px){
+  .orto-capa .t-hero{font-size:min(var(--t-display),calc((100vw - 32px) / 7.6))}
+  .orto-capa__funcao{font-size:1.5rem;max-width:20ch;margin-inline:auto}
+  .orto-capa .t-lead{font-size:var(--t-lead);max-width:34ch;margin-inline:auto;text-wrap:balance}
+  .orto-capa .capa__id{margin-top:28px;padding-top:14px}
+  .orto-placa{max-width:320px;margin-top:8px;padding:20px}
+  .orto-placa__arte{max-width:220px}
+}
+/* celular baixo (320 x 568, iPhone SE de 1ª geração): a linha do CFM entra na primeira dobra */
+@media (max-width:599px) and (max-height:600px){
+  .orto-capa{padding-top:16px}
+  .orto-capa .t-hero{font-size:min(var(--t-display),10vw)}
+  .orto-capa__funcao{margin-top:10px;font-size:1.375rem;max-width:24ch}
+  .orto-capa .t-lead{margin-top:14px;font-size:var(--t-nota);line-height:1.45}
+  .orto-capa .acoes{margin-top:16px;row-gap:8px}
+  .orto-capa .capa__id{margin-top:16px;padding-top:12px}
+}
+/* telas baixas (notebook de 657 px): a capa sobe para o topo e a linha do CFM entra na dobra */
+@media (min-width:600px) and (max-height:700px){
+  .orto-capa{align-content:start;min-height:min(calc(var(--orto-tela) - var(--hdr-h)),1000px);padding-block:28px 32px}
+  .orto-capa__texto,.orto-placa{align-self:start}
+  .orto-capa .capa__id{margin-top:24px;padding-top:12px}
+  .orto-placa__arte{max-width:min(340px,calc((70vh - 90px) * .8))}
+}
+@media (min-width:900px) and (max-height:700px){
+  .orto-capa .t-hero{font-size:min(var(--t-display),10vh)}
+  .orto-capa__funcao{margin-top:10px;font-size:min(var(--t-h3,2.25rem),5vh)}
+  .orto-capa__texto>*+*{margin-top:18px}
+}
+/* notebook de 701 a 820 px de altura (1280 x 720, 1366 x 768): a capa inteira, com a linha do CFM
+   e a legenda da Fig. 1, cabe na primeira dobra; a prancha se limita pela altura disponível */
+@media (min-width:900px) and (min-height:701px) and (max-height:820px){
+  .orto-capa{padding-block:40px}
+  .orto-capa__funcao{margin-top:10px;font-size:min(var(--t-h3,2.25rem),1.75rem)}
+  .orto-capa .t-lead{margin-top:16px}
+  .orto-capa .acoes{margin-top:20px}
+  .orto-capa .capa__id{margin-top:28px}
+  .orto-placa{padding:22px;gap:14px}
+  .orto-placa__arte{max-width:min(340px,calc((var(--orto-tela) - var(--hdr-h) - 230px) * .8))}
+}
+/* janela deitada baixa (celular deitado): figura menor, função mais curta, ritmo mais curto */
+@media (orientation:landscape) and (max-height:600px) and (min-width:600px){
+  .orto-capa{padding-block:16px 24px}
+  .orto-capa__grade{grid-template-columns:minmax(0,7fr) minmax(0,4fr);column-gap:28px;align-items:start}
+  .orto-capa__texto{grid-column:1}
+  .orto-capa__texto>*+*{margin-top:14px}
+  .orto-capa .t-hero{font-size:min(2.5rem,6.4vw)}
+  .orto-capa__funcao{margin-top:8px;font-size:1.25rem}
+  .orto-capa .t-lead{max-width:none;font-size:1rem;line-height:1.45}
+  .orto-capa .acoes{flex-wrap:nowrap;gap:20px}
+  .orto-capa .capa__id{margin-top:14px;padding-top:10px}
+  .orto-placa{grid-column:2;padding:14px;gap:10px}
+  .orto-placa__arte{max-width:min(200px,calc((100vh - 120px) * .8))}
+  .orto-placa__legenda{padding-top:8px;font-size:.9375rem}
+}
+
+/* celular deitado mais baixo (667 x 375): coluna de texto mais larga, título numa linha */
+@media (orientation:landscape) and (max-height:420px) and (min-width:600px){
+  .orto-capa{padding-block:12px 20px}
+  .orto-capa__grade{grid-template-columns:minmax(0,3fr) minmax(0,1fr);column-gap:20px}
+  .orto-capa .t-hero{font-size:min(2.125rem,5.2vw)}
+  .orto-capa__funcao{font-size:1.125rem}
+  .orto-capa__texto>*+*{margin-top:10px}
+  .orto-capa .acoes>.btn{padding-inline:20px;white-space:nowrap}
+  .orto-capa .capa__id{margin-top:10px;padding-top:8px}
+  .orto-placa{padding:10px}
+  .orto-placa__legenda{display:none}
+}
+
+/* ---------- 2. O que cuida: seis tecidos numa moldura ---------- */
+.cuida__lista{display:grid;grid-template-columns:minmax(0,1fr);column-gap:40px}
+.cuida__item{display:grid;align-content:start;grid-template-columns:44px minmax(0,1fr);column-gap:18px;align-items:start;padding-block:22px;border-top:1px solid var(--filete-suave)}
+.cuida__item:first-child{border-top:0;padding-top:0}
+.cuida__glifo{grid-row:1 / span 2;width:44px;height:44px;color:var(--ouro-profundo)}
+.cuida__item h3{font-size:var(--t-h3-ficha,1.75rem);line-height:1.12}
+.cuida__item p{margin-top:6px;font-size:var(--t-nota,.9375rem);line-height:1.55;color:var(--cor-texto)}
+@media (min-width:600px){
+  .cuida__lista{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cuida__item:nth-child(2){border-top:0;padding-top:0}
+}
+@media (max-width:599px){
+  .cuida__item{grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center}
+  .cuida__glifo{grid-row:auto;margin-bottom:10px}
+  .cuida__item p{max-width:30ch}
+}
+
+/* ---------- 3. Mapa do corpo ---------- */
+.corpo__grade{display:grid;gap:40px;align-items:start}
+.corpo__placa{margin:0;padding:28px 24px 22px}
+.corpo__fig{position:relative;width:100%;max-width:360px;margin-inline:auto}
+.corpo__svg{display:block;width:100%;height:auto;overflow:visible;color:var(--champanhe)}
+.corpo__svg :is(path,line,ellipse,rect,circle,use){vector-effect:non-scaling-stroke}
+.corpo__eixo{stroke:rgba(216,192,138,.2);stroke-width:1;stroke-dasharray:2 6}
+.corpo__chao{fill:none;stroke:rgba(216,192,138,.22);stroke-width:1}
+.corpo__contorno{fill:rgba(216,192,138,.035);stroke:var(--champanhe);stroke-width:var(--traco-gravura,1.25px);stroke-linejoin:round;stroke-linecap:round}
+.corpo__zona{fill:transparent;stroke:rgba(216,192,138,.3);stroke-width:1;stroke-dasharray:3 4;transition:stroke var(--t-rapido) var(--ease),fill-opacity var(--t-rapido) var(--ease)}
+.corpo__zona.quase{stroke:rgba(216,192,138,.7)}
+.corpo__zona.on{fill:url(#ortoHach);fill-opacity:.55;stroke:var(--champanhe);stroke-dasharray:none}
+.corpo__rot line{stroke:rgba(216,192,138,.26);stroke-width:1;transition:stroke var(--t-rapido) var(--ease)}
+.corpo__rot text{font-family:var(--serif);font-style:italic;font-size:19px;fill:var(--texto-escuro);transition:fill var(--t-rapido) var(--ease)}
+.corpo__rot--dir text{text-anchor:end}
+/* abaixo de 1100 px a figura fica menor: rótulos um pouco maiores no desenho */
+@media (max-width:1099px){.corpo__rot text{font-size:21px}}
+.corpo__rot.quase line{stroke:rgba(216,192,138,.6)}
+.corpo__rot.on line{stroke:var(--champanhe)}
+.corpo__rot.on text,.corpo__rot.quase text{fill:var(--marfim)}
+.corpo__marca .anel{fill:var(--carvao);stroke:var(--champanhe);stroke-width:1.2}
+.corpo__marca .miolo{fill:var(--champanhe);opacity:0;transition:opacity var(--t-rapido) var(--ease)}
+.corpo__marca.quase .miolo{opacity:.5}
+.corpo__marca.on .anel{stroke-width:2}
+.corpo__marca.on .miolo{opacity:1}
+.js .corpo__rot,.js .corpo__zona{cursor:pointer}
+/* onda: some quando parada; a escolha feita pela pessoa (.pulso, ortopedia.js) solta uma */
+.corpo__marca .onda{fill:none;stroke:var(--champanhe);stroke-width:1;opacity:0;transform-box:fill-box;transform-origin:center}
+.corpo__marca.pulso .onda{animation:orto-onda 720ms var(--ease)}
+@keyframes orto-onda{from{opacity:.75;transform:scale(1)}to{opacity:0;transform:scale(2.6)}}
+@media (prefers-reduced-motion:reduce){.corpo__marca.pulso .onda{animation:none}}
+html.motion-paused .corpo__marca.pulso .onda{animation:none}
+/* Movimento (assets/movimento.js): com html.mov, a Fig. 2 fica no estado inicial até se desenhar
+   (só opacity, nada de layout); sem GSAP em 4 s, html.mov sai e ela aparece pronta */
+html.mov .corpo__placa[data-mov]:not(.mov-feito) :is(.corpo__eixo,.corpo__chao,.corpo__contorno>*,.corpo__zona,.corpo__rot line,.corpo__rot text,.corpo__marca-in){opacity:0}/* alvo de toque de 44 px sobre cada marca */
+.corpo__ponto{position:absolute;left:var(--x);top:var(--y);width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.corpo__ponto:active{background:rgba(216,192,138,.12)}
+
+/* lista de regiões = legenda da placa (abas) */
+.corpo__indice{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:20px;margin-top:22px;border-top:1px solid var(--fio-escuro-suave)}
+.corpo__aba{display:flex;align-items:center;gap:12px;min-height:46px;padding:8px 0;border-bottom:1px solid var(--fio-escuro-suave);text-align:left;
+  font-size:var(--t-nota,.9375rem);line-height:1.25;color:var(--texto-escuro);transition:color var(--t-rapido) var(--ease)}
+.corpo__aba::before{content:"";flex:none;width:9px;height:9px;border:1.3px solid var(--champanhe);border-radius:50%;transition:background-color var(--t-rapido) var(--ease)}
+.corpo__aba:hover{color:var(--marfim)}
+.corpo__aba:hover::before{background:rgba(216,192,138,.35)}
+.corpo__aba:active{color:var(--champanhe)}
+.corpo__aba[aria-selected="true"]{color:var(--marfim)}
+.corpo__aba[aria-selected="true"]::before{background:var(--champanhe)}
+.corpo__legenda{margin-top:18px;padding-top:14px;border-top:1px solid var(--fio-escuro-suave);font-size:var(--t-nota,.9375rem);color:var(--texto-escuro);text-align:center}
+@media (max-width:359px){.corpo__indice{grid-template-columns:1fr}}
+
+/* sem JS: sem lista nem pontos; as sete fichas uma embaixo da outra */
+html:not(.js) .corpo__indice,html:not(.js) .corpo__ponto{display:none}
+html:not(.js) .regiao+.regiao{margin-top:56px;padding-top:48px;border-top:1px solid var(--fio-escuro-suave)}
+
+/* ficha da região */
+.regiao[hidden]{display:none}
+.regiao.on{animation:orto-folha 320ms var(--ease)}
+@keyframes orto-folha{from{opacity:0;transform:translateY(8px)}}
+.regiao:focus-visible{outline-offset:8px}
+.regiao__nome{font-size:var(--t-h3,2.25rem);line-height:1.08;color:var(--marfim)}
+.regiao__oque{margin-top:14px;max-width:46ch;font-weight:300;font-size:var(--t-lead,1.3125rem);line-height:1.55;color:var(--marfim)}
+.regiao__rot{margin-top:32px;font-size:var(--t-nota,.9375rem);font-weight:500;line-height:1.3;color:var(--cor-suave)}
+.regiao__queixas{display:grid;gap:12px;margin-top:14px}
+.regiao__queixas li{position:relative;padding-left:24px;line-height:1.55;color:var(--texto-escuro)}
+.regiao__queixas li::before{content:"";position:absolute;left:2px;top:.6em;width:8px;height:8px;border:1px solid var(--champanhe);border-radius:50%}
+.regiao__queixas b{font-weight:500;color:var(--marfim)}
+.regiao__duas{display:grid;gap:0 32px}
+.regiao__duas p{margin-top:10px;line-height:1.6;color:var(--texto-escuro);max-width:46ch}
+@media (min-width:600px){.regiao__duas{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.regiao__alerta{margin-top:28px;padding:16px 0;background:var(--sutura) top/100% 1px no-repeat,var(--sutura) bottom/100% 1px no-repeat;font-size:var(--t-nota,.9375rem);line-height:1.55;color:var(--marfim)}
+.regiao__links{display:flex;flex-wrap:wrap;gap:4px 28px;margin-top:20px}
+
+/* computador: placa à esquerda (cols 1–5), ficha à direita (cols 7–12) */
+@media (min-width:1100px){
+  .corpo__grade{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--calha)}
+  .corpo__placa{grid-column:1 / 6}
+  .corpo__fig{max-width:400px}
+  .corpo__fichas{grid-column:7 / 13;padding-top:8px}
+}
+/* tablet: figura e lista lado a lado na placa; a ficha embaixo, em largura toda */
+@media (min-width:600px) and (max-width:1099px){
+  .corpo__placa{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:32px;align-items:center;padding:32px}
+  .corpo__fig{grid-row:1;max-width:330px}
+  .corpo__indice{grid-row:1;grid-column:2;grid-template-columns:1fr;margin-top:0}
+  .corpo__legenda{grid-column:1 / -1}
+  .corpo__fichas{max-width:760px;margin-inline:auto;width:100%}
+}
+/* celular: tudo no eixo; a lista de queixas com o marcador junto do texto */
+@media (max-width:599px){
+  .corpo__placa{padding:24px 16px 18px}
+  .corpo__fig{max-width:300px}
+  .regiao{text-align:center}
+  .regiao__nome::after{content:"";display:block;width:32px;height:1px;margin:16px auto 0;background:var(--champanhe)}
+  .regiao__oque,.regiao__duas p{margin-inline:auto;max-width:32ch;text-wrap:balance}
+  .regiao__oque{font-size:1.1875rem}
+  .regiao__queixas li{padding-left:0;max-width:34ch;margin-inline:auto}
+  .regiao__queixas li::before{position:static;display:inline-block;margin-right:10px;vertical-align:.08em}
+  .regiao__duas>div+div{margin-top:4px}
+  .regiao__links{justify-content:center}
+}
+
+/* ---------- 4. Consulta ou pronto-socorro ---------- */
+.quando__grade{display:grid;gap:24px}
+.quando__card{display:flex;flex-direction:column;padding:clamp(28px,3vw,40px)}
+.quando__card h3{font-size:var(--t-h3,2.25rem);line-height:1.1}
+.quando__sub{margin-top:12px;font-size:var(--t-nota,.9375rem);line-height:1.55;color:var(--cor-suave);max-width:40ch}
+.quando__lista{display:grid;gap:12px;margin-block:24px 0;padding-top:22px;border-top:1px solid var(--filete-suave)}
+.quando__lista li{position:relative;padding-left:24px;line-height:1.55;color:var(--cor-titulo)}
+.quando__lista li::before{content:"";position:absolute;left:2px;top:.62em;width:8px;height:8px;border:1px solid var(--cor-destaque);border-radius:50%}
+.quando__card .btn{align-self:flex-start;margin-top:auto}
+.quando__card .quando__lista{margin-bottom:32px}
+.quando__card--ps{background:url("../brand/carvao.svg") 0 0/320px 320px,var(--carvao)}
+.quando__card--ps .quando__lista li::before{border-radius:0;width:9px;height:1px;top:.78em;border:0;background:var(--champanhe)}
+.quando__192{margin-top:auto;padding-top:18px;border-top:1px solid var(--fio-escuro-suave);font-size:var(--t-nota,.9375rem);color:var(--texto-escuro)}
+.quando__192 a{display:inline-block;padding:10px 9px;margin:-10px -9px;font-weight:500;color:var(--champanhe);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.25em}
+.quando__192 a:hover{text-decoration-thickness:2px}
+@media (min-width:700px){.quando__grade{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1100px){.quando__grade{gap:32px}}
+@media (max-width:699px){
+  .quando__card{align-items:center;text-align:center}
+  .quando__sub{margin-inline:auto;text-wrap:balance}
+  .quando__lista{justify-items:center}
+  .quando__lista li{padding-left:0;max-width:32ch}
+  .quando__lista li::before{position:static;display:inline-block;margin-right:10px;vertical-align:.08em}
+  .quando__card--ps .quando__lista li::before{vertical-align:.3em}
+  .quando__card .btn{align-self:stretch}
+}
+
+/* ---------- 5. Consulta: quatro passos e os exames ---------- */
+.passos{position:relative;display:grid;gap:48px 32px;counter-reset:none}
+.passo{display:grid;align-content:start;justify-items:center;text-align:center}
+.passo__n{position:relative;z-index:1;display:grid;place-items:center;width:56px;height:56px;border:1px solid var(--fio-escuro-forte);border-radius:50%;background:var(--carvao);
+  font-family:var(--serif);font-style:italic;font-size:var(--t-h3-ficha,1.75rem);line-height:1;color:var(--champanhe)}
+.passo__n::before{content:"";position:absolute;inset:4px;border:1px solid var(--fio-escuro-suave);border-radius:50%}
+.passo h3{margin-top:22px;font-size:var(--t-h3-ficha,1.75rem);line-height:1.15}
+.passo p{margin-top:10px;max-width:30ch;line-height:1.6;color:var(--texto-escuro)}
+@media (min-width:600px) and (max-width:1099px){.passos{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1100px){
+  .passos{grid-template-columns:repeat(4,minmax(0,1fr))}
+  /* o fio que liga os medalhões, de centro a centro */
+  .passos::before{content:"";position:absolute;left:12.5%;right:12.5%;top:28px;height:1px;background:var(--fio-escuro)}
+}
+/* celular: no eixo, com sutura entre os passos */
+@media (max-width:599px){
+  .passos{gap:0}
+  .passo+.passo{margin-top:28px;padding-top:28px;background:var(--sutura) top center/96px 1px no-repeat}
+}
+
+.exames{margin-top:clamp(56px,7vw,96px);padding:clamp(28px,3.4vw,48px)}
+.exames__cabeca h3{font-size:var(--t-h3,2.25rem);line-height:1.1}
+.exames__cabeca p{margin-top:14px;max-width:34ch;line-height:1.6;color:var(--texto-escuro)}
+.exames__lista{display:grid;margin-top:28px;border-top:1px solid var(--fio-escuro-suave)}
+.exames__lista>div{display:grid;align-content:start;gap:4px;padding-block:16px;border-bottom:1px solid var(--fio-escuro-suave)}
+.exames__lista dt{font-family:var(--serif);font-size:1.5rem;line-height:1.2;color:var(--marfim)}
+.exames__lista dd{font-size:var(--t-nota,.9375rem);line-height:1.55;color:var(--texto-escuro)}
+@media (min-width:700px){.exames__lista{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px}}
+@media (min-width:1100px){
+  .exames{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--calha)}
+  .exames__cabeca{grid-column:1 / 5}
+  .exames__lista{grid-column:5 / 13;margin-top:0}
+}
+@media (max-width:699px){
+  .exames{text-align:center}
+  .exames__cabeca p{margin-inline:auto;text-wrap:balance}
+  .exames__lista dd{max-width:32ch;margin-inline:auto}
+}
+
+/* ---------- 6. Opções de tratamento ---------- */
+.trat__regua{display:flex;justify-content:space-between;padding-bottom:14px;
+  font-family:var(--serif);font-style:italic;font-size:var(--t-legenda,1.125rem);color:var(--cor-texto);
+  background:repeating-linear-gradient(90deg,var(--filete-padrao) 0 1px,transparent 1px 16px) left bottom/100% 7px no-repeat}
+.trat__grade{display:grid;gap:40px;border-top:1px solid var(--filete-forte)}
+.trat__grupo{position:relative;padding-top:30px}
+.trat__grupo::before{content:"";position:absolute;left:0;top:-6px;width:11px;height:11px;border:1px solid var(--ouro-profundo);border-radius:50%;background:var(--marfim)}
+.trat__grupo>h3{font-size:var(--t-h3-ficha,1.75rem);line-height:1.12}
+.trat__lista{display:grid;gap:24px 32px;margin-top:20px}
+.trat__lista li{padding-top:18px;border-top:1px solid var(--filete-suave)}
+.trat__lista h4{font-size:var(--t-corpo,1.0625rem);line-height:1.35}
+.trat__lista p{margin-top:6px;font-size:var(--t-nota,.9375rem);line-height:1.6;color:var(--cor-texto);max-width:42ch}
+.trat__lista .link{margin-top:6px}
+/* régua que preenche: as marcas da régua e a linha da grade se tingem de ouro profundo (clip-path,
+   sem deformar as marcas) e os marcos dos grupos acendem.
+   Parada (sem GSAP, movimento reduzido, "Pausar animações"), fica cheia: é o estado final.
+   Com .trat--vivo (ortopedia.js), o GSAP leva o filete com a rolagem e o grupo alcançado acende. */
+.trat__grade{position:relative}
+.trat__progresso{position:absolute;left:0;right:0;top:-8px;height:8px;pointer-events:none;
+  background:repeating-linear-gradient(90deg,var(--ouro-profundo) 0 1px,transparent 1px 16px) left top/100% 7px no-repeat,linear-gradient(var(--ouro-profundo),var(--ouro-profundo)) left bottom/100% 1px no-repeat}
+.trat__grupo::before{z-index:1;background:var(--ouro-profundo);transition:background-color var(--t-camada,240ms) var(--ease),box-shadow var(--t-camada,240ms) var(--ease)}
+.trat--vivo .trat__grupo:not(.trat__grupo--alcancado)::before{background:var(--marfim)}
+.trat--parado .trat__progresso{clip-path:none!important}
+.trat--parado .trat__grupo::before{background:var(--ouro-profundo)!important}
+@media (min-width:600px){
+  .trat__grade{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--calha)}
+  .trat__grupo:first-child{grid-column:1 / -1}
+  .trat__grupo:first-child .trat__lista{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (min-width:1100px){
+  .trat__grade{grid-template-columns:repeat(12,minmax(0,1fr))}
+  .trat__grupo:first-child{grid-column:1 / 7}
+  .trat__grupo:nth-child(2){grid-column:7 / 10}
+  .trat__grupo:nth-child(3){grid-column:10 / 13}
+}
+/* celular: grupos no eixo, ligados por sutura; sem a régua */
+@media (max-width:599px){
+  .trat__regua{display:none}
+  .trat__grade{border-top:0;gap:0;text-align:center}
+  .trat__grupo{padding-top:0}
+  .trat__grupo::before{display:none}
+  .trat__grupo+.trat__grupo{margin-top:40px;padding-top:40px;background:var(--sutura) top center/96px 1px no-repeat}
+  .trat__lista{justify-items:center}
+  .trat__lista li{width:100%}
+  .trat__lista p{max-width:32ch;margin-inline:auto}
+}
+/* celular: a sutura entre os grupos leva um marco no eixo; ao chegar no grupo, o fio se fecha
+   do marco para os dois lados (transição em CSS, ligada pela rolagem em ortopedia.js) */
+@media (max-width:599px){
+  .trat__progresso{display:none}
+  .trat__grupo+.trat__grupo::before{display:block;left:50%;top:-5px;margin-left:-5.5px}
+  .trat__grupo+.trat__grupo::after{content:"";position:absolute;left:50%;top:0;width:96px;height:1px;margin-left:-48px;background:var(--ouro-profundo);transition:transform 600ms var(--ease)}
+  .trat--vivo .trat__grupo:not(.trat__grupo--alcancado)::after{transform:scaleX(0)}
+  .trat--parado .trat__grupo::after{transform:none!important}
+}
+@media (max-width:599px) and (prefers-reduced-motion:reduce){.trat__grupo::after{transition:none}}
+
+/* ---------- 7. Mão e punho, o foco ---------- */
+.foco__acoes{display:flex;flex-wrap:wrap;gap:4px 28px;margin-top:24px}
+.foco__lista{display:grid;border-top:1px solid var(--fio-escuro-suave)}
+.foco__lista a{display:grid;grid-template-columns:2.4em minmax(0,1fr);column-gap:12px;align-items:baseline;min-height:44px;padding-block:16px;border-bottom:1px solid var(--fio-escuro-suave);transition:border-color var(--t-rapido) var(--ease)}
+.foco__n{grid-row:1 / span 2;font-family:var(--serif);font-style:italic;font-size:var(--t-legenda,1.125rem);color:var(--champanhe)}
+.foco__nome{font-family:var(--serif);font-size:var(--t-h3-ficha,1.75rem);line-height:1.15;color:var(--marfim)}
+.foco__sinal{margin-top:2px;font-size:var(--t-nota,.9375rem);line-height:1.45;color:var(--texto-escuro)}
+.foco__lista a:hover{border-bottom-color:var(--fio-escuro-forte)}
+.foco__lista a:hover .foco__nome{text-decoration:underline;text-decoration-color:var(--champanhe);text-decoration-thickness:1px;text-underline-offset:.2em}
+.foco__lista a:active .foco__nome{color:var(--champanhe)}
+@media (min-width:600px){
+  .foco__lista{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px}
+}
+@media (max-width:899px){
+  .foco .cap__margem{text-align:center}
+  .foco__acoes{display:flex;justify-content:center}
+}
+@media (max-width:599px){
+  .foco__lista a{grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center}
+  .foco__n{grid-row:auto}
+}
+
+/* ---------- 8. Dúvidas (acordeão do site.css) ---------- */
+.duvidas .acordeao__corpo p{line-height:1.65}
+.duvidas .acordeao__corpo a{color:var(--cor-destaque);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.25em}
+
+/* Celular baixo (até 760 px de altura útil: 320 × 568, 360 × 640, 375 × 667): a linha do CFM sobe para
+   logo abaixo do lead, antes das chamadas, e entra inteira na primeira dobra (como na home e no /dr/). */
+@media (max-width:599px) and (orientation:portrait) and (max-height:760px){
+  .orto-capa__texto{display:flex;flex-direction:column}
+  .orto-capa__texto>.t-lead{order:1}
+  .orto-capa .orto-capa__texto>.capa__id{order:2;margin-top:14px;padding-top:0;border-top:0}
+  .orto-capa__texto>.acoes{order:3;margin-top:18px}
+}
+
+/* Tablet em pé (600 a 899 px, e o iPad em pé alto até 1099 px): a capa no eixo, no mesmo esquema das
+   condições, do /cirurgias/ e do /infiltracoes/: título, função, lead, chamadas e identificação
+   centrados e, embaixo, a prancha do goniômetro. As duas colunas ficam no tablet deitado. */
+@media (min-width:600px) and (max-width:899px) and (orientation:portrait),
+       (min-width:600px) and (max-width:899px) and (min-height:761px),
+       (min-width:600px) and (max-width:1099px) and (orientation:portrait) and (min-height:900px){
+  .orto-capa__grade{grid-template-columns:minmax(0,1fr);row-gap:40px}
+  .orto-capa__texto{grid-column:1 / -1;text-align:center}
+  .orto-capa .t-hero{font-size:var(--t-display);max-width:16ch;margin-inline:auto}
+  .orto-capa__funcao{max-width:26ch;margin-inline:auto}
+  .orto-capa .t-lead{max-width:46ch;margin-inline:auto;text-wrap:balance}
+  .orto-capa .acoes{justify-content:center}
+  .orto-capa .capa__id{margin-top:32px;text-align:center}
+  .orto-placa{grid-column:1 / -1;justify-self:center;width:100%;max-width:440px;padding:clamp(22px,2.4vw,34px)}
+}
+@media (min-width:600px) and (max-width:1099px) and (orientation:portrait) and (min-height:900px){
+  .orto-capa{min-height:calc(var(--orto-tela) - var(--hdr-h))}
+}

@@ -230,25 +230,44 @@ syncMotion();
       .observe($('main') || document.body, { childList: true, subtree: true });
   }
   /* Um bloco dourado sólido por tela: enquanto o botão de agendar da capa está à
-     vista, o do cabeçalho fica fantasma (html.cta-capa-visivel, site.css).
+     vista, o do cabeçalho fica fantasma. O fantasma é o estado de partida no CSS;
+     aqui só se acende o sólido (html.cta-solida, site.css) quando nenhum está à vista.
      "À vista" desconta a faixa do cabeçalho: botão da capa escondido sob ele
      não conta, e o do cabeçalho volta a ser sólido. A margem segue a altura
      real do cabeçalho (muda em 1100 px), refeita só quando ela muda. */
-  const ctaCapa = $('main .capa .btn[data-agendar]');
-  if (ctaCapa && 'IntersectionObserver' in window) {
+  /* Desde 24/11 vale para qualquer botão de agendar sólido do conteúdo (não só o da capa):
+     enquanto um deles está à vista, o do cabeçalho fica fantasma. */
+  const ctasSolidos = $$('main .btn[data-agendar]:not(.btn--fantasma):not(.btn--ghost)');
+  if (ctasSolidos.length && 'IntersectionObserver' in window) {
     let ioCta = null, alturaCta = -1;
+    const vistos = new Set();
     const observarCta = () => {
       const h = hdr ? Math.round(hdr.getBoundingClientRect().height) : 0;
       if (h === alturaCta) return;
       alturaCta = h;
       if (ioCta) ioCta.disconnect();
-      ioCta = new IntersectionObserver(([e]) => raiz.classList.toggle('cta-capa-visivel', e.isIntersecting),
-        { rootMargin: `-${h}px 0px 0px 0px`, threshold: .5 });
-      ioCta.observe(ctaCapa);
+      vistos.clear();
+      ioCta = new IntersectionObserver(es => {
+        es.forEach(e => { if (e.isIntersecting) vistos.add(e.target); else vistos.delete(e.target); });
+        raiz.classList.toggle('cta-solida', vistos.size === 0);
+        pronto();
+      }, { rootMargin: `-${h}px 0px 0px 0px`, threshold: .5 });
+      ctasSolidos.forEach(b => ioCta.observe(b));
     };
+    /* decisão já na carga, sem esperar o observador: algum botão sólido com metade à vista? */
+    const topo = hdr ? hdr.getBoundingClientRect().bottom : 0;
+    const algumVisto = ctasSolidos.some(b => {
+      const r = b.getBoundingClientRect();
+      if (!r.height) return false;
+      const vis = Math.min(r.bottom, innerHeight) - Math.max(r.top, topo);
+      return vis >= r.height * .5;
+    });
+    raiz.classList.toggle('cta-solida', !algumVisto);
+    let prontoFeito = false;
+    const pronto = () => { if (prontoFeito) return; prontoFeito = true; requestAnimationFrame(() => requestAnimationFrame(() => raiz.classList.add('cta-pronto'))); };
     observarCta();
     addEventListener('resize', observarCta, { passive: true });
-  }
+  } else requestAnimationFrame(() => raiz.classList.add('cta-pronto'));
   const norm = p => p.replace(/index\.html$/, '').replace(/\/?$/, '/');
   const aqui = norm(location.pathname);
   $$('#nav a, #drawer a, .rodape__lista a').forEach(a => {
@@ -276,7 +295,7 @@ syncMotion();
     const y = scrollY, max = document.documentElement.scrollHeight - innerHeight;
     if (hdr) {
       hdr.classList.toggle('stuck', y > 12);
-      const oculto = !auto && y > 420 && y > last && !document.body.classList.contains('menu-open');
+      const oculto = !auto && y > 420 && y > last && !document.body.classList.contains('menu-open') && !$('#nav .aberto');
       hdr.classList.toggle('hide', oculto);
       /* espelho no html: o que fica preso abaixo do cabeçalho sobe junto (--hdr-vis) */
       raiz.classList.toggle('hdr-oculto', oculto);
@@ -315,6 +334,123 @@ syncMotion();
   });
   $$('a', d).forEach(a => a.addEventListener('click', close));
   addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  /* Seções da gaveta (Condições, Tratamentos): botão com aria-expanded que mostra o painel
+     ligado por aria-controls. Abrem e fecham independentes, sem animação de altura. */
+  $$('[data-sanfona]', d).forEach(g => {
+    const p = document.getElementById(g.getAttribute('aria-controls'));
+    if (!p) return;
+    g.addEventListener('click', () => {
+      const on = g.getAttribute('aria-expanded') !== 'true';
+      g.setAttribute('aria-expanded', String(on));
+      p.hidden = !on;
+    });
+  });
+})();
+
+/* ---------- 4b. Menus do cabeçalho (computador, a partir de 1100 px) ----------
+   Padrão "disclosure" de navegação: cada [data-menu] tem um .nav__gatilho (button, aria-expanded,
+   aria-controls) e um .nav__painel com links. Abre por clique (fica aberto), pelo mouse parado no
+   gatilho (120 ms; fecha 280 ms depois de sair) e pelo teclado: Enter e Espaço alternam; seta para
+   baixo ou para cima abre e entra no primeiro ou no último link; dentro do painel as setas andam
+   entre os links, Home e End vão às pontas, Esc fecha e devolve o foco ao gatilho; seta para os
+   lados no primeiro nível passa ao item vizinho. Fecha ao clicar fora, ao sair com o Tab e ao
+   rolar a página. Um painel por vez. */
+(function menusDoCabecalho () {
+  const nav = $('#nav');
+  const grupos = $$('[data-menu]', nav);
+  if (!grupos.length) return;
+  const HOVER = matchMedia('(hover:hover) and (pointer:fine)');
+  let aberto = null, fixo = false, tAbrir = 0, tFechar = 0;
+  const gatilho = g => $('.nav__gatilho', g);
+  const painel = g => $('.nav__painel', g);
+  const links = g => $$('a', painel(g));
+  const topo = () => $$(':scope > a, :scope > [data-menu] > .nav__gatilho', nav);
+  /* recua o painel para dentro da margem direita (e nunca além da esquerda) */
+  function ajustar (g) {
+    const p = painel(g);
+    p.style.setProperty('--nav-x', '0px');
+    const r = p.getBoundingClientRect(), m = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--margem')) || 32;
+    const limite = document.documentElement.clientWidth - m;
+    let dx = r.right > limite ? limite - r.right : 0;
+    if (r.left + dx < m) dx = m - r.left;
+    p.style.setProperty('--nav-x', Math.round(dx) + 'px');
+  }
+  function abrir (g, foco) {
+    clearTimeout(tAbrir); clearTimeout(tFechar);
+    if (aberto && aberto !== g) fechar(aberto);
+    if (aberto !== g) { ajustar(g); g.classList.add('aberto'); gatilho(g).setAttribute('aria-expanded', 'true'); aberto = g; }
+    const l = links(g);
+    if (foco === 'primeiro' && l.length) l[0].focus();
+    else if (foco === 'ultimo' && l.length) l[l.length - 1].focus();
+  }
+  function fechar (g, devolver) {
+    clearTimeout(tAbrir); clearTimeout(tFechar);
+    g = g || aberto;
+    if (!g) return;
+    g.classList.remove('aberto'); gatilho(g).setAttribute('aria-expanded', 'false');
+    if (aberto === g) { aberto = null; fixo = false; }
+    if (devolver) gatilho(g).focus();
+  }
+  grupos.forEach(g => {
+    const b = gatilho(g);
+    b.addEventListener('click', () => {
+      if (aberto === g && fixo) { fechar(g); return; }
+      abrir(g); fixo = true;
+    });
+    b.addEventListener('keydown', e => {
+      if (e.key === 'ArrowDown') { e.preventDefault(); abrir(g, 'primeiro'); fixo = true; }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); abrir(g, 'ultimo'); fixo = true; }
+    });
+    painel(g).addEventListener('keydown', e => {
+      const l = links(g), i = l.indexOf(document.activeElement);
+      if (i < 0) return;
+      let j = -1;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') j = (i + 1) % l.length;
+      else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') j = (i - 1 + l.length) % l.length;
+      else if (e.key === 'Home') j = 0;
+      else if (e.key === 'End') j = l.length - 1;
+      else return;
+      e.preventDefault(); e.stopPropagation(); l[j].focus();
+    });
+    g.addEventListener('focusout', e => { if (aberto === g && !g.contains(e.relatedTarget)) fechar(g); });
+    g.addEventListener('pointerenter', e => {
+      if (e.pointerType !== 'mouse' || !HOVER.matches) return;
+      clearTimeout(tFechar);
+      if (aberto === g) return;
+      tAbrir = setTimeout(() => { abrir(g); fixo = false; }, aberto ? 0 : 120);
+    });
+    g.addEventListener('pointerleave', e => {
+      if (e.pointerType !== 'mouse') return;
+      clearTimeout(tAbrir);
+      if (aberto === g && !fixo) tFechar = setTimeout(() => fechar(g), 280);
+    });
+  });
+  /* Esc em qualquer lugar fecha o painel; o foco volta ao gatilho se estava dentro dele */
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && aberto) { const dentro = aberto.contains(document.activeElement); fechar(aberto, dentro); }
+  });
+  /* setas para os lados no primeiro nível: item vizinho (o painel aberto fecha) */
+  nav.addEventListener('keydown', e => {
+    if (e.defaultPrevented || (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft')) return;
+    const t = topo(), i = t.indexOf(document.activeElement);
+    if (i < 0) return;
+    e.preventDefault();
+    if (aberto) fechar(aberto);
+    t[(i + (e.key === 'ArrowRight' ? 1 : -1) + t.length) % t.length].focus();
+  });
+  document.addEventListener('pointerdown', e => { if (aberto && !aberto.contains(e.target)) fechar(aberto); });
+  let y0 = scrollY;
+  addEventListener('scroll', () => { if (aberto && Math.abs(scrollY - y0) > 40) fechar(aberto); if (!aberto) y0 = scrollY; }, { passive: true });
+  addEventListener('resize', () => { if (aberto) ajustar(aberto); }, { passive: true });
+  matchMedia('(max-width:1099px)').addEventListener('change', e => { if (e.matches && aberto) fechar(aberto); });
+  /* item-pai da página atual: "Condições" ou "Tratamentos" ganham aria-current="true"
+     (o laço da seção 3 já marcou o link com aria-current="page") */
+  const marcarPai = () => $$('#nav [data-menu], #drawer .gaveta__grupo').forEach(g => {
+    const b = $('.nav__gatilho, .gaveta__gatilho', g);
+    if (!b) return;
+    if ($('a[aria-current="page"]', g)) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current');
+  });
+  marcarPai();
 })();
 
 /* ---------- 5. Revelação (opcional) ---------- */
@@ -637,12 +773,12 @@ function accessibility () {
       if (!document.body.classList.contains('menu-open')) return;
       if (e.key === 'Escape') { burger.focus(); return; }
       if (e.key === 'Tab') {
-        const f = [burger, ...$$('a,button', drawer)], i = f.indexOf(document.activeElement);
+        const f = [burger, ...$$('a,button', drawer).filter(el => el.getClientRects().length)], i = f.indexOf(document.activeElement);
         if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); }
         else if (!e.shiftKey && (i === f.length - 1 || i < 0)) { e.preventDefault(); burger.focus(); }
       }
     });
-    matchMedia('(min-width:1000px)').addEventListener('change', e => { if (e.matches && document.body.classList.contains('menu-open')) burger.click(); });
+    matchMedia('(min-width:1100px)').addEventListener('change', e => { if (e.matches && document.body.classList.contains('menu-open')) burger.click(); });
   }
   /* Abas com teclado (setas, Home, End). O painel de cada lista é
      ligado por id: #xrList → #xrPanel; #tabNav → .pane; ou aria-controls. */
@@ -660,6 +796,7 @@ function accessibility () {
     }
     tabs.forEach(tab => tab.addEventListener('click', sync));
     list.addEventListener('keydown', e => {
+      if (e.defaultPrevented) return;
       let i = tabs.indexOf(document.activeElement);
       if (i < 0) return;
       if (['ArrowRight', 'ArrowDown'].includes(e.key)) i = (i + 1) % tabs.length;

@@ -36,7 +36,7 @@
     .js .prp-capa__figura #tubeOuter:not(.prp-tube-outer){padding-bottom:339px}
   }
 }
-/* a legenda da Fig. 1 vai sempre em duas linhas equilibradas ("Fig. 1. Desenho esquemático, fora de
+/* a legenda da Fig. 1 vai sempre em duas linhas equilibradas ("Fig. 1. Ilustração esquemática, fora de
    escala." / "As proporções variam conforme o preparo."), numa caixa de duas linhas com o texto
    assentado no pé: a fonte de reserva também cabe nela, e a placa não muda de altura quando o
    Cormorant chega (sem salto na capa) */
@@ -103,6 +103,9 @@
   .lab-placa .lab-status{font-size:var(--t-micro,.8125rem)}
   .lab-placa .lab-tabs{justify-content:space-between;gap:8px}
   .lab-placa .lab-tabs button{font-size:.875rem}
+  /* legendas das figuras e a descrição da fração no eixo, como as demais figuras do site no celular */
+  .lab-placa .lab-description{text-align:center;text-wrap:balance;margin-inline:auto}
+  .lab-placa .lab-note{justify-content:center;text-align:center;text-wrap:balance;margin-inline:auto}
 }
 
 /* ---------- Placas (Fig. 1 e Fig. 2): régua de qualidade, só o acabamento ---------- */
@@ -315,4 +318,44 @@
   .process-illus-inner .lab-controls .lab-button{grid-row:2;width:100%;padding:0 8px}
   .process-illus-inner .lab-button span{display:none}
   .process-illus-inner .lab-note{margin-top:auto;padding-top:10px;font-size:var(--t-nota,.9375rem);line-height:1.3}
+}
+
+/* Fig. 2 no celular: a placa inteira no eixo (título e descrição da etapa ao centro,
+   como os pontos, os botões e a legenda logo abaixo). A min-height do lab.css continua. */
+@media (max-width:599px){
+  .lab-placa .lab-caption{text-align:center}
+  .lab-placa .lab-caption p{text-wrap:balance;margin-inline:auto;max-width:34ch}
+}
+
+/* Celular baixo (até 760 px de altura útil: 320 × 568, 360 × 640, 375 × 667): a linha do CFM sobe para
+   logo abaixo do lead, antes das chamadas, e entra inteira na primeira dobra (como na home e no /dr/). */
+@media (max-width:599px) and (orientation:portrait) and (max-height:760px){
+  .prp-capa .capa__texto>.capa__id{order:2;margin-top:14px;padding-top:0;border-top:0}
+  .prp-capa .capa__texto>.acoes{margin-top:20px}
+}
+
+/* Tablet (600 a 1099 px): o lead da capa em 46ch; onde a capa vai no eixo (em pé, ou até 899 px) ele
+   fica centrado pela regra da faixa (margin-inline:auto) */
+@media (min-width:600px) and (max-width:1099px){
+  .prp-capa .capa__texto>.t-lead{max-width:46ch}
+}
+
+/* Fig. 2 no celular deitado: a coluna da direita também no eixo (título, texto da etapa e nota ao
+   centro, como os pontos e os botões) */
+@media (orientation:landscape) and (max-width:899px) and (max-height:750px){
+  .process-illus-inner .lab-caption,.process-illus-inner .lab-note{text-align:center}
+  .process-illus-inner .lab-caption p{text-wrap:balance}
+}
+
+/* Celular deitado (até 500 px de altura): a primeira dobra continua só com a capa (a Fig. 1 deitada
+   vem logo depois), mas no eixo, como no tablet em pé: título, lead, ações e a identificação
+   centrados, sem a metade direita vazia (rev. 2, 24/11) */
+@media (orientation:landscape) and (max-height:500px){
+  .prp-capa .capa__texto{text-align:center}
+  .prp-capa .capa__texto>.t-hero{margin:auto auto 0}
+  .prp-capa .capa__texto>.t-lead{margin-inline:auto;max-width:56ch;text-wrap:balance}
+  .prp-capa .capa__texto>.acoes{justify-content:center}
+  .prp-capa .capa__texto>.capa__id{text-align:center}
+  .prp-capa .capa__id>.id-medico__sep{display:inline}
+  .prp-capa .capa__id>span{display:inline}
 }

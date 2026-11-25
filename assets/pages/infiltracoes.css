@@ -1,0 +1,489 @@
+/* ==========================================================================
+   Pedro Sarzi · /infiltracoes/ (Infiltrações: o que são e quando podem ajudar)
+   Sistema "Atlas da mão, edição de luxo contido" (docs/design.md). Tamanhos só da
+   escala do site.css (var(--t-…, reserva)); cartões só moldura clara ou prancha
+   escura; filetes por token. Celular simétrico; tablet (600 a 899 px) com
+   composição própria.
+   1. Capa e Fig. 1 (placa da mão)   2. O que é   3. Quando pode ajudar
+   4. Comparador das medicações (Fig. 2)   5. Como é no dia   6. Faça e evite
+   7. Riscos   8. Leve para a consulta   9. Dúvidas   10. Movimento
+   ========================================================================== */
+
+/* reservas do título da capa, com a largura da Cormorant: enquanto ela não chega (ou se não
+   chegar), "e quando podem ajudar." ocupa a mesma largura e a capa não salta. Medido com
+   measureText: Cormorant 300 = 929, Times New Roman = 955 (97 %), Georgia = 1073 (87 %).
+   Noto Serif (Android) sem medida local: usa a escala da Georgia, que é a mais larga. */
+@font-face{font-family:"If reserva Times";src:local("Times New Roman"),local("TimesNewRomanPSMT"),local("Times");size-adjust:96%}
+@font-face{font-family:"If reserva Georgia";src:local("Georgia");size-adjust:86%}
+@font-face{font-family:"If reserva Noto";src:local("Noto Serif"),local("NotoSerif-Regular"),local("Droid Serif");size-adjust:86%}
+:root{--if-tela:100vh}
+@supports (height:100svh){:root{--if-tela:100svh}}
+
+/* ---------- 1. Capa ---------- */
+.if-capa{display:grid;align-content:center;min-height:min(calc(var(--if-tela) - var(--hdr-h)),1000px)}
+.if-capa .capa__texto{container:if-texto / inline-size}
+.if-capa .t-hero{text-wrap:balance;font-family:"Cormorant Garamond","If reserva Times","If reserva Georgia","If reserva Noto",serif}
+/* as duas linhas do título ficam fixas, qualquer que seja a fonte: o tamanho já é calculado para
+   caber com a Cormorant, e com a reserva do sistema (mais larga) a linha não quebra nem empurra a
+   capa quando a fonte chega (CLS). O recorte vertical da subida continua; o lateral fica livre. */
+.if-capa .t-hero>.rise{overflow-x:visible;overflow-y:clip}
+.if-capa .t-hero>.rise>span{white-space:nowrap}
+.if-capa .t-lead{max-width:44ch}
+/* linha de identificação sem ponto solto: em coluna estreita (a linha inteira mede cerca de
+   405 px) quebra entre o nome e os registros, como na condição e no /prp/ */
+@container if-texto (max-width:419px){
+  .if-capa .capa__id>.id-medico__sep{display:none}
+  .if-capa .capa__id>span{display:block}
+}
+@container if-texto (min-width:420px){
+  .if-capa .capa__id{white-space:nowrap}
+}
+/* telas baixas (notebook de 657 px, celular deitado): a capa sobe para o topo e a linha do CFM
+   entra na primeira dobra */
+@media (max-height:700px) and (min-width:600px){
+  .if-capa{align-content:start;padding-block:32px 24px}
+}
+@media (max-height:700px) and (min-width:900px){
+  .if-capa .capa__texto,.if-capa .capa__figura{align-self:start}
+  .if-capa .capa__id{margin-top:32px}
+}
+
+/* Placa da Fig. 1: prancha escura com a mão em traço, quatro regiões em hachura e a legenda
+   numerada logo abaixo (cada nome leva ao atlas da home). */
+.if-placa{margin:0;padding:clamp(22px,2.4vw,34px);display:grid;justify-items:center;gap:20px}
+.if-placa__arte{width:min(100%,330px)}
+.if-placa__mao{display:block;width:100%;height:auto;overflow:visible}
+.if-placa__contorno{stroke-width:var(--traco-gravura,1.25px)}
+.if-reg__zona{fill:url(#ifHach);stroke:#D8C08A;stroke-width:var(--traco-gravura,1.25px);stroke-dasharray:4 4;transition:fill-opacity 200ms var(--ease),stroke-width 200ms var(--ease)}
+.if-reg__guia{fill:none;stroke:rgba(216,192,138,.55);stroke-width:1}
+.if-reg__disco{fill:var(--carvao);stroke:rgba(216,192,138,.6);stroke-width:1;transition:fill 200ms var(--ease),stroke 200ms var(--ease)}
+.if-reg__n{font-family:var(--serif);font-style:italic;font-size:17px;fill:#D8C08A;text-anchor:middle;transition:fill 200ms var(--ease)}
+.if-reg.on .if-reg__zona{stroke-width:2;stroke-dasharray:none}
+.if-reg.on .if-reg__disco{fill:#D8C08A;stroke:#D8C08A}
+.if-reg.on .if-reg__n{fill:var(--carvao)}
+.if-reg.on .if-reg__guia{stroke:#D8C08A}
+
+.if-placa__legenda{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 20px;width:100%;padding-top:18px;border-top:1px solid var(--fio-escuro-suave)}
+.if-placa__legenda li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:start;align-content:start}
+.if-placa__n{position:relative;display:grid;place-items:center;width:28px;height:28px;border:1px solid var(--fio-escuro-forte);border-radius:50%;
+  font-family:var(--serif);font-style:italic;font-size:var(--t-legenda,1.125rem);line-height:1;color:var(--champanhe);font-variant-numeric:lining-nums;transition:background-color 200ms var(--ease),color 200ms var(--ease)}
+.if-placa__legenda a{display:inline-block;font-family:var(--serif);font-size:var(--t-lead,1.3125rem);line-height:1.15;color:var(--marfim);
+  text-decoration:underline;text-decoration-color:var(--fio-escuro-forte);text-decoration-thickness:1px;text-underline-offset:.22em;transition:text-decoration-color var(--t-rapido)}
+/* o toque vale no item inteiro (número, nome e linha de apoio), sem mudar a linha */
+.if-placa__legenda li{position:relative}
+.if-placa__legenda a::after{content:"";position:absolute;inset:-6px}
+.if-placa__legenda a:hover,.if-placa__legenda a:active{text-decoration-color:var(--champanhe);text-decoration-thickness:2px}
+.if-placa__legenda small{display:block;margin-top:3px;font-size:var(--t-micro,.8125rem);line-height:1.35;color:var(--texto-escuro)}
+.if-placa__legenda li:hover .if-placa__n,.if-placa__legenda li:focus-within .if-placa__n{background:var(--champanhe);color:var(--carvao)}
+.if-placa .legenda{justify-self:stretch;font-size:1.0625rem;color:var(--cor-suave);text-align:left}
+
+@media (min-width:900px){
+  .if-capa .capa__texto{grid-column:1 / 8}
+  .if-capa .capa__figura{grid-column:8 / 13;align-self:center}
+  /* o título fica em duas linhas: a mais longa, "e quando podem ajudar." (8,95 em em romano), cabe na coluna */
+  .if-capa .t-hero{font-size:min(var(--t-display),10.8cqi)}
+}
+/* 900 a 1099 px: a coluna da placa é estreita; a legenda vai em uma coluna, sem quebrar os nomes */
+@media (min-width:900px) and (max-width:1099px){
+  .if-placa__arte{width:min(100%,250px)}
+  .if-placa__legenda{grid-template-columns:1fr;gap:12px}
+}
+/* tela baixa a partir de 900 px (notebook de 657 a 880 px de altura, 1024 x 768): a placa deita, como
+   no tablet em pé (mão à esquerda, legenda em coluna à direita), e a Fig. 1 cabe na primeira dobra */
+@media (min-width:900px) and (max-height:880px){
+  .if-placa{grid-template-columns:minmax(0,50%) minmax(0,1fr);align-items:center;justify-items:stretch;column-gap:28px;row-gap:18px}
+  .if-placa__arte{width:100%;max-width:calc((var(--if-tela) - var(--hdr-h) - 220px) * .76);justify-self:center}
+  .if-placa__legenda{grid-template-columns:1fr;padding-top:0;border-top:0;gap:16px}
+  .if-placa .legenda{grid-column:1 / -1;padding-top:14px;border-top:1px solid var(--fio-escuro-suave)}
+}
+@media (min-width:900px) and (max-width:1099px) and (max-height:880px){
+  .if-placa{padding:20px;column-gap:16px;grid-template-columns:minmax(0,50%) minmax(0,1fr)}
+  .if-placa__legenda{gap:12px}
+  .if-placa__legenda li{gap:10px}
+  .if-placa__legenda a{font-size:var(--t-corpo,1.0625rem)}
+  .if-placa__n{width:24px;height:24px;font-size:1rem}
+  .if-placa .legenda{font-size:var(--t-nota,.9375rem)}
+}
+/* tablet em pé (600 a 899 px): a placa deita, com a mão à esquerda e a legenda em coluna à direita */
+@media (min-width:600px) and (max-width:899px){
+  .if-capa{padding-block:48px 56px}
+  /* a capa no eixo, como as cabeças de capítulo abaixo de 900 px */
+  .if-capa .capa__texto{text-align:center}
+  .if-capa .t-lead{margin-inline:auto;text-wrap:balance}
+  .if-capa .acoes{justify-content:center}
+  .if-capa .capa__id{text-align:center}
+  .if-placa{grid-template-columns:minmax(0,250px) minmax(0,1fr);align-items:center;justify-items:stretch;column-gap:36px;max-width:680px;width:100%;justify-self:center}
+  .if-placa__legenda{grid-template-columns:1fr;padding-top:0;border-top:0;gap:18px}
+  .if-placa .legenda{grid-column:1 / -1;padding-top:16px;border-top:1px solid var(--fio-escuro-suave)}
+}
+/* celular: tudo no eixo; a legenda em dois por dois, número sobre o nome */
+@media (max-width:599px){
+  .if-capa{padding-block:32px 48px}
+  /* "e quando podem ajudar." (cerca de 8,95 em em romano) cabe numa linha até 320 px */
+  .if-capa .t-hero{font-size:min(var(--t-display),calc((100vw - 32px) / 9.1))}
+  .if-capa .t-lead{margin-inline:auto;text-wrap:balance}
+  .if-capa .acoes{justify-content:center}
+  .if-placa{margin-top:16px}
+  .if-placa__arte{width:min(100%,250px)}
+  .if-placa__legenda{gap:20px 12px}
+  .if-placa__legenda li{grid-template-columns:1fr;justify-items:center;text-align:center;gap:8px}
+  .if-placa .legenda{text-align:center;text-wrap:balance}
+}
+/* celular baixo (320 × 568 e parecidos): a linha do CFM entra na primeira dobra */
+@media (max-width:599px) and (max-height:600px){
+  .if-capa{padding-block:16px 40px}
+  .if-capa .capa__texto>.t-lead{margin-top:14px;line-height:1.48}
+  .if-capa .acoes{margin-top:20px;row-gap:8px}
+  .if-capa .capa__id{margin-top:16px;padding-top:12px}
+}
+
+/* ---------- 2. O que é: resumo numa moldura ---------- */
+.if-resumo>div{display:grid;gap:6px;padding-block:18px;border-bottom:1px solid var(--fio-claro-suave)}
+.if-resumo>div:first-child{padding-top:4px}
+.if-resumo>div:last-child{border-bottom:0;padding-bottom:4px}
+.if-resumo dt{font-family:var(--serif);font-size:var(--t-h3-ficha,1.75rem);line-height:1.12;color:var(--tinta)}
+.if-resumo dd{font-size:var(--t-corpo,1.0625rem);line-height:1.6;color:var(--texto-claro);max-width:54ch}
+.if-resumo>div:last-child dd{color:var(--tinta)}
+@media (min-width:600px){
+  .if-resumo>div{grid-template-columns:minmax(0,5fr) minmax(0,8fr);gap:28px;align-items:baseline}
+}
+@media (min-width:900px){.if-oque .cap__margem{align-self:start}}
+@media (max-width:599px){
+  .if-resumo{text-align:center}
+  .if-resumo dd{margin-inline:auto;max-width:32ch}
+}
+
+/* ---------- 3. Quando pode ajudar ---------- */
+.if-criterios{display:grid;gap:20px}
+@media (min-width:700px){.if-criterios{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}}
+.if-criterio{position:relative;padding:clamp(26px,3vw,40px)}
+.if-criterio h3{font-size:var(--t-h3-ficha,1.75rem);line-height:1.1;color:var(--marfim)}
+/* "fora": a ficha tracejada em sutura, o sinal de "fora" do sistema (como a do /prp/) */
+.if-criterio--fora{background:
+  linear-gradient(90deg,rgba(172,149,89,.5) 50%,transparent 0) 0 0/12px 1px repeat-x,
+  linear-gradient(90deg,rgba(172,149,89,.5) 50%,transparent 0) 0 100%/12px 1px repeat-x,
+  linear-gradient(180deg,rgba(172,149,89,.5) 50%,transparent 0) 0 0/1px 12px repeat-y,
+  linear-gradient(180deg,rgba(172,149,89,.5) 50%,transparent 0) 100% 0/1px 12px repeat-y}
+.if-lista{display:grid;gap:12px;margin-top:20px}
+.if-lista li{position:relative;padding-left:24px;font-size:var(--t-corpo,1.0625rem);line-height:1.55;color:var(--texto-escuro)}
+.if-lista li::before{content:"";position:absolute;left:0;top:.72em;width:12px;height:1px;background:var(--champanhe)}
+.if-criterio--fora .if-lista li::before{background:none;border-top:1px dashed rgba(172,149,89,.8)}
+.if-lista a{color:var(--marfim);text-decoration:underline;text-decoration-color:var(--champanhe);text-decoration-thickness:1px;text-underline-offset:.25em}
+.if-lista a:hover,.if-lista a:active{text-decoration-thickness:2px}
+
+.if-onde{display:grid;gap:56px;margin-top:clamp(56px,6vw,88px)}
+@media (min-width:900px){.if-onde{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--calha)}}
+@media (min-width:1100px){.if-onde{column-gap:72px}}
+.if-onde__titulo{font-size:var(--t-h3,2.25rem);line-height:1.1;letter-spacing:var(--trk-titulo)}
+.if-cond{margin-top:24px;border-top:1px solid var(--fio-escuro)}
+.if-cond>li{padding-block:20px;border-bottom:1px solid var(--fio-escuro-suave)}
+.if-cond__nome{display:inline-block;font-family:var(--serif);font-size:var(--t-h3-ficha,1.75rem);line-height:1.15;color:var(--marfim)}
+a.if-cond__nome{position:relative;text-decoration:underline;text-decoration-color:var(--fio-escuro-forte);text-decoration-thickness:1px;text-underline-offset:.2em;transition:text-decoration-color var(--t-rapido)}
+/* 30 px de caixa + 2 × 8 px = 46 px de toque, sem mexer no ritmo do texto */
+a.if-cond__nome::after{content:"";position:absolute;inset:-8px -4px}
+a.if-cond__nome:hover,a.if-cond__nome:active{text-decoration-color:var(--champanhe);text-decoration-thickness:2px}
+.if-cond p{margin-top:6px;max-width:56ch;font-size:var(--t-nota,.9375rem);line-height:1.55;color:var(--texto-escuro)}
+.if-cond p a{color:var(--marfim);text-decoration:underline;text-decoration-color:var(--champanhe);text-underline-offset:.25em}
+.if-cond p a:hover{text-decoration-thickness:2px}
+.if-onde__mais{margin-top:16px}
+@media (max-width:899px){
+  .if-onde__grupo{text-align:center}
+  .if-cond p{margin-inline:auto;max-width:34ch}
+}
+@media (max-width:599px){
+  .if-criterio{text-align:center}
+  .if-lista li{padding-left:0}
+  .if-lista li::before{position:static;display:block;margin:0 auto 8px;width:12px}
+}
+
+/* ---------- 4. Comparador das medicações (Fig. 2) ---------- */
+.med{padding:clamp(22px,3.4vw,48px)}
+.med__abas{display:flex;flex-wrap:wrap;gap:0 32px;border-bottom:1px solid var(--fio-escuro)}
+.med__aba{position:relative;min-height:52px;padding:0;margin-bottom:-1px;border:0;border-bottom:2px solid transparent;background:none;cursor:pointer;
+  font-family:var(--sans);font-weight:500;font-size:var(--t-nota,.9375rem);line-height:1.2;color:var(--texto-escuro);
+  transition:color var(--t-rapido) var(--ease),border-color var(--t-rapido) var(--ease)}
+.med__aba:hover{color:var(--marfim);border-bottom-color:var(--fio-escuro-forte)}
+.med__aba:active{color:var(--champanhe)}
+.med__aba[aria-selected="true"]{color:var(--marfim);border-bottom-color:var(--champanhe)}
+.med__aba:focus-visible{outline:2px solid var(--champanhe);outline-offset:3px}
+/* alvo de toque: o vão entre as abas (32 px) entra no alvo, 12 px de cada lado; o traço não muda */
+.med__aba::before{content:"";position:absolute;inset:0 -12px}
+
+.med__paineis{margin-top:clamp(28px,3vw,40px)}
+.med__painel+.med__painel{margin-top:40px}
+/* com JS: os quatro painéis na mesma célula; só o escolhido aparece (a altura não pula) */
+.med--pronto .med__paineis{display:grid}
+.med--pronto .med__painel{grid-area:1 / 1;margin-top:0;transition:opacity 220ms var(--ease),visibility 0s}
+.med--pronto .med__painel:not(.on){visibility:hidden;opacity:0;transition:opacity 220ms var(--ease),visibility 0s 220ms}
+.med__painel:focus-visible{outline:2px solid var(--champanhe);outline-offset:8px}
+.med__painel{display:grid;gap:24px;align-content:start}
+@media (min-width:900px){.med__painel{grid-template-columns:minmax(0,5fr) minmax(0,7fr);column-gap:56px}}
+.med__cabeca h3{font-size:var(--t-h3,2.25rem);line-height:1.08;letter-spacing:var(--trk-titulo);color:var(--marfim)}
+.med__oque{margin-top:14px;max-width:34ch;font-weight:300;font-size:var(--t-lead,1.3125rem);line-height:1.5;color:var(--marfim)}
+.med__dados{border-top:1px solid var(--fio-escuro-suave)}
+.med__dados>div{display:grid;gap:4px;padding-block:14px;border-bottom:1px solid var(--fio-escuro-suave)}
+.med__dados dt{font-size:var(--t-micro,.8125rem);line-height:1.4;color:var(--champanhe)}
+.med__dados dd{font-size:var(--t-corpo,1.0625rem);line-height:1.55;color:var(--texto-escuro)}
+.med__dados .link{min-height:0;margin-left:6px;color:var(--marfim)}
+@media (min-width:1100px){.med__dados>div{grid-template-columns:11rem minmax(0,1fr);gap:20px;align-items:baseline}}
+
+/* régua do tempo: horas, dias, semanas, meses; a faixa em hachura vai de --ini a --fim (0 a 100)
+   e se apaga no fim, porque o efeito diminui aos poucos */
+.regua{margin:clamp(32px,3.4vw,44px) 0 0;padding-top:24px;border-top:1px solid var(--fio-escuro-suave)}
+.regua__titulo{font-size:var(--t-nota,.9375rem);line-height:1.45;color:var(--marfim)}
+.regua__trilho{--ini:30;--fim:92;position:relative;height:44px;margin:18px 6px 0;
+  background:
+    linear-gradient(rgba(216,192,138,.55),rgba(216,192,138,.55)) 0 50%/100% 1px no-repeat,
+    linear-gradient(rgba(216,192,138,.7),rgba(216,192,138,.7)) 0 50%/1px 18px no-repeat,
+    linear-gradient(rgba(216,192,138,.7),rgba(216,192,138,.7)) 33.333% 50%/1px 18px no-repeat,
+    linear-gradient(rgba(216,192,138,.7),rgba(216,192,138,.7)) 66.666% 50%/1px 18px no-repeat,
+    linear-gradient(rgba(216,192,138,.7),rgba(216,192,138,.7)) 100% 50%/1px 18px no-repeat,
+    repeating-linear-gradient(90deg,rgba(216,192,138,.32) 0 1px,transparent 1px calc(100% / 12)) 0 50%/100% 8px no-repeat}
+.regua__faixa{position:absolute;top:50%;left:calc(var(--ini) * 1%);width:calc((var(--fim) - var(--ini)) * 1%);height:14px;transform:translateY(-50%);
+  background:repeating-linear-gradient(-52deg,rgba(216,192,138,.8) 0 1px,transparent 1px 6px),rgba(8,8,10,.6);
+  border-block:1px solid var(--champanhe);
+  -webkit-mask:linear-gradient(90deg,#000 55%,transparent);mask:linear-gradient(90deg,#000 55%,transparent);
+  transition:left 420ms var(--ease),width 420ms var(--ease)}
+.regua__ponto{position:absolute;top:50%;left:calc(var(--ini) * 1%);width:13px;height:13px;margin-left:-6.5px;margin-top:-6.5px;border-radius:50%;
+  background:var(--champanhe);box-shadow:0 0 0 4px var(--carvao),0 0 0 5px rgba(216,192,138,.45);transition:left 420ms var(--ease)}
+.regua__marcas{position:relative;height:26px;margin:8px 6px 0}
+.regua__marcas li{position:absolute;top:0;transform:translateX(-50%);font-family:var(--serif);font-style:italic;font-size:var(--t-legenda,1.125rem);line-height:1.2;color:var(--texto-escuro);white-space:nowrap}
+.regua__marcas li:nth-child(1){left:0;transform:none}
+.regua__marcas li:nth-child(2){left:33.333%}
+.regua__marcas li:nth-child(3){left:66.666%}
+.regua__marcas li:nth-child(4){left:100%;transform:translateX(-100%)}
+.med__legenda{margin-top:20px;font-size:1.0625rem;color:var(--cor-suave)}
+.med__nota{margin:28px auto 0;max-width:52ch;text-align:center;font-size:var(--t-nota,.9375rem);line-height:1.55;color:var(--texto-claro);text-wrap:balance}
+
+/* celular: abas em dois por dois, com 48 px de toque; painel no eixo */
+@media (max-width:599px){
+  .med__abas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;border-bottom:0}
+  .med__aba{min-height:48px;padding:6px 8px;margin:0;border:1px solid var(--fio-escuro);text-align:center}
+  .med__aba::before{inset:0}
+  .med__aba:hover{border-color:var(--fio-escuro-forte)}
+  .med__aba[aria-selected="true"]{border-color:var(--champanhe);box-shadow:inset 0 -2px 0 var(--champanhe)}
+  .med__painel{text-align:center}
+  .med__oque{margin-inline:auto;text-wrap:balance}
+  .med__dados dd{max-width:32ch;margin-inline:auto}
+  .med__dados .link{margin-left:0}
+  .regua__titulo,.med__legenda{text-align:center;text-wrap:balance}
+  /* a régua (e a legenda da Fig. 2) sobe para logo abaixo das abas: o toque na aba mede na hora, à vista,
+     sem ter de rolar até o fim do painel mais alto */
+  .med{display:flex;flex-direction:column}
+  .med__abas{order:0}
+  .regua{order:1;margin-top:28px;padding-top:0;border-top:0}
+  .med__legenda{order:2;margin-top:12px;padding-bottom:24px;border-bottom:1px solid var(--fio-escuro-suave);font-size:var(--t-nota,.9375rem)}
+  .med__paineis{order:3}
+}
+@media (min-width:600px) and (max-width:899px){
+  .med__painel{grid-template-columns:minmax(0,1fr)}
+  .med__oque{max-width:46ch}
+  .med__dados>div{grid-template-columns:10rem minmax(0,1fr);gap:20px;align-items:baseline}
+}
+
+/* ---------- 5. Como é no dia: cinco momentos ligados por um fio ---------- */
+.dia{position:relative;display:grid;gap:40px;counter-reset:dia}
+.dia__n{position:relative;z-index:1;display:grid;place-items:center;width:56px;height:56px;border:1px solid var(--fio-escuro-forte);border-radius:50%;background:var(--carvao);
+  font-family:var(--serif);font-style:italic;font-weight:400;font-size:var(--t-h3-ficha,1.75rem);line-height:1;color:var(--champanhe);font-variant-numeric:lining-nums}
+.dia__n::after{content:"";position:absolute;inset:4px;border:1px solid var(--fio-escuro-suave);border-radius:50%}
+.dia__passo h3{font-size:var(--t-h3-ficha,1.75rem);line-height:1.1;color:var(--marfim)}
+.dia__passo p{font-size:var(--t-nota,.9375rem);line-height:1.55;color:var(--texto-escuro)}
+.dia__fecho{margin:clamp(48px,5vw,72px) auto 0;padding-top:28px;max-width:40ch;border-top:1px solid var(--fio-escuro-suave);text-align:center;
+  font-family:var(--serif);font-style:italic;font-size:var(--t-h3-ficha,1.75rem);line-height:1.25;color:var(--marfim);text-wrap:balance}
+/* computador: cinco colunas, o fio passa pelo centro dos medalhões */
+@media (min-width:900px){
+  .dia{grid-template-columns:repeat(5,minmax(0,1fr));column-gap:var(--calha)}
+  .dia::before{content:"";position:absolute;top:28px;left:10%;right:10%;height:1px;background:var(--fio-escuro-forte)}
+  .dia__passo{display:grid;justify-items:center;align-content:start;gap:16px;text-align:center}
+  .dia__passo h3{margin-top:4px}
+  .dia__passo p{max-width:24ch}
+}
+/* tablet: uma linha por momento, medalhão à esquerda e fio na vertical */
+@media (min-width:600px) and (max-width:899px){
+  .dia{gap:32px;max-width:620px;margin-inline:auto}
+  .dia::before{content:"";position:absolute;top:28px;bottom:28px;left:28px;width:1px;background:var(--fio-escuro-forte)}
+  .dia__passo{display:grid;grid-template-columns:56px minmax(0,1fr);column-gap:28px;align-items:start}
+  .dia__passo h3{grid-column:2;align-self:center;min-height:56px;display:flex;align-items:center}
+  .dia__passo .dia__n{grid-row:1 / span 2}
+  .dia__passo p{grid-column:2;margin-top:2px;max-width:46ch}
+}
+/* celular: no eixo, com a sutura ligando um momento ao outro */
+@media (max-width:599px){
+  .dia{gap:0}
+  .dia__passo{display:grid;justify-items:center;gap:12px;text-align:center}
+  .dia__passo+.dia__passo{padding-top:52px;position:relative}
+  .dia__passo+.dia__passo::before{content:"";position:absolute;top:10px;left:50%;width:1px;height:32px;
+    background:linear-gradient(180deg,rgba(172,149,89,.5) 50%,transparent 0) 0 0/1px 12px repeat-y}
+  .dia__passo p{max-width:32ch}
+}
+
+/* ---------- 6. Nos dias seguintes: faça e evite ---------- */
+.fe{display:grid;gap:20px}
+@media (min-width:600px){.fe{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}}
+.fe__bloco h3{font-size:var(--t-h3,2.25rem);line-height:1.05;letter-spacing:var(--trk-titulo)}
+.fe__lista{display:grid;margin-top:16px;border-top:1px solid var(--fio-claro)}
+.fe__lista li{position:relative;padding:14px 0 14px 28px;border-bottom:1px solid var(--fio-claro-suave);font-size:var(--t-corpo,1.0625rem);line-height:1.55;color:var(--tinta)}
+.fe__lista li:last-child{border-bottom:0;padding-bottom:0}
+/* marcador: anel no "faça", traço no "evite", em ouro profundo */
+.fe__lista li::before{content:"";position:absolute;left:2px;top:calc(14px + .5em);width:10px;height:10px;margin-top:-5px;border:1px solid var(--ouro-profundo);border-radius:50%}
+.fe__bloco--evite .fe__lista li::before{width:12px;height:0;margin-top:0;border:0;border-top:1px solid var(--ouro-profundo);border-radius:0}
+@media (max-width:599px){
+  .fe__bloco{text-align:center}
+  .fe__lista li{padding-left:0}
+  .fe__lista li::before{position:static;display:block;margin:0 auto 10px}
+  .fe__bloco--evite .fe__lista li::before{margin:4px auto 12px}
+}
+
+/* ---------- 7. Riscos e quando procurar ajuda (areia) ---------- */
+.riscos{border-top-color:var(--fio-claro)}
+.riscos>li{border-bottom-color:var(--fio-claro-suave)}
+.riscos p{color:var(--texto-claro)}
+.alerta{display:grid;gap:20px}
+/* computador: os dois avisos vão sob a cabeça, na coluna da margem; a lista dos riscos ocupa o corpo */
+@media (min-width:900px){
+  .if-riscos .cap__margem{grid-row:1}
+  .if-riscos .cap__corpo{grid-row:1 / span 2}
+  .if-riscos .alerta{grid-column:1 / 6;grid-row:2;align-self:start}
+  .if-riscos .cap__grade{grid-template-rows:auto 1fr;row-gap:40px}
+}
+/* tablet: os riscos em duas colunas; os avisos um sobre o outro, sem ficha esticada */
+@media (min-width:600px) and (max-width:899px){
+  .riscos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px;border-top:0}
+  .riscos>li{border-top:1px solid var(--fio-claro);border-bottom:0}
+  .alerta{margin-top:16px}
+}
+.alerta__bloco h3{font-size:var(--t-h3-ficha,1.75rem);line-height:1.1}
+.alerta__bloco p,.alerta__lista li{font-size:var(--t-corpo,1.0625rem);line-height:1.55;color:var(--tinta)}
+.alerta__bloco>p{margin-top:12px}
+/* o do pronto-socorro leva o filete de fora mais forte: é o mais importante */
+.alerta__bloco--ps{border-color:var(--fio-claro-forte)}
+.alerta__bloco--ps::before{border-color:var(--fio-claro)}
+.alerta__lista{display:grid;gap:8px;margin-top:12px}
+.alerta__lista li{position:relative;padding-left:22px}
+.alerta__lista li::before{content:"";position:absolute;left:0;top:.75em;width:12px;height:1px;background:var(--ouro-profundo)}
+.alerta__tel{display:flex;flex-wrap:wrap;align-items:center;gap:0 12px;margin-top:16px;padding-top:12px;border-top:1px solid var(--fio-claro-suave)}
+.alerta__tel span{font-size:var(--t-nota,.9375rem);color:var(--texto-claro)}
+@media (max-width:899px){
+  .riscos{text-align:center}
+  .riscos h3+p{margin-inline:auto;max-width:32ch}
+}
+@media (max-width:599px){
+  .alerta__bloco{text-align:center}
+  .alerta__lista li{padding-left:0}
+  .alerta__lista li::before{position:static;display:block;margin:0 auto 8px}
+  .alerta__tel{justify-content:center}
+}
+
+/* ---------- 8. Leve para a consulta: título na margem, as perguntas na coluna larga ----------
+   Sem foto (24/11): o retrato já é a capa do /ortopedia/. A cabeça fica no alto da coluna, sem prender
+   ao rolar (rev. 3, 24/11): presa, ela descia em relação à lista curta, e nas condições ela não prende. */
+.consulta__grade{display:grid;gap:32px;align-items:start}
+.consulta__cabeca .t-lead{margin-top:16px;max-width:36ch;text-wrap:balance}
+.consulta__cabeca::after{content:"";display:block;width:96px;height:1px;margin-top:32px;background:var(--sutura)}
+.perguntas{counter-reset:pg;border-top:1px solid var(--fio-escuro)}
+.perguntas li{counter-increment:pg;display:grid;grid-template-columns:2.2em minmax(0,1fr);align-items:baseline;padding-block:12px;border-bottom:1px solid var(--fio-escuro-suave);
+  font-size:var(--t-corpo,1.0625rem);line-height:1.5;color:var(--marfim)}
+.perguntas li::before{content:counter(pg);font-family:var(--serif);font-style:italic;font-size:var(--t-legenda,1.125rem);color:var(--champanhe);font-variant-numeric:lining-nums}
+.consulta__acoes{margin-top:28px}
+.consulta__status{min-height:1.55em;margin-top:12px;font-size:var(--t-nota,.9375rem);line-height:1.55;color:var(--champanhe)}
+@media (min-width:900px){
+  .consulta__grade{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--calha)}
+  .consulta__cabeca{grid-column:1 / 6}
+  .consulta__cabeca .t-lead{margin-top:24px}
+  .consulta__texto{grid-column:7 / 13}
+}
+/* tablet em pé (600 a 899 px): uma coluna no eixo, como as outras cabeças de capítulo abaixo de 900 px;
+   a lista numerada segue alinhada à esquerda dentro da coluna centrada */
+@media (min-width:600px) and (max-width:899px){
+  .consulta__grade{grid-template-columns:minmax(0,1fr)}
+  .consulta__cabeca,.consulta__cabeca .cap__titulo{text-align:center}
+  .consulta__cabeca .t-lead{margin-inline:auto;max-width:46ch;text-wrap:balance}
+  .consulta__cabeca::after{margin-inline:auto}
+  .consulta__texto{max-width:36rem;margin-inline:auto;width:100%}
+  .consulta__acoes{justify-content:center;align-items:center}
+  .consulta__status{text-align:center}
+}
+@media (max-width:599px){
+  .consulta__cabeca,.consulta__texto{text-align:center}
+  .consulta__cabeca .t-lead{margin-inline:auto;max-width:30ch}
+  .consulta__cabeca::after{margin-inline:auto;margin-top:28px}
+  .perguntas li{display:block;padding-block:14px}
+  .perguntas li::before{display:block;margin-bottom:2px}
+  .consulta__acoes{align-items:center}
+  .consulta__acoes>.btn{width:100%}
+}
+
+/* ---------- 9. Dúvidas frequentes ---------- */
+.if-faq .acordeao__corpo p{color:var(--texto-claro)}
+.if-faq .acordeao__corpo a{color:var(--tinta);text-decoration:underline;text-decoration-color:var(--ouro-profundo);text-decoration-thickness:1px;text-underline-offset:.25em}
+.if-faq .acordeao__corpo a:hover,.if-faq .acordeao__corpo a:active{text-decoration-thickness:2px}
+.if-faq .acordeao__item>summary:active{color:var(--ouro-profundo)}
+
+/* ---------- 10. Movimento (assets/movimento.js e infiltracoes.js, parte 4) ----------
+   Fig. 1 (data-mov="placa"): com html.mov, o contorno, as regiões, as linhas e os números ficam escondidos
+   (só opacity, o layout não muda) até o GSAP desenhar; pronta, a placa ganha .mov-feito. Sem GSAP em 4 s,
+   html.mov sai e tudo aparece. Fig. 2: com o GSAP, quem move a faixa e o ponto é ele (a transição sai). */
+html.mov .if-placa[data-mov]:not(.mov-feito) :is(.if-placa__contorno,.if-reg__zona,.if-reg__guia,.if-reg__disco,.if-reg__n){opacity:0}
+.if-reg__guia{transition:stroke 200ms var(--ease)}
+.if-placa__legenda li.on .if-placa__n{background:var(--champanhe);color:var(--carvao)}
+.if-placa__legenda li.on a{text-decoration-color:var(--champanhe)}
+.regua__trilho--mov :is(.regua__faixa,.regua__ponto){transition:none}
+.regua__marcas li{transition:color var(--t-camada,240ms) var(--ease)}
+.regua__marcas li.on{color:var(--marfim)}
+
+/* parado com movimento reduzido ou "Pausar animações" */
+@media (prefers-reduced-motion:reduce){
+  .regua__faixa,.regua__ponto,.regua__marcas li,.med--pronto .med__painel,.med__aba,.if-reg__zona,.if-reg__guia,.if-reg__disco,.if-reg__n,.if-placa__n{transition:none!important}
+}
+html.motion-paused :is(.regua__faixa,.regua__ponto,.regua__marcas li,.med--pronto .med__painel,.med__aba,.if-reg__zona,.if-reg__guia,.if-reg__disco,.if-reg__n,.if-placa__n){transition:none!important}
+
+@media print{
+  .med--pronto .med__painel:not(.on){visibility:visible;opacity:1}
+  .med--pronto .med__paineis{display:block}
+  .regua,.consulta__acoes{display:none}
+}
+
+/* ---------- 11. Capa no celular deitado (até 500 px de altura, 600 a 1099 px de largura) ----------
+   Texto e placa lado a lado, como as outras capas deitadas: a linha de identificação fica na dobra. */
+@media (orientation:landscape) and (max-height:500px) and (min-width:600px) and (max-width:1099px){
+  .if-capa{min-height:0;padding-block:20px 32px}
+  .if-capa .capa__grade{grid-template-columns:minmax(0,7fr) minmax(0,5fr);column-gap:28px;align-items:start}
+  .if-capa .capa__texto{grid-column:1;text-align:left}
+  .if-capa .capa__texto>*+*{margin-top:14px}
+  .if-capa .t-hero{font-size:min(2.375rem,8cqi)}
+  .if-capa .t-lead{margin-inline:0;font-size:1.0625rem}
+  .if-capa .acoes{justify-content:flex-start;flex-direction:row;align-items:center}
+  .if-capa .acoes>.btn{width:auto}
+  .if-capa .capa__id{margin-top:18px;padding-top:12px;text-align:left}
+  /* a placa deita dentro da coluna (mão à esquerda, legenda à direita) e cabe na altura da tela */
+  .if-capa .capa__figura{grid-column:2;display:grid;grid-template-columns:minmax(0,40%) minmax(0,1fr);align-items:center;justify-items:stretch;max-width:none;padding:14px;gap:10px 14px}
+  .if-placa__arte{width:100%;max-width:calc((var(--if-tela) - var(--hdr-h) - 150px) * .76);justify-self:center}
+  .if-placa__legenda{grid-template-columns:1fr;gap:8px;padding-top:0;border-top:0}
+  .if-placa__legenda li{grid-template-columns:auto minmax(0,1fr);justify-items:start;text-align:left;gap:8px}
+  .if-placa__legenda a{font-size:var(--t-nota,.9375rem)}
+  .if-placa__legenda small{font-size:.75rem;margin-top:1px}
+  .if-placa__n{width:22px;height:22px;font-size:.875rem}
+  .if-placa .legenda{grid-column:1 / -1;padding-top:8px;border-top:1px solid var(--fio-escuro-suave);font-size:.8125rem;line-height:1.4}
+}
+/* celular deitado mais baixo (667 x 375): coluna de texto mais larga e ritmo mais curto, para a linha do CFM entrar na tela */
+@media (orientation:landscape) and (max-height:420px) and (min-width:600px) and (max-width:1099px){
+  .if-capa{padding-block:12px 24px}
+  .if-capa .capa__grade{grid-template-columns:minmax(0,8fr) minmax(0,4fr)}
+  .if-capa .capa__texto>*+*{margin-top:10px}
+  .if-capa .t-lead{max-width:none;font-size:1rem;line-height:1.45}
+  .if-capa .acoes{flex-wrap:nowrap;gap:20px}
+  .if-capa .acoes>.btn{padding-inline:20px}
+  .if-capa .capa__id{margin-top:12px;padding-top:8px}
+  .if-capa .capa__figura{padding:12px;grid-template-columns:1fr;justify-items:center;gap:8px}
+  /* coluna estreita: a mão em cima, os quatro nomes embaixo, sem a linha de apoio; a legenda da figura
+     fica só para leitor de tela */
+  .if-placa__arte{max-width:calc((var(--if-tela) - var(--hdr-h) - 190px) * .76)}
+  .if-placa__legenda{justify-self:stretch;gap:2px;padding-top:6px;border-top:1px solid var(--fio-escuro-suave)}
+  .if-placa__legenda small{display:none}
+  .if-placa__legenda a{font-size:.875rem;line-height:1.1}
+  .if-placa__legenda li{align-items:center}
+  .if-placa__n{width:20px;height:20px;font-size:.8125rem}
+  .if-placa__legenda a::after{inset:-1px -6px}
+  .if-placa .legenda{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+}
+@media (max-width:599px){.if-capa .capa__id{margin-top:32px}}
