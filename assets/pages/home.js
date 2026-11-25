@@ -1,196 +1,38 @@
 /* ==========================================================================
    Home (/) · componentes da página (v3, out/2026)
    Carregado depois de site.js (window.PS). A home não usa pages/lab.*.
-   Ordem: ossos → mão em camadas → atlas (abas + pontos da mão) →
+   Ordem: atlas (abas + imagem da condição) →
    questionário → frase da marca (rolagem) → caminhos (régua). As fichas
    que viram e o "Onde atende" são componentes do site.js (seção 10).
    Ganchos e inventário: docs/site.md.
    ========================================================================== */
 (function () {
 'use strict';
-const { $, $$, clamp, lerp, easeOut } = window.PS;
+const { $, $$, clamp } = window.PS;
 const PS = window.PS;
 const RM = PS.RM;
-const NS = 'http://www.w3.org/2000/svg';
 const parado = () => RM || PS.motion.paused;
 
-/* ---------- 1. OSSOS EM TRAÇO DE GRAVURA ---------- */
-const HAND_BONES = [
-  // indicador
-  [158,352,152,262,9],[151,256,145,196,8],[144,190,141,152,7],[140,146,139,122,6],
-  // médio
-  [189,354,188,258,9.5],[188,252,186,186,8.5],[186,180,185,140,7.5],[185,134,184,106,6.5],
-  // anelar
-  [216,352,218,262,9],[219,256,222,198,8],[223,192,225,154,7],[225,148,226,120,6],
-  // mínimo
-  [240,350,245,270,8],[246,264,252,216,7],[253,210,257,182,6],[258,176,261,158,5.5],
-  // polegar
-  [152,360,118,336,11],[114,332,92,310,10],[88,306,74,276,8.5],
-  // rádio e ulna
-  [176,398,172,442,19],[212,400,216,442,14]
-];
-const HAND_CARPALS = [
-  [162,368,10,8,-12],[182,370,10,8,8],[202,366,11,9,0],[222,370,10,8,14],
-  [168,388,10,7,-18],[188,390,10,7,0],[208,388,9,7,12],[226,394,7,5,0]
-];
-
-/* Cada osso: contorno fino + linha de eixo (a "hachura" do atlas). */
-function drawBones (target) {
-  if (!target) return;
-  target.textContent = '';
-  HAND_BONES.forEach(([x1, y1, x2, y2, w]) => {
-    const L = Math.hypot(x2 - x1, y2 - y1), r = w * .55, n = w * .29;
-    const g = document.createElementNS(NS, 'g');
-    g.setAttribute('transform', `translate(${x1} ${y1}) rotate(${Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI - 90})`);
-    g.innerHTML =
-      `<path class="osso" d="M${-r} 0C${-r} ${-r} ${r} ${-r} ${r} 0C${r} ${L * .18} ${n} ${L * .27} ${n} ${L * .5}S${r * 1.25} ${L * .85} ${r} ${L}C${r} ${L + r} ${-r} ${L + r} ${-r} ${L}C${-r * 1.25} ${L * .85} ${-n} ${L * .7} ${-n} ${L * .5}S${-r} ${L * .18} ${-r} 0Z"/>` +
-      `<path class="osso__eixo" d="M${-w * .14} 3Q${-w * .08} ${L * .5} ${-w * .14} ${L - 3}"/>`;
-    target.append(g);
-  });
-  HAND_CARPALS.forEach(([x, y, rx, ry, rot]) => {
-    const p = document.createElementNS(NS, 'path');
-    p.setAttribute('class', 'osso');
-    p.setAttribute('d', `M${-rx} 0Q${-rx} ${-ry} 0 ${-ry}Q${rx} ${-ry} ${rx} 0Q${rx * .7} ${ry} 0 ${ry}Q${-rx} ${ry} ${-rx} 0Z`);
-    p.setAttribute('transform', `translate(${x} ${y}) rotate(${rot})`);
-    target.append(p);
-  });
-}
-drawBones($('#bones'));
-
-/* ---------- 2. MÃO EM CAMADAS (Fig. 1 do atlas) ----------
-   Ganchos: #handbox, #handSvg (viewBox 10 70 320 400), #handGeo,
-   #scanMask, #scanC, #scanRing, #boneLayer, #bones, #nerves,
-   .hs[data-i][data-x][data-y] (um ponto por condição), .hand-hint.
-   Cria .lab-card.lab-hand e os botões [data-layer]. Devolve aim(), que
-   leva a lupa até um ponto (o atlas usa ao trocar de condição). */
-function handExperience () {
-  const box = $('#handbox'), svg = $('#handSvg');
-  if (!box || !svg) return null;
-  const card = document.createElement('div');
-  card.className = 'lab-card lab-hand';
-  box.before(card); card.append(box);
-
-  const controls = document.createElement('div');
-  controls.className = 'lab-tabs mao__camadas';
-  controls.setAttribute('role', 'group');
-  controls.setAttribute('aria-label', 'Camada anatômica');
-  controls.innerHTML = '<button type="button" data-layer="scan" aria-pressed="true">Lupa</button><button type="button" data-layer="bones" aria-pressed="false">Ossos</button><button type="button" data-layer="nerves" aria-pressed="false">Nervos</button>';
-  card.prepend(controls);
-
-  const boneLayer = $('#boneLayer'), nerves = $('#nerves'), bones = $('#bones');
-  let layer = 'scan';
-
-  // Base anatômica legível; a lupa realça uma região por cima dela.
-  const base = bones.cloneNode(true);
-  base.removeAttribute('id'); base.setAttribute('class', 'mao__base');
-  boneLayer.before(base);
-  const tendon = document.createElementNS(NS, 'g');
-  tendon.setAttribute('class', 'mao__tendoes');
-  tendon.innerHTML = '<path d="M178 470C180 378 153 309 141 159"/><path d="M191 470C196 357 186 267 184 130"/><path d="M207 470C221 358 223 270 226 147"/><path d="M216 470C232 372 250 280 259 176"/><path d="M166 470C168 380 118 333 84 287"/>';
-  base.after(tendon);
-  const folds = document.createElementNS(NS, 'g');
-  folds.setAttribute('class', 'mao__dobras');
-  // pregas dos dedos (base, PIP dupla, DIP), do polegar, linhas da palma e do punho
-  folds.innerHTML = '<path d="M141 251.5Q150.5 254 160 251.5M142 256Q150.5 258.5 159 256M136 193Q144.5 196 153 193M136.5 198Q144.5 201 152.5 198M132 149Q139.5 151.5 147 149M178 248Q188 250.5 198 248M178.5 252.5Q188 255 197.5 252.5M177 183Q186 186 195 183M177.5 188Q186 191 194.5 188M176.5 137Q184.5 139.5 192.5 137M210.5 252Q219.5 254.5 228.5 252M211 256.5Q219.5 259 228 256.5M214.5 195.5Q223 198.5 231.5 196M215 200.5Q223 203.5 231 201M218.5 151Q225.5 153.5 232.5 151.5M240.5 265Q248.5 267.5 256.5 265.5M248 213Q255.5 215.5 263 213.5M248.5 217.5Q255.5 220 262.5 218M254 179Q260.5 181.5 267 179.5M82 300Q86 308 97 309M96 315Q100 322 112 323M260 298C236 302 206 295 172 271M134 303C160 310 205 319 243 336M136 307C128 332 137 374 168 411M160 421Q196 428 233 419M162 431Q197 437 231 429"/>';
-  boneLayer.before(folds);
-
-  const scanC = $('#scanC'), ring = $('#scanRing');
-  scanC.setAttribute('r', '70'); ring.setAttribute('r', '66');
-  let pos = { x: 192, y: 372 }, anim = 0;
-  const api = { ativo: { x: 192, y: 372 } };
-  function desenha () {
-    scanC.setAttribute('cx', pos.x); scanC.setAttribute('cy', pos.y);
-    ring.setAttribute('cx', pos.x); ring.setAttribute('cy', pos.y);
-  }
-  /* Leva a lupa até (x, y). Suave quando a troca vem de um clique; direta
-     quando segue o cursor ou com movimento reduzido. */
-  api.aim = (x, y, suave) => {
-    cancelAnimationFrame(anim);
-    const alvo = { x: +x, y: +y };
-    if (!suave || parado()) { pos = alvo; desenha(); return; }
-    const de = { ...pos }, t0 = performance.now(), dur = 520;
-    const passo = t => {
-      const k = easeOut(clamp((t - t0) / dur, 0, 1));
-      pos = { x: lerp(de.x, alvo.x, k), y: lerp(de.y, alvo.y, k) }; desenha();
-      if (k < 1) anim = requestAnimationFrame(passo);
-    };
-    anim = requestAnimationFrame(passo);
-  };
-
-  $$('[data-layer]', card).forEach(b => b.addEventListener('click', () => {
-    layer = b.dataset.layer;
-    $$('[data-layer]', card).forEach(t => t.setAttribute('aria-pressed', String(t === b)));
-    if (layer === 'scan') boneLayer.setAttribute('mask', 'url(#scanMask)'); else boneLayer.removeAttribute('mask');
-    bones.style.opacity = layer === 'nerves' ? '.15' : '1';
-    nerves.style.opacity = layer === 'bones' ? '0' : '1';
-    ring.style.opacity = layer === 'scan' ? '' : '0';
-    card.dataset.camada = layer;
-  }));
-
-  // A lupa segue o cursor; quando ele sai, volta para a condição escolhida.
-  let pending = 0;
-  box.addEventListener('pointermove', e => {
-    if (e.pointerType === 'touch' || layer !== 'scan' || PS.motion.paused) return;
-    cancelAnimationFrame(pending);
-    pending = requestAnimationFrame(() => {
-      const p = svg.createSVGPoint(); p.x = e.clientX; p.y = e.clientY;
-      const m = svg.getScreenCTM(); if (!m) return;
-      const local = p.matrixTransform(m.inverse()); api.aim(local.x, local.y, false);
-    });
-  }, { passive: true });
-  box.addEventListener('pointerleave', () => api.aim(api.ativo.x, api.ativo.y, true));
-
-  function position () {
-    const m = svg.getScreenCTM(); if (!m) return;
-    const bounds = box.getBoundingClientRect();
-    $$('.hs', box).forEach(b => {
-      const p = svg.createSVGPoint(); p.x = +b.dataset.x; p.y = +b.dataset.y;
-      const xy = p.matrixTransform(m);
-      b.style.left = (xy.x - bounds.left) + 'px'; b.style.top = (xy.y - bounds.top) + 'px';
-    });
-  }
-  if ('ResizeObserver' in window) new ResizeObserver(position).observe(box);
-  position();
-  $('.hand-hint', box).textContent = PS.COARSE ? 'Toque nos pontos da mão' : 'Passe o cursor sobre a mão para ver por dentro';
-
-  /* Goniômetro em volta da placa: centro no punho, ponteiro ao longo do dedo
-     médio. Varre de 0° a 90° quando a placa aparece na tela. */
-  const gEl = $('.mao__gonio', box);
-  if (gEl && PS.gonio) {
-    const g = PS.gonio(gEl, { vb: '0 0 960 500', cx: 480, cy: 480, r: 432, passo: 5, l5: 7, l15: 12, l45: 20, numeros: true, base: 24, cauda: 0, folga: 30, eixo: 5, centro: 2 });
-    g.set(0);
-    if ('IntersectionObserver' in window && !parado()) {
-      const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { io.disconnect(); setTimeout(() => g.varrer(90, 1400), 200); } }, { threshold: .35 });
-      io.observe(card);
-    } else g.set(90);
-  }
-  return api;
-}
-const mao = handExperience();
-
-/* ---------- 3. ONDE DÓI? Abas + pontos da mão + figura ----------
-   .tab-btn, .pane, .xr-ov[data-ov] e .hs[data-i] seguem a mesma ordem.
+/* ---------- 1. ONDE DÓI? Abas + imagem da condição + ficha ----------
+   .tab-btn, .pane e .atlas__img[data-i] seguem a mesma ordem (25/11/2026:
+   a mão em linha com camadas e pontos saiu; cada condição tem a sua imagem).
    Links com [data-goto] (fichas de sinais, questionário) escolhem a
    condição na hora; a rolagem até #tratamentos fica com o site.js. */
 (function atlas () {
   const nav = $('#tabNav');
   if (!nav) return;
-  const btns = $$('.tab-btn', nav), panes = $$('.pane'), overlays = $$('.xr-ov'),
-        hots = $$('.hs'), legenda = $('#atlasLegenda');
-  function set (i, instantaneo) {
+  const btns = $$('.tab-btn', nav), panes = $$('.pane'), imgs = $$('.atlas__img'),
+        legenda = $('#atlasLegenda');
+  function set (i) {
     i = clamp(+i || 0, 0, btns.length - 1);
     btns.forEach((b, k) => { b.classList.toggle('on', k === i); b.setAttribute('aria-selected', String(k === i)); });
     panes.forEach((p, k) => p.classList.toggle('on', k === i));
-    overlays.forEach(o => o.classList.toggle('on', +o.dataset.ov === i));
-    hots.forEach(h => { const on = +h.dataset.i === i; h.classList.toggle('on', on); h.setAttribute('aria-pressed', String(on)); });
+    imgs.forEach(p => p.classList.toggle('on', +p.dataset.i === i));
     if (legenda && panes[i] && panes[i].dataset.fig) legenda.textContent = panes[i].dataset.fig;
-    const h = hots.find(x => +x.dataset.i === i);
-    if (mao && h) { mao.ativo = { x: +h.dataset.x, y: +h.dataset.y }; mao.aim(h.dataset.x, h.dataset.y, !instantaneo); }
   }
-  /* Abaixo de 1000 px a ficha fica embaixo da placa: depois do toque num ponto ou
-     numa aba, se o título da ficha escolhida estiver fora da tela, a página rola
+  /* Abaixo de 1000 px a ficha fica embaixo da placa: depois do toque numa aba, se o título da ficha escolhida estiver fora da tela, a página rola
      só o necessário para ele aparecer (block 'nearest' + scroll-margin-bottom do
-     home.css), sem tirar a mão de vista. Só nesses cliques: [data-goto], ?atlas=
+     home.css). Só nesses cliques: [data-goto], ?atlas=
      e o 'Ver no atlas' do questionário têm a rolagem deles. */
   const estreito = matchMedia('(max-width:999px)');
   function mostraFicha (i) {
@@ -206,7 +48,6 @@ const mao = handExperience();
     });
   }
   btns.forEach(b => b.addEventListener('click', () => { set(b.dataset.i); mostraFicha(b.dataset.i); }));
-  hots.forEach(h => h.addEventListener('click', () => { set(h.dataset.i); mostraFicha(h.dataset.i); }));
   document.addEventListener('click', e => {
     const a = e.target.closest && e.target.closest('[data-goto]');
     if (!a) return;
@@ -215,14 +56,14 @@ const mao = handExperience();
     requestAnimationFrame(() => btns[i].focus({ preventScroll: true }));
   });
   window.__setTab = set;
-  set(0, true);
+  set(0);
   // Links de outras páginas abrem uma condição: ../?atlas=<data-slug>#tratamentos
   const pedida = new URLSearchParams(location.search).get('atlas');
   const alvo = pedida ? btns.findIndex(b => b.dataset.slug === pedida) : -1;
-  if (alvo > 0) set(alvo, true);
+  if (alvo > 0) set(alvo);
 })();
 
-/* ---------- 4. ENTENDA SEUS SINTOMAS (questionário) ----------
+/* ---------- 2. ENTENDA SEUS SINTOMAS (questionário) ----------
    Cinco perguntas, sem nível de urgência. O resultado sempre termina em
    "Agendar avaliação". O progresso aparece no goniômetro #qProg. */
 (function quiz () {
@@ -395,7 +236,7 @@ const mao = handExperience();
   renderStep();
 })();
 
-/* ---------- 5. FRASE DA MARCA: o arco do movimento ----------
+/* ---------- 3. FRASE DA MARCA: o arco do movimento ----------
    Ganchos: #manifesto, .manifesto__trilho (altura da cena), #mArco,
    .mw (palavras), .manifesto__valores li[data-limiar], #mGraus.
    A rolagem dentro do trilho vira um ângulo de 0° a 180°: o ponteiro
@@ -451,7 +292,7 @@ const mao = handExperience();
   modo();
 })();
 
-/* ---------- 7. CAMINHOS DE CUIDADO: régua graduada ----------
+/* ---------- 4. CAMINHOS DE CUIDADO: régua graduada ----------
    Ganchos: #trilha, .trilha__marco[data-i] (role=tab), .trilha__painel,
    .trilha__seta[data-dir]. As setas do teclado ficam com o site.js
    (abas). A régua se desenha uma vez, quando aparece na tela. */

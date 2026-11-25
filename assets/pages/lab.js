@@ -1,11 +1,9 @@
 /* ==========================================================================
-   Placas de laboratório (PRP): explorador do sangue e player de etapas.
+   Placa de laboratório (PRP): explorador do sangue (Fig. 1 da capa).
    Carregado só pela página /prp/, depois do site.js.
    Desenho de gravura: traço fino, hachura, pontilhado. Diagramas
    esquemáticos, não imagens diagnósticas. Sem dependências.
-   Montagem: #tubeOuter (PRP) ou .prp-tsr-grid > div:last-child (home);
-   player em .process-illus-inner com os .process-step[data-step] da página
-   (título e texto de cada etapa vêm do h3 e do p de cada passo).
+   Montagem: #tubeOuter. O player de etapas em desenho saiu em 25/11/2026.
    ========================================================================== */
 (() => {
   'use strict';
@@ -122,130 +120,5 @@
     }
   }
 
-  /* ---------- Player de etapas (Fig. 2) ---------- */
-  function processExperience() {
-    const root = $('.process-illus-inner'); if (!root) return;
-    /* Braço na dobra do cotovelo, cortado pelas bordas (máscara de esmaecimento). */
-    const BRACO = 'M0 170C80 160 170 166 240 184C300 199 380 206 490 204L490 272C380 276 300 286 240 300C180 314 90 322 0 322Z';
-    const TUBO_COLETA = 'M364 216C412 192 436 112 492 92S562 70 582 93';
-    /* Tecido em corte, genérico: a pele em cima, cortado pelas bordas (máscara de esmaecimento). */
-    const CORTE = 'M70 282C170 270 250 266 320 266C390 266 470 270 570 280L570 366C470 372 390 374 320 374C250 374 170 372 70 366Z';
-    const scenes = [
-      () => stage('collect', `
-        <defs>
-          <linearGradient id="collect-fade" gradientUnits="userSpaceOnUse" x1="0" x2="490"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".16" stop-color="#fff"/><stop offset=".84" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-          <mask id="collect-m" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="430"><rect width="640" height="430" fill="url(#collect-fade)"/></mask>
-          <clipPath id="collect-braco"><path d="${BRACO}"/></clipPath>
-        </defs>
-        <g mask="url(#collect-m)">
-          <path d="${BRACO}" class="corpo"/>
-          <rect x="0" y="282" width="490" height="44" fill="url(#collect-h)" clip-path="url(#collect-braco)"/>
-          <path d="M0 252C90 250 170 246 250 244C330 242 410 236 490 236" class="veia"/>
-          <path d="M0 252C90 250 170 246 250 244C330 242 410 236 490 236" class="ln-s"/>
-          <path d="M236 204C247 228 249 256 241 284" class="ln-s"/>
-          <path d="M0 170C80 160 170 166 240 184C300 199 380 206 490 204M490 272C380 276 300 286 240 300C180 314 90 322 0 322" class="ln"/>
-          <path d="M112 162L127 163L131 321L116 322Z" class="corpo ln-m"/>
-        </g>
-        <path d="M300 242L342 222" class="ln-m"/>
-        <path d="M336 220L360 209L366 224L342 235Z" class="corpo ln"/>
-        <path d="${TUBO_COLETA}" class="tubo-ext"/>
-        <path d="${TUBO_COLETA}" class="tubo-sangue"/>
-        <path d="${TUBO_COLETA}" class="fluxo draw-flow"/>
-        <g transform="translate(470 70) scale(.42)">${vial('collect', { mixed: true })}</g>
-        <circle cx="300" cy="242" r="12" class="ln-s"/>
-        <path d="M300 230V156H60" class="guia"/>${rot(60, 126, 'Coleta venosa', 'uma amostra da veia do braço')}
-        <path d="M582 262V284" class="guia"/>${rot(572, 308, 'Tubo de coleta', 'estéril', 'text-anchor="middle"')}
-      `, 'Coleta de uma amostra de sangue da veia do braço, na dobra do cotovelo, com tubo de coleta estéril'),
-      () => stage('spin', `
-        <path d="M120 212L135 302Q320 395 505 302L520 212Z" class="corpo"/>
-        <path d="M137 267Q320 351 503 267V302Q320 388 137 302Z" fill="url(#spin-h)"/>
-        <path d="M120 212L135 302Q320 395 505 302L520 212" class="ln"/>
-        <ellipse cx="320" cy="214" rx="201" ry="105" class="corpo ln"/>
-        <ellipse cx="320" cy="214" rx="179" ry="87" class="fundo ln-s"/>
-        <g transform="translate(0 107) scale(1 .5)"><g class="rotor">
-          <circle cx="320" cy="214" r="141" class="ln-s"/>
-          ${Array.from({ length: 8 }, (_, i) => `<g transform="rotate(${i * 45} 320 214)"><rect x="306" y="80" width="28" height="79" rx="10" class="corpo"/><rect x="310" y="86" width="20" height="30" class="sangue"/><rect x="310" y="116" width="20" height="4" class="interface"/><rect x="310" y="120" width="20" height="33" class="plasma"/><rect x="306" y="80" width="28" height="79" rx="10" class="ln"/></g>`).join('')}
-          <circle cx="320" cy="214" r="44" class="corpo ln"/><circle cx="320" cy="214" r="19" class="ln-s"/>
-        </g></g>
-        <ellipse cx="320" cy="214" rx="191" ry="97" class="gira draw-flow"/>
-        <path d="M126 196H86V146" class="guia"/>${rot(40, 108, 'Centrifugação', 'separa pelo peso de cada parte')}
-        <path d="M478 168L520 128" class="guia"/>${rot(470, 92, 'Tubos equilibrados', 'um diante do outro')}
-      `, 'Centrífuga com tubos equilibrados, em rotação, separando o sangue em camadas'),
-      () => stage('extract', `
-        <g transform="translate(30 95) scale(.7)">${vial('extract', { cap: false })}</g>
-        <g transform="translate(310 10) rotate(21)">
-          <path d="M0 135V268" class="ln-m"/>
-          <rect x="-7" y="122" width="14" height="19" rx="2" class="corpo ln"/>
-          <rect x="-21" y="41" width="42" height="86" rx="4" class="corpo"/>
-          <rect class="fluid-fill plasma" x="-16" y="52" width="32" height="71" rx="2"/>
-          <rect x="-21" y="41" width="42" height="86" rx="4" class="ln-m"/>
-          ${Array.from({ length: 6 }, (_, i) => `<path d="M11 ${53 + i * 11}H19" class="ln-s"/>`).join('')}
-          <g class="plunger"><rect x="-16" y="45" width="32" height="5" class="corpo ln"/><rect x="-4" y="6" width="8" height="40" class="corpo ln-s"/><rect x="-25" y="1" width="50" height="7" rx="2" class="corpo ln"/></g>
-          <rect x="-31" y="36" width="62" height="6" rx="2" class="corpo ln-m"/>
-        </g>
-        <path d="M150 266H204" class="guia"/>${rot(28, 236, 'Camada de plasma', 'com mais plaquetas')}
-        <path d="M300 82H455V146" class="guia"/>${rot(432, 172, 'PRP', 'plasma rico em plaquetas')}
-      `, 'Seringa estéril retirando a camada de plasma com mais plaquetas do tubo centrifugado'),
-      /* Aplicação: pele e tecido em corte genérico (sem osso, articulação nem tendão), o transdutor do
-         exame de imagem apoiado na pele, o feixe e a agulha chegando ao alvo dentro dele. */
-      () => stage('apply', `
-        <defs>
-          <linearGradient id="apply-fade" gradientUnits="userSpaceOnUse" x1="70" x2="570"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".16" stop-color="#fff"/><stop offset=".84" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-          <mask id="apply-m" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="430"><rect width="640" height="430" fill="url(#apply-fade)"/></mask>
-          <clipPath id="apply-corpo"><path d="${CORTE}"/></clipPath>
-        </defs>
-        <g mask="url(#apply-m)">
-          <path d="${CORTE}" class="corpo"/>
-          <rect x="70" y="332" width="500" height="44" fill="url(#apply-h)" clip-path="url(#apply-corpo)"/>
-          <path d="M70 296C170 284 250 280 320 280C390 280 470 284 570 294" class="ln-s"/>
-          <path d="M570 366C470 372 390 374 320 374C250 374 170 372 70 366" class="ln-s"/>
-          <path d="M70 282C170 270 250 266 320 266C390 266 470 270 570 280" class="ln"/>
-        </g>
-        <path d="M386 267L414 267L444 358L356 358Z" class="feixe beam"/>
-        <g transform="translate(376 220)"><path d="M24 0V-30Q24 -64 67 -62" class="ln-s"/><rect width="48" height="44" rx="6" class="corpo ln"/><rect x="3" y="34" width="42" height="12" rx="3" class="corpo ln-m"/></g>
-        <g transform="translate(303 180) rotate(-35)"><path d="M0 79V169" class="ln-m"/><rect x="-18" width="36" height="77" rx="4" class="corpo"/><rect x="-13" y="12" width="26" height="59" class="plasma"/><rect x="-18" width="36" height="77" rx="4" class="ln-m"/><rect x="-5" y="-28" width="10" height="31" class="corpo ln-s"/><path d="M-24 -29H24M-25 2H25" class="ln-m"/></g>
-        <circle cx="400" cy="318" r="16" class="alvo"/><circle cx="400" cy="318" r="2.5" class="ponto-guia"/>
-        ${rot(40, 58, 'Aplicação', 'no ponto definido na avaliação')}
-        <path d="M428 228H468" class="guia"/>${rot(476, 224, 'Guiada por imagem', 'quando necessário')}
-      `, 'Aplicação do preparo com agulha fina no ponto definido na avaliação, guiada por exame de imagem quando necessário')
-    ];
-    /* Texto de cada etapa: um só lugar, o h3 e o p de cada .process-step. */
-    const steps = $$('.process-step');
-    const copy = steps.map(s => [$('h3', s).textContent.trim(), $('p', s).textContent.trim()]);
-    root.classList.add('lab-card', 'lab-placa', 'sup-escura');
-    root.innerHTML = `<div class="lab-topline"><span class="lab-fig">Fig. 2. Do sangue ao preparo</span><span class="lab-status" id="processStatus">01 / 04</span></div><div id="processScene"></div><div class="lab-caption" aria-live="polite"><p class="lab-caption__titulo" id="processTitle"></p><p id="processDescription"></p></div><div class="lab-bottom"><div class="lab-controls"><button type="button" class="lab-button" id="processPlay" aria-pressed="false">Reproduzir<span> etapas</span></button><div class="lab-progress" role="group" aria-label="Escolha uma etapa">${copy.map((c, i) => `<button type="button" data-scene="${i}" tabindex="-1" aria-label="Etapa ${i + 1}: ${c[0]}"></button>`).join('')}</div><button type="button" class="lab-button" id="processNext">Próxima<span> etapa</span></button></div><p class="lab-note">Ilustração esquemática, fora de escala. O&nbsp;preparo e a&nbsp;técnica variam conforme o&nbsp;caso.</p></div>`;
-    let active = 0, playing = false, timer = null, visible = true;
-    steps.forEach((s, i) => { s.setAttribute('role', 'button'); s.tabIndex = 0; s.setAttribute('aria-controls', 'processScene'); s.addEventListener('click', () => select(i, true)); s.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); s.click(); } }); });
-    /* Teclado: uma parada por etapa (a lista de passos). Os traços [data-scene] ficam fora da
-       ordem do Tab (tabindex -1) e continuam clicáveis com o mouse e o toque. */
-    /* Avanço automático só depois de "Reproduzir". O controle global "Pausar animações"
-       também para o player; com movimento reduzido, "Reproduzir" avança as etapas sem
-       religar as animações do site (as cenas ficam paradas). */
-    function schedule() { clearTimeout(timer); if (playing && visible && !document.hidden) timer = setTimeout(() => { select((active + 1) % 4); schedule(); }, 6500); }
-    function playState() { $('#processPlay').innerHTML = playing ? 'Pausar<span> etapas</span>' : 'Reproduzir<span> etapas</span>'; $('#processPlay').setAttribute('aria-pressed', String(playing)); root.classList.toggle('is-playing', playing); schedule(); }
-    function select(i, manual = false) {
-      active = i; if (manual) { playing = false; playState(); }
-      steps.forEach((s, j) => { s.classList.toggle('active', i === j); s.setAttribute('aria-pressed', String(i === j)); });
-      $('#processScene').innerHTML = scenes[i]();
-      $('#processStatus').textContent = `0${i + 1} / 04`;
-      $('#processTitle').textContent = copy[i][0]; $('#processDescription').textContent = copy[i][1];
-      $$('[data-scene]', root).forEach((b, j) => { if (i === j) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current'); });
-      $('#processNext').innerHTML = i === 3 ? 'Recomeçar' : 'Próxima<span> etapa</span>';
-      /* No celular e no tablet, a escolha feita na lista de etapas (abaixo da placa) traz a placa à
-         tela. Com a placa já inteira na tela (o "Próxima" dela, ou o celular deitado), não rola:
-         a rolagem para cima traria o cabeçalho de volta por cima da placa. */
-      const r = root.getBoundingClientRect();
-      if (manual && matchMedia('(max-width:900px)').matches && (r.top < 0 || r.bottom > innerHeight)) root.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'center' });
-    }
-    $$('[data-scene]', root).forEach(b => b.addEventListener('click', () => select(+b.dataset.scene, true)));
-    $('#processNext').addEventListener('click', () => select((active + 1) % 4, true));
-    $('#processPlay').addEventListener('click', () => { playing = !playing; if (playing && PS.motion.paused && !PS.RM) PS.motion.set(false); playState(); });
-    document.addEventListener('motionchange', () => { if (PS.motion.paused) playing = false; playState(); });
-    document.addEventListener('visibilitychange', schedule);
-    if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => { visible = e.isIntersecting; schedule(); }, { threshold: .1 }).observe(root);
-    select(0);
-  }
-
   tubeExperience();
-  processExperience();
 })();

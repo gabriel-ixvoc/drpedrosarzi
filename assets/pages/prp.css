@@ -44,39 +44,32 @@
 .js #tubeOuter:not(.prp-tube-outer)>*{visibility:hidden;position:absolute}
 @media (max-width:600px){.js #tubeOuter:not(.prp-tube-outer){padding-bottom:312px}}
 
-/* ---------- 2. Como é preparado (marfim; a placa escura fica embutida) ---------- */
-.processo__passos{border-top:1px solid var(--filete-padrao)}
-.process-step{
-  position:relative;display:grid;grid-template-columns:36px 1fr;gap:4px 12px;padding-block:20px;
-  border-bottom:1px solid var(--filete-padrao);cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
-}
-/* a etapa escolhida: o filete de cima se desenha em ouro profundo */
-.process-step::before{content:"";position:absolute;left:0;top:-1px;width:100%;height:1px;background:var(--ouro-profundo);
-  transform:scaleX(0);transform-origin:left;transition:transform 250ms var(--ease)}
-.process-step.active::before{transform:scaleX(1)}
-.process-step-num{font-family:var(--serif);font-style:italic;font-size:var(--t-lead,1.3125rem);line-height:1.3;color:var(--cor-suave);transition:color var(--t-rapido) var(--ease)}
-.process-step h3{font-size:var(--t-h3-ficha,1.75rem);line-height:1.12;color:var(--cor-texto);transition:color var(--t-rapido) var(--ease)}
-.process-step p{margin-top:6px;max-width:40ch;font-size:var(--t-nota,.9375rem);line-height:1.55;color:var(--cor-suave);transition:color var(--t-rapido) var(--ease)}
-.process-step:hover h3{color:var(--cor-titulo)}
-.process-step:hover .process-step-num{color:var(--cor-texto)}
-.process-step:active h3{color:var(--cor-destaque)}
-.process-step.active .process-step-num{color:var(--cor-destaque)}
-.process-step.active h3{color:var(--cor-titulo)}
-.process-step.active p{color:var(--cor-texto)}
-.process-step:focus-visible{outline:2px solid var(--cor-foco);outline-offset:3px}
+/* ---------- 2. Como é preparado (marfim) ----------
+   25/11/2026: o player em desenho (braço, tubo, centrífuga) saiu. Ficam as quatro etapas em lista
+   fixa e, ao lado, a imagem do joelho (infil-capa) numa placa escura, como a do atlas da home. */
+.processo__passos{margin:0;padding:0;list-style:none;border-top:1px solid var(--filete-padrao)}
+.process-step{display:grid;grid-template-columns:36px 1fr;gap:4px 12px;padding-block:20px;border-bottom:1px solid var(--filete-padrao)}
+.process-step-num{font-family:var(--serif);font-style:italic;font-size:var(--t-lead,1.3125rem);line-height:1.3;color:var(--cor-destaque)}
+.process-step h3{font-size:var(--t-h3-ficha,1.75rem);line-height:1.12;color:var(--cor-titulo)}
+.process-step p{margin-top:6px;max-width:40ch;font-size:var(--t-nota,.9375rem);line-height:1.55;color:var(--cor-texto)}
+.processo__foto{margin:0;align-self:start;border:1px solid var(--fio-escuro);background:var(--carvao);box-shadow:var(--sombra-prancha)}
+.processo__img{aspect-ratio:4 / 3;margin:7px 7px 0;overflow:hidden;background:#08080A}
+.processo__img img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 52%;filter:var(--trato-ilustracao,saturate(.9) contrast(1.02))}
+.processo__foto figcaption{margin:0;padding:14px 20px 18px;font-size:var(--t-legenda,1.125rem);line-height:1.35;color:var(--texto-escuro)}
 @media (max-width:899px){
   .processo__margem{order:1}
   .processo__placa{order:2}
   .processo__passos{order:3}
-  .process-step p{display:none}
-  /* celular e tablet: número e nome da etapa no eixo */
-  .process-step{display:flex;justify-content:center;align-items:baseline;gap:14px;padding-block:16px;text-align:center}
-  .process-step::before{transform-origin:center}
+  .processo__img{aspect-ratio:1 / 1}
+  .processo__foto figcaption{text-align:center;text-wrap:balance}
+  /* celular e tablet: número, nome e frase da etapa no eixo */
+  .process-step{display:block;padding-block:18px;text-align:center}
+  .process-step-num{display:block}
+  .process-step p{margin-inline:auto;max-width:30ch;text-wrap:balance}
 }
-/* tablet: as quatro etapas em duas colunas sob a placa (1 e 2 em cima, 3 e 4 embaixo), não a lista
-   do celular esticada */
 @media (min-width:600px) and (max-width:899px){
+  .processo__foto{width:min(100%,600px);margin-inline:auto}
+  .processo__img{aspect-ratio:4 / 3}
   .processo__passos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--calha);border-top:0}
   .process-step{border-top:1px solid var(--filete-padrao);border-bottom:0}
   .process-step:nth-child(n+3){border-bottom:1px solid var(--filete-padrao)}
@@ -87,10 +80,6 @@
   .processo__passos{grid-column:1 / 5;grid-row:2;align-self:start}
   .processo__placa{grid-column:6 / 13;grid-row:1 / 3}
 }
-/* tablet deitado e notebook pequeno (900 a 1199 px): com a cabeça ao lado, a lista de etapas ficava
-   numa coluna de ~280 px, mais alta que a placa, com um vão sob ela. Aqui a cabeça vai por cima, à
-   esquerda, e as etapas (cinco colunas) ficam ao lado da placa (sete), com os topos alinhados e alturas parecidas (até ~35 px de diferença): quem toca
-   na última etapa vê a cena trocar. */
 @media (min-width:900px) and (max-width:1199px){
   .processo__grade{grid-template-rows:auto auto}
   .processo__margem{grid-column:1 / -1}

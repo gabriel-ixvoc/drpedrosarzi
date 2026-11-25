@@ -1,343 +1,216 @@
 /* ==========================================================================
    Cirurgias (/cirurgias/) · estilos da página
-   Base em site.css (capa, capítulos, tipografia, botões, .moldura, .prancha,
-   .quadro, acordeão, "Onde atende"). Aqui só o que é desta página:
-   1. capa com a Fig. 1 (mão com as oito regiões numeradas e a legenda);
-   2. as cirurgias: resumo, índice em prancha (abas) e a ficha em moldura;
-   3. o caminho da cirurgia: lista com sutura no eixo (celular e sem JS) ou
-      régua de sete marcos com painel (a partir de 600 px, cirurgias.js);
-   4. depois da cirurgia: cuidados em casa (moldura) e sinais de alerta (prancha);
-   5. dúvidas (acordeão do site.css).
-   Gravura: mão em traço champanhe e a região em hachura, sem anatomia interna.
-   Tamanhos só pela escala (--t-…). Celular simétrico; tablet com composição própria.
+   Base em site.css (capa, capítulos, tipografia, botões, .quadro, acordeão,
+   "Onde atende"). Aqui só o que é desta página:
+   1. capa com a foto real do Dr. Pedro no centro cirúrgico (quadro em arco);
+   2. quando a cirurgia é indicada: três situações numeradas;
+   3. a cirurgia de cada condição: índice em abas e a ficha (imagem cond-<slug>
+      em quadro pequeno, dados e dois blocos curtos);
+   4. como é o dia: antes, no dia e depois, ligados por um fio;
+   5. recuperação em faixas de tempo, cuidados em casa e sinais de alerta;
+   6. dúvidas (acordeão do site.css).
+   Sem desenho de anatomia. Tamanhos só pela escala (--t-…). Celular simétrico;
+   tablet com composição própria.
    ========================================================================== */
 
-:root{--cir-tela:100vh}
-@supports (height:1svh){:root{--cir-tela:100svh}}
-
-/* ---------- 0. Gravura (desenhos da página) ---------- */
-/* números sempre com algarismos de altura igual (o Cormorant usa os antigos por padrão) */
-.cir-capa__n,.cir__n,.caminho__n,.caminho__no{font-variant-numeric:lining-nums}
-.cir-zona{fill:url(#cirHach);stroke:var(--champanhe);stroke-width:1.5;stroke-dasharray:4 4}
-.cir-zona--cheia{stroke-dasharray:none}
-.cir-zona--sem-borda{stroke:none}
-.cir-traco{fill:none;stroke:var(--champanhe);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.cir-traco--fino{stroke-width:1.4}
-.cir-traco--forte{stroke-width:2.2}
-/* contorno da mão: espessura fixa na tela em todo tamanho da gravura (token do site.css, mesmo traço das
-   condições e do /infiltracoes/); non-scaling-stroke vale no path original, clonado pelos <use> */
-#handGeo path{vector-effect:non-scaling-stroke}
-.cir-capa__mao>use[href="#cirMao"],.cir__fig use[href="#cirMao"]{stroke-width:var(--traco-gravura,1.25px)}
-/* texto pequeno em ouro sobre o linho ("Onde atende"): tom só de texto, o mesmo das condições e do ortopedia.css */
+.cir-capa__n,.indicacao__n,.caminho__n{font-variant-numeric:lining-nums}
 .semana__hoje{color:var(--ouro-texto,#74612F)}
+@keyframes cirEntra{from{opacity:0;transform:translateY(6px)}}
 
 /* ---------- 1. Capa ---------- */
-.cir-capa{display:grid;align-content:center;min-height:min(calc(var(--cir-tela) - var(--hdr-h)),1000px)}
 .cir-capa .t-hero{text-wrap:balance}
-.cir-capa .t-lead{max-width:44ch}
-.cir-capa__figura{margin:0;width:100%;max-width:600px;justify-self:center}
-.cir-capa__figura>.legenda{margin-top:16px;color:var(--texto-escuro)}
-
-/* a placa: a mão à esquerda e a legenda numerada à direita */
-.cir-capa__placa{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);align-items:center;gap:8px 28px;padding:28px 32px 28px 20px}
-.cir-capa__mao{display:block;width:100%;height:auto;max-height:min(520px,calc(var(--cir-tela) - 330px));overflow:visible}
-.cir-marca__no{fill:var(--carvao);stroke:var(--champanhe);stroke-width:1.2}
-.cir-marca__halo{fill:none;stroke:var(--champanhe);stroke-width:1;stroke-dasharray:3 3;opacity:0;transition:opacity var(--t-rapido) var(--ease)}
-.cir-marca text{font-family:var(--serif);font-style:italic;font-weight:500;font-size:16px;font-variant-numeric:lining-nums;fill:var(--champanhe);text-anchor:middle}
-.cir-marca.is-on .cir-marca__no{fill:var(--champanhe)}
-.cir-marca.is-on text{fill:var(--carvao)}
-.cir-marca.is-on .cir-marca__halo{opacity:1}
-.cir-marca__no,.cir-marca text{transition:fill var(--t-rapido) var(--ease)}
-
-.cir-capa__legenda{display:grid;border-top:1px solid var(--fio-escuro-suave)}
-.cir-capa__legenda li{border-bottom:1px solid var(--fio-escuro-suave)}
-.cir-capa__legenda a{display:flex;align-items:center;gap:14px;min-height:46px;padding-block:6px;
-  font-family:var(--serif);font-weight:400;font-size:var(--t-lead,1.3125rem);line-height:1.15;color:var(--marfim);
-  text-decoration:underline;text-decoration-color:transparent;text-decoration-thickness:1px;text-underline-offset:.3em;
-  transition:text-decoration-color var(--t-rapido) var(--ease)}
-.cir-capa__n{display:inline-grid;place-items:center;flex:none;width:28px;height:28px;border:1px solid var(--fio-escuro-forte);border-radius:50%;
-  font-family:var(--serif);font-style:italic;font-size:var(--t-legenda,1.125rem);line-height:1;color:var(--champanhe);
-  transition:background-color var(--t-rapido) var(--ease),color var(--t-rapido) var(--ease),border-color var(--t-rapido) var(--ease)}
-.cir-capa__legenda a:hover,.cir-capa__legenda a.is-on{text-decoration-color:var(--champanhe)}
-.cir-capa__legenda a:hover .cir-capa__n,.cir-capa__legenda a.is-on .cir-capa__n{background:var(--champanhe);border-color:var(--champanhe);color:var(--carvao)}
-.cir-capa__legenda a:active{color:var(--champanhe)}
-
+.cir-capa .t-lead{max-width:34ch}
+.cir-capa__foto{--q-linha:rgba(216,192,138,.4);width:100%;max-width:440px;justify-self:center}
+.cir-capa__foto .quadro__passe img{aspect-ratio:1122 / 1402;height:auto;min-height:0;object-position:50% 30%}
+.cir-capa__foto figcaption{color:var(--texto-escuro)}
 @media (min-width:900px){
-  .cir-capa .capa__texto{grid-column:1 / 7}
-  .cir-capa__figura{grid-column:7 / 13;justify-self:end}
+  .cir-capa .capa__texto{grid-column:1 / 8}
+  .cir-capa__foto{grid-column:8 / 13;justify-self:end;max-width:min(440px,calc((100svh - var(--hdr-h,72px) - 150px) * .8))}
 }
-@media (min-width:1100px){.cir-capa{padding-block:64px 72px}}
-@media (min-width:1600px){.cir-capa__figura{max-width:640px}}
-
-/* Abaixo de 900 px: título, lead, ações e a identificação (na primeira dobra, como nas outras capas);
-   o filete do .capa__id fecha o bloco de texto e a placa vem depois */
+@media (min-width:1100px){.cir-capa{padding-block:56px 64px}}
+/* Abaixo de 900 px: título, lead, ações e a identificação na primeira dobra; a foto vem depois */
 @media (max-width:899px){
-  .cir-capa .capa__grade{row-gap:0}
-  .cir-capa .capa__texto{display:contents;text-align:center}
-  .cir-capa .t-hero{order:1;text-align:center}
-  .cir-capa .t-lead{order:2;margin:20px auto 0;text-align:center;text-wrap:balance}
-  .cir-capa .acoes{order:3;margin-top:28px;justify-content:center}
-  .cir-capa__figura{order:5;margin-top:44px}
-  .cir-capa__figura>.legenda{text-align:center;text-wrap:balance}
-  .cir-capa .capa__id{order:4;margin-top:28px;text-align:center}
-  .cir-capa__mao{max-height:none}
+  .cir-capa .capa__grade{row-gap:44px}
+  .cir-capa .capa__texto{text-align:center}
+  .cir-capa .t-lead{margin-inline:auto;text-wrap:balance}
+  .cir-capa .acoes{justify-content:center}
+  .cir-capa .capa__id{text-align:center}
+  .cir-capa__foto{max-width:400px}
 }
-@media (min-width:600px) and (max-width:899px){
-  .cir-capa{padding-block:48px 56px}
-  .cir-capa .t-lead{max-width:40ch}
-  .cir-capa__placa{padding:32px 36px 32px 24px}
-}
-/* celular: a mão em cima e a legenda em duas colunas embaixo */
-@media (max-width:599px){
-  .cir-capa__placa{grid-template-columns:1fr;padding:24px 18px 18px;gap:20px}
-  .cir-capa__mao{width:auto;height:min(340px,84vw);margin-inline:auto}
-  .cir-capa__legenda{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:14px}
-  .cir-capa__legenda a{gap:10px;font-size:var(--t-legenda,1.125rem);min-height:48px}
-  .cir-capa__n{width:26px;height:26px;font-size:1rem}
-}
-@media (max-width:359px){.cir-capa__legenda a{gap:8px}.cir-capa__n{width:24px;height:24px}}
-/* celular deitado e janelas baixas: título, lead, ações e a identificação cabem na primeira dobra */
-@media (orientation:landscape) and (max-height:600px){
-  .cir-capa{min-height:0;align-content:start;padding-top:20px}
-  .cir-capa .t-hero{font-size:min(var(--t-display),11vh)}
-  .cir-capa .t-lead{margin-top:12px;max-width:58ch;font-size:var(--t-nota,.9375rem);line-height:1.5}
-  .cir-capa .acoes{margin-top:16px}
-  .cir-capa .capa__id{margin-top:12px}
-}
-/* celular pequeno em pé (até 600 px de altura): vãos menores entre lead, ações e identificação */
-@media (max-width:599px) and (orientation:portrait) and (max-height:600px){
-  .cir-capa{padding-top:24px}
-  .cir-capa .t-lead{margin-top:14px}
-  .cir-capa .acoes{margin-top:18px}
-  .cir-capa .capa__id{margin-top:16px}
-}
+@media (max-width:599px){.cir-capa__foto{max-width:min(82vw,340px)}}
 
-/* ---------- 2. As cirurgias ---------- */
-/* Resumo: três avisos curtos, entre filetes */
-.cir__resumo{display:grid;margin-bottom:clamp(40px,5vw,64px);border-block:1px solid var(--filete-padrao)}
-.cir__resumo li{padding:22px 0;font-size:var(--t-nota,.9375rem);line-height:1.55;color:var(--cor-texto)}
-.cir__resumo li+li{border-top:1px solid var(--filete-suave)}
-.cir__resumo strong{display:block;margin-bottom:6px;font-family:var(--serif);font-weight:400;font-size:var(--t-lead,1.3125rem);line-height:1.2;color:var(--cor-titulo)}
-@media (min-width:900px){
-  .cir__resumo{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .cir__resumo li{padding:26px 32px}
-  .cir__resumo li:first-child{padding-left:0}
-  .cir__resumo li:last-child{padding-right:0}
-  .cir__resumo li+li{border-top:0;border-left:1px solid var(--filete-suave)}
+/* ---------- 2. Quando a cirurgia é indicada ---------- */
+.indicacao__lista{display:grid;gap:0;border-top:1px solid var(--filete-padrao)}
+.indicacao__lista li{display:grid;align-content:start;justify-items:center;text-align:center;padding:32px 8px;border-bottom:1px solid var(--filete-suave)}
+.indicacao__n{display:grid;place-items:center;width:44px;height:44px;border:1px solid var(--cor-destaque);border-radius:50%;
+  font-family:var(--serif);font-style:italic;font-size:1.25rem;color:var(--cor-destaque)}
+.indicacao__lista h3{margin-top:18px;font-size:var(--t-h3-ficha);line-height:1.15}
+.indicacao__lista p{margin-top:10px;max-width:30ch;font-size:var(--t-corpo,1.0625rem);line-height:1.6;color:var(--cor-texto);text-wrap:balance}
+.indicacao__nota{margin-top:28px;text-align:center;font-family:var(--serif);font-style:italic;font-size:var(--t-legenda);line-height:1.4;color:var(--cor-titulo);text-wrap:balance}
+@media (min-width:768px){
+  .indicacao__lista{grid-template-columns:repeat(3,minmax(0,1fr));border-bottom:1px solid var(--filete-padrao)}
+  .indicacao__lista li{padding:40px 24px;border-bottom:0}
+  .indicacao__lista li+li{border-left:1px solid var(--filete-suave)}
 }
-@media (max-width:899px){.cir__resumo li{text-align:center;max-width:36ch;margin-inline:auto}}
+@media (min-width:900px){.indicacao__nota{margin-top:36px}}
 
-/* Palco: índice (prancha escura) e a ficha (moldura clara) */
+/* ---------- 3. A cirurgia de cada condição (carvão) ---------- */
 .cir__palco{display:grid;gap:24px}
 .cir__nav{min-width:0}
-.cir__indice{position:relative;padding:14px;background:url("../brand/carvao.svg") 0 0/320px 320px,var(--carvao);border:1px solid var(--fio-escuro);
-  --cor-foco:var(--champanhe)}
-.cir__indice::before{content:"";position:absolute;inset:7px;border:1px solid var(--fio-escuro-suave);pointer-events:none}
-.cir__item{position:relative;display:flex;align-items:center;gap:14px;min-height:56px;padding:10px 12px;color:var(--marfim);
+.cir__indice{display:grid;border-top:1px solid var(--fio-escuro)}
+.cir__indice>li{border-bottom:1px solid var(--fio-escuro-suave)}
+.cir__item{position:relative;display:grid;gap:2px;align-content:center;min-height:60px;padding:10px 14px 10px 18px;color:var(--marfim);
   transition:background-color var(--t-rapido) var(--ease)}
-.cir__item:hover .cir__nome{text-decoration:underline;text-decoration-color:var(--champanhe);text-decoration-thickness:1px;text-underline-offset:.22em}
-.cir__item:active{background:rgba(216,192,138,.06)}
-.cir__n{display:inline-grid;place-items:center;flex:none;width:32px;height:32px;border:1px solid var(--fio-escuro-forte);border-radius:50%;
-  font-family:var(--serif);font-style:italic;font-size:var(--t-legenda,1.125rem);line-height:1;color:var(--champanhe);
-  transition:background-color var(--t-rapido) var(--ease),color var(--t-rapido) var(--ease),border-color var(--t-rapido) var(--ease)}
-.cir__rot{display:grid;gap:2px;min-width:0}
+.cir__item::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:2px;background:var(--champanhe);transform:scaleY(0);transition:transform var(--t-rapido) var(--ease)}
 .cir__nome{font-family:var(--serif);font-size:var(--t-lead,1.3125rem);line-height:1.15;color:var(--marfim)}
 .cir__sub{font-size:var(--t-micro,.8125rem);line-height:1.35;color:var(--texto-escuro)}
-.cir__item[aria-selected="true"]{background:rgba(216,192,138,.07);box-shadow:inset 2px 0 0 var(--champanhe)}
-.cir__item[aria-selected="true"] .cir__n{background:var(--champanhe);border-color:var(--champanhe);color:var(--carvao)}
+.cir__item:hover .cir__nome{text-decoration:underline;text-decoration-color:var(--champanhe);text-decoration-thickness:1px;text-underline-offset:.22em}
+.cir__item:active{background:rgba(216,192,138,.06)}
+.cir__item[aria-selected="true"]{background:rgba(216,192,138,.06)}
+.cir__item[aria-selected="true"]::before{transform:none}
+.cir__item[aria-selected="true"] .cir__nome{color:var(--champanhe)}
 .cir__item:focus-visible{outline:2px solid var(--champanhe);outline-offset:-2px}
 
-/* A ficha */
+/* A ficha: moldura fina em dois filetes, a imagem em quadro pequeno e o texto ao lado */
 .cir__fichas{display:grid;gap:32px;min-width:0}
-.cir__ficha{padding:clamp(26px,3.4vw,48px)}
+.cir__ficha{position:relative;display:grid;gap:32px;padding:clamp(26px,3.2vw,44px);border:1px solid var(--fio-escuro)}
+.cir__ficha::before{content:"";position:absolute;inset:7px;border:1px solid var(--fio-escuro-suave);pointer-events:none}
 .cir__ficha[hidden]{display:none}
 .cir__ficha.entra{animation:cirEntra 240ms var(--ease) both}
-@keyframes cirEntra{from{opacity:0;transform:translateY(6px)}}
-.cir__topo{display:grid;gap:28px;align-items:center}
-.cir__fig{margin:0;padding:20px 20px 16px;display:grid;justify-items:center}
-.cir__fig svg{display:block;width:100%;max-width:200px;height:auto;overflow:visible}
-.cir__fig figcaption{margin-top:12px;font-size:var(--t-nota,.9375rem);line-height:1.35;color:var(--champanhe);text-align:center;text-wrap:balance}
-.cir__cabeca h3{font-size:var(--t-h3,2.25rem);line-height:1.08;letter-spacing:var(--trk-titulo)}
-.cir__sente{margin-top:14px;max-width:42ch;font-weight:300;font-size:var(--t-lead,1.3125rem);line-height:1.5;color:var(--cor-titulo)}
-.cir__dados{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:24px;border-top:1px solid var(--fio-claro)}
-.cir__dados>div{padding:12px 16px 12px 0;border-bottom:1px solid var(--fio-claro-suave)}
-.cir__dados>div:nth-child(even){padding:12px 0 12px 16px;border-left:1px solid var(--fio-claro-suave)}
-.cir__dados dt{font-size:var(--t-micro,.8125rem);line-height:1.3;color:var(--cor-suave)}
-.cir__dados dd{margin-top:3px;font-size:var(--t-nota,.9375rem);line-height:1.4;color:var(--tinta)}
+.cir__foto{position:relative;margin:0;align-self:start;justify-self:center;width:min(100%,220px)}
+.cir__foto::before{content:"";position:absolute;inset:-9px;border:1px solid rgba(216,192,138,.32);pointer-events:none}
+.cir__foto img{display:block;width:100%;height:auto;aspect-ratio:4 / 5;object-fit:cover;background:#0b0b0d;filter:var(--trato-ilustracao,saturate(.9) contrast(1.02))}
+.cir__corpo{min-width:0}
+.cir__corpo h3{font-size:var(--t-h3);line-height:1.08;color:var(--marfim)}
+.cir__sente{margin-top:12px;max-width:40ch;font-weight:300;font-size:var(--t-lead,1.3125rem);line-height:1.45;color:var(--marfim)}
+.cir__dados{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:24px;border-block:1px solid var(--fio-escuro)}
+.cir__dados>div{padding:12px 12px 12px 0}
+.cir__dados>div+div{padding-left:14px;border-left:1px solid var(--fio-escuro-suave)}
+.cir__dados dt{font-size:var(--t-micro,.8125rem);line-height:1.3;letter-spacing:.04em;color:var(--champanhe)}
+.cir__dados dd{margin-top:4px;font-size:var(--t-nota,.9375rem);line-height:1.4;color:var(--marfim)}
+.cir__bloco{margin-top:22px}
+.cir__bloco h4{font-family:var(--sans);font-weight:500;font-size:var(--t-micro,.8125rem);line-height:1.3;letter-spacing:.08em;text-transform:uppercase;color:var(--champanhe)}
+.cir__bloco p{margin-top:6px;max-width:56ch;font-size:var(--t-corpo,1.0625rem);line-height:1.6;color:var(--texto-escuro)}
+.cir__alerta{margin-top:22px;padding-top:16px;background:var(--sutura) top left/100% 1px no-repeat;
+  font-size:var(--t-nota,.9375rem);line-height:1.5;color:var(--marfim)}
+.cir__links{margin-top:18px}
+.cir__nota{margin-top:28px;text-align:center;font-size:var(--t-micro,.8125rem);line-height:1.5;color:var(--texto-escuro);text-wrap:balance}
 
-.cir__texto{margin-top:clamp(32px,4vw,48px);border-top:1px solid var(--fio-claro)}
-.cir__bloco{display:grid;gap:8px;padding-block:22px;border-bottom:1px solid var(--fio-claro-suave)}
-.cir__bloco:last-child{border-bottom:0;padding-bottom:4px}
-.cir__bloco h4{font-family:var(--serif);font-weight:400;font-size:var(--t-lead,1.3125rem);line-height:1.2;color:var(--tinta)}
-.cir__bloco p{max-width:64ch;font-size:var(--t-corpo,1.0625rem);line-height:1.65;color:var(--cor-texto)}
-
-.cir__alerta{margin-top:20px;padding-top:18px;background:var(--sutura) top left/100% 1px no-repeat;
-  font-size:var(--t-nota,.9375rem);line-height:1.5;color:var(--tinta)}
-.cir__links{display:flex;flex-wrap:wrap;gap:0 28px;margin-top:20px;padding-top:8px;border-top:1px solid var(--fio-claro-suave)}
-.cir__alerta+.cir__links{border-top:0;margin-top:8px}
-
-.cir__guia{margin-top:48px;text-align:center;font-size:var(--t-nota,.9375rem);line-height:1.6;color:var(--cor-texto);text-wrap:balance}
-.cir__guia .link{position:relative;min-height:0;padding-block:0;margin-block:0}
-/* link dentro de frase (exceção do critério 2.5.8 da WCAG): a área cresce para os lados (o "PRP" tem 28 px)
-   e só 4 px na vertical, para não invadir o link da linha de cima ou de baixo */
-.cir__guia .link::before{content:"";position:absolute;inset:-4px -8px}
-
-/* Computador: índice preso à esquerda, a ficha à direita */
+/* Computador: índice preso à esquerda, a ficha à direita com a imagem ao lado do texto */
 @media (min-width:1100px){
-  .cir__palco{grid-template-columns:300px minmax(0,1fr);gap:40px;align-items:start}
-  .cir__nav{position:sticky;top:calc(var(--hdr-vis) + 24px);transition:top var(--t-camada) var(--ease)}
+  .cir__palco{grid-template-columns:270px minmax(0,1fr);gap:48px;align-items:start}
+  .cir__nav{position:sticky;top:calc(var(--hdr-vis,72px) + 24px);transition:top var(--t-camada) var(--ease)}
 }
-@media (min-width:1600px){.cir__palco{grid-template-columns:320px minmax(0,1fr);gap:48px}}
-@media (min-width:900px){
-  .cir__topo{grid-template-columns:minmax(200px,250px) minmax(0,1fr);gap:40px}
-  .cir__bloco{grid-template-columns:minmax(10rem,13rem) minmax(0,1fr);gap:32px;align-items:baseline}
+@media (min-width:768px){
+  .cir__ficha{grid-template-columns:minmax(180px,240px) minmax(0,1fr);gap:clamp(32px,4vw,56px);align-items:start}
+  .cir__foto{width:calc(100% - 18px);margin:9px}
 }
 /* Tablet: o índice em quatro colunas, duas fileiras, acima da ficha */
 @media (min-width:600px) and (max-width:1099px){
-  .cir__indice{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2px}
-  .cir__item{flex-direction:column;align-items:center;text-align:center;gap:8px;padding:14px 8px;height:100%}
-  .cir__item[aria-selected="true"]{box-shadow:inset 0 -2px 0 var(--champanhe)}
+  .cir__indice{grid-template-columns:repeat(4,minmax(0,1fr));border-top:0;border-left:1px solid var(--fio-escuro-suave)}
+  .cir__indice>li{border:1px solid var(--fio-escuro-suave);border-left:0;margin-top:-1px}
+  .cir__item{justify-items:center;text-align:center;padding:12px 8px;height:100%}
+  .cir__item::before{left:12px;right:12px;top:auto;bottom:0;width:auto;height:2px;transform:scaleX(0)}
   .cir__nome{font-size:1.1875rem}
 }
-@media (min-width:600px) and (max-width:899px){
-  .cir__topo{grid-template-columns:200px minmax(0,1fr);gap:32px}
-  .cir__fig svg{max-width:160px}
-  .cir__bloco{grid-template-columns:minmax(8.5rem,10rem) minmax(0,1fr);gap:24px;align-items:baseline}
+@media (min-width:600px) and (max-width:767px){
+  .cir__foto{width:200px}
 }
 /* Celular: o índice em duas colunas; a ficha toda no eixo */
 @media (max-width:599px){
-  .cir__indice{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px;padding:12px}
-  .cir__item{gap:10px;padding:10px 8px;min-height:56px}
+  .cir__indice{grid-template-columns:repeat(2,minmax(0,1fr));border-top:0;border-left:1px solid var(--fio-escuro-suave)}
+  .cir__indice>li{border:1px solid var(--fio-escuro-suave);border-left:0;margin-top:-1px}
+  .cir__item{justify-items:center;text-align:center;min-height:56px;padding:10px 6px}
+  .cir__item::before{left:12px;right:12px;top:auto;bottom:0;width:auto;height:2px;transform:scaleX(0)}
   .cir__sub{display:none}
   .cir__nome{font-size:1.0625rem}
-  .cir__n{width:28px;height:28px;font-size:1rem}
-  .cir__item[aria-selected="true"]{box-shadow:inset 0 -2px 0 var(--champanhe)}
-  .cir__ficha{padding:26px 20px}
-  .cir__fig{justify-self:center;width:min(100%,240px)}
-  .cir__fig svg{max-width:150px}
-  .cir__cabeca{text-align:center}
+  .cir__ficha{padding:30px 20px 26px;text-align:center}
+  .cir__foto{width:min(62vw,220px)}
   .cir__sente{margin-inline:auto;text-wrap:balance}
-  .cir__dados>div,.cir__dados>div:nth-child(even){padding:12px 8px;text-align:center}
-  .cir__dados>div:nth-child(odd){padding-left:0}
-  .cir__dados>div:nth-child(even){padding-right:0}
-  .cir__texto{text-align:center}
-  .cir__bloco p{max-width:34ch;margin-inline:auto}
-  .cir__alerta{text-align:center;background-position:top center;background-size:96px 1px;text-wrap:balance}
-  .cir__links{justify-content:center}
+  .cir__dados>div{padding:12px 4px}
+  .cir__dados>div+div{padding-left:6px}
+  .cir__bloco p{max-width:34ch;margin-inline:auto;text-wrap:balance}
+  .cir__alerta{background-position:top center;background-size:96px 1px;text-wrap:balance}
 }
+.cir__item[aria-selected="true"]::before{transform:none}
 
-/* ---------- 3. O caminho da cirurgia ---------- */
-/* Sem foto (a do centro cirúrgico é do /dr/: princípio 10): a cabeça e a régua ocupam a largura */
-.caminho__grade{display:grid;gap:40px}
-.caminho__cabeca{margin-bottom:0}
-@media (min-width:600px){.caminho__grade{row-gap:56px}}
+/* ---------- 4. Como é o dia: três momentos com imagem, ligados por um fio (marfim) ---------- */
+.caminho__lista{display:grid;gap:0}
+.caminho__passo{display:grid;align-content:start;justify-items:center;text-align:center}
+.caminho__passo+.caminho__passo{margin-top:56px}
+.caminho__foto{position:relative;margin:9px 9px 28px;width:min(66vw,240px)}
+.caminho__foto::before{content:"";position:absolute;inset:-9px;border:1px solid rgba(172,149,89,.45);pointer-events:none}
+.caminho__foto img{display:block;width:100%;height:auto;aspect-ratio:4 / 5;object-fit:cover;background:#0b0b0d;filter:var(--trato-ilustracao,saturate(.9) contrast(1.02))}
+.caminho__marco{position:relative;display:flex;justify-content:center;width:100%}
+.caminho__n{position:relative;z-index:1;display:grid;place-items:center;width:52px;height:52px;border:1px solid var(--cor-destaque);border-radius:50%;
+  background:var(--cor-fundo,var(--marfim));font-family:var(--serif);font-style:italic;font-size:1.375rem;color:var(--cor-destaque)}
+.caminho__passo h3{margin-top:16px;font-size:var(--t-h3);line-height:1.1}
+.caminho__passo ul{margin-top:14px;display:grid;gap:10px;max-width:32ch}
+.caminho__passo li{font-size:var(--t-corpo,1.0625rem);line-height:1.55;color:var(--cor-texto);text-wrap:balance}
+.caminho__nota{margin-top:40px;text-align:center;font-size:var(--t-micro,.8125rem);line-height:1.5;color:var(--cor-suave)}
+@media (min-width:768px){
+  .caminho__lista{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--cam-gap,clamp(24px,3vw,48px))}
+  .caminho__passo+.caminho__passo{margin-top:0}
+  .caminho__foto{width:calc(100% - 18px);max-width:280px}
+  /* o fio sai do número e chega ao número do momento seguinte */
+  .caminho__passo:not(:last-child) .caminho__marco::after{content:"";position:absolute;top:26px;left:calc(50% + 34px);
+    width:calc(100% + var(--cam-gap,clamp(24px,3vw,48px)) - 68px);height:1px;background:var(--sutura)}
+  .caminho__passo ul{gap:12px}
+}
 @media (min-width:1100px){
-  .caminho__grade{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--calha);row-gap:56px}
-  .caminho__cabeca{grid-column:1 / 9}
-  .caminho__linha{grid-column:1 / -1}
+  .caminho__lista{--cam-gap:48px}
+  .caminho__foto{max-width:300px;margin-inline:9px}
+  .caminho__passo{justify-items:start;text-align:left}
+  .caminho__marco{justify-content:flex-start;padding-left:9px}
+  .caminho__passo:not(:last-child) .caminho__marco::after{left:77px;width:calc(100% + 48px - 86px)}
+  .caminho__passo h3{padding-left:9px}
+  .caminho__passo ul{gap:0;margin-top:18px;padding-inline:9px;max-width:none;width:100%}
+  .caminho__passo li{text-wrap:pretty;padding-block:12px;border-top:1px solid var(--filete-suave)}
+  .caminho__nota{text-align:left}
 }
 
-/* Lista (celular e sem JS): etapas no eixo, ligadas por sutura vertical */
-.caminho__lista{display:grid;justify-items:center;text-align:center}
-.caminho__passo{display:grid;justify-items:center;max-width:36ch}
-.caminho__passo+.caminho__passo::before{content:"";display:block;width:1px;height:40px;margin:16px auto;
-  background:repeating-linear-gradient(180deg,rgba(172,149,89,.5) 0 6px,transparent 6px 12px)}
-.caminho__n{display:grid;place-items:center;width:44px;height:44px;margin-inline:auto;border:1px solid var(--fio-escuro-forte);border-radius:50%;
-  font-family:var(--serif);font-style:italic;font-size:1.375rem;line-height:1;color:var(--champanhe)}
-.caminho__corpo h3{margin-top:14px;font-size:var(--t-h3-ficha,1.75rem);line-height:1.15}
-.caminho__corpo p:not(.caminho__n){margin-top:10px;font-size:var(--t-corpo,1.0625rem);line-height:1.65;color:var(--cor-texto)}
-
-/* Régua com painel (a partir de 600 px, com JS) */
-.caminho__lista.is-abas{position:relative;grid-template-columns:repeat(7,minmax(0,1fr));justify-items:stretch;text-align:left;--prog:0}
-.caminho__lista.is-abas>.caminho__passo{display:contents}
-.caminho__lista.is-abas>.caminho__passo::before{display:none}
-.caminho__lista.is-abas::before,.caminho__lista.is-abas::after{content:"";position:absolute;top:22px;left:calc(100% / 14);right:calc(100% / 14);height:1px;pointer-events:none}
-.caminho__lista.is-abas::before{background:var(--fio-escuro)}
-.caminho__lista.is-abas::after{background:var(--champanhe);transform-origin:left center;transform:scaleX(var(--prog));transition:transform var(--t-camada) var(--ease)}
-.caminho__marco{position:relative;z-index:1;grid-row:1;display:flex;flex-direction:column;align-items:center;gap:12px;min-height:44px;padding:0 4px 4px;
-  background:none;border:0;color:var(--texto-escuro);cursor:pointer;text-align:center}
-.caminho__no{display:grid;place-items:center;width:44px;height:44px;border:1px solid var(--fio-escuro-forte);border-radius:50%;background:var(--carvao);
-  font-family:var(--serif);font-style:italic;font-size:1.25rem;line-height:1;color:var(--champanhe);
-  transition:background-color var(--t-rapido) var(--ease),color var(--t-rapido) var(--ease),border-color var(--t-rapido) var(--ease)}
-.caminho__rot{font-family:var(--serif);font-size:clamp(1.0625rem,.6rem + .8vw,1.3125rem);line-height:1.15;text-wrap:balance;transition:color var(--t-rapido) var(--ease)}
-.caminho__marco:hover .caminho__no{border-color:var(--champanhe)}
-.caminho__marco:hover .caminho__rot{color:var(--marfim);text-decoration:underline;text-decoration-color:var(--champanhe);text-underline-offset:.25em}
-.caminho__marco:active .caminho__no{background:rgba(216,192,138,.16)}
-.caminho__marco.feito .caminho__no{border-color:var(--champanhe)}
-.caminho__marco[aria-selected="true"] .caminho__no{background:var(--champanhe);border-color:var(--champanhe);color:var(--carvao)}
-.caminho__marco[aria-selected="true"] .caminho__rot{color:var(--marfim)}
-.caminho__marco:focus-visible{outline:2px solid var(--champanhe);outline-offset:3px}
-
-.caminho__lista.is-abas .caminho__corpo{position:relative;grid-row:2;grid-column:1 / -1;margin-top:32px;
-  display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:32px;align-items:start;
-  padding:clamp(28px,3vw,44px);border:1px solid var(--fio-escuro)}
-.caminho__lista.is-abas .caminho__corpo::before{content:"";position:absolute;inset:7px;border:1px solid var(--fio-escuro-suave);pointer-events:none}
-/* as sete etapas na mesma célula: o painel fica com a altura da mais longa e nada pula ao trocar */
-.caminho__lista.is-abas .caminho__corpo.is-fora{visibility:hidden}
-.caminho__lista.is-abas .caminho__corpo.entra{animation:cirEntra 240ms var(--ease) both}
-.caminho__lista.is-abas .caminho__n{grid-row:1 / span 2;width:auto;height:auto;margin:0;border:0;border-radius:0;
-  font-style:normal;font-weight:300;font-size:clamp(5.5rem,11vw,9.5rem);line-height:.78;color:var(--champanhe);opacity:.75}
-.caminho__lista.is-abas .caminho__corpo h3{margin-top:0;font-size:var(--t-h3,2.25rem);line-height:1.1}
-.caminho__lista.is-abas .caminho__corpo p:not(.caminho__n){max-width:60ch;margin-top:14px}
-
-.caminho__nav{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:20px}
-.caminho__nav[hidden]{display:none}
-/* anterior/próxima: o mesmo controle da régua da home (link sublinhado, sem caixa); o contador "Etapa n de 7" fica só para leitor de tela */
-.caminho__seta{min-height:44px;padding:0;background:none;border:0;font-size:.9375rem;font-weight:500;color:var(--marfim);cursor:pointer;
-  text-decoration:underline;text-decoration-color:rgba(216,192,138,.55);text-underline-offset:.3em}
-.caminho__seta:hover{text-decoration-color:var(--champanhe);text-decoration-thickness:2px}
-.caminho__seta:focus-visible{outline:2px solid var(--champanhe);outline-offset:3px}
-.caminho__seta:disabled{text-decoration:none;opacity:var(--op-desabilitado,.45);cursor:default}
-@media (min-width:600px) and (max-width:899px){
-  .caminho__rot{font-size:.9375rem;line-height:1.15}
-  .caminho__lista.is-abas .caminho__corpo{column-gap:24px}
-}
-/* computador: o painel na largura toda; número, título e texto lado a lado, sem vão à direita */
-@media (min-width:1100px){
-  .caminho__lista.is-abas .caminho__corpo{grid-template-columns:auto minmax(0,4fr) minmax(0,7fr);column-gap:48px;align-items:baseline}
-  .caminho__lista.is-abas .caminho__n{grid-row:1}
-  .caminho__lista.is-abas .caminho__corpo p:not(.caminho__n){margin-top:0}
+/* ---------- 5. Recuperação: faixas de tempo, cuidados e alerta (carvão) ---------- */
+/* imagem da reabilitação ao lado das faixas (computador); abaixo delas no celular e no tablet */
+.recup{display:grid;gap:48px;justify-items:center}
+.recup__faixas{width:100%}
+.recup__foto{position:relative;margin:9px;width:min(62vw,240px)}
+.recup__foto::before{content:"";position:absolute;inset:-9px;border:1px solid rgba(216,192,138,.32);pointer-events:none}
+.recup__foto img{display:block;width:100%;height:auto;aspect-ratio:4 / 5;object-fit:cover;filter:var(--trato-ilustracao,saturate(.9) contrast(1.02))}
+@media (min-width:900px){.recup{grid-template-columns:minmax(0,1fr) 260px;gap:clamp(40px,5vw,72px);align-items:center}.recup__foto{width:calc(100% - 18px)}}
+.faixas{display:grid;border-top:1px solid var(--fio-escuro)}
+.faixa{display:grid;justify-items:center;text-align:center;gap:10px;padding:24px 0;border-bottom:1px solid var(--fio-escuro-suave)}
+.faixa__tempo{font-family:var(--serif);font-size:var(--t-h3-ficha);line-height:1.15;color:var(--marfim)}
+.faixa::after{content:"";order:2;display:block;width:calc(var(--faixa,1) * min(100%,280px));height:3px;border-radius:2px;
+  background:linear-gradient(90deg,var(--champanhe),rgba(216,192,138,.55))}
+.faixa__quem{order:3;font-size:var(--t-nota,.9375rem);line-height:1.5;color:var(--texto-escuro);max-width:34ch;text-wrap:balance}
+.faixas__nota{margin-top:16px;text-align:center;font-size:var(--t-micro,.8125rem);line-height:1.5;color:var(--texto-escuro)}
+@media (min-width:900px){
+  .faixa{grid-template-columns:minmax(14rem,18rem) minmax(0,1fr);justify-items:start;text-align:left;column-gap:clamp(24px,4vw,56px);row-gap:10px;align-items:center;padding:26px 0}
+  .faixa__tempo{grid-row:1 / span 2}
+  .faixa::after{grid-column:2;grid-row:1;order:0;width:calc(var(--faixa,1) * 100%)}
+  .faixa__quem{grid-column:2;grid-row:2;max-width:none}
+  .faixas__nota{text-align:left}
 }
 
-/* ---------- 4. Depois da cirurgia ---------- */
-.cuidados__grade{display:grid;gap:24px}
-@media (min-width:900px){.cuidados__grade{grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:var(--calha);align-items:stretch}}
-.cuidados__casa,.cuidados__alerta{padding:clamp(26px,3vw,44px)}
-.cuidados__grade h3{font-size:var(--t-h3-ficha,1.75rem);line-height:1.15}
-.cuidados__alerta h3{color:var(--marfim)}
-.cuidados__lista{margin-top:16px;border-top:1px solid var(--filete-suave)}
-.cuidados__lista li{position:relative;padding:12px 0 12px 22px;border-bottom:1px solid var(--filete-suave);
-  font-size:var(--t-corpo,1.0625rem);line-height:1.55;color:var(--cor-texto)}
-.cuidados__lista li::before{content:"";position:absolute;left:2px;top:calc(12px + .62em);width:6px;height:6px;border:1px solid var(--cor-destaque);border-radius:50%}
-.cuidados__casa .cuidados__lista li{color:var(--tinta)}
-.cuidados__intro{margin-top:12px;font-size:var(--t-corpo,1.0625rem);line-height:1.55;color:var(--marfim)}
-.cuidados__alerta .cuidados__lista li{color:var(--texto-escuro)}
-.cuidados__alerta .cuidados__lista li::before{border-color:var(--champanhe)}
-.cuidados__acao{margin-top:20px;padding-top:18px;background:var(--sutura) top left/100% 1px no-repeat;
-  font-size:var(--t-corpo,1.0625rem);line-height:1.55;color:var(--marfim)}
-@media (max-width:599px){
-  .cuidados__grade{text-align:center}
-  .cuidados__lista li{padding-left:0}
+.cuidados__grade{display:grid;gap:40px;margin-top:clamp(56px,7vw,88px)}
+@media (min-width:768px){.cuidados__grade{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--calha) clamp(32px,5vw,72px)}}
+.cuidados__bloco h3{font-size:var(--t-h3-ficha);line-height:1.15;color:var(--marfim)}
+.cuidados__lista{margin-top:16px;border-top:1px solid var(--fio-escuro)}
+.cuidados__lista li{position:relative;padding:12px 0 12px 22px;border-bottom:1px solid var(--fio-escuro-suave);
+  font-size:var(--t-corpo,1.0625rem);line-height:1.5;color:var(--texto-escuro)}
+.cuidados__lista li::before{content:"";position:absolute;left:2px;top:calc(12px + .6em);width:6px;height:6px;border:1px solid var(--champanhe);border-radius:50%}
+.cuidados__bloco--alerta .cuidados__lista li::before{background:var(--champanhe)}
+@media (max-width:767px){
+  .cuidados__bloco{text-align:center}
+  .cuidados__lista li{padding-left:0;text-wrap:balance}
   .cuidados__lista li::before{position:static;display:inline-block;margin-right:10px;vertical-align:.12em}
-  .cuidados__acao{background-position:top center;background-size:96px 1px}
 }
 
-/* ---------- 5. Dúvidas ---------- */
+/* ---------- 6. Dúvidas ---------- */
 .duvidas__mais{margin-top:32px;font-size:var(--t-nota,.9375rem);color:var(--cor-texto)}
 .acordeao__corpo .link{min-height:0;padding-block:12px;margin-block:-12px}
 @media (max-width:899px){.duvidas__mais{text-align:center}}
 
 /* ---------- Movimento reduzido ---------- */
-@media (prefers-reduced-motion:reduce){
-  .cir__ficha.entra,.caminho__corpo.entra{animation:none}
-  .caminho__lista.is-abas::after{transition:none}
-}
-html.motion-paused .cir__ficha.entra,html.motion-paused .caminho__corpo.entra{animation:none}
-
-/* ---------- 6. Movimento (assets/movimento.js; o JS está na parte 4 do cirurgias.js) ----------
-   Um só momento na página, o da capa: a mão da Fig. 1 se desenha e as oito marcas acendem em
-   sequência, cada uma com a linha dela na legenda. As fichas e o caminho só trocam (240 ms).
-   Só com html.mov e enquanto a figura não tem .mov-feito: sem GSAP, com movimento reduzido ou
-   "Pausar animações", nada aqui vale e a capa fica pronta. */
-html.mov .cir-capa__figura[data-mov]:not(.mov-feito) :is(.cir-capa__mao>use,.cir-marca,.cir-capa__legenda>li),
-html.mov .cir-capa__figura[data-mov]:not(.mov-feito)>.legenda{opacity:0}
+@media (prefers-reduced-motion:reduce){.cir__ficha.entra{animation:none}}
+html.motion-paused .cir__ficha.entra{animation:none}
