@@ -638,6 +638,9 @@ $$('#yr').forEach(el => { el.textContent = new Date().getFullYear(); });
   const semQuebra = raiz => {
     const w = document.createTreeWalker(raiz, NodeFilter.SHOW_TEXT);
     for (let n; (n = w.nextNode());) {
+      /* na agenda da semana quem decide a quebra do local é o CSS (inteiro na lista; em duas
+         linhas na coluna estreita do calendário) */
+      if (n.parentElement && n.parentElement.closest('.turno__local')) continue;
       if (NOMES.test(n.nodeValue)) n.nodeValue = n.nodeValue.replace(NOMES, m => m.replace(/ /g, ' '));
       NOMES.lastIndex = 0;
     }

@@ -101,7 +101,6 @@
       <a href="../../dr/">O médico</a>
       <a href="#onde">Onde atende</a>
     </nav>
-    <a class="btn cabecalho__cta" href="https://ig.me/m/pedro_sarzi" data-agendar target="_blank" rel="noopener">Agendar avaliação</a>
     <button class="burger" id="burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="drawer"><i></i><i></i></button>
   </div>
 </header>
@@ -146,9 +145,7 @@
     <a href="../../dr/">O médico</a>
     <a href="#onde">Onde atende</a>
   </div>
-  <a class="btn" href="https://ig.me/m/pedro_sarzi" data-agendar target="_blank" rel="noopener">Agendar avaliação</a>
   <div class="gaveta__contato">
-    <a href="tel:+551138514000">(11) 3851-4000</a>
     <span>São Luiz Alphaville, Clínica Fares e São Luiz Osasco</span>
     <a href="#onde">Dias e horários de cada local</a>
     <p class="id-medico"><span>Dr. Pedro Sarzi · Médico</span><span class="id-medico__sep"> · </span><span>CRM-SP 183.332 · RQE 110447</span></p>
@@ -175,7 +172,7 @@
       <h1 class="t-hero abre" id="cond-titulo" style="--atraso:60ms">Síndrome do túnel do&nbsp;carpo</h1>
       <p class="t-lead abre" style="--atraso:200ms">É a compressão do nervo mediano no punho. Faz a mão formigar e adormecer, sobretudo à noite, do polegar à metade do anelar.</p>
       <div class="acoes abre" style="--atraso:340ms">
-        <a class="btn" href="https://ig.me/m/pedro_sarzi" data-agendar target="_blank" rel="noopener">Agendar avaliação</a>
+        <a class="btn btn--fantasma" href="#onde">Ver onde ele atende</a>
         <a class="link" href="#tratamento">Ver os caminhos de tratamento</a>
       </div>
       <p class="id-medico capa__id abre" style="--atraso:480ms"><span>Dr. Pedro Sarzi · Médico</span><span class="id-medico__sep"> · </span><span>CRM-SP 183.332 · RQE 110447</span></p>
@@ -192,7 +189,7 @@
   </div>
 </section>
 
-<!-- ===== 1. O QUE VOCÊ SENTE (marfim): imagem do sinal (a mesma série da home), quatro sinais e a causa ===== -->
+<!-- ===== 1. O QUE VOCÊ SENTE (marfim): imagem do que se sente (série sente-*), quatro sinais e a causa ===== -->
 <section class="cap cap--marfim cond-sente" id="sintomas" aria-labelledby="sintomas-titulo">
   <div class="wrap cond-sente__grade">
     <header class="cond-sente__cabeca">
@@ -201,7 +198,10 @@
     </header>
     <figure class="cond-foto cond-sente__foto">
       <div class="cond-foto__quadro">
-        <img src="../../imagensnovas/sinal-forca.webp" srcset="../../imagensnovas/sinal-forca.webp 760w, ../../imagensnovas/sinal-forca-1122.webp 1122w" sizes="(min-width:1100px) 400px, (min-width:900px) 34vw, (min-width:600px) 360px, 82vw" width="760" height="950" alt="Mão em fundo preto deixando escapar uma xícara escura." loading="lazy" decoding="async">
+        <picture>
+          <source type="image/avif" srcset="../../imagensnovas/series/sente-tunel-do-carpo-720.avif 720w, ../../imagensnovas/series/sente-tunel-do-carpo.avif 1122w" sizes="(min-width:1100px) 420px, (min-width:900px) 34vw, (min-width:600px) 360px, 300px">
+          <img src="../../imagensnovas/series/sente-tunel-do-carpo-720.webp" srcset="../../imagensnovas/series/sente-tunel-do-carpo-720.webp 720w, ../../imagensnovas/series/sente-tunel-do-carpo.webp 1122w" sizes="(min-width:1100px) 420px, (min-width:900px) 34vw, (min-width:600px) 360px, 300px" width="1122" height="1402" alt="Mão deitada sobre um lençol escuro segurando o celular, com o trajeto do nervo aceso em dourado do punho até os dedos." loading="lazy" decoding="async">
+        </picture>
       </div>
       <figcaption class="cond-foto__legenda">Ilustração conceitual.</figcaption>
     </figure>
@@ -217,7 +217,7 @@
   </div>
 </section>
 
-<!-- ===== 2. QUANDO PROCURAR (linho): agende se / no mesmo dia se ===== -->
+<!-- ===== 2. QUANDO PROCURAR (linho): procure se / no mesmo dia se ===== -->
 <section class="cap cap--linho cond-procurar" id="quando-procurar" aria-labelledby="procurar-titulo">
   <div class="wrap">
     <header class="secao__cabeca">
@@ -226,14 +226,14 @@
     </header>
     <div class="cond-procurar__grade">
         <div class="moldura cond-procurar__ficha">
-          <h3>Agende uma avaliação se</h3>
+          <h3>Procure uma avaliação se</h3>
           <ul class="cond-lista">
             <li>o formigamento volta ou acorda você à noite;</li>
             <li>a dormência não passa;</li>
             <li>falta força ou objetos escapam da mão;</li>
             <li>na gestação, o formigamento atrapalha o sono.</li>
           </ul>
-          <a class="btn" href="https://ig.me/m/pedro_sarzi" data-agendar target="_blank" rel="noopener">Agendar avaliação</a>
+          <a class="btn btn--fantasma" href="#onde">Ver onde ele atende</a>
         </div>
         <div class="moldura cond-procurar__ficha cond-alerta--dia">
           <h3>Procure atendimento no mesmo dia se</h3>
@@ -248,12 +248,21 @@
 </section>
 
 <!-- ===== 3. COMO SE CONFIRMA (marfim): conversa, exame, exames ===== -->
-<section class="cap cap--marfim cond-diag" id="diagnostico" aria-labelledby="diag-titulo">
+<section class="cap cap--marfim cond-diag cond-com-foto cond-com-foto--direita" id="diagnostico" aria-labelledby="diag-titulo">
   <div class="wrap cond-com-foto__grade">
     <header class="secao__cabeca">
       <h2 class="cap__titulo" id="diag-titulo">Como se confirma</h2>
       <p class="t-lead">A conversa e o exame vêm primeiro. Exames entram quando ajudam a decidir.</p>
     </header>
+    <figure class="cond-foto cond-com-foto__foto">
+      <div class="cond-foto__quadro">
+        <picture>
+          <source type="image/avif" srcset="../../imagensnovas/series/exame-tunel-do-carpo-720.avif 720w, ../../imagensnovas/series/exame-tunel-do-carpo.avif 1122w" sizes="(min-width:1100px) 420px, (min-width:900px) 34vw, (min-width:600px) 360px, 300px">
+          <img src="../../imagensnovas/series/exame-tunel-do-carpo-720.webp" srcset="../../imagensnovas/series/exame-tunel-do-carpo-720.webp 720w, ../../imagensnovas/series/exame-tunel-do-carpo.webp 1122w" sizes="(min-width:1100px) 420px, (min-width:900px) 34vw, (min-width:600px) 360px, 300px" width="1122" height="1402" alt="Dois punhos dobrados com o dorso das mãos encostado, em fundo preto." loading="lazy" decoding="async">
+        </picture>
+      </div>
+      <figcaption class="cond-foto__legenda">Ilustração conceitual.</figcaption>
+    </figure>
     <ol class="cond-passos">
       <li><span class="cond-passos__n" aria-hidden="true">1</span><h3>A conversa</h3><p>Quais dedos formigam, desde quando e o que piora.</p></li>
       <li><span class="cond-passos__n" aria-hidden="true">2</span><h3>O exame</h3><p>Sensibilidade, força da pinça e manobras que provocam o formigamento.</p></li>
@@ -263,7 +272,7 @@
 </section>
 
 <!-- ===== 4. CAMINHOS DE TRATAMENTO (carvão): faixa do mais simples ao cirúrgico ===== -->
-<section class="cap cap--carvao cond-trat cond-com-foto" id="tratamento" aria-labelledby="trat-titulo">
+<section class="cap cap--carvao cond-trat cond-com-foto cond-com-foto--esquerda" id="tratamento" aria-labelledby="trat-titulo">
   <div class="wrap cond-com-foto__grade">
     <header class="secao__cabeca">
       <h2 class="cap__titulo" id="trat-titulo">Caminhos de tratamento</h2>
@@ -272,8 +281,8 @@
     <figure class="cond-foto cond-com-foto__foto">
       <div class="cond-foto__quadro">
         <picture>
-          <source type="image/avif" srcset="../../imagensnovas/series/trat-ortese-720.avif 720w, ../../imagensnovas/series/trat-ortese.avif 1122w" sizes="(min-width:1100px) 360px, (min-width:900px) 30vw, (min-width:600px) 340px, 82vw">
-          <img src="../../imagensnovas/series/trat-ortese-720.webp" srcset="../../imagensnovas/series/trat-ortese-720.webp 720w, ../../imagensnovas/series/trat-ortese.webp 1122w" sizes="(min-width:1100px) 360px, (min-width:900px) 30vw, (min-width:600px) 340px, 82vw" width="1122" height="1402" alt="Punho com uma órtese bege de tecido, em fundo preto." loading="lazy" decoding="async">
+          <source type="image/avif" srcset="../../imagensnovas/series/trat-tunel-do-carpo-720.avif 720w, ../../imagensnovas/series/trat-tunel-do-carpo.avif 1122w" sizes="(min-width:1100px) 420px, (min-width:900px) 34vw, (min-width:600px) 360px, 300px">
+          <img src="../../imagensnovas/series/trat-tunel-do-carpo-720.webp" srcset="../../imagensnovas/series/trat-tunel-do-carpo-720.webp 720w, ../../imagensnovas/series/trat-tunel-do-carpo.webp 1122w" sizes="(min-width:1100px) 420px, (min-width:900px) 34vw, (min-width:600px) 360px, 300px" width="1122" height="1402" alt="Punho com uma órtese bege de tecido e a mão aberta sobre um tecido escuro." loading="lazy" decoding="async">
         </picture>
       </div>
       <figcaption class="cond-foto__legenda">Ilustração conceitual.</figcaption>
@@ -409,8 +418,8 @@
         <article class="moldura onde__card onde__horario">
           <h3>Dias e horários</h3>
           <p class="semana__agora" id="semanaAgora" aria-live="polite" hidden></p>
-          <ol class="semana" id="semana"><li data-dia="1"><span class="semana__dia">Segunda</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 16h</span><span class="turno__local">Clínica Fares</span></li><li data-local="alphaville"><span class="turno__hora">17h às 19h</span><span class="turno__local">São Luiz Alphaville</span></li></ul></li><li data-dia="2" data-agora="Hoje é dia de hospital, sem consultas. Na quarta ele atende na <b>Clínica Fares</b>, das 8h às 17h."><span class="semana__dia">Terça</span><ul class="semana__turnos"><li class="turno--sem"><span class="turno__hora"></span><span class="turno__local">Dia de hospital, sem consultas</span></li></ul></li><li data-dia="3"><span class="semana__dia">Quarta</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 17h</span><span class="turno__local">Clínica Fares</span></li></ul></li><li data-dia="4"><span class="semana__dia">Quinta</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 17h</span><span class="turno__local">Clínica Fares</span></li><li data-local="osasco"><span class="turno__hora">17h às 20h</span><span class="turno__local">São Luiz Osasco</span></li></ul></li><li data-dia="5"><span class="semana__dia">Sexta</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 12h30</span><span class="turno__local">Clínica Fares</span></li><li class="turno--sem"><span class="turno__hora">Tarde</span><span class="turno__local">Cirurgias</span></li></ul></li><li data-dia="6" data-agora="Hoje é sábado: ele atende na <b>Clínica Fares</b>, das 8h às 16h, em dois sábados por mês. Confirme a data ao agendar."><span class="semana__dia">Sábado</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 16h</span><span class="turno__local">Clínica Fares, dois por mês</span></li></ul></li><li data-dia="0" data-agora="Hoje é domingo, sem atendimento. Na segunda ele atende na <b>Clínica Fares</b>, das 8h às 16h."><span class="semana__dia">Domingo</span><ul class="semana__turnos"><li class="turno--sem"><span class="turno__hora"></span><span class="turno__local">Sem atendimento</span></li></ul></li></ol>
-          <p class="semana__nota">Os sábados de atendimento são dois por mês: confirme a data ao agendar.</p>
+          <ol class="semana" id="semana"><li data-dia="1"><span class="semana__dia">Segunda</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 16h</span><span class="turno__local">Clínica Fares</span></li><li data-local="alphaville"><span class="turno__hora">17h às 19h</span><span class="turno__local">São Luiz Alphaville</span></li></ul></li><li data-dia="2" data-agora="Hoje é dia de hospital, sem consultas. Na quarta ele atende na <b>Clínica Fares</b>, das 8h às 17h."><span class="semana__dia">Terça</span><ul class="semana__turnos"><li class="turno--sem"><span class="turno__hora"></span><span class="turno__local">Dia de hospital, sem consultas</span></li></ul></li><li data-dia="3"><span class="semana__dia">Quarta</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 17h</span><span class="turno__local">Clínica Fares</span></li></ul></li><li data-dia="4"><span class="semana__dia">Quinta</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 17h</span><span class="turno__local">Clínica Fares</span></li><li data-local="osasco"><span class="turno__hora">17h às 20h</span><span class="turno__local">São Luiz Osasco</span></li></ul></li><li data-dia="5"><span class="semana__dia">Sexta</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 12h30</span><span class="turno__local">Clínica Fares</span></li><li class="turno--sem"><span class="turno__hora">Tarde</span><span class="turno__local">Cirurgias</span></li></ul></li><li data-dia="6" data-agora="Hoje é sábado: ele atende na <b>Clínica Fares</b>, das 8h às 16h, em dois sábados por mês."><span class="semana__dia">Sábado</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 16h</span><span class="turno__local">Clínica Fares, dois por mês</span></li></ul></li><li data-dia="0" data-agora="Hoje é domingo, sem atendimento. Na segunda ele atende na <b>Clínica Fares</b>, das 8h às 16h."><span class="semana__dia">Domingo</span><ul class="semana__turnos"><li class="turno--sem"><span class="turno__hora"></span><span class="turno__local">Sem atendimento</span></li></ul></li></ol>
+          <p class="semana__nota">Os sábados de atendimento são dois por mês.</p>
         </article>
         <article class="moldura onde__card onde__locais">
           <h3>Locais</h3>
@@ -436,15 +445,6 @@
           </ul>
           <p class="locais__dica">Toque no nome de um local para ver só os dias dele na agenda.</p>
         </article>
-        <article class="moldura onde__card onde__agenda">
-          <h3>Agendamento</h3>
-          <p>Envie uma mensagem e combine o local, o dia e o horário da avaliação.</p>
-          <a class="btn" href="https://ig.me/m/pedro_sarzi" data-agendar target="_blank" rel="noopener">Agendar avaliação</a>
-          <ul class="onde__contato">
-            <li><a href="tel:+551138514000">(11)&nbsp;3851-4000</a><span>central da Clínica Fares</span></li>
-            <li><a href="mailto:contato.pedrosarzi@gmail.com">contato.pedrosarzi@gmail.com</a></li>
-          </ul>
-        </article>
         <figure class="quadro onde__foto">
           <div class="quadro__passe"><img src="../../assets/image-be927f6d3d.webp" width="960" height="720" alt="Fachada da Clínica Fares, com a entrada e a calçada, em Osasco" loading="lazy" decoding="async"></div>
           <figcaption>Clínica Fares, Rua Antônio Agú, 630, Centro de Osasco</figcaption>
@@ -463,9 +463,6 @@
 </section>
 
 </main>
-
-<!-- Agendar no celular: barra fixa só abaixo de 600 px (site.js mostra quando nenhum outro botão de agendar está na tela e esconde sobre o rodapé) -->
-<a class="fab" id="fab" href="https://ig.me/m/pedro_sarzi" data-agendar target="_blank" rel="noopener">Agendar avaliação</a>
 
 <!-- ===== RODAPÉ (sistema único: docs/site.md) ===== -->
 <footer class="rodape">
@@ -519,7 +516,6 @@
           <p>Clínica Fares<br>Rua Antônio Agú, 630, Centro<br>Osasco/SP</p>
           <a href="https://www.google.com/maps/search/?api=1&amp;query=Cl%C3%ADnica%20Fares%2C%20Rua%20Ant%C3%B4nio%20Ag%C3%BA%20630%2C%20Osasco%20SP" target="_blank" rel="noopener">Ver no mapa</a>
           <a href="#onde">Dias e horários de cada local</a>
-          <a href="tel:+551138514000">(11) 3851-4000, central da Clínica Fares</a>
           <a href="mailto:contato.pedrosarzi@gmail.com">contato.pedrosarzi@gmail.com</a>
           <a href="https://www.instagram.com/pedro_sarzi" target="_blank" rel="noopener">Instagram @pedro_sarzi</a>
         </address>

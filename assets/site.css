@@ -1032,34 +1032,25 @@ html.motion-paused *,html.motion-paused *::before,html.motion-paused *::after{tr
    fichas com filete duplo; o mapa só carrega quando a pessoa pede.
    ========================================================================== */
 .onde__grade{display:grid;gap:20px}
-/* Tablet em pé (600 a 899 px): duas colunas, em vez do celular esticado, sem ficha esticada com
-   vão no pé. De 720 a 899 px a agenda da semana (a ficha mais alta) ocupa a coluna da esquerda nas
-   duas primeiras fileiras, Locais e Agendamento se empilham à direita, e foto e mapa ficam lado a
-   lado embaixo. De 600 a 719 px a agenda vai inteira no alto (em meia largura os turnos
-   quebrariam), Locais à esquerda, Agendamento e foto à direita, e o mapa embaixo. */
+/* 25/11/2026 (pedido do Gabriel: "parece tudo espremido na esquerda"): a agenda da semana e os
+   locais ocupam a largura toda, cada um numa moldura de ponta a ponta; embaixo, foto e mapa lado a
+   lado (o cartão de agendamento saiu em 25/11/2026, até o Dr. confirmar o canal de cada local). A agenda vira calendário (7 colunas, uma por dia) quando cabe, grade de 4 colunas
+   no tablet e lista no eixo no celular; os locais ficam em três colunas, Alphaville primeiro.
+   As trocas são por container query (a largura da moldura), não pela tela. */
+.onde__horario,.onde__locais{container-type:inline-size}
 @media (min-width:600px) and (max-width:899px){
-  /* a sobra de altura de Locais vai para a fileira da foto (1fr), não para a ficha de Agendamento */
-  .onde__grade{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto auto 1fr auto;grid-template-areas:"horario horario" "locais agenda" "locais foto" "mapa mapa";gap:20px}
+  .onde__grade{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"horario horario" "locais locais" "foto mapa";gap:20px}
   .onde__horario{grid-area:horario}
   .onde__locais{grid-area:locais}
-  .onde__agenda{grid-area:agenda}
   .onde__foto{grid-area:foto}
   .onde__mapa{grid-area:mapa}
 }
-@media (min-width:720px) and (max-width:899px){
-  .onde__grade{grid-template-rows:none;grid-template-areas:"horario locais" "horario agenda" "foto mapa"}
-  /* a agenda fica na altura dela (Locais + Agendamento passam dela por uns 90 px): a sobra vira
-     linho sob a ficha, não vão dentro da moldura */
-  .onde__horario{align-self:start}
-}
 @media (min-width:900px){
   .onde__grade{grid-template-columns:repeat(12,minmax(0,1fr));gap:24px}
-  /* agenda da semana e locais lado a lado (alturas parecidas); foto, mapa e agendamento embaixo, em três */
-  .onde__horario{grid-column:1 / 8;grid-row:1}
-  .onde__locais{grid-column:8 / 13;grid-row:1}
-  .onde__foto{grid-column:1 / 5;grid-row:2}
-  .onde__mapa{grid-column:5 / 9;grid-row:2}
-  .onde__agenda{grid-column:9 / 13;grid-row:2}
+  .onde__horario{grid-column:1 / -1;grid-row:1}
+  .onde__locais{grid-column:1 / -1;grid-row:2}
+  .onde__foto{grid-column:1 / 7;grid-row:3}
+  .onde__mapa{grid-column:7 / 13;grid-row:3}
 }
 /* Moldura clara: marfim com papel e filete duplo de ouro profundo (.32 por fora, .16 por dentro,
    a 7 px). Sem sombra: sobre o claro a profundidade vem do filete duplo. */
@@ -1070,41 +1061,71 @@ html.motion-paused *,html.motion-paused *::before,html.motion-paused *::after{tr
 .onde__card address{margin-top:14px;font-style:normal;font-size:var(--t-corpo);line-height:1.6;color:var(--tinta)}
 .onde__acoes{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;margin-top:24px}
 
-/* Agenda da semana: cada dia com um ou dois turnos (hora + local). Tabela, então
-   fica em duas colunas também no celular. O site.js marca o dia de hoje, escreve a
-   frase "Hoje" e apaga os turnos dos outros locais quando um local é escolhido. */
+/* Agenda da semana: cada dia com um ou dois turnos (hora sobre o local). O site.js marca o dia de
+   hoje, escreve a frase "Hoje" e apaga os turnos dos outros locais quando um local é escolhido.
+   Três arranjos pela largura da moldura (container query):
+   - lista no eixo (moldura até 599 px): dia no alto e "hora · local" embaixo, tudo ao centro;
+   - grade de 4 colunas (600 a 999 px): segunda a quinta em cima, sexta a domingo embaixo;
+   - calendário (1000 px ou mais): os sete dias lado a lado, filete vertical entre eles.
+   O dia de hoje ganha a barra de 2 px de ouro profundo (no topo da célula, ou um traço no eixo na
+   lista) e o "hoje" em itálico, sem fundo tingido. */
 /* a frase "Hoje" fica no próprio marfim da moldura, entre dois filetes suaves: sem caixa e sem
-   fundo tingido (nenhum bege novo; o dia marcado segue só com a barra de 2 px) */
-.semana__agora{margin-top:14px;padding:14px 0;border-block:1px solid var(--fio-claro-suave);
+   fundo tingido */
+.semana__agora{margin-top:16px;padding:14px 0;border-block:1px solid var(--fio-claro-suave);
   font-family:var(--serif);font-size:var(--t-lead);line-height:1.3;color:var(--tinta);text-wrap:balance}
 .semana__agora b{font-weight:500;white-space:nowrap}
+.semana__agora:not([hidden])+.semana{margin-top:0}
 .semana{display:grid;margin-top:16px}
-.semana>li{display:grid;grid-template-columns:7.5em minmax(0,1fr);gap:4px 16px;align-items:baseline;padding:12px 10px;
+.semana>li{position:relative;display:grid;align-content:start;justify-items:center;gap:6px;padding:16px 4px;text-align:center;
   border-bottom:1px solid var(--fio-claro-suave);transition:opacity 250ms var(--ease),background-color 250ms}
 .semana>li:last-child{border-bottom:0}
-.semana__dia{font-size:var(--t-nota);color:var(--tinta)}
-/* hoje: só a barra de 2 px e o peso 500, sem fundo tingido (o "hoje" em ouro profundo
-   precisa de pelo menos 4,5:1, e ouro profundo nunca vai sobre fundo tingido) */
-.semana>li.hoje{box-shadow:inset 2px 0 0 var(--ouro-profundo)}
+.semana__dia{display:flex;align-items:baseline;justify-content:center;gap:10px;font-family:var(--serif);font-size:var(--t-lead);line-height:1.15;color:var(--tinta)}
 .semana>li.hoje .semana__dia{font-weight:500}
-.semana__hoje{display:block;font-family:var(--serif);font-style:italic;font-weight:400;font-size:var(--t-legenda);line-height:1.1;color:var(--ouro-texto)}
-.semana__turnos{display:grid;gap:6px}
-.semana__turnos li{display:grid;grid-template-columns:7.2em minmax(0,1fr);gap:12px;align-items:baseline;font-size:var(--t-nota);line-height:1.4;transition:opacity 250ms var(--ease)}
-.turno__hora{color:var(--tinta);font-variant-numeric:lining-nums tabular-nums}
+.semana__hoje{font-family:var(--serif);font-style:italic;font-weight:400;font-size:var(--t-legenda);line-height:1.1;color:var(--ouro-texto)}
+/* hoje na lista: um traço de 2 px no eixo, no topo da linha */
+.semana>li.hoje::before{content:"";position:absolute;top:-1px;left:50%;width:40px;height:2px;margin-left:-20px;background:var(--ouro-profundo)}
+.semana__turnos{display:grid;justify-items:center;gap:2px}
+.semana__turnos li{display:flex;flex-wrap:wrap;justify-content:center;gap:0 .4em;font-size:var(--t-nota);line-height:1.5;transition:opacity 250ms var(--ease)}
+.turno__hora{color:var(--tinta);white-space:nowrap;font-variant-numeric:lining-nums tabular-nums}
 .turno__local{color:var(--texto-claro)}
+/* nomes de local inteiros na lista; na grade e no calendário a coluna é estreita e o nome pode ir
+   em duas linhas ("São Luiz" sobre "Alphaville"): o site.js deixa essa quebra para o CSS */
+.semana__turnos li[data-local] .turno__local{white-space:nowrap}
+.turno__hora:not(:empty)::after{content:" ·";color:var(--cor-suave)}
 /* dia sem consulta: só a cor suave da moldura marca a diferença (sem itálico: o Ubuntu não tem) */
 .turno--sem .turno__hora,.turno--sem .turno__local{color:var(--cor-suave)}
 .turno--sem .turno__hora:empty{display:none}
-.turno--sem .turno__hora:empty+.turno__local{grid-column:1 / -1}
+/* grade e calendário: tabela de verdade, dia no alto da célula e cada turno com a hora (tinta, no
+   corpo) sobre o local (nota); células alinhadas à esquerda, filetes entre elas */
+@container (min-width:600px){
+  .semana{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .semana>li{justify-items:start;gap:12px;padding:20px 18px 22px;text-align:left;border-left:1px solid var(--fio-claro-suave)}
+  .semana>li:nth-child(4n+1){border-left:0;padding-left:0}
+  .semana>li:nth-child(n+5){border-bottom:0}
+  .semana>li:nth-child(-n+4){border-bottom:1px solid var(--fio-claro-suave)}
+  .semana__dia{justify-content:flex-start}
+  .semana>li.hoje::before{left:0;right:0;width:auto;margin-left:0}
+  .semana__turnos{justify-items:start;gap:12px}
+  .semana__turnos li{display:grid;justify-content:start;gap:0;line-height:1.4}
+  .turno__hora{font-size:var(--t-corpo)}
+  .turno__hora:not(:empty)::after{content:none}
+  .semana__turnos li .turno__local,.semana__turnos li[data-local] .turno__local{white-space:normal;text-wrap:balance}
+}
+@container (min-width:1000px){
+  .semana{grid-template-columns:repeat(7,minmax(0,1fr));border-bottom:1px solid var(--fio-claro-suave)}
+  .semana>li,.semana>li:nth-child(4n+1),.semana>li:nth-child(-n+4){padding:22px 16px 26px;border-left:1px solid var(--fio-claro-suave);border-bottom:0}
+  .semana>li:first-child{border-left:0;padding-left:0}
+}
 /* Agenda filtrada (site.js): os outros locais ficam na cor suave da moldura (#5C5C62, 6,2:1 sobre
    o marfim), sem opacidade, porque continuam sendo informação; os turnos do local escolhido ficam
    em tinta, com o local em 500. */
 .semana .fora,.semana .fora *{color:var(--cor-suave)}
 .semana:has(.fora) .semana__turnos>li:not(.fora) :is(.turno__hora,.turno__local){color:var(--tinta)}
 .semana:has(.fora) .semana__turnos>li:not(.fora) .turno__local{font-weight:500}
-.semana__nota{margin-top:14px;font-size:var(--t-micro);line-height:1.45;color:var(--texto-claro)}
+.semana__nota{margin-top:16px;font-size:var(--t-micro);line-height:1.45;color:var(--texto-claro)}
 
-/* Locais: o nome é um botão que filtra a agenda e troca o local do mapa. */
+/* Locais: o nome é um botão que filtra a agenda e troca o local do mapa. Na moldura larga (640 px
+   ou mais), três colunas iguais com filete vertical entre elas e os links de mapa alinhados na base. */
 .locais{display:grid;margin-top:8px}
 .local{padding:16px 0;border-bottom:1px solid var(--fio-claro-suave)}
 .local:last-child{border-bottom:0;padding-bottom:4px}
@@ -1120,6 +1141,17 @@ html.motion-paused *,html.motion-paused *::before,html.motion-paused *::after{tr
 .local__dias{color:var(--tinta)}
 .local__links{display:flex;flex-wrap:wrap;gap:0 18px;padding-left:24px}
 .local__links .link{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:44px;font-size:var(--t-nota)}
+@container (min-width:640px){
+  .locais{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:20px;border-block:1px solid var(--fio-claro-suave)}
+  .local,.local:last-child{display:flex;flex-direction:column;padding:20px 24px 12px;border-bottom:0;border-left:1px solid var(--fio-claro-suave)}
+  .local:first-child{border-left:0;padding-left:0}
+  .local:last-child{padding-right:0}
+  .local__filtro{flex-wrap:wrap;row-gap:2px}
+  .local__tipo{flex-basis:100%;margin-left:24px}
+  .local__end{margin-top:8px}
+  .local__dias{text-wrap:balance}
+  .local__links{margin-top:auto;padding-top:8px}
+}
 /* Dica que vira status (site.js): "Agenda filtrada: só os dias do …" + "Ver na agenda". */
 .locais__dica{margin-top:12px;font-size:var(--t-micro);line-height:1.45;color:var(--texto-claro);text-wrap:balance}
 .locais__dica.filtrada{color:var(--tinta)}
@@ -1151,13 +1183,14 @@ html.motion-paused *,html.motion-paused *::before,html.motion-paused *::after{tr
 .onde__foto{align-self:start}
 .onde__foto .quadro__passe{flex:none}
 .onde__foto img{min-height:0;aspect-ratio:2.4 / 1;object-position:50% 36%}
-/* Computador (900 px ou mais): foto, mapa e agendamento dividem a fileira; a faixa de 2,4:1
+/* Tablet e computador (600 px ou mais): foto e mapa dividem a fileira; a faixa de 2,4:1
    terminava ~130 px acima das fichas vizinhas. O quadro estica até a base da fileira e a foto
    preenche o passe (absoluta, para não ditar a altura da fileira). Num quadro quase quadrado o
    cover mostraria a altura toda e os pedestres do pé (a partir de ~76 % da altura): a foto tem
    135 % da altura do passe, presa no topo, e o clip-path corta os 26 % de baixo, então o quadro
-   mostra só a placa e a entrada. Celular e tablet seguem com a faixa de 2,4:1. */
-@media (min-width:900px){
+   mostra só a placa e a entrada. Vale também no tablet (foto ao lado do mapa); o celular segue com
+   a faixa de 2,4:1. */
+@media (min-width:600px){
   .onde__foto{align-self:stretch}
   .onde__foto .quadro__passe{flex:1 1 auto;min-height:200px}
   .onde__foto img{position:absolute;top:0;left:0;width:100%;height:135%;aspect-ratio:auto;object-position:62% 0;clip-path:inset(0 0 25.93% 0)}
@@ -1192,35 +1225,22 @@ html.motion-paused *,html.motion-paused *::before,html.motion-paused *::after{tr
 .mapa__carregando{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--serif);font-style:italic;font-size:var(--t-legenda);color:var(--texto-claro);pointer-events:none}
 .mapa__abrir{display:flex;justify-content:center;padding:4px 16px 8px;border-top:1px solid var(--fio-claro-suave)}
 .mapa__abrir .link{color:var(--tinta)}
-.onde__agenda>p{margin-top:12px;max-width:34ch;color:var(--texto-claro)}
-.onde__agenda .btn{margin-top:20px}
-.onde__contato{display:grid;margin-top:14px;font-size:var(--t-nota);line-height:1.4}
-.onde__contato li{display:flex;flex-wrap:wrap;align-items:center;column-gap:8px}
-.onde__contato span{color:var(--texto-claro)}
-.onde__contato a{display:inline-flex;align-items:center;min-height:44px;color:var(--tinta);text-decoration:underline;text-decoration-color:var(--fio-claro-forte);text-underline-offset:.25em;transition:text-decoration-color var(--t-rapido)}
-.onde__contato a:hover,.onde__contato a:active{text-decoration-thickness:2px;text-decoration-color:var(--ouro-profundo)}
 @media (max-width:899px){
   .onde__grade{gap:16px}
   .onde__card{text-align:center}
   .onde__acoes{flex-direction:column;align-items:stretch;gap:10px}
-  .semana>li{grid-template-columns:1fr;gap:6px;padding:12px 4px;text-align:left}
-  .semana__dia{display:flex;align-items:baseline;gap:10px}
-  .semana__hoje{display:inline}
   .local__filtro{flex-wrap:wrap;justify-content:center;gap:0 10px;text-align:center}
   .local__tipo{flex-basis:100%;margin-left:0}
   .local__end,.local__dias,.local__links{padding-left:0}
   /* texto curto centrado: balance (sem "Osasco" ou "cada um" sozinho na última linha) */
   .local__end,.local__dias,.semana__nota{text-wrap:balance}
   .local__links{justify-content:center}
-  .onde__agenda>p{margin-inline:auto;text-wrap:balance}
-  .onde__contato li{justify-content:center}
   .onde__mapa{min-height:300px}
 }
-/* 320 a 379 px: coluna da hora mais justa, para "São Luiz Alphaville" (sem quebra) caber dentro do
+/* 320 a 379 px: respiro lateral menor, para "São Luiz Alphaville" (sem quebra) caber dentro do
    filete. A ficha do mapa não tem padding próprio (o respiro é o da capa da rosa), então fica fora:
    com os 22 px a mais, "Mostrar o mapa aqui" quebrava e deixava "aqui" sozinho. */
-@media (max-width:379px){.semana__turnos li{grid-template-columns:6.2em minmax(0,1fr);gap:8px}.moldura:not(.onde__mapa){padding-inline:22px}.mapa__capa{padding-inline:22px}}
+@media (max-width:379px){.moldura:not(.onde__mapa){padding-inline:22px}.mapa__capa{padding-inline:22px}}
 /* o botão do mapa nunca quebra (no máximo 199 px, cabe da menor tela para cima) */
 #mapaBtn{white-space:nowrap}
-/* botão na largura do conteúdo no tablet; largura toda só no celular */
-@media (max-width:599px){.onde__agenda .btn{width:100%}}
+

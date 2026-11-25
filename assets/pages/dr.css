@@ -16,256 +16,138 @@
 :root{--dr-tela:100vh}
 @supports (height:1svh){:root{--dr-tela:100svh}}
 
-/* ---------- 1. Capa: retrato (foto inteira), digital e goniômetro ----------
-   A foto é a #58 da sessão de 08/10/2026 (no centro cirúrgico, olhando a lente; outra tomada,
-   não a da home), 2:3, em AVIF com reserva em WebP (760 a 2048 px), com o tom vivo já no
-   arquivo: sem filtro aqui.
-   Celular: foto de ponta a ponta, fundida no carvão embaixo.
-   Computador: foto num quadro em arco com filete de ouro, sobre o goniômetro.
-   Celular deitado: texto à esquerda e retrato inteiro à direita (fim da seção). */
-.medico{
-  padding-block:0;
-  /* digital centrada atrás da cabeça do retrato (centro do desenho em 50% 47%) */
-  --digital-tam:760px;
-  --digital-x:calc(50% - 380px);
-  --digital-y:-220px;
-  --digital-opac:.075;
+/* ---------- 1. Capa: foto do Dr. Pedro no consultório, no padrão da capa da home ----------
+   25/11/2026: o quadro em arco, o goniômetro e a digital saíram. A foto é a #36 da sessão de
+   08/10/2026 (sorrindo, examinando o punho de um paciente que aparece de costas), recortada sem
+   o teclado e os papéis, com o tom já tratado no arquivo (sem filtro aqui):
+   dr-pedro-sorri-{960,1440,2000} (9:10) e, no celular em pé, dr-pedro-sorri-cel-{800,1200} (1:1).
+   Tela deitada: a foto ocupa 62% da largura à direita, de cima a baixo, e se funde no carvão pela
+   esquerda e pela base (máscara); o texto fica à esquerda, assentado na base, como na home.
+   Tela em pé: a foto numa faixa no alto, que cresce até o texto assentar no pé da primeira dobra,
+   e o texto no eixo logo abaixo. */
+.medico{display:flex;flex-direction:column;align-items:stretch;padding-block:0;overflow:hidden;overflow:clip;
+  min-height:calc(var(--dr-tela) - var(--hdr-h))}
+.medico__foto{position:relative;z-index:0;flex:1 0 auto;
+  min-height:max(240px,min(62vw,560px,var(--dr-tela) - var(--hdr-h) - 470px))}
+.medico__foto picture{position:absolute;inset:0;display:block;
+  -webkit-mask-image:linear-gradient(0deg,transparent 0%,rgba(0,0,0,.55) 20%,#000 46%);
+  mask-image:linear-gradient(0deg,transparent 0%,rgba(0,0,0,.55) 20%,#000 46%)}
+.medico__retrato{display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:56% 2%;filter:none}
+.medico__grade{flex:none;padding-block:8px 56px}
+.medico__texto{position:relative;min-width:0;grid-column:1 / -1;text-align:center}
+.medico__titulo{display:block;margin:0;font-weight:300}
+.medico__titulo .t-hero{display:block;font-size:var(--t-display,4.875rem);line-height:1;letter-spacing:var(--trk-display);color:var(--marfim)}
+.medico__funcao{display:block;margin-top:.4em;font-family:var(--serif);font-weight:400;
+  font-size:var(--t-h3,2.25rem);line-height:1.15;letter-spacing:-.005em;color:var(--champanhe);text-wrap:balance}
+.medico .t-lead{max-width:40ch;margin-inline:auto;text-wrap:balance}
+.medico .acoes{justify-content:center;margin-top:32px}
+/* chamadas discretas (25/11/2026: o botão de agendar saiu do site até haver telefone confirmado):
+   dois links lado a lado, também no celular */
+.medico .acoes{flex-direction:row;flex-wrap:wrap;align-items:center;gap:12px 32px}
+.medico .acoes>.link{align-self:center}
+.medico .t-lead.abre{--atraso:420ms}
+.medico .acoes.abre{--atraso:520ms}
+.medico .medico__base.abre{--atraso:640ms}
+/* base: filete na largura do bloco, credenciais e identificação (a mesma peça da home) */
+.medico__base{width:100%;margin-top:40px;padding-top:20px;border-top:1px solid var(--cor-filete);container:medico-base / inline-size}
+.medico__base .capa__id{margin-top:12px;padding-top:0;border-top:0;text-align:center}
+@container medico-base (max-width:419px){
+  .medico__base .capa__id>.id-medico__sep{display:none}
+  .medico__base .capa__id>span{display:block}
 }
-.medico__grade{row-gap:0}
-.medico__figura{position:relative;display:flex;justify-content:center;align-items:flex-start;overflow:hidden;height:min(50vh,400px);height:min(50svh,400px);margin-inline:calc(var(--margem) * -1)}
-/* o <picture> (AVIF com reserva em WebP) não entra no layout: o img continua filho do quadro */
-.medico__foto{display:contents}
-.medico__retrato{
-  position:relative;z-index:1;display:block;flex:none;
-  width:100%;max-width:none;height:100%;
-  object-fit:cover;object-position:50% 12%;
-  filter:none;
-  /* celular e telas em pé: a foto se desfaz no próprio fundo da capa (carvão com a trama e a
-     digital), sem pintar carvão liso por cima; assim não há emenda atrás do nome. Os 42% de
-     baixo somem, como no degradê antigo. O quadro em arco (telas deitadas) tira a máscara. */
-  -webkit-mask-image:linear-gradient(to bottom,#000 58%,rgba(0,0,0,.55) 76%,rgba(0,0,0,0) 97%);
-  mask-image:linear-gradient(to bottom,#000 58%,rgba(0,0,0,.55) 76%,rgba(0,0,0,0) 97%);
+@container medico-base (min-width:420px){
+  .medico__base .capa__id>span{white-space:nowrap}
 }
-.medico__gonio{display:none}
-.medico__texto{position:relative;z-index:3;margin-top:-72px;padding-bottom:48px}
-.medico__titulo{display:block;font-weight:300}
-.medico__titulo .t-hero{font-size:clamp(3rem,6vw,5.25rem);line-height:1.02;letter-spacing:-.01em}
-.medico__funcao{margin-top:.35em;font-family:var(--serif);font-weight:400;font-size:clamp(1.5rem,2.4vw,2.125rem);line-height:1.18;color:var(--champanhe);text-wrap:balance}
-.medico .t-lead{max-width:40ch}
-.medico .capa__id{margin-top:40px;max-width:34rem}
-@media (max-width:599px){
-  /* sem linha curta sobrando ("punho. Atende no") */
-  .medico .t-lead{max-width:27ch;margin-inline:auto;font-size:1.125rem;text-wrap:balance}
+.medico__cred{display:flex;flex-wrap:wrap;justify-content:center;row-gap:6px;margin:0;padding:0;list-style:none;
+  font-family:var(--sans);font-weight:400;font-size:var(--t-micro,.8125rem);line-height:1.3;color:var(--marfim)}
+.medico__cred li{white-space:nowrap}
+.medico__cred li+li{margin-left:16px;padding-left:16px;border-left:1px solid var(--fio-escuro)}
+
+/* celular em pé: recorte quadrado, faixa que cede à altura; só a identificação na base */
+/* tela em pé até 1199 px: título um degrau maior, como na home */
+@media (max-width:1199px) and (orientation:portrait){
+  .medico__titulo .t-hero{font-size:calc(var(--t-display,2.5rem) * 1.1);line-height:1.02}
+}
+@media (max-width:699px) and (orientation:portrait){
+  .medico__retrato{object-position:60% 4%}
+}
+@media (max-width:599px) and (orientation:portrait){
+  .medico__foto{min-height:max(170px,min(76vw,440px,var(--dr-tela) - var(--hdr-h) - 500px))}
+  .medico__funcao{font-size:clamp(1.375rem,1rem + 1.9vw,1.75rem)}
+  .medico .t-lead{max-width:30ch;margin-top:18px}
+  .medico__cred{display:none}
+  .medico__base{margin-top:32px}
+  .medico__base .capa__id{margin-top:0}
+}
+/* celular baixo (até 720 px de altura útil): respiros menores para o botão e a identificação */
+@media (max-width:599px) and (orientation:portrait) and (max-height:720px){
+  .medico__foto{min-height:max(150px,var(--dr-tela) - var(--hdr-h) - 470px)}
+  .medico__grade{padding-block:0 32px}
+  .medico .acoes{margin-top:22px}
+  .medico__base{margin-top:22px;padding-top:14px}
 }
 
-/* celular baixo (320 × 640, 360 × 640): foto mais baixa para o nome, a frase e o botão de
-   agendar caberem na primeira dobra */
-@media (max-width:599px) and (max-height:700px){
-  .medico__figura{height:max(190px,38vh);height:max(190px,38svh)}
+/* 320 × 568 (iPhone SE de 1.ª geração): letra um degrau menor e faixa mais baixa, para o
+   "Ver a formação" entrar inteiro na primeira dobra */
+@media (max-width:359px) and (orientation:portrait) and (max-height:600px){
+  .medico__foto{min-height:136px}
+  .medico__titulo .t-hero{font-size:2.375rem}
+  .medico__funcao{font-size:1.25rem}
+  .medico .t-lead{margin-top:12px;font-size:1.0625rem;line-height:1.45}
+  .medico .acoes{column-gap:24px}
 }
-/* 375 × 548 (iPhone SE no Safari) e menores: faixa de 190 px, rosto mais alto nela e o nome
-   menos sobreposto, para o botão de agendar caber inteiro na dobra sem o nome cobrir o rosto */
-@media (max-width:599px) and (max-height:560px){
-  .medico__figura{height:190px}
-  .medico__retrato{object-position:50% 22%}
-  .medico__texto{margin-top:-64px}
-}
-/* celular em pé de 561 px de altura para cima: a capa enche a primeira dobra e a foto fica com
-   o que sobra depois do texto (medido pelo próprio layout, como no tablet). Assim a
-   identificação assenta na base da dobra de ~735 px de altura útil para cima (430 × 746,
-   412 × 830, 390 × 844); abaixo disso a foto não desce do piso e o "Ver a formação" continua
-   inteiro na dobra (375 × 629, 390 × 664). */
-@media (max-width:599px) and (orientation:portrait) and (min-height:561px){
-  .medico__grade{display:flex;flex-direction:column;align-items:stretch;min-height:calc(var(--dr-tela) - var(--hdr-h))}
-  .medico__figura{flex:1 0 auto;height:auto;min-height:max(190px,min(calc(var(--dr-tela) * .38),var(--dr-tela) - var(--hdr-h) - 350px))}
-  .medico__retrato{position:absolute;inset:0;height:100%}
-}
-/* 320 × 568 (iPhone SE de 1.ª geração): no piso de 190 px o "Ver a formação" ficava cortado pela
-   borda da tela; com 164 px ele fica inteiro na dobra e o rosto continua no quadro (50% 21%) */
-@media (max-width:359px) and (orientation:portrait) and (min-height:561px) and (max-height:600px){
-  .medico__figura{min-height:164px}
-}
-@media (max-width:599px) and (orientation:portrait) and (min-height:701px){
-  .medico__figura{min-height:max(190px,28vh);min-height:max(190px,28svh)}
-}
-/* faixa baixa (até ~290 px): o rosto sobe no quadro, para o nome não cobrir a máscara */
-@media (max-width:599px) and (orientation:portrait) and (min-height:561px) and (max-height:800px){
-  .medico__retrato{object-position:50% 21%}
-}
-/* 701 a 800 px de altura útil (iPhone Plus e Pro Max no Safari, 428/430 × 746; iPhone 11 no Safari,
-   414 × 715): a faixa da foto fica com 200 a 240 px. O nome sobrepõe menos a foto, o rosto sobe mais
-   um pouco e o respiro antes da identificação encolhe: o topo de "Pedro" fica 14 a 37 px abaixo da
-   máscara e a identificação continua na dobra */
-@media (max-width:599px) and (orientation:portrait) and (min-height:701px) and (max-height:800px){
-  .medico__texto{margin-top:-54px}
-  .medico .capa__id{margin-top:28px}
-  .medico__retrato{object-position:50% 23%}
-}
-/* 540 a 599 px de largura até 800 px de altura (Surface Duo em pé, 540 × 720): a foto tem 810 px de
-   altura e o rosto fica maior que a faixa. Botão e link numa linha só, no eixo, e a frase em três
-   linhas: a foto ganha uns 95 px e o nome assenta abaixo da máscara, com a touca inteira no quadro */
-@media (min-width:540px) and (max-width:599px) and (orientation:portrait) and (min-height:561px) and (max-height:800px){
-  .medico .t-lead{max-width:44ch}
-  .medico .acoes{flex-direction:row;justify-content:center}
-  .medico .acoes>.btn{width:auto}
-  .medico .acoes>.link{align-self:center}
-  .medico__retrato{object-position:50% 20%}
-}
-@media (min-width:540px) and (max-width:599px) and (orientation:portrait) and (min-height:561px) and (max-height:700px){
-  .medico__texto{margin-top:-16px}
-  .medico__retrato{object-position:50% 22%}
-}
-/* 320 × 568: na faixa de 164 px, o rosto sobe (a touca continua no quadro), o nome sobrepõe menos e
-   os respiros do texto encolhem: o nome fica abaixo da máscara e o "Ver a formação" termina na dobra */
-@media (max-width:359px) and (orientation:portrait) and (min-height:561px) and (max-height:600px){
-  .medico__texto{margin-top:-58px}
-  .medico__retrato{object-position:50% 26%}
-  .medico .capa__texto>*+*{margin-top:18px}
-}
-@media (min-width:600px){
-  .medico__figura{height:min(60vh,520px);height:min(60svh,520px)}
-}
-/* Tablet em pé (600 a 899 px) e tela grande em pé (iPad Pro, monitor vertical): a capa enche a
-   primeira dobra, sem teto (como a home). A foto vai de ponta a ponta e cresce até o texto
-   assentar no pé; texto, chamadas e identificação no eixo, como na home e no /prp/. O quadro em
-   arco fica para o computador (tela deitada) e para a janela deitada de até 899 px (fim da seção). */
-@media (min-width:600px) and (max-width:899px) and (min-height:501px) and (orientation:portrait),(min-width:900px) and (orientation:portrait){
-  .medico__grade{display:flex;flex-direction:column;align-items:stretch;min-height:calc(var(--dr-tela) - var(--hdr-h))}
-  .medico__figura{flex:1 0 auto;height:auto;min-height:min(46vh,520px);min-height:min(46svh,520px)}
-  .medico__retrato{position:absolute;inset:0;height:100%}
-  .medico__texto{text-align:center}
-  .medico .t-lead{margin-inline:auto;text-wrap:balance}
-  .medico .acoes{justify-content:center}
-  .medico .capa__id{margin-inline:auto;text-align:center}
-}
-@media (min-width:900px) and (orientation:portrait){
-  .medico__grade{min-height:calc(var(--dr-tela) - var(--hdr-h))}
-  .medico__figura{min-height:min(52vh,900px);min-height:min(52svh,900px)}
-  .medico__texto{padding-bottom:64px}
+
+/* Tela deitada (computador, notebook, tablet e celular deitados): foto à direita, texto à esquerda */
+@media (orientation:landscape){
+  .medico{display:grid;align-items:end;min-height:min(calc(var(--dr-tela) - var(--hdr-h)),1240px)}
+  /* a foto entra inteira na altura da capa (9:10, da cabeça às mãos), presa à direita; só quando a
+     janela é larga e baixa ela passa de 70% da largura e é recortada em cima e embaixo */
+  .medico__foto{position:absolute;inset:0;z-index:-1;min-height:0}
+  .medico__foto picture{left:auto;right:0;width:auto;height:100%;aspect-ratio:1440 / 1600;min-width:44%;max-width:70%;
+    -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.5) 18%,#000 40%),linear-gradient(0deg,transparent 0%,#000 16%,#000 93%,rgba(0,0,0,.7) 100%);
+    -webkit-mask-composite:source-in;
+    mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.5) 18%,#000 40%),linear-gradient(0deg,transparent 0%,#000 16%,#000 93%,rgba(0,0,0,.7) 100%);
+    mask-composite:intersect}
+  .medico__retrato{object-position:50% 18%}
+  .medico__grade{padding-block:64px 56px}
+  .medico__texto{max-width:620px;text-align:left}
+  .medico .t-lead{max-width:44ch;margin-inline:0;margin-top:24px}
+  .medico .acoes{justify-content:flex-start;margin-top:40px}
+  .medico__base{width:min(100%,35rem);margin-top:64px}
+  .medico__base .capa__id{text-align:left}
+  .medico__cred{justify-content:flex-start}
 }
 @media (min-width:900px) and (orientation:landscape){
-  .medico{--digital-tam:1040px;--digital-x:calc(25% - 520px);--digital-y:-330px}
-  /* primeira dobra cheia até 1240 px de altura (1920 × 1080, 1920 × 1200 e 2560 × 1305 sem
-     faixa vazia embaixo; acima disso, a capa para de crescer) */
-  .medico__grade{min-height:min(calc(var(--dr-tela) - var(--hdr-h)),1240px);align-items:stretch}
-  .medico__figura,.medico__texto{grid-row:1}
-  .medico__figura{
-    grid-column:7 / 13;height:auto;margin:0;overflow:visible;
-    align-items:flex-end;padding-top:48px;padding-bottom:var(--retrato-base);
-  }
-  /* o arco cresce com a tela até 936 px de altura (624 de largura: cabe nas seis colunas de 1320) */
-  .medico{--retrato-h:min(calc(var(--dr-tela) - var(--hdr-h) - 40px),1048px);--retrato-base:56px}
-  /* quadro em arco (o mesmo dos quadros do relato): filete de ouro solto a 12 px.
-     2:3 é a proporção do arquivo: a foto entra inteira, da cabeça às mãos */
-  .medico__retrato{
-    width:auto;max-width:calc(100% - 26px);height:calc(var(--retrato-h) - 112px);aspect-ratio:2 / 3;
-    object-position:50% 18%;border-radius:999px 999px 0 0;-webkit-mask-image:none;mask-image:none;
-    outline:1px solid rgba(216,192,138,.45);outline-offset:12px;
-    box-shadow:var(--sombra-prancha);
-  }
-  /* goniômetro grande atrás do retrato: o centro fica na base do quadro,
-     e o arco aparece dos dois lados (raio ≈ metade da altura) */
-  .medico__gonio{
-    display:block;position:absolute;z-index:0;max-width:none;
-    --g:min(calc(var(--retrato-h) * 1.3),165%);
-    width:var(--g);left:calc(50% - var(--g) / 2);bottom:calc(var(--g) * -.041 + var(--retrato-base) - 12px);
-  }
-  /* o SVG escala ~3,5×: números e marcas voltam ao tamanho de leitura */
-  .medico__gonio .gonio__num{font-size:4.4px}
-  .medico__gonio .gonio__marca{opacity:.32}
-  .medico__gonio .gonio__marca--15{opacity:.5}
-  .medico__gonio .gonio__marca--45{opacity:.75}
-  .medico__texto{grid-column:1 / 7;align-self:center;margin:0;padding-block:72px 64px}
-  .medico .capa__id{margin-top:56px}
+  .medico__texto{grid-column:1 / 7}
 }
-/* o arco passa da borda direita da tela: sem os números das pontas, o 0 não fica sozinho */
-.medico__gonio text:first-of-type,.medico__gonio text:last-of-type{display:none}
-@media (min-width:900px) and (max-width:1199px) and (orientation:landscape){
-  .medico__gonio{--g:min(calc(var(--retrato-h) * 1.3),125%)}
-  .medico__gonio .gonio__num{font-size:5.5px}
-}
-/* Notebook de tela baixa (1366 × 657, 1280 × 689): título pela altura da tela, respiros menores,
-   para o retrato e a identificação assentarem na primeira dobra */
+/* notebook de tela baixa (1366 × 657, 1280 × 689): título pela altura e respiros proporcionais,
+   para a base caber na primeira dobra (mesma conta da home) */
 @media (min-width:900px) and (orientation:landscape) and (max-height:820px){
-  .medico{--retrato-base:40px}
-  .medico__figura{padding-top:32px}
-  .medico__titulo .t-hero{font-size:min(clamp(3rem,6vw,5.25rem),11vh);font-size:min(clamp(3rem,6vw,5.25rem),11svh)}
-  .medico__texto{padding-block:36px 32px}
-  .medico .capa__texto>*+*{margin-top:18px}
-  .medico .capa__id{margin-top:32px}
+  .medico__grade{padding-block:clamp(24px,calc(18.2vh - 85px),64px) clamp(20px,calc(16.4vh - 78px),56px)}
+  .medico__titulo .t-hero{font-size:min(var(--t-display,4.875rem),11vh)}
+  .medico__funcao{font-size:min(var(--t-h3,2.25rem),4.6vh)}
+  .medico .t-lead{margin-top:clamp(12px,calc(5.45vh - 20px),24px)}
+  .medico .acoes{margin-top:clamp(20px,calc(9.1vh - 34px),40px)}
+  .medico__base{margin-top:clamp(24px,calc(18.2vh - 85px),64px);padding-top:clamp(12px,calc(3.64vh - 10px),20px)}
+  .medico__base .capa__id{margin-top:clamp(8px,calc(1.82vh - 3px),12px)}
 }
-/* Celular deitado (e tela baixa de computador): texto | retrato inteiro, na altura da tela.
-   Vem depois do bloco de 900 px e vale também acima dele (932 × 430). Sem goniômetro e sem
-   o degradê de fusão; o rosto fica no alto do arco. O quadro (2:3, a proporção do arquivo) é
-   dimensionado pela altura e fica centrado na capa, com a base e o filete de baixo dentro dela:
-   28 px de cada lado, 19 livres depois do filete.
-   Vale também na janela deitada de até 899 px com mais de 500 px de altura (meia tela de notebook,
-   683 × 620; janela de 800 × 600; Split View do iPad), com o arco limitado pela largura logo abaixo. */
-@media (orientation:landscape) and (max-height:500px),(orientation:landscape) and (min-height:501px) and (max-width:899px){
-  .medico__grade{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:clamp(24px,5vw,56px);align-items:center;min-height:calc(var(--dr-tela) - var(--hdr-h))}
-  .medico__figura,.medico__texto{grid-row:1}
-  .medico__figura{grid-column:2;height:auto;margin:0;padding:0 10px;overflow:visible;align-items:center;align-self:center}
-  .medico__gonio{display:none}
-  .medico__retrato{
-    width:auto;max-width:none;height:calc(var(--dr-tela) - var(--hdr-h) - 56px);aspect-ratio:2 / 3;
-    object-position:50% 14%;border-radius:999px 999px 0 0;-webkit-mask-image:none;mask-image:none;
-    outline:1px solid rgba(216,192,138,.45);outline-offset:8px;box-shadow:none;
-  }
-  .medico__texto{grid-column:1;align-self:center;margin:0;padding-block:20px;text-align:left}
-  .medico__titulo .t-hero{font-size:clamp(2.25rem,5.4vw,3.25rem)}
-  .medico__funcao{font-size:clamp(1.125rem,2.4vw,1.375rem)}
-  .medico .t-lead{max-width:44ch;margin-inline:0;font-size:1rem;line-height:1.5}
-  .medico .capa__texto>*+*{margin-top:14px}
-  .medico .acoes{flex-direction:row;align-items:center}
-  .medico .acoes>.btn{width:auto}
-  .medico .acoes>.link{align-self:center}
-  .medico .capa__id{margin-top:16px;padding-top:12px;text-align:left}
+/* janela deitada estreita e celular deitado: a coluna do texto fica com pouco mais da metade */
+@media (orientation:landscape) and (max-width:899px){
+  .medico__texto{max-width:min(56%,520px)}
+  .medico__funcao{font-size:clamp(1.25rem,2.6vw,1.625rem)}
 }
-/* janela deitada de até 899 px com mais de 500 px de altura: pela altura, o arco tomaria mais da
-   metade da largura e a coluna do texto ficaria com uns 230 px. O arco fica com no máximo 41% da
-   largura útil (62% dela de altura) e centrado na capa; a identificação quebra entre o nome e os
-   registros, como no celular, sem ponto solto no fim da linha */
-@media (orientation:landscape) and (min-height:501px) and (max-width:899px){
-  .medico__retrato{height:min(calc(var(--dr-tela) - var(--hdr-h) - 56px),calc((100vw - var(--margem) * 2) * .62))}
-  .medico__funcao{font-size:clamp(1.25rem,2.8vw,1.5rem)}
-  .medico .capa__id>.id-medico__sep{display:none}
-  .medico .capa__id>span{display:block}
+@media (orientation:landscape) and (max-height:500px){
+  .medico__grade{padding-block:20px 20px}
+  .medico__titulo .t-hero{font-size:clamp(2rem,5vw,3rem)}
+  .medico__funcao{font-size:clamp(1.0625rem,2.4vw,1.375rem)}
+  .medico .t-lead{font-size:1rem;line-height:1.45;margin-top:12px}
+  .medico .acoes{margin-top:16px}
+  .medico__cred{display:none}
+  .medico__base{margin-top:16px;padding-top:10px}
+  .medico__base .capa__id{margin-top:0}
 }
-/* Notebook de tela muito baixa (1366 × 520, 1440 × 540, 1920 × 575: janela não maximizada ou
-   notebook a 150% com barras extras): a coluna do bloco de notebook não cabia e a identificação e a
-   base do arco ficavam abaixo da dobra. Mesmo arranjo do celular deitado: texto | arco inteiro, na
-   altura da tela, sem goniômetro; a letra continua a do bloco de notebook */
-@media (orientation:landscape) and (min-width:900px) and (min-height:501px) and (max-height:580px){
-  .medico__grade{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:clamp(24px,5vw,56px);align-items:center;min-height:calc(var(--dr-tela) - var(--hdr-h))}
-  .medico__figura{grid-column:2;grid-row:1;height:auto;margin:0;padding:0 10px;overflow:visible;align-items:center;align-self:center}
-  .medico__gonio{display:none}
-  .medico__retrato{height:calc(var(--dr-tela) - var(--hdr-h) - 56px);aspect-ratio:2 / 3;object-position:50% 14%;outline-offset:8px;box-shadow:none}
-  .medico__texto{grid-column:1;grid-row:1;align-self:center;margin:0;padding-block:20px;text-align:left}
-  .medico .capa__texto>*+*{margin-top:14px}
-  .medico .capa__id{margin-top:16px;padding-top:12px;text-align:left}
-}
-/* Celular deitado baixo (667 × 375, 640 × 360): letra e respiros menores,
-   para nome, frase, botão e identificação caberem na dobra; a identificação quebra entre o nome
-   e os registros, como no celular em pé (sem ponto solto no fim da linha) */
-@media (orientation:landscape) and (max-height:400px){
-  .medico__grade{column-gap:clamp(20px,4vw,40px)}
-  .medico__texto{padding-block:8px}
-  .medico__titulo .t-hero{font-size:clamp(1.875rem,4.6vw,2.5rem)}
-  .medico__funcao{margin-top:.25em;font-size:1.0625rem}
-  .medico .t-lead{max-width:none;font-size:.9375rem;line-height:1.45}
-  .medico .capa__texto>*+*{margin-top:8px}
-  .medico .capa__id{margin-top:10px;padding-top:8px}
-  .medico .capa__id>.id-medico__sep{display:none}
-  .medico .capa__id>span{display:block}
-}
-/* 568 × 320: mais um degrau, e o arco menor para a frase ganhar largura */
-@media (orientation:landscape) and (max-height:340px){
-  .medico__retrato{height:calc(var(--dr-tela) - var(--hdr-h) - 72px)}
-  .medico__texto{padding-block:6px}
-  .medico__titulo .t-hero{font-size:1.75rem}
-  .medico__funcao{font-size:1rem}
-  .medico .t-lead{font-size:.875rem;line-height:1.4}
-  .medico .capa__texto>*+*{margin-top:6px}
+@media (orientation:landscape) and (max-height:380px){
+  .medico .t-lead{display:none}
 }
 
 /* ==========================================================================
@@ -499,11 +381,11 @@
    acender só "São Luiz Alphaville," quando ela quebra em duas linhas. */
 .rodape address>p:first-child{color:var(--marfim)}
 
-/* Celular baixo (até 760 px de altura útil: 320 × 568, 360 × 640, 375 × 667): a linha do CFM sobe para
-   logo abaixo do lead, antes das chamadas, e entra inteira na primeira dobra (como na home). */
+/* Celular baixo (até 760 px de altura útil: 320 × 568, 360 × 640, 375 × 667): a base da capa (linha do
+   CFM) sobe para logo abaixo do lead, antes das chamadas, e entra inteira na primeira dobra. */
 @media (max-width:599px) and (orientation:portrait) and (max-height:760px){
   .medico__texto{display:flex;flex-direction:column}
   .medico .capa__texto>.t-lead{order:1}
-  .medico .capa__texto>.capa__id{order:2;margin-top:14px;margin-inline:auto;padding-top:0;border-top:0;text-align:center}
-  .medico .capa__texto>.acoes{order:3;margin-top:18px}
+  .medico .capa__texto>.medico__base{order:2;margin-top:14px;padding-top:0;border-top:0}
+  .medico .capa__texto>.acoes{order:3;margin-top:20px}
 }

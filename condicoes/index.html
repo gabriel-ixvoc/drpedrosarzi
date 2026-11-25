@@ -31,7 +31,7 @@
 {"@type":"Question","name":"O site consegue dizer o que eu tenho?","acceptedAnswer":{"@type":"Answer","text":"Não. O diagnóstico vem da conversa, do exame e, se preciso, de exames."}},
 {"@type":"Question","name":"Toda condição da mão termina em cirurgia?","acceptedAnswer":{"@type":"Answer","text":"Não. Muitos casos começam com órtese, ajustes, remédio, terapia de mão ou infiltração."}},
 {"@type":"Question","name":"O que levar na primeira consulta?","acceptedAnswer":{"@type":"Answer","text":"Documento com foto, exames e laudos (com as imagens), a lista de remédios e o que você já tentou."}},
-{"@type":"Question","name":"Atende plano de saúde?","acceptedAnswer":{"@type":"Answer","text":"Pergunte ao agendar ou na central da Clínica Fares, (11) 3851-4000."}}
+{"@type":"Question","name":"Atende plano de saúde?","acceptedAnswer":{"@type":"Answer","text":"Cobertura, valores e formas de pagamento variam conforme o plano e o local de atendimento."}}
 ]}
 ]}
 </script>
@@ -101,7 +101,6 @@
       <a href="../dr/">O médico</a>
       <a href="#onde">Onde atende</a>
     </nav>
-    <a class="btn cabecalho__cta" href="https://ig.me/m/pedro_sarzi" data-agendar target="_blank" rel="noopener">Agendar avaliação</a>
     <button class="burger" id="burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="drawer"><i></i><i></i></button>
   </div>
 </header>
@@ -146,9 +145,7 @@
     <a href="../dr/">O médico</a>
     <a href="#onde">Onde atende</a>
   </div>
-  <a class="btn" href="https://ig.me/m/pedro_sarzi" data-agendar target="_blank" rel="noopener">Agendar avaliação</a>
   <div class="gaveta__contato">
-    <a href="tel:+551138514000">(11) 3851-4000</a>
     <span>São Luiz Alphaville, Clínica Fares e São Luiz Osasco</span>
     <a href="#onde">Dias e horários de cada local</a>
     <p class="id-medico"><span>Dr. Pedro Sarzi · Médico</span><span class="id-medico__sep"> · </span><span>CRM-SP 183.332 · RQE 110447</span></p>
@@ -171,7 +168,7 @@
       <h1 class="t-hero abre" id="hub-titulo" style="--atraso:60ms">Condições da mão, do punho e do&nbsp;cotovelo</h1>
       <p class="t-lead abre" style="--atraso:200ms">As dez queixas mais comuns, do formigamento à noite ao dedo que trava. Escolha uma para ver o que se sente e como se&nbsp;trata.</p>
       <div class="acoes abre" style="--atraso:340ms">
-        <a class="btn" href="https://ig.me/m/pedro_sarzi" data-agendar target="_blank" rel="noopener">Agendar avaliação</a>
+        <a class="btn btn--fantasma" href="#onde">Ver onde ele atende</a>
         <a class="link" href="#sintomas">Ver as dez condições</a>
       </div>
       <p class="id-medico capa__id abre" style="--atraso:480ms"><span>Dr. Pedro Sarzi · Médico</span><span class="id-medico__sep"> · </span><span>CRM-SP 183.332 · RQE 110447</span></p>
@@ -304,7 +301,7 @@
   </div>
 </section>
 
-<!-- ===== 2. QUANDO PROCURAR AVALIAÇÃO (carvão): agende se / no mesmo dia
+<!-- ===== 2. QUANDO PROCURAR AVALIAÇÃO (carvão): procure se / no mesmo dia
      (fontes: carrossel CA10, estático ES01 e NHS, "Wrist pain") ===== -->
 <section class="cap cap--carvao hub-avaliacao" id="avaliacao" aria-labelledby="avaliacao-titulo">
   <div class="wrap">
@@ -313,14 +310,14 @@
     </header>
     <div class="hub-aval__grade">
       <div class="prancha hub-aval__ficha">
-        <h3>Agende uma consulta se</h3>
+        <h3>Procure uma consulta se</h3>
         <ul class="cond-lista">
           <li>o formigamento volta ou piora à noite;</li>
           <li>a dor não melhora em 2 semanas;</li>
           <li>o dedo trava ou um caroço cresce;</li>
           <li>falta força para segurar.</li>
         </ul>
-        <a class="btn btn--fantasma" href="https://ig.me/m/pedro_sarzi" data-agendar target="_blank" rel="noopener">Agendar avaliação</a>
+        <a class="btn btn--fantasma" href="#onde">Ver onde ele atende</a>
       </div>
       <div class="prancha hub-aval__ficha hub-aval__dia">
         <h3>Procure atendimento no mesmo dia se</h3>
@@ -394,7 +391,7 @@
         </details>
         <details class="acordeao__item">
           <summary>Atende plano de saúde?</summary>
-          <div class="acordeao__corpo"><p>Pergunte ao agendar ou na central da Clínica Fares, <a class="nobr" href="tel:+551138514000">(11)&nbsp;3851-4000</a>.</p></div>
+          <div class="acordeao__corpo"><p>Cobertura, valores e formas de pagamento variam conforme o plano e o local de atendimento.</p></div>
         </details>
       </div>
       <p class="cond-revisao">Conteúdo educativo. Atualizado em <time datetime="2026-11">novembro de 2026</time>.</p>
@@ -420,8 +417,8 @@
         <article class="moldura onde__card onde__horario">
           <h3>Dias e horários</h3>
           <p class="semana__agora" id="semanaAgora" aria-live="polite" hidden></p>
-          <ol class="semana" id="semana"><li data-dia="1"><span class="semana__dia">Segunda</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 16h</span><span class="turno__local">Clínica Fares</span></li><li data-local="alphaville"><span class="turno__hora">17h às 19h</span><span class="turno__local">São Luiz Alphaville</span></li></ul></li><li data-dia="2" data-agora="Hoje é dia de hospital, sem consultas. Na quarta ele atende na <b>Clínica Fares</b>, das 8h às 17h."><span class="semana__dia">Terça</span><ul class="semana__turnos"><li class="turno--sem"><span class="turno__hora"></span><span class="turno__local">Dia de hospital, sem consultas</span></li></ul></li><li data-dia="3"><span class="semana__dia">Quarta</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 17h</span><span class="turno__local">Clínica Fares</span></li></ul></li><li data-dia="4"><span class="semana__dia">Quinta</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 17h</span><span class="turno__local">Clínica Fares</span></li><li data-local="osasco"><span class="turno__hora">17h às 20h</span><span class="turno__local">São Luiz Osasco</span></li></ul></li><li data-dia="5"><span class="semana__dia">Sexta</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 12h30</span><span class="turno__local">Clínica Fares</span></li><li class="turno--sem"><span class="turno__hora">Tarde</span><span class="turno__local">Cirurgias</span></li></ul></li><li data-dia="6" data-agora="Hoje é sábado: ele atende na <b>Clínica Fares</b>, das 8h às 16h, em dois sábados por mês. Confirme a data ao agendar."><span class="semana__dia">Sábado</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 16h</span><span class="turno__local">Clínica Fares, dois por mês</span></li></ul></li><li data-dia="0" data-agora="Hoje é domingo, sem atendimento. Na segunda ele atende na <b>Clínica Fares</b>, das 8h às 16h."><span class="semana__dia">Domingo</span><ul class="semana__turnos"><li class="turno--sem"><span class="turno__hora"></span><span class="turno__local">Sem atendimento</span></li></ul></li></ol>
-          <p class="semana__nota">Os sábados de atendimento são dois por mês: confirme a data ao agendar.</p>
+          <ol class="semana" id="semana"><li data-dia="1"><span class="semana__dia">Segunda</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 16h</span><span class="turno__local">Clínica Fares</span></li><li data-local="alphaville"><span class="turno__hora">17h às 19h</span><span class="turno__local">São Luiz Alphaville</span></li></ul></li><li data-dia="2" data-agora="Hoje é dia de hospital, sem consultas. Na quarta ele atende na <b>Clínica Fares</b>, das 8h às 17h."><span class="semana__dia">Terça</span><ul class="semana__turnos"><li class="turno--sem"><span class="turno__hora"></span><span class="turno__local">Dia de hospital, sem consultas</span></li></ul></li><li data-dia="3"><span class="semana__dia">Quarta</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 17h</span><span class="turno__local">Clínica Fares</span></li></ul></li><li data-dia="4"><span class="semana__dia">Quinta</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 17h</span><span class="turno__local">Clínica Fares</span></li><li data-local="osasco"><span class="turno__hora">17h às 20h</span><span class="turno__local">São Luiz Osasco</span></li></ul></li><li data-dia="5"><span class="semana__dia">Sexta</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 12h30</span><span class="turno__local">Clínica Fares</span></li><li class="turno--sem"><span class="turno__hora">Tarde</span><span class="turno__local">Cirurgias</span></li></ul></li><li data-dia="6" data-agora="Hoje é sábado: ele atende na <b>Clínica Fares</b>, das 8h às 16h, em dois sábados por mês."><span class="semana__dia">Sábado</span><ul class="semana__turnos"><li data-local="fares"><span class="turno__hora">8h às 16h</span><span class="turno__local">Clínica Fares, dois por mês</span></li></ul></li><li data-dia="0" data-agora="Hoje é domingo, sem atendimento. Na segunda ele atende na <b>Clínica Fares</b>, das 8h às 16h."><span class="semana__dia">Domingo</span><ul class="semana__turnos"><li class="turno--sem"><span class="turno__hora"></span><span class="turno__local">Sem atendimento</span></li></ul></li></ol>
+          <p class="semana__nota">Os sábados de atendimento são dois por mês.</p>
         </article>
         <article class="moldura onde__card onde__locais">
           <h3>Locais</h3>
@@ -447,15 +444,6 @@
           </ul>
           <p class="locais__dica">Toque no nome de um local para ver só os dias dele na agenda.</p>
         </article>
-        <article class="moldura onde__card onde__agenda">
-          <h3>Agendamento</h3>
-          <p>Envie uma mensagem e combine o local, o dia e o horário da avaliação.</p>
-          <a class="btn" href="https://ig.me/m/pedro_sarzi" data-agendar target="_blank" rel="noopener">Agendar avaliação</a>
-          <ul class="onde__contato">
-            <li><a href="tel:+551138514000">(11)&nbsp;3851-4000</a><span>central da Clínica Fares</span></li>
-            <li><a href="mailto:contato.pedrosarzi@gmail.com">contato.pedrosarzi@gmail.com</a></li>
-          </ul>
-        </article>
         <figure class="quadro onde__foto">
           <div class="quadro__passe"><img src="../assets/image-be927f6d3d.webp" width="960" height="720" alt="Fachada da Clínica Fares, com a entrada e a calçada, em Osasco" loading="lazy" decoding="async"></div>
           <figcaption>Clínica Fares, Rua Antônio Agú, 630, Centro de Osasco</figcaption>
@@ -474,9 +462,6 @@
 </section>
 
 </main>
-
-<!-- Agendar no celular: barra fixa só abaixo de 600 px (site.js mostra quando nenhum outro botão de agendar está na tela e esconde sobre o rodapé) -->
-<a class="fab" id="fab" href="https://ig.me/m/pedro_sarzi" data-agendar target="_blank" rel="noopener">Agendar avaliação</a>
 
 <!-- ===== RODAPÉ (sistema único: docs/site.md) ===== -->
 <footer class="rodape">
@@ -530,7 +515,6 @@
           <p>Clínica Fares<br>Rua Antônio Agú, 630, Centro<br>Osasco/SP</p>
           <a href="https://www.google.com/maps/search/?api=1&amp;query=Cl%C3%ADnica%20Fares%2C%20Rua%20Ant%C3%B4nio%20Ag%C3%BA%20630%2C%20Osasco%20SP" target="_blank" rel="noopener">Ver no mapa</a>
           <a href="#onde">Dias e horários de cada local</a>
-          <a href="tel:+551138514000">(11) 3851-4000, central da Clínica Fares</a>
           <a href="mailto:contato.pedrosarzi@gmail.com">contato.pedrosarzi@gmail.com</a>
           <a href="https://www.instagram.com/pedro_sarzi" target="_blank" rel="noopener">Instagram @pedro_sarzi</a>
         </address>
