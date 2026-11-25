@@ -233,7 +233,7 @@ const mao = handExperience();
   const Q = [
     { q: 'Onde começa o incômodo?', h: 'Escolha a região mais próxima do que você sente.', r: 'Onde começa',
       o: [
-        { t: 'No punho e nos dedos', s: 'Formigam ou adormecem, do polegar ao anelar', v: { carpo: 3 } },
+        { t: 'No punho e nos dedos', s: 'Formigam ou adormecem, do polegar à metade do anelar', v: { carpo: 3 } },
         { t: 'Em um dedo que trava ou estala', s: 'Às vezes precisa da outra mão para esticar', v: { gatilho: 3 } },
         { t: 'Na lateral do punho, do lado do polegar', s: 'Dói ao torcer o punho, pegar peso ou fazer pinça', v: { tendinite: 3 } },
         { t: 'Na base do polegar', s: 'Dói ao abrir potes, girar a chave ou escrever', v: { artrose: 3, tendinite: 1 } },
@@ -270,22 +270,22 @@ const mao = handExperience();
   ];
 
   const RES = {
-    carpo: { tab: 0, name: 'Síndrome do túnel do carpo', curto: 'túnel do carpo',
-      d: 'Formigamento do polegar ao anelar, pior à noite, costuma estar ligado ao nervo mediano apertado no punho.',
+    carpo: { tab: 0, name: 'Síndrome do túnel do carpo', curto: 'túnel do carpo', pag: [['tunel-do-carpo', 'o túnel do carpo']],
+      d: 'Formigamento do polegar à metade do anelar, pior à noite, costuma estar ligado ao nervo mediano apertado no punho.',
       n: ['Exame da sensibilidade e da força da mão', 'Manobras simples no consultório', 'Eletroneuromiografia, exame que mede a condução do nervo, se necessário', 'Conversa sobre órtese, infiltração ou cirurgia, conforme o caso'] },
-    gatilho: { tab: 1, name: 'Dedo em gatilho', curto: 'dedo em gatilho',
+    gatilho: { tab: 1, name: 'Dedo em gatilho', curto: 'dedo em gatilho', pag: [['dedo-em-gatilho', 'o dedo em gatilho']],
       d: 'Travamento e estalo ao mexer o dedo costumam vir do tendão que passa com dificuldade pela polia, um anel na base do dedo.',
       n: ['Exame do dedo e do ponto onde o tendão trava', 'Avaliação do grau de travamento', 'Conversa sobre órtese, infiltração ou cirurgia, conforme o caso'] },
-    tendinite: { tab: 2, name: 'Tenossinovite de De Quervain', curto: 'De Quervain',
+    tendinite: { tab: 2, name: 'Tenossinovite de De Quervain', curto: 'De Quervain', pag: [['de-quervain', 'De Quervain']],
       d: 'Dor na lateral do punho ao torcer ou segurar costuma estar ligada aos tendões do polegar, que inflamam dentro de um túnel estreito.',
       n: ['Exame da lateral do punho, com uma manobra simples (teste de Finkelstein)', 'Conversa sobre a rotina e os movimentos que pioram a dor', 'Conversa sobre órtese, infiltração ou cirurgia, conforme o caso'] },
-    artrose: { tab: 3, name: 'Rizartrose', curto: 'rizartrose',
+    artrose: { tab: 3, name: 'Rizartrose', curto: 'rizartrose', pag: [['rizartrose', 'a rizartrose']],
       d: 'Dor na base do polegar ao abrir potes ou girar a chave pode vir do desgaste da cartilagem dessa articulação.',
       n: ['Exame da base do polegar e da força da pinça', 'Raio-X para ver o desgaste da articulação', 'Conversa sobre órtese, exercícios, infiltração ou cirurgia, conforme o caso'] },
-    caroco: { tab: 4, name: 'Cisto sinovial ou contratura de Dupuytren', curto: 'cisto sinovial',
+    caroco: { tab: 4, name: 'Cisto sinovial ou contratura de Dupuytren', curto: 'cisto sinovial', pag: [['cisto-sinovial', 'o cisto sinovial'], ['dupuytren', 'a contratura de Dupuytren']],
       d: 'Um caroço na mão pode ter causas diferentes. As mais comuns são o cisto sinovial, uma bolsa de líquido junto ao punho, e a contratura de Dupuytren, um nódulo firme na palma.',
       n: ['Exame do caroço: tamanho, consistência e relação com tendões e articulações', 'Ultrassom, se necessário', 'Conversa sobre acompanhamento ou tratamento, conforme o caso'] },
-    trauma: { tab: 6, name: 'Fratura ou lesão de tendão', curto: 'fraturas',
+    trauma: { tab: 6, name: 'Fratura ou lesão de tendão', curto: 'fraturas', pag: [['fraturas', 'fraturas'], ['lesoes-de-tendao', 'lesões de tendão']],
       d: 'Dor, inchaço ou dificuldade de mexer depois de queda, pancada ou corte pedem avaliação para ver se houve fratura ou lesão de tendão.',
       alerta: 'Se houve corte e o dedo não dobra ou ficou dormente, procure atendimento no mesmo dia.',
       n: ['Exame da mão e do movimento dos dedos', 'Raio-X e, se necessário, outro exame de imagem', 'Conversa sobre imobilização, cirurgia e reabilitação, conforme o caso'] }
@@ -361,6 +361,7 @@ const mao = handExperience();
         ${r.alerta ? `<p class="qres__alerta">${r.alerta}</p>` : ''}
         <h4>O que costuma ser visto na consulta</h4>
         <ul class="pane__lista">${r.n.map(x => `<li>${x}</li>`).join('')}</ul>
+        <p class="qres__ler">${r.pag.map(([s, t]) => `<a class="link" href="condicoes/${s}/">Ler tudo sobre ${t}</a>`).join(' ')}</p>
         <details class="acordeao__item qres__resumo"><summary>O que você respondeu</summary><dl class="ficha">${resumo}</dl></details>
         <div class="acoes qres__acoes">
           <a class="btn" href="${PS.AGENDAR_URL}" data-agendar target="_blank" rel="noopener">Agendar avaliação</a>

@@ -161,7 +161,7 @@
     width:auto;max-width:calc(100% - 26px);height:calc(var(--retrato-h) - 112px);aspect-ratio:2 / 3;
     object-position:50% 18%;border-radius:999px 999px 0 0;-webkit-mask-image:none;mask-image:none;
     outline:1px solid rgba(216,192,138,.45);outline-offset:12px;
-    box-shadow:0 42px 70px -40px rgba(0,0,0,.9);
+    box-shadow:var(--sombra-prancha);
   }
   /* goniômetro grande atrás do retrato: o centro fica na base do quadro,
      e o arco aparece dos dois lados (raio ≈ metade da altura) */
@@ -287,7 +287,7 @@
   padding:clamp(26px,3vw,38px) clamp(12px,2vw,24px) clamp(24px,2.8vw,34px);text-align:center;
   background:url("../brand/papel.svg") 0 0/640px 640px,var(--marfim);border:1px solid var(--fio-claro)}
 .placa-reg::before{content:"";position:absolute;inset:7px;border:1px solid var(--fio-claro-suave);pointer-events:none}
-.placa-reg__sigla{font-size:var(--t-micro,.8125rem);font-weight:500;line-height:1.2;letter-spacing:.02em;color:var(--ouro-profundo)}
+.placa-reg__sigla{font-size:var(--t-micro,.8125rem);font-weight:500;line-height:1.2;letter-spacing:.02em;color:var(--ouro-texto)}
 .placa-reg__num{font-family:var(--serif);font-weight:400;font-size:var(--t-h3,2.25rem);line-height:1;color:var(--tinta);font-variant-numeric:lining-nums;white-space:nowrap}
 .placa-reg__rotulo{max-width:18ch;font-size:var(--t-nota,.9375rem);line-height:1.35;color:var(--texto-claro);text-wrap:balance;hyphens:manual}
 .placas__conferir{margin:24px auto 0;text-align:center;font-size:var(--t-nota,.9375rem);color:var(--texto-claro);text-wrap:balance}
@@ -295,7 +295,7 @@
 .placas__conferir a{position:relative;display:inline;min-height:0;white-space:nowrap;color:var(--tinta);text-decoration:underline;text-decoration-color:var(--fio-claro-forte);text-decoration-thickness:1px;text-underline-offset:.25em;transition:text-decoration-color var(--t-rapido) var(--ease),text-decoration-thickness var(--t-rapido) var(--ease)}
 .placas__conferir a::before{content:"";position:absolute;inset:-14px -4px}
 .placas__conferir a:hover{text-decoration-color:var(--ouro-profundo);text-decoration-thickness:2px}
-.placas__conferir a:active{color:var(--ouro-profundo);text-decoration-color:var(--ouro-profundo);text-decoration-thickness:2px}
+.placas__conferir a:active{color:var(--ouro-texto);text-decoration-color:var(--ouro-profundo);text-decoration-thickness:2px}
 .placas__conferir a:focus-visible{outline:2px solid var(--ouro-profundo);outline-offset:3px}
 
 .fio{position:relative;max-width:1080px;margin:clamp(64px,8vw,104px) auto 0;--fio:1}
@@ -307,7 +307,7 @@
 .fio__marco+.fio__marco{margin-top:clamp(24px,4vw,40px)}
 /* nó: vazado (marfim com filete) até o fio chegar; aceso, tinta com o desenho em champanhe e um anel de filete */
 .fio__no{grid-column:2;grid-row:1;position:relative;z-index:1;display:grid;place-items:center;width:56px;height:56px;
-  border:1px solid var(--fio-claro-forte);border-radius:50%;background:var(--marfim);color:var(--ouro-profundo);
+  border:1px solid var(--fio-claro-forte);border-radius:50%;background:var(--marfim);color:var(--ouro-texto);
   outline:1px solid transparent;outline-offset:5px;
   transition:background-color 250ms var(--ease),color 250ms var(--ease),border-color 250ms var(--ease),outline-color 250ms var(--ease)}
 .fio__no svg{width:30px;height:30px;overflow:visible}
@@ -323,7 +323,7 @@
 .fio__marco::after{content:"";position:absolute;top:28px;width:clamp(24px,4vw,56px);height:1px;background:var(--fio-claro-forte)}
 .fio__marco:nth-child(odd)::after{right:calc(50% + 28px)}
 .fio__marco:nth-child(even)::after{left:calc(50% + 28px)}
-.fio__onde{font-size:var(--t-nota,.9375rem);font-weight:500;line-height:1.35;color:var(--ouro-profundo)}
+.fio__onde{font-size:var(--t-nota,.9375rem);font-weight:500;line-height:1.35;color:var(--ouro-texto)}
 .fio__ficha h3{margin-top:8px;font-size:var(--t-h3-ficha,1.75rem);line-height:1.12;text-wrap:balance}
 .fio__ficha h3+p{margin-top:12px;font-size:var(--t-corpo,1.0625rem);line-height:1.6;color:var(--texto-claro);text-wrap:pretty}
 /* parágrafo curto (até 6 linhas) equilibrado em todas as larguras: sem "Medicina de" sobrando antes
@@ -446,6 +446,7 @@
 @media (max-width:899px){.areas .sinais__nota{max-width:52ch;margin-inline:auto}}
 .areas__guia{margin-top:32px;text-align:center;color:var(--texto-claro);text-wrap:balance}
 .areas__guia .link{margin-left:6px}
+.areas__guia--mais{margin-top:12px}
 
 /* ==========================================================================
    Tablet (600 a 899 px): faixa própria, nunca o celular esticado
@@ -515,3 +516,12 @@
    só a primeira linha do primeiro parágrafo; aqui a lista inteira fica em marfim, para não
    acender só "São Luiz Alphaville," quando ela quebra em duas linhas. */
 .rodape address>p:first-child{color:var(--marfim)}
+
+/* Celular baixo (até 760 px de altura útil: 320 × 568, 360 × 640, 375 × 667): a linha do CFM sobe para
+   logo abaixo do lead, antes das chamadas, e entra inteira na primeira dobra (como na home). */
+@media (max-width:599px) and (orientation:portrait) and (max-height:760px){
+  .medico__texto{display:flex;flex-direction:column}
+  .medico .capa__texto>.t-lead{order:1}
+  .medico .capa__texto>.capa__id{order:2;margin-top:14px;margin-inline:auto;padding-top:0;border-top:0;text-align:center}
+  .medico .capa__texto>.acoes{order:3;margin-top:18px}
+}

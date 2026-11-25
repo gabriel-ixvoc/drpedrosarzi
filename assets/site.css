@@ -27,6 +27,13 @@
   --ouro:#AC9559;
   --champanhe:#D8C08A;
   --ouro-profundo:#7E6A38;
+  /* dourado para TEXTO, por superfície: champanhe no carvão (11:1) e #6E5C2E no claro (5,7:1 no
+     marfim, 5:1 no linho com textura, medido nos pixels). O ouro profundo puro dá 4,6:1 no marfim e
+     cai abaixo do AA no linho: texto pequeno dourado usa var(--ouro-texto). */
+  --ouro-texto-claro:#6E5C2E;
+  --ouro-texto:var(--champanhe);
+  /* traço da gravura (mão, braço, regiões em hachura): 1,25 px (direção de arte, item 11) */
+  --traco-gravura:1.25px;
   --texto-escuro:#BDB8AC;
   --texto-claro:#4A4A4F;
   --filete-escuro:rgba(216,192,138,.16);
@@ -112,6 +119,7 @@ body,.cap--carvao,.cap--grafite,.sup-escura,.prancha{
   --cor-titulo:var(--marfim);
   --cor-texto:var(--texto-escuro);
   --cor-suave:#8F8B82;
+  --ouro-texto:var(--champanhe);
   --cor-destaque:var(--champanhe);
   --cor-deco:var(--ouro);
   --cor-filete:var(--filete-escuro);
@@ -129,7 +137,8 @@ body,.cap--carvao,.cap--grafite,.sup-escura,.prancha{
   --cor-fundo:var(--marfim);
   --cor-titulo:var(--tinta);
   --cor-texto:var(--texto-claro);
-  --cor-suave:#66666C;
+  --cor-suave:#5C5C62;
+  --ouro-texto:var(--ouro-texto-claro);
   --cor-destaque:var(--ouro-profundo);
   --cor-deco:var(--ouro);
   --cor-filete:var(--filete-claro);
@@ -142,7 +151,9 @@ body,.cap--carvao,.cap--grafite,.sup-escura,.prancha{
   --btn-texto:var(--marfim);
   --btn-fundo-hover:var(--ouro-profundo);
 }
-.cap--linho{--cor-fundo:var(--linho)}
+/* suave do claro: #5C5C62 (o antigo #66666C dava 4,27:1 no linho com textura, medido nos pixels).
+   No linho texturizado ele escurece mais um pouco. */
+.cap--linho{--cor-fundo:var(--linho);--cor-suave:#55555B}
 
 /* ---------- 2. Reset ---------- */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -316,25 +327,86 @@ strong,b{font-weight:500}
 }
 
 .nav{display:none}
-/* alvo de 44 × 44 px (iPad): 6 px de respiro de cada lado, devolvidos pela margem negativa */
-.nav a{position:relative;display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:44px;padding-inline:6px;margin-inline:-6px;font-size:var(--t-nota);color:var(--texto-escuro);transition:color var(--t-rapido)}
-.nav a:hover,.nav a:active{color:var(--marfim)}
-.nav a.active,.nav a[aria-current="page"]{color:var(--marfim)}
-/* sublinhado que se desenha (200 ms) no hover; fica desenhado na página atual */
-.nav a::after{content:"";position:absolute;left:6px;right:6px;bottom:8px;height:1px;background:var(--champanhe);transform:scaleX(0);transform-origin:left center;transition:transform var(--t-rapido) var(--ease)}
-.nav a:hover::after,.nav a.active::after,.nav a[aria-current="page"]::after{transform:none}
-.nav a:not([aria-current]):hover::after{background:rgba(216,192,138,.55)}
+/* Itens do primeiro nível: links (O médico, Onde atende) e os dois gatilhos (Condições, Tratamentos).
+   Alvo de 44 × 44 px: 6 px de respiro de cada lado, devolvidos pela margem negativa. */
+.nav>a,.nav__gatilho{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;min-width:44px;padding-inline:6px;margin-inline:-6px;font-size:var(--t-nota);color:var(--texto-escuro);white-space:nowrap;transition:color var(--t-rapido)}
+.nav>a:hover,.nav>a:active,.nav__gatilho:hover,.nav__grupo.aberto>.nav__gatilho{color:var(--marfim)}
+.nav>a.active,.nav>a[aria-current="page"],.nav__gatilho[aria-current]{color:var(--marfim)}
+/* sublinhado que se desenha (200 ms) no hover; fica desenhado na página atual e no item-pai dela */
+.nav>a::after,.nav__gatilho::after{content:"";position:absolute;left:6px;right:6px;bottom:8px;height:1px;background:var(--champanhe);transform:scaleX(0);transform-origin:left center;transition:transform var(--t-rapido) var(--ease)}
+.nav>a:hover::after,.nav>a.active::after,.nav>a[aria-current="page"]::after,.nav__gatilho:hover::after,.nav__gatilho[aria-current]::after,.nav__grupo.aberto>.nav__gatilho::after{transform:none}
+.nav>a:not([aria-current]):hover::after,.nav__gatilho:not([aria-current]):hover::after,.nav__grupo.aberto>.nav__gatilho:not([aria-current])::after{background:rgba(216,192,138,.55)}
+/* o sublinhado do gatilho vai só sob a palavra; a seta fica de fora */
+.nav__gatilho::after{right:21px}
+/* seta em traço de 1 px (meia moldura girada): aponta para baixo e vira para cima com o painel aberto */
+.nav__seta{flex:none;width:6px;height:6px;margin-top:-3px;border-right:1px solid currentColor;border-bottom:1px solid currentColor;color:var(--champanhe);transform:rotate(45deg);transition:transform var(--t-rapido) var(--ease),margin var(--t-rapido) var(--ease)}
+.nav__grupo.aberto .nav__seta{margin-top:3px;transform:rotate(-135deg)}
+
+/* ---------- 7a. Painéis do menu (Condições, Tratamentos) ----------
+   Prancha escura (carvão, trama, filete champanhe .30 por fora e .16 por dentro, a 7 px), pousada
+   sob o cabeçalho com a única sombra do site. Fica sempre no DOM: fechado é invisível (fora do Tab)
+   e não ocupa espaço, então abrir não mexe em nada da página. --nav-x (site.js) recua o painel
+   quando ele passaria da margem direita. */
+.nav__grupo{position:relative;display:flex}
+.nav__painel{
+  position:absolute;z-index:1;top:calc(100% + (var(--hdr-h) - 44px) / 2);left:-30px;
+  translate:var(--nav-x,0px) 0;
+  padding:26px 34px 22px;
+  background:url("brand/carvao.svg") 0 0/320px 320px,var(--carvao);
+  border:1px solid var(--fio-escuro);box-shadow:var(--sombra-prancha);
+  color:var(--texto-escuro);
+  opacity:0;visibility:hidden;transform:translateY(-6px);
+  transition:opacity var(--t-rapido) var(--ease),transform var(--t-rapido) var(--ease),visibility 0s linear var(--t-rapido);
+}
+.nav__painel::before{content:"";position:absolute;inset:7px;border:1px solid var(--fio-escuro-suave);pointer-events:none}
+/* ponte invisível entre o gatilho e o painel: o mouse atravessa a faixa sem fechar */
+.nav__painel::after{content:"";position:absolute;left:0;right:0;bottom:100%;height:calc((var(--hdr-h) - 44px) / 2 + 2px)}
+.nav__grupo.aberto>.nav__painel{opacity:1;visibility:visible;transform:none;transition:opacity var(--t-rapido) var(--ease),transform var(--t-rapido) var(--ease)}
+/* sem JavaScript, o painel abre com o mouse e com o foco */
+html:not(.js) .nav__grupo:is(:hover,:focus-within)>.nav__painel{opacity:1;visibility:visible;transform:none}
+.nav__painel--condicoes{display:grid;grid-template-columns:auto auto;column-gap:52px;width:max-content}
+.nav__painel--tratamentos{width:330px}
+/* Os dois painéis usam o mesmo par: nome em Cormorant 400 (marfim) e apoio em Ubuntu var(--t-micro).
+   Em Condições o apoio é o rótulo da região; em Tratamentos, a linha do que a página explica. */
+.nav__rotulo{margin-bottom:4px;font-family:var(--sans);font-style:normal;font-weight:400;font-size:var(--t-micro);line-height:1.4;letter-spacing:normal;text-transform:none;color:var(--champanhe)}
+.nav__lista{display:grid;align-content:start}
+.nav__lista--2{grid-template-columns:repeat(2,auto);column-gap:40px}
+.nav__lista a{position:relative;display:inline-flex;align-items:center;min-height:44px;font-family:var(--serif);font-weight:400;font-size:1.3125rem;line-height:1.15;color:var(--marfim);white-space:nowrap;transition:color var(--t-rapido)}
+.nav__lista a::after,.nav__todas::after{content:"";position:absolute;left:0;right:0;bottom:8px;height:1px;background:rgba(216,192,138,.55);transform:scaleX(0);transform-origin:left center;transition:transform var(--t-rapido) var(--ease)}
+.nav__lista a:hover,.nav__todas:hover{color:var(--champanhe)}
+.nav__lista a:hover::after,.nav__todas:hover::after{transform:none}
+.nav__lista a[aria-current="page"],.nav__todas[aria-current="page"]{color:var(--champanhe)}
+.nav__lista a[aria-current="page"]::after,.nav__todas[aria-current="page"]::after{background:var(--champanhe);transform:none}
+/* Tratamentos: nome em Cormorant e uma linha do que a página explica, separados por filete suave */
+.nav__lista--desc li+li{border-top:1px solid var(--fio-escuro-suave)}
+.nav__lista--desc a{display:grid;gap:4px;min-height:0;padding-block:12px;font-family:var(--sans);font-size:inherit;white-space:normal}
+.nav__lista--desc a::after{display:none}
+.nav__nome{font-family:var(--serif);font-weight:400;font-size:1.3125rem;line-height:1.15;color:var(--marfim);transition:color var(--t-rapido)}
+.nav__desc{font-size:var(--t-micro);line-height:1.4;color:#8F8B82}
+.nav__lista--desc a:hover .nav__nome,.nav__lista--desc a[aria-current="page"] .nav__nome{color:var(--champanhe)}
+/* pé do painel de condições: a sutura e o caminho para o índice */
+.nav__pe{grid-column:1 / -1;margin-top:14px;padding-top:10px;background:var(--sutura) top left/100% 1px no-repeat}
+.nav__todas{position:relative;display:inline-flex;align-items:center;min-height:44px;font-family:var(--serif);font-size:1.3125rem;line-height:1.2;color:var(--marfim);transition:color var(--t-rapido)}
+.nav__todas::after{bottom:10px}
 .cabecalho__cta{display:none}
 @media (min-width:600px){
   .cabecalho__cta{display:inline-flex;min-height:44px;padding-inline:20px}
-  /* Um bloco dourado sólido por tela: enquanto o botão de agendar da capa está à vista
-     (html.cta-capa-visivel, site.js), o do cabeçalho fica fantasma. */
-  html.cta-capa-visivel .cabecalho__cta{background:transparent;color:var(--champanhe);border-color:rgba(216,192,138,.55)}
-  html.cta-capa-visivel .cabecalho__cta:hover{background:rgba(216,192,138,.08);border-color:var(--champanhe);color:var(--marfim)}
+  /* Um bloco dourado sólido por tela. Em página com botão de agendar sólido no conteúdo,
+     o do cabeçalho JÁ NASCE fantasma (o da capa está à vista na carga) e só acende com
+     html.cta-solida, que o site.js põe quando nenhum botão sólido do conteúdo está à vista.
+     Sem JS, fica fantasma: não fazer nada é o estado certo. Página sem botão sólido no
+     conteúdo: o do cabeçalho é sempre sólido. Sem transição de cor até html.cta-pronto
+     (primeiro quadro depois da decisão), para o botão não piscar na carga. */
+  .cabecalho__cta{transition:none}
+  html.cta-pronto .cabecalho__cta{transition:background-color var(--t-rapido) var(--ease),color var(--t-rapido) var(--ease),border-color var(--t-rapido) var(--ease)}
+  html:has(main .btn[data-agendar]:not(.btn--fantasma):not(.btn--ghost)):not(.cta-solida) .cabecalho__cta{background:transparent;color:var(--champanhe);border-color:rgba(216,192,138,.55)}
+  html:has(main .btn[data-agendar]:not(.btn--fantasma):not(.btn--ghost)):not(.cta-solida) .cabecalho__cta:hover{background:rgba(216,192,138,.08);border-color:var(--champanhe);color:var(--marfim)}
   /* com o menu aberto, o agendar é o da gaveta: o do cabeçalho sai (nunca dois à vista) */
   body.menu-open .cabecalho__cta{visibility:hidden}
 }
-@media (min-width:1000px){.nav{display:flex;gap:32px}.cabecalho__cta{min-height:48px;padding-inline:24px}}
+/* Menu do computador a partir de 1100 px; de 600 a 1099 px (tablet) vale a gaveta. */
+@media (min-width:1100px){.nav{display:flex;align-items:center;gap:28px}.cabecalho__cta{min-height:48px;padding-inline:24px}}
+@media (min-width:1280px){.nav{gap:34px}}
 
 .burger{display:grid;place-items:center;width:44px;height:44px;margin-right:-10px;flex:none}
 /* em 320 px o anel de foco (2 px a 3 px de afastamento) passava 1 px da beira da tela */
@@ -344,7 +416,7 @@ strong,b{font-weight:500}
 .burger i:last-child{transform:translateY(4px)}
 body.menu-open .burger i:first-child{transform:rotate(45deg)}
 body.menu-open .burger i:last-child{transform:rotate(-45deg)}
-@media (min-width:1000px){.burger{display:none}}
+@media (min-width:1100px){.burger{display:none}}
 
 /* Gaveta do menu (mobile) */
 .gaveta{
@@ -369,8 +441,27 @@ body.menu-open .gaveta{opacity:1;visibility:visible;transition:opacity 250ms var
 body.menu-open .cabecalho .assinatura{opacity:0;pointer-events:none}
 @media (max-width:359px){.gaveta__nome{font-size:1.75rem}.gaveta__mono{height:64px}}
 .gaveta__nav{border-top:1px solid var(--filete-escuro)}
-.gaveta__nav a{display:block;padding-block:16px;border-bottom:1px solid var(--filete-escuro);font-family:var(--serif);font-size:2.125rem;line-height:1.1;color:var(--marfim)}
-.gaveta__nav a.active,.gaveta__nav a[aria-current="page"]{color:var(--champanhe)}
+.gaveta__nav>a,.gaveta__gatilho{display:block;width:100%;padding-block:16px;border-bottom:1px solid var(--filete-escuro);font-family:var(--serif);font-size:2.125rem;line-height:1.1;color:var(--marfim)}
+.gaveta__nav>a.active,.gaveta__nav>a[aria-current="page"],.gaveta__gatilho[aria-current]{color:var(--champanhe)}
+/* Condições e Tratamentos: seções que abrem no lugar (site.js). O sinal é o "+" do acordeão,
+   que gira e vira "×"; o painel abre sob o gatilho, acima do filete. */
+.gaveta__gatilho{position:relative;display:flex;align-items:center;justify-content:space-between;gap:16px;text-align:left}
+.gaveta__gatilho::after{content:"";flex:none;width:16px;height:16px;color:var(--champanhe);
+  background:linear-gradient(currentColor,currentColor) center/100% 1px no-repeat,linear-gradient(currentColor,currentColor) center/1px 100% no-repeat;
+  transition:transform 250ms var(--ease)}
+.gaveta__gatilho[aria-expanded="true"]::after{transform:rotate(45deg)}
+.gaveta__grupo:has(>.gaveta__gatilho[aria-expanded="true"])>.gaveta__gatilho{border-bottom-color:transparent}
+.gaveta__painel{padding:4px 0 22px;border-bottom:1px solid var(--filete-escuro)}
+.gaveta__rotulo{margin:14px 0 4px;font-family:var(--serif);font-style:italic;font-weight:500;font-size:var(--t-nota);line-height:1.2;letter-spacing:normal;text-transform:none;color:var(--champanhe)}
+.gaveta__rotulo:first-child{margin-top:4px}
+.gaveta__lista{display:grid}
+.gaveta__lista a,.gaveta__todas{display:flex;align-items:center;min-height:44px;font-size:1.0625rem;line-height:1.3;color:var(--texto-escuro)}
+.gaveta__lista a[aria-current="page"],.gaveta__todas[aria-current="page"]{color:var(--champanhe)}
+.gaveta__lista a:active,.gaveta__todas:active{color:var(--marfim)}
+.gaveta__pe{margin-top:10px;padding-top:6px;background:var(--sutura) top left/96px 1px no-repeat}
+.gaveta__todas{font-family:var(--serif);font-size:1.375rem;color:var(--marfim);text-decoration:underline;text-decoration-color:rgba(216,192,138,.5);text-decoration-thickness:1px;text-underline-offset:.28em}
+.gaveta__todas{display:inline-flex}
+@media (min-width:360px){.gaveta__lista--2{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:16px;max-width:440px;margin-inline:auto}}
 .gaveta .btn{align-self:stretch}
 .gaveta__contato{margin-top:auto;display:grid;gap:6px;font-size:.9375rem}
 /* telefone e "Dias e horários": alvo de 44 px em toda largura (no tablet e deitado eram 24 px) */
@@ -380,7 +471,11 @@ body.menu-open .cabecalho .assinatura{opacity:0;pointer-events:none}
    vão para o mesmo eixo, numa coluna de até 560 px (sem o vão entre a marca e a lista). */
 @media (min-width:600px) and (min-height:501px){
   .gaveta__nav,.gaveta__contato{align-self:center;width:min(100%,560px)}
-  .gaveta__nav a{text-align:center}
+  .gaveta__nav>a{text-align:center}
+  .gaveta__gatilho{justify-content:center}
+  .gaveta__gatilho::before{content:"";flex:none;width:16px}
+  .gaveta__painel,.gaveta__lista a{text-align:center;justify-content:center}
+  .gaveta__pe{background-position:top center}
   .gaveta .btn{align-self:center}
   .gaveta__contato{justify-items:center;text-align:center}
 }
@@ -392,8 +487,19 @@ body.menu-open .cabecalho .assinatura{opacity:0;pointer-events:none}
   .gaveta__mono{height:40px;margin-bottom:0}
   .gaveta__nome{font-size:1.375rem}
   .gaveta__desc{display:none}
-  .gaveta__nav{display:flex;justify-content:center;gap:8px 40px;border-bottom:1px solid var(--filete-escuro)}
-  .gaveta__nav a{padding-block:10px;border-bottom:0;font-size:1.75rem}
+  .gaveta__nav{display:flex;flex-wrap:wrap;justify-content:center;gap:0 36px;border-bottom:1px solid var(--filete-escuro)}
+  .gaveta__grupo{display:contents}
+  .gaveta__nav>a,.gaveta__gatilho{width:auto;padding-block:8px;border-bottom:0;font-size:1.625rem}
+  .gaveta__gatilho{gap:12px}
+  .gaveta__gatilho::after{width:12px;height:12px}
+  /* a seção aberta ocupa a linha toda, abaixo dos quatro itens */
+  .gaveta__painel{order:2;flex-basis:100%;padding:2px 0 14px;border-bottom:0;border-top:1px solid var(--filete-escuro);text-align:center}
+  .gaveta__rotulo{margin:10px 0 0}
+  .gaveta__lista,.gaveta__lista--2{display:flex;flex-wrap:wrap;justify-content:center;column-gap:28px;max-width:none}
+  /* nome curto (PRP) com área de toque de 44 x 44 px, sem mudar o desenho da linha */
+  .gaveta__lista a{min-width:44px;justify-content:center}
+  .gaveta__pe{margin-top:4px;background-position:top center}
+  .gaveta__todas{justify-content:center}
   .gaveta .btn{align-self:center}
   .gaveta__contato{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:0 24px;margin-top:0;text-align:center}
   .gaveta__contato .id-medico{flex-basis:100%;margin-top:4px}
@@ -405,7 +511,20 @@ body.menu-open .cabecalho .assinatura{opacity:0;pointer-events:none}
   .gaveta__marca{margin-top:auto}
   .gaveta__contato{margin-top:32px;margin-bottom:auto}
 }
-@media (min-width:1000px){.gaveta{display:none}}
+/* Tablet deitado (600 a 1099 px de largura, 501 a 860 de altura; ex.: 1024 × 768): a assinatura
+   vertical (≈150 px) empurrava "Dias e horários" e a linha do CFM para fora da tela. A assinatura
+   fica em linha (símbolo de 44 px, sem descritor) e os itens perdem 6 px por lado, para o menu
+   fechado caber sem rolar em 768 px; com uma seção aberta, a gaveta rola (overflow-y:auto). */
+@media (min-width:600px) and (max-width:1099px) and (orientation:landscape) and (min-height:501px) and (max-height:860px){
+  .gaveta{gap:24px;padding-top:calc(var(--hdr-h) + 8px);padding-bottom:24px}
+  .gaveta__marca{flex-direction:row;gap:12px;padding-top:0;min-height:44px}
+  .gaveta__mono{height:44px;margin-bottom:0}
+  .gaveta__nome{font-size:1.5rem}
+  .gaveta__desc{display:none}
+  .gaveta__nav>a,.gaveta__gatilho{padding-block:10px;font-size:1.875rem}
+  .gaveta__contato .id-medico{margin-top:8px}
+}
+@media (min-width:1100px){.gaveta{display:none}}
 
 /* ---------- 8. Rodapé (um só sistema) ---------- */
 .rodape{position:relative;isolation:isolate;overflow:hidden;overflow:clip;background:var(--carvao);color:var(--texto-escuro);border-top:1px solid var(--filete-escuro);padding-block:72px 84px}
@@ -420,6 +539,9 @@ body.menu-open .cabecalho .assinatura{opacity:0;pointer-events:none}
 .rodape__frase{margin-top:24px;max-width:30ch;font-size:var(--t-nota);color:var(--texto-escuro)}
 .rodape__titulo{font-family:var(--serif);font-weight:400;font-size:var(--t-lead);line-height:1.2;color:var(--marfim);margin-bottom:14px}
 .rodape__lista{display:grid;gap:0;font-size:var(--t-nota)}
+/* Páginas do site em dois blocos: Condições (as dez e o índice) e Tratamentos com as Páginas */
+.rodape__paginas{display:grid;gap:36px}
+.rodape__titulo--2{margin-top:30px}
 .rodape__lista a,.rodape address a{display:inline-flex;align-items:center;min-height:44px;color:var(--texto-escuro);
   text-decoration:underline;text-decoration-color:rgba(216,192,138,.4);text-decoration-thickness:1px;text-underline-offset:.3em;
   transition:color var(--t-rapido),text-decoration-color var(--t-rapido),text-decoration-thickness var(--t-rapido)}
@@ -436,26 +558,24 @@ body.menu-open .cabecalho .assinatura{opacity:0;pointer-events:none}
 .rodape address>p:not(:first-child),.rodape address>a[href^="tel:"]{margin-top:18px}
 .rodape__base{display:grid;gap:10px;margin-top:64px;padding-top:22px;background:var(--sutura) top left/100% 1px no-repeat;font-size:var(--t-micro);color:#8F8B82}
 .rodape__base .id-medico{color:var(--texto-escuro)}
-@media (min-width:900px){
-  .rodape{padding-block:96px 72px}
+@media (min-width:900px){.rodape{padding-block:96px 72px}}
+@media (min-width:1100px){
   .rodape__grade{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--calha)}
-  .rodape__marca{grid-column:1 / 6}
-  .rodape__paginas{grid-column:7 / 9}
-  .rodape__atendimento{grid-column:9 / 13}
+  .rodape__marca{grid-column:1 / 4}
+  .rodape__paginas{grid-column:4 / 10;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--calha)}
+  .rodape__atendimento{grid-column:10 / 13}
   /* base na mesma grade: identificação em 1–6, nota alinhada à coluna Páginas, © à direita */
   .rodape__base{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--calha);align-items:baseline}
   .rodape__base>:nth-child(1){grid-column:1 / 7}
   .rodape__base>:nth-child(2){grid-column:7 / 11}
   .rodape__base>:nth-child(3){grid-column:11 / 13;justify-self:end;white-space:nowrap}
 }
-/* O vão vai do fim da marca (assinatura e frase ocupam 249 px a partir da margem, mais 40 px de
-   respiro) até 24 px antes da coluna Páginas, que começa 12 px depois do meio da página. O
-   monograma ocupa no máximo 280 px de largura, fica ao centro do vão e encolhe com ele
-   (201 px em 1100, 241 px em 1180): nunca encosta na frase nem passa por trás dos links. */
+/* Desde 24/11 (Condições e Tratamentos no rodapé) a coluna das páginas é a mais alta, e o vão real
+   fica sob a frase da marca, na coluna 1 a 3: o monograma assenta ali, com o pé dissolvendo
+   antes da linha da base, sem encostar na frase nem passar por trás de links. */
 @media (min-width:1100px){
-  .rodape__mono{--mono-x:calc(max(var(--margem),(100% - var(--largura)) / 2) + 289px);--mono-vao:calc(50% - 12px - var(--mono-x));
-    display:block;width:min(280px,var(--mono-vao));height:auto;bottom:178px;
-    left:calc(var(--mono-x) + (var(--mono-vao) - min(280px,var(--mono-vao))) / 2)}
+  .rodape__mono{display:block;width:min(190px,calc((min(100%,var(--largura)) - 2 * var(--margem)) * .17));height:auto;bottom:176px;
+    left:max(var(--margem),(100% - var(--largura)) / 2)}
 }
 
 /* ---------- 9. Grão (textura fixa por cima de tudo) ---------- */
@@ -532,6 +652,10 @@ body::after{
 .acordeao__item[open]>summary::after{transform:rotate(45deg)}
 .acordeao__item>summary:hover{text-decoration:underline;text-decoration-color:var(--cor-filete-forte);text-decoration-thickness:1px;text-underline-offset:.22em}
 .acordeao__item>summary:hover::after{color:var(--cor-titulo)}
+/* O item corta o que passa da borda (overflow:hidden, para a altura animada): o anel de foco do
+   summary vai por dentro, com 10 px de respiro lateral no summary e no corpo (como nas condições). */
+.acordeao__item>summary,.acordeao__corpo{padding-inline:10px}
+.acordeao__item>summary:focus-visible{outline-offset:-3px}
 .acordeao__corpo{padding-bottom:24px;max-width:68ch}
 .acordeao__corpo>*+*{margin-top:.8em}
 
@@ -703,15 +827,16 @@ html.motion-paused *,html.motion-paused *::before,html.motion-paused *::after{tr
   .rodape address>p{max-width:30ch}
   .rodape__base{justify-items:center;text-align:center;margin-top:48px;background-position:top center;background-size:min(100%,240px) 1px}
 }
-/* Tablet (600 a 899 px): o rodapé é faixa própria, não o celular esticado. Duas colunas: marca e
-   Páginas à esquerda, Atendimento à direita; na base, a identificação em duas linhas à esquerda e
-   a nota e o © à direita, sob a sutura de ponta a ponta. */
-@media (min-width:600px) and (max-width:899px){
+/* Tablet (600 a 1099 px): o rodapé é faixa própria, não o celular esticado. Duas colunas: marca e
+   Atendimento à esquerda; Condições (em duas colunas) e Tratamentos à direita. Na base, a
+   identificação em duas linhas à esquerda e a nota e o © à direita, sob a sutura de ponta a ponta. */
+@media (min-width:600px) and (max-width:1099px){
   .rodape{text-align:left}
-  .rodape__grade{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--calha);row-gap:40px;justify-items:start}
+  .rodape__grade{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--calha);row-gap:40px;justify-items:start;align-items:start}
   .rodape__marca{grid-column:1;grid-row:1}
-  .rodape__paginas{grid-column:1;grid-row:2}
-  .rodape__atendimento{grid-column:2;grid-row:1 / span 2}
+  .rodape__paginas{grid-column:2;grid-row:1 / span 2;width:100%}
+  .rodape__lista--cond{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--calha)}
+  .rodape__atendimento{grid-column:1;grid-row:2}
   .rodape__frase{margin-inline:0}
   .rodape__lista{display:grid;justify-content:start}
   .rodape address{justify-items:start}
@@ -722,7 +847,11 @@ html.motion-paused *,html.motion-paused *::before,html.motion-paused *::after{tr
 }
 @media (max-width:599px){
   /* menu aberto ao centro: páginas, agendar e contato no mesmo eixo */
-  .gaveta__nav a{text-align:center}
+  .gaveta__nav>a{text-align:center}
+  .gaveta__gatilho{justify-content:center}
+  .gaveta__gatilho::before{content:"";flex:none;width:16px}
+  .gaveta__painel,.gaveta__lista a,.gaveta__todas{text-align:center;justify-content:center}
+  .gaveta__pe{background-position:top center}
   .gaveta__contato{justify-items:center;text-align:center}
   .gaveta__contato .id-medico{margin-top:10px}
 }
@@ -958,7 +1087,7 @@ html.motion-paused *,html.motion-paused *::before,html.motion-paused *::after{tr
    precisa de pelo menos 4,5:1, e ouro profundo nunca vai sobre fundo tingido) */
 .semana>li.hoje{box-shadow:inset 2px 0 0 var(--ouro-profundo)}
 .semana>li.hoje .semana__dia{font-weight:500}
-.semana__hoje{display:block;font-family:var(--serif);font-style:italic;font-weight:400;font-size:var(--t-legenda);line-height:1.1;color:var(--ouro-profundo)}
+.semana__hoje{display:block;font-family:var(--serif);font-style:italic;font-weight:400;font-size:var(--t-legenda);line-height:1.1;color:var(--ouro-texto)}
 .semana__turnos{display:grid;gap:6px}
 .semana__turnos li{display:grid;grid-template-columns:7.2em minmax(0,1fr);gap:12px;align-items:baseline;font-size:var(--t-nota);line-height:1.4;transition:opacity 250ms var(--ease)}
 .turno__hora{color:var(--tinta);font-variant-numeric:lining-nums tabular-nums}
@@ -967,7 +1096,7 @@ html.motion-paused *,html.motion-paused *::before,html.motion-paused *::after{tr
 .turno--sem .turno__hora,.turno--sem .turno__local{color:var(--cor-suave)}
 .turno--sem .turno__hora:empty{display:none}
 .turno--sem .turno__hora:empty+.turno__local{grid-column:1 / -1}
-/* Agenda filtrada (site.js): os outros locais ficam na cor suave da moldura (#66666C, 5,3:1 sobre
+/* Agenda filtrada (site.js): os outros locais ficam na cor suave da moldura (#5C5C62, 6,2:1 sobre
    o marfim), sem opacidade, porque continuam sendo informação; os turnos do local escolhido ficam
    em tinta, com o local em 500. */
 .semana .fora,.semana .fora *{color:var(--cor-suave)}
@@ -1022,6 +1151,17 @@ html.motion-paused *,html.motion-paused *::before,html.motion-paused *::after{tr
 .onde__foto{align-self:start}
 .onde__foto .quadro__passe{flex:none}
 .onde__foto img{min-height:0;aspect-ratio:2.4 / 1;object-position:50% 36%}
+/* Computador (900 px ou mais): foto, mapa e agendamento dividem a fileira; a faixa de 2,4:1
+   terminava ~130 px acima das fichas vizinhas. O quadro estica até a base da fileira e a foto
+   preenche o passe (absoluta, para não ditar a altura da fileira). Num quadro quase quadrado o
+   cover mostraria a altura toda e os pedestres do pé (a partir de ~76 % da altura): a foto tem
+   135 % da altura do passe, presa no topo, e o clip-path corta os 26 % de baixo, então o quadro
+   mostra só a placa e a entrada. Celular e tablet seguem com a faixa de 2,4:1. */
+@media (min-width:900px){
+  .onde__foto{align-self:stretch}
+  .onde__foto .quadro__passe{flex:1 1 auto;min-height:200px}
+  .onde__foto img{position:absolute;top:0;left:0;width:100%;height:135%;aspect-ratio:auto;object-position:62% 0;clip-path:inset(0 0 25.93% 0)}
+}
 .cap--carvao .quadro figcaption{color:var(--texto-escuro)}
 .quadro--arco .quadro__passe::before{border-radius:999px 999px 0 0}
 .quadro--arco .quadro__passe::after{display:none}
