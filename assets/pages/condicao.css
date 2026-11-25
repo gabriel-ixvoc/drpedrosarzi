@@ -41,7 +41,7 @@
 .migalhas a:active{color:var(--cor-destaque)}
 .migalhas [aria-current="page"]{color:var(--cor-titulo)}
 
-/* ---------- 3. Imagem (capa e "O que você sente"): a prancha dos sinais da home ---------- */
+/* ---------- 3. Imagem (capa e seções): a prancha dos sinais da home ---------- */
 .cond-foto{margin:0}
 .cond-foto__quadro{position:relative;aspect-ratio:4 / 5;overflow:hidden;background:var(--carvao);border:1px solid var(--fio-escuro);border-radius:2px}
 .cond-foto__quadro::after{content:"";position:absolute;inset:7px;border:1px solid var(--fio-escuro-suave);pointer-events:none}
@@ -94,7 +94,7 @@
 /* ---------- 5. O que você sente: imagem do sinal, quatro sinais e a causa ---------- */
 .cond-sente__grade{display:grid;gap:36px}
 .cond-sente__cabeca .t-lead{margin-top:20px}
-.cond-sente__foto{justify-self:center;width:min(100%,270px)}
+.cond-sente__foto{justify-self:center;width:min(100%,300px)}
 .cond-sinais{border-top:1px solid var(--cor-filete)}
 .cond-sinais>li{padding-block:18px;border-bottom:1px solid var(--filete-suave)}
 .cond-sinais h3{font-size:var(--t-h3-ficha,1.75rem);line-height:1.1;text-wrap:balance}
@@ -179,24 +179,34 @@
   .cond-ressalva{margin:64px 0 0;text-align:left}
 }
 
-/* Imagem de apoio (uma por página: o exame em "Como se confirma" ou órtese, exercício e pós-operatório em
-   "Caminhos de tratamento"): no computador, a imagem à direita e a lista na vertical à esquerda; abaixo de
-   900 px, a imagem no eixo entre o título e a lista. */
-.cond-com-foto__foto{justify-self:center;width:min(100%,270px);margin-bottom:40px}
+/* Imagem de cada seção (25/11/2026, série 2): "Como se confirma" com exame-<slug> à direita e "Caminhos de
+   tratamento" com trat-<slug> à esquerda, alternando com "O que você sente" (sente-<slug> à esquerda). No computador,
+   a lista fica na vertical ao lado da imagem; abaixo de 900 px, a imagem no eixo entre o título e a lista. */
+.cond-com-foto__foto{justify-self:center;width:min(100%,300px);margin-bottom:40px}
 .cond-com-foto__foto .cond-foto__legenda{text-align:center}
-@media (min-width:600px) and (max-width:899px){.cond-com-foto__foto{width:min(100%,340px)}}
+@media (max-width:899px){.cond-com-foto .secao__cabeca{text-align:center}.cond-com-foto .secao__cabeca .t-lead{margin-inline:auto;max-width:34ch}}
+@media (min-width:600px) and (max-width:899px){
+  .cond-com-foto__foto{width:min(100%,360px)}
+  /* no tablet, a imagem no eixo pede os marcos no eixo também */
+  .cond-com-foto .cond-passos>li{align-items:center;text-align:center}
+}
 @media (min-width:900px){
   .cond-com-foto .cond-com-foto__grade{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--calha);align-items:start}
-  .cond-com-foto .cond-com-foto__grade>:not(.cond-com-foto__foto){grid-column:1 / 8}
-  .cond-com-foto .cond-com-foto__foto{grid-column:9 / 13;grid-row:1 / span 3;justify-self:end;width:min(100%,380px);margin:0}
-  .cond-com-foto .cond-foto__legenda{text-align:right}
-  .cond-com-foto :is(.cond-passos,.cond-faixa){display:block;max-width:none;margin-inline:0}
+  .cond-com-foto .cond-com-foto__foto{grid-row:1 / span 3;width:min(100%,420px);margin:0}
+  .cond-com-foto--direita .cond-com-foto__grade>:not(.cond-com-foto__foto){grid-column:1 / 7}
+  .cond-com-foto--direita .cond-com-foto__foto{grid-column:8 / 13;justify-self:end}
+  .cond-com-foto--direita .cond-foto__legenda{text-align:right}
+  .cond-com-foto--esquerda .cond-com-foto__grade>:not(.cond-com-foto__foto){grid-column:7 / 13}
+  .cond-com-foto--esquerda .cond-com-foto__foto{grid-column:1 / 6;justify-self:start}
+  .cond-com-foto--esquerda .cond-foto__legenda{text-align:left}
+  .cond-com-foto .secao__cabeca{margin-bottom:0}
+  .cond-com-foto :is(.cond-passos,.cond-faixa){display:block;max-width:none;margin:40px 0 0}
   .cond-com-foto :is(.cond-passos,.cond-faixa)>li{display:grid;grid-template-columns:48px minmax(0,1fr);column-gap:28px;align-items:start;text-align:left;max-width:none;margin:0}
   .cond-com-foto :is(.cond-passos__n,.cond-faixa__n){grid-row:1 / span 3}
   .cond-com-foto :is(.cond-passos,.cond-faixa)>li>:not(:first-child){grid-column:2;justify-self:start;max-width:56ch}
   .cond-com-foto :is(.cond-passos,.cond-faixa) h3{margin-top:8px}
   .cond-com-foto .cond-passos>li{padding-block:24px;border-top:1px solid var(--cor-filete)}
-  .cond-com-foto .cond-passos>li:first-child{border-top:0;padding-top:0}
+  .cond-com-foto .cond-passos>li:first-child{padding-top:0;border-top:0}
   .cond-com-foto .cond-faixa>li{padding-bottom:36px}
   .cond-com-foto .cond-faixa>li:last-child{padding-bottom:0}
   .cond-com-foto .cond-faixa>li::before{left:24px;right:auto;top:56px;bottom:6px;width:1px;height:auto}

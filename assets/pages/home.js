@@ -65,7 +65,7 @@ const parado = () => RM || PS.motion.paused;
 
 /* ---------- 2. ENTENDA SEUS SINTOMAS (questionário) ----------
    Cinco perguntas, sem nível de urgência. O resultado sempre termina em
-   "Agendar avaliação". O progresso aparece no goniômetro #qProg. */
+   "Ver onde ele atende" (o agendamento saiu do site em 25/11/2026). O progresso aparece no goniômetro #qProg. */
 (function quiz () {
   const body = $('#quizBody'), progEl = $('#qProg'), numEl = $('#qNum'), backEl = $('#qBack');
   if (!body) return;
@@ -205,7 +205,7 @@ const parado = () => RM || PS.motion.paused;
         <p class="qres__ler">${r.pag.map(([s, t]) => `<a class="link" href="condicoes/${s}/">Ler tudo sobre ${t}</a>`).join(' ')}</p>
         <details class="acordeao__item qres__resumo"><summary>O que você respondeu</summary><dl class="ficha">${resumo}</dl></details>
         <div class="acoes qres__acoes">
-          <a class="btn" href="${PS.AGENDAR_URL}" data-agendar target="_blank" rel="noopener">Agendar avaliação</a>
+          <a class="btn btn--fantasma" href="#onde">Ver onde ele atende</a>
           <button class="link" id="qSeeTab" type="button">Ver ${r.curto} no atlas</button>
           <button class="link" id="qAgain" type="button">Refazer</button>
         </div>

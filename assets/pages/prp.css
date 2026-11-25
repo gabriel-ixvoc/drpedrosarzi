@@ -45,46 +45,28 @@
 @media (max-width:600px){.js #tubeOuter:not(.prp-tube-outer){padding-bottom:312px}}
 
 /* ---------- 2. Como é preparado (marfim) ----------
-   25/11/2026: o player em desenho (braço, tubo, centrífuga) saiu. Ficam as quatro etapas em lista
-   fixa e, ao lado, a imagem do joelho (infil-capa) numa placa escura, como a do atlas da home. */
+   25/11/2026: o player em desenho (braço, tubo, centrífuga) saiu e a imagem do joelho (infil-capa)
+   também, porque ela é a capa da /infiltracoes/ e nenhuma imagem se repete entre páginas. Ficam as
+   quatro etapas: na margem o título; ao lado, as etapas em duas colunas. */
 .processo__passos{margin:0;padding:0;list-style:none;border-top:1px solid var(--filete-padrao)}
 .process-step{display:grid;grid-template-columns:36px 1fr;gap:4px 12px;padding-block:20px;border-bottom:1px solid var(--filete-padrao)}
 .process-step-num{font-family:var(--serif);font-style:italic;font-size:var(--t-lead,1.3125rem);line-height:1.3;color:var(--cor-destaque)}
 .process-step h3{font-size:var(--t-h3-ficha,1.75rem);line-height:1.12;color:var(--cor-titulo)}
 .process-step p{margin-top:6px;max-width:40ch;font-size:var(--t-nota,.9375rem);line-height:1.55;color:var(--cor-texto)}
-.processo__foto{margin:0;align-self:start;border:1px solid var(--fio-escuro);background:var(--carvao);box-shadow:var(--sombra-prancha)}
-.processo__img{aspect-ratio:4 / 3;margin:7px 7px 0;overflow:hidden;background:#08080A}
-.processo__img img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 52%;filter:var(--trato-ilustracao,saturate(.9) contrast(1.02))}
-.processo__foto figcaption{margin:0;padding:14px 20px 18px;font-size:var(--t-legenda,1.125rem);line-height:1.35;color:var(--texto-escuro)}
 @media (max-width:899px){
-  .processo__margem{order:1}
-  .processo__placa{order:2}
-  .processo__passos{order:3}
-  .processo__img{aspect-ratio:1 / 1}
-  .processo__foto figcaption{text-align:center;text-wrap:balance}
   /* celular e tablet: número, nome e frase da etapa no eixo */
   .process-step{display:block;padding-block:18px;text-align:center}
   .process-step-num{display:block}
   .process-step p{margin-inline:auto;max-width:30ch;text-wrap:balance}
 }
-@media (min-width:600px) and (max-width:899px){
-  .processo__foto{width:min(100%,600px);margin-inline:auto}
-  .processo__img{aspect-ratio:4 / 3}
+@media (min-width:600px){
   .processo__passos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--calha);border-top:0}
   .process-step{border-top:1px solid var(--filete-padrao);border-bottom:0}
   .process-step:nth-child(n+3){border-bottom:1px solid var(--filete-padrao)}
 }
 @media (min-width:900px){
-  .processo__grade{grid-template-rows:auto 1fr;row-gap:40px}
-  .processo__margem{grid-column:1 / 5;grid-row:1}
-  .processo__passos{grid-column:1 / 5;grid-row:2;align-self:start}
-  .processo__placa{grid-column:6 / 13;grid-row:1 / 3}
-}
-@media (min-width:900px) and (max-width:1199px){
-  .processo__grade{grid-template-rows:auto auto}
-  .processo__margem{grid-column:1 / -1}
-  .processo__passos{grid-column:1 / 6;grid-row:2;align-self:start}
-  .processo__placa{grid-column:6 / 13;grid-row:2}
+  .processo__margem{grid-column:1 / 5}
+  .processo__passos{grid-column:6 / 13;align-self:start}
 }
 
 /* ---------- 3. Quando o CFM autoriza: o quadro das quatro situações e a que fica fora ----------
@@ -231,3 +213,4 @@
 @media (max-width:599px){
   .prp-capa .t-hero{font-size:min(calc((100vw - 32px) / 7.4),2.875rem)}
 }
+.mitos .sinal__media picture{display:contents}
