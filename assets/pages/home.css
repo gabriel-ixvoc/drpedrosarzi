@@ -426,3 +426,7 @@ html.motion-paused .atlas__img{transition:none}
   .medico__ficha>div{justify-items:center;text-align:center}
   .medico__ficha dd{max-width:32ch;text-wrap:balance}
 }
+
+/* Onde dói?: convite para a mão 3D do /condicoes/ (25/11/2026) */
+.atlas__ir3d{margin-top:24px}
+@media (max-width:599px){.atlas__ir3d{text-align:center}}
