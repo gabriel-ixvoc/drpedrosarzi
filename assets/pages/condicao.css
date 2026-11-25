@@ -50,45 +50,146 @@
 /* no claro, a prancha escura pousa com o filete de ouro profundo, como as fichas da home no linho */
 :is(.cap--marfim,.cap--linho) .cond-foto__quadro{border-color:var(--fio-claro-forte)}
 
-/* ---------- 4. Capa: texto à esquerda, imagem à direita ----------
-   Altura: min(100svh − cabeçalho, 1240 px), a régua da home, do /prp/ e do /dr/, com a identificação
-   dentro da dobra. A imagem nunca passa da altura útil da tela. */
-.cond-capa{display:grid;align-content:center;min-height:min(calc(var(--cond-tela) - var(--hdr-h)),1240px)}
-.cond-capa .capa__texto>.migalhas{margin-top:0}
-.cond-capa .capa__texto>.migalhas+.t-hero{margin-top:16px}
-.cond-capa .t-hero{max-width:12ch;text-wrap:balance}
-.cond-capa .t-lead{max-width:40ch;text-wrap:pretty}
-.cond-capa .capa__figura{justify-self:center;width:min(100%,340px)}
+/* ---------- 4. Capa: no modelo da capa do /dr/ (25/11/2026) ----------
+   A prancha com a imagem ao lado do texto saiu. Tela deitada: a imagem cond-<slug> (4:5, fundo preto)
+   entra grande, presa à direita, da altura da capa, e se funde no carvão pela esquerda e pela base
+   (máscara, sem moldura); as migalhas ficam no topo e o texto à esquerda, assentado na base:
+   título, subtítulo em Cormorant champanhe, lead, chamadas discretas (links) e a base com as
+   credenciais e a identificação. Tela em pé: migalhas por cima de uma faixa da imagem no alto, que
+   cresce até o texto assentar no pé da primeira dobra, e o texto no eixo logo abaixo.
+   Altura: min(100svh − cabeçalho, 1240 px), a régua da home, do /prp/ e do /dr/. A imagem é camada
+   absoluta (sem CLS); a faixa usa o mesmo arquivo, recortado com object-position (--foco no img quando o
+   ponto da condição fica fora do meio: túnel cubital e rizartrose). */
+.cond-capa{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(var(--cond-faixa,200px),1fr) auto;
+  padding-block:0;overflow:hidden;overflow:clip;min-height:calc(var(--cond-tela) - var(--hdr-h))}
+.cond-capa__topo{grid-row:1;grid-column:1;position:relative;z-index:1}
+.cond-capa__foto{grid-row:2;grid-column:1;position:relative;z-index:0;margin:0}
+.cond-capa__foto picture{position:absolute;inset:0;display:block;
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.55) 0%,#000 16%,#000 54%,rgba(0,0,0,.55) 80%,transparent 100%);
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.55) 0%,#000 16%,#000 54%,rgba(0,0,0,.55) 80%,transparent 100%)}
+.cond-capa__img{display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:var(--foco,50% 46%);
+  filter:var(--trato-ilustracao,saturate(.9) contrast(1.02))}
+.cond-capa__legenda{position:absolute;right:var(--margem);bottom:8px;z-index:1;margin:0;
+  font-family:var(--serif);font-style:italic;font-size:var(--t-nota,.9375rem);line-height:1.3;color:var(--cor-suave)}
+@keyframes cond-capa-foto{from{opacity:0}}
+.cond-capa__foto.abre{animation-name:cond-capa-foto;animation-duration:900ms}
+.cond-capa__grade{grid-row:3;grid-column:1;padding-block:8px 48px}
+.cond-capa .capa__texto{grid-column:1 / -1;min-width:0;text-align:center;container:cond-texto / inline-size}
+.cond-capa .t-hero{max-width:13ch;margin-inline:auto;text-wrap:balance}
+.cond-capa .capa__texto>.cond-capa__sub{margin-top:14px}
+.cond-capa__sub{font-family:var(--serif);font-weight:400;font-size:var(--t-h3,2.25rem);line-height:1.15;
+  letter-spacing:-.005em;color:var(--champanhe);text-wrap:balance}
+.cond-capa .t-lead{max-width:40ch;margin-inline:auto;text-wrap:pretty}
+/* chamadas discretas (o agendamento saiu do site em 25/11/2026): dois links, também no celular */
+.cond-capa .acoes{flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:center;gap:0 32px;margin-top:28px}
+.cond-capa .acoes>.link{align-self:center;min-height:44px}
+/* base: filete na largura do bloco, credenciais e identificação (a mesma peça do /dr/) */
+.cond-capa__base{width:100%;margin-top:32px;padding-top:20px;border-top:1px solid var(--cor-filete)}
+.cond-capa__base .capa__id{margin-top:12px;padding-top:0;border-top:0;text-align:center}
+.cond-capa__cred{display:flex;flex-wrap:wrap;justify-content:center;row-gap:6px;margin:0;padding:0;list-style:none;
+  font-family:var(--sans);font-weight:400;font-size:var(--t-micro,.8125rem);line-height:1.3;color:var(--marfim)}
+.cond-capa__cred li{white-space:nowrap}
+.cond-capa__cred li+li{margin-left:16px;padding-left:16px;border-left:1px solid var(--fio-escuro)}
 /* linha de identificação sem ponto solto: em coluna estreita, quebra entre o nome e os registros */
-.cond-capa .capa__texto{container:cond-texto / inline-size}
 @container cond-texto (max-width:419px){
   .capa__id>.id-medico__sep{display:none}
   .capa__id>span{display:block}
 }
-@media (max-width:599px){
+@container cond-texto (min-width:420px){
+  .cond-capa .capa__id>span{white-space:nowrap}
+}
+
+/* tela em pé */
+@media (orientation:portrait){
+  .cond-capa{--cond-faixa:max(200px,min(64vw,520px,var(--cond-tela) - var(--hdr-h) - 610px))}
+}
+@media (min-width:600px) and (orientation:portrait){
+  .cond-capa .capa__texto{width:100%;max-width:640px;margin-inline:auto}
+  .cond-capa__grade{padding-block:16px 64px}
+}
+@media (max-width:599px) and (orientation:portrait){
+  .cond-capa{--cond-faixa:max(150px,min(72vw,380px,var(--cond-tela) - var(--hdr-h) - 560px))}
+  .cond-capa .t-lead{max-width:32ch;margin-top:16px}
+  .cond-capa .acoes{margin-top:18px;column-gap:24px}
+  .cond-capa__cred{display:none}
+  .cond-capa__base{margin-top:20px;padding-top:16px}
+  .cond-capa__base .capa__id{margin-top:0}
+  .cond-capa__legenda{bottom:4px}
+}
+/* celular baixo (até 760 px de altura útil: 320 × 568, 360 × 640, 375 × 667): a identificação sobe para
+   logo abaixo do lead, antes das chamadas, e entra inteira na primeira dobra (como no /dr/) */
+@media (max-width:599px) and (orientation:portrait) and (max-height:760px){
+  .cond-capa{--cond-faixa:max(96px,var(--cond-tela) - var(--hdr-h) - 500px)}
+  .cond-capa__grade{padding-block:0 32px}
   .cond-capa .capa__texto{display:flex;flex-direction:column;align-items:center}
-  .cond-capa .t-hero{margin-inline:auto}
-  .cond-capa .capa__figura{width:min(100%,300px)}
-  .cond-capa .cond-foto__legenda{text-align:center}
+  .cond-capa .capa__texto>.cond-capa__sub{margin-top:8px}
+  .cond-capa .capa__texto>.t-lead{order:1;margin-top:12px;font-size:1.0625rem;line-height:1.45}
+  .cond-capa .capa__texto>.cond-capa__base{order:2;margin-top:14px;padding-top:0;border-top:0}
+  .cond-capa .capa__texto>.acoes{order:3;margin-top:10px}
 }
-/* tablet em pé (600 a 899 px): no eixo, texto e identificação antes da imagem */
-@media (min-width:600px) and (max-width:899px){
-  .cond-capa .capa__texto{width:100%;text-align:center;max-width:600px;margin-inline:auto}
-  .cond-capa .t-hero,.cond-capa .t-lead{margin-inline:auto}
-  .cond-capa .acoes{justify-content:center}
-  .cond-capa .capa__figura{width:min(100%,380px)}
-  .cond-capa .cond-foto__legenda{text-align:center}
+@media (max-width:359px) and (orientation:portrait) and (max-height:600px){
+  .cond-capa .t-hero{font-size:2.125rem}
+  .cond-capa__sub{font-size:1.25rem}
+  .cond-capa .capa__texto>.t-lead{font-size:1rem}
+  .cond-capa .acoes{column-gap:20px}
 }
-@media (min-width:900px){
-  .cond-capa .capa__texto{grid-column:1 / 7}
-  .cond-capa .capa__figura{grid-column:8 / 13;justify-self:end;width:min(100%,calc((var(--cond-tela) - var(--hdr-h) - 150px) * .8))}
-}
-/* tela deitada baixa (celular deitado): texto e imagem lado a lado, imagem pela altura */
-@media (orientation:landscape) and (max-height:500px) and (max-width:899px){
-  .cond-capa .capa__grade{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);column-gap:32px}
-  .cond-capa .capa__texto{text-align:left;margin:0}
+
+/* tela deitada (computador, notebook, tablet e celular deitados): imagem à direita, texto à esquerda */
+@media (orientation:landscape){
+  .cond-capa{grid-template-rows:auto 1fr auto;min-height:min(calc(var(--cond-tela) - var(--hdr-h)),1240px)}
+  .cond-capa__topo{padding-top:16px}
+  .cond-capa__foto{grid-row:1 / -1;position:absolute;inset:0;z-index:-1}
+  .cond-capa__foto picture{left:auto;right:0;width:auto;height:100%;aspect-ratio:1122 / 1402;min-width:42%;max-width:66%;
+    -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.5) 18%,#000 40%),linear-gradient(0deg,transparent 0%,#000 16%,#000 93%,rgba(0,0,0,.7) 100%);
+    -webkit-mask-composite:source-in;
+    mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.5) 18%,#000 40%),linear-gradient(0deg,transparent 0%,#000 16%,#000 93%,rgba(0,0,0,.7) 100%);
+    mask-composite:intersect}
+  .cond-capa__img{object-position:50% 40%}
+  .cond-capa__legenda{bottom:16px}
+  .cond-capa__grade{grid-row:3;padding-block:40px 56px}
+  .cond-capa .capa__texto{max-width:620px;text-align:left}
   .cond-capa .t-hero,.cond-capa .t-lead{margin-inline:0}
-  .cond-capa .capa__figura{width:min(100%,calc((var(--cond-tela) - 60px) * .8))}
+  .cond-capa .t-hero{max-width:15ch}
+  .cond-capa .t-lead{max-width:42ch;margin-top:24px}
+  .cond-capa .acoes{justify-content:flex-start;margin-top:32px}
+  .cond-capa__base{width:min(100%,35rem);margin-top:48px}
+  .cond-capa__base .capa__id{text-align:left}
+  .cond-capa__cred{justify-content:flex-start}
+}
+@media (min-width:900px) and (orientation:landscape){
+  .cond-capa .capa__texto{grid-column:1 / 7}
+}
+/* notebook de tela baixa (1366 × 657, 1280 × 689): título pela altura e respiros proporcionais */
+@media (min-width:900px) and (orientation:landscape) and (max-height:820px){
+  .cond-capa__topo{padding-top:8px}
+  .cond-capa__grade{padding-block:clamp(16px,calc(18.2vh - 100px),40px) clamp(20px,calc(16.4vh - 78px),56px)}
+  .cond-capa .t-hero{font-size:min(var(--t-display,4.875rem),10.4vh)}
+  .cond-capa__sub{font-size:min(var(--t-h3,2.25rem),4.4vh)}
+  .cond-capa .t-lead{margin-top:clamp(12px,calc(5.45vh - 20px),24px)}
+  .cond-capa .acoes{margin-top:clamp(12px,calc(9.1vh - 40px),32px)}
+  .cond-capa__base{margin-top:clamp(16px,calc(18.2vh - 95px),48px);padding-top:clamp(12px,calc(3.64vh - 10px),20px)}
+  .cond-capa__base .capa__id{margin-top:clamp(8px,calc(1.82vh - 3px),12px)}
+}
+/* janela deitada estreita e celular deitado: a coluna do texto fica com pouco mais da metade */
+@media (orientation:landscape) and (max-width:899px){
+  .cond-capa .capa__texto{max-width:min(58%,520px)}
+  .cond-capa__sub{font-size:clamp(1.25rem,2.6vw,1.625rem)}
+}
+@media (orientation:landscape) and (max-height:500px){
+  .cond-capa__topo{padding-top:0}
+  .cond-capa__grade{padding-block:4px 16px}
+  .cond-capa .capa__texto{max-width:min(62%,600px)}
+  .cond-capa .t-hero{max-width:none;font-size:clamp(1.75rem,4.2vw,2.5rem)}
+  .cond-capa .capa__texto>.cond-capa__sub{margin-top:6px}
+  .cond-capa__sub{font-size:clamp(1.0625rem,2.4vw,1.375rem)}
+  .cond-capa .t-lead{max-width:none;font-size:.9375rem;line-height:1.45;margin-top:10px}
+  .cond-capa .acoes{margin-top:6px}
+  .cond-capa__cred{display:none}
+  .cond-capa__base{margin-top:6px;padding-top:8px}
+  .cond-capa__base .capa__id{margin-top:0}
+}
+@media (orientation:landscape) and (max-height:380px){
+  .cond-capa .t-lead{display:none}
 }
 
 /* ---------- 5. O que você sente: imagem do sinal, quatro sinais e a causa ---------- */

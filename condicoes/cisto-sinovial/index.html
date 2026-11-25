@@ -36,6 +36,7 @@
 ]}
 ]}
 </script>
+<link rel="preload" as="image" href="../../imagensnovas/series/cond-cisto-sinovial.avif" imagesrcset="../../imagensnovas/series/cond-cisto-sinovial-720.avif 720w, ../../imagensnovas/series/cond-cisto-sinovial.avif 1122w" imagesizes="(orientation:landscape) min(80vh, 62vw), 100vw" type="image/avif" fetchpriority="high">
 <link rel="stylesheet" href="../../assets/site.css">
 <link rel="stylesheet" href="../../assets/pages/condicao.css">
 <link rel="stylesheet" href="../../assets/pages/alt.css">
@@ -158,34 +159,43 @@
      como se confirma, caminhos de tratamento, dúvidas, leve para a consulta, relacionadas e Onde atende.
      CSS em assets/pages/condicao.css; guia em docs/condicoes.md. -->
 
-<!-- ===== 0. CAPA (carvão): migalhas, nome, o que é numa frase, chamadas e a imagem da condição ===== -->
+<!-- ===== 0. CAPA (carvão), no modelo da capa do /dr/ (25/11/2026): migalhas no topo; a imagem da condição
+     grande, presa à direita e fundida no carvão; o texto à esquerda, assentado na base. Em pé: a imagem numa faixa
+     no alto e o texto no eixo. ===== -->
 <section class="capa cond-capa" aria-labelledby="cond-titulo">
-  <div class="wrap capa__grade">
+  <div class="wrap cond-capa__topo">
+    <nav class="migalhas abre" aria-label="Você está em">
+      <ol>
+        <li><a href="../../">Início</a></li>
+        <li><a href="../">Condições</a></li>
+        <li><span aria-current="page">Cisto sinovial</span></li>
+      </ol>
+    </nav>
+  </div>
+  <figure class="cond-capa__foto abre" style="--atraso:100ms">
+    <picture>
+      <source type="image/avif" srcset="../../imagensnovas/series/cond-cisto-sinovial-720.avif 720w, ../../imagensnovas/series/cond-cisto-sinovial.avif 1122w" sizes="(orientation:landscape) min(80vh, 62vw), 100vw">
+      <img class="cond-capa__img" src="../../imagensnovas/series/cond-cisto-sinovial.webp" srcset="../../imagensnovas/series/cond-cisto-sinovial-720.webp 720w, ../../imagensnovas/series/cond-cisto-sinovial.webp 1122w" sizes="(orientation:landscape) min(80vh, 62vw), 100vw" width="1122" height="1402" alt="Dorso da mão em fundo preto, com uma pequena bolsa translúcida e dourada sobre o punho." fetchpriority="high" decoding="async">
+    </picture>
+    <figcaption class="cond-capa__legenda">Ilustração conceitual.</figcaption>
+  </figure>
+  <div class="wrap capa__grade cond-capa__grade">
     <div class="capa__texto">
-      <nav class="migalhas abre" aria-label="Você está em">
-          <ol>
-            <li><a href="../../">Início</a></li>
-            <li><a href="../">Condições</a></li>
-            <li><span aria-current="page">Cisto sinovial</span></li>
-          </ol>
-        </nav>
       <h1 class="t-hero abre" id="cond-titulo" style="--atraso:60ms">Cisto sinovial</h1>
-      <p class="t-lead abre" style="--atraso:200ms">É uma bolsa de líquido, benigna, presa a uma articulação ou a um tendão. Aparece como um caroço no punho ou no dedo que muda de tamanho.</p>
-      <div class="acoes abre" style="--atraso:340ms">
-        <a class="btn btn--fantasma" href="#onde">Ver onde ele atende</a>
+      <p class="cond-capa__sub abre" style="--atraso:160ms">Caroço no punho e na mão.</p>
+      <p class="t-lead abre" style="--atraso:280ms">É uma bolsa de líquido, benigna, presa a uma articulação ou a um tendão. Aparece como um caroço no punho ou no dedo que muda de tamanho.</p>
+      <div class="acoes abre" style="--atraso:400ms">
+        <a class="link" href="#onde">Ver onde ele atende</a>
         <a class="link" href="#tratamento">Ver os caminhos de tratamento</a>
       </div>
-      <p class="id-medico capa__id abre" style="--atraso:480ms"><span>Dr. Pedro Sarzi · Médico</span><span class="id-medico__sep"> · </span><span>CRM-SP 183.332 · RQE 110447</span></p>
-    </div>
-    <figure class="capa__figura cond-foto cond-foto--capa abre" style="--atraso:140ms">
-      <div class="cond-foto__quadro">
-        <picture>
-          <source type="image/avif" srcset="../../imagensnovas/series/cond-cisto-sinovial-720.avif 720w, ../../imagensnovas/series/cond-cisto-sinovial.avif 1122w" sizes="(min-width:1100px) 440px, (min-width:900px) 38vw, (min-width:600px) 400px, 82vw">
-          <img src="../../imagensnovas/series/cond-cisto-sinovial-720.webp" srcset="../../imagensnovas/series/cond-cisto-sinovial-720.webp 720w, ../../imagensnovas/series/cond-cisto-sinovial.webp 1122w" sizes="(min-width:1100px) 440px, (min-width:900px) 38vw, (min-width:600px) 400px, 82vw" width="1122" height="1402" alt="Dorso da mão em fundo preto, com uma pequena bolsa translúcida e dourada sobre o punho." fetchpriority="high" decoding="async">
-        </picture>
+      <div class="cond-capa__base abre" style="--atraso:520ms">
+        <ul class="cond-capa__cred" aria-label="Formação">
+          <li>Especialização pela UNESP</li>
+          <li>Membro titular da SBCM</li>
+        </ul>
+        <p class="id-medico capa__id"><span>Dr. Pedro Sarzi · Médico</span><span class="id-medico__sep"> · </span><span>CRM-SP 183.332 · RQE 110447</span></p>
       </div>
-      <figcaption class="cond-foto__legenda">Ilustração conceitual.</figcaption>
-    </figure>
+    </div>
   </div>
 </section>
 

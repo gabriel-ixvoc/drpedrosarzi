@@ -36,7 +36,7 @@
 ]}
 ]}
 </script>
-<link rel="preload" as="image" type="image/avif" imagesrcset="../imagensnovas/series/orto-capa-720.avif 720w, ../imagensnovas/series/orto-capa.avif 1122w" imagesizes="(min-width:1100px) 500px, (min-width:600px) 42vw, calc(100vw - 32px)" fetchpriority="high">
+<link rel="preload" as="image" type="image/avif" imagesrcset="../imagensnovas/series/orto-capa-720.avif 720w, ../imagensnovas/series/orto-capa.avif 1122w" imagesizes="(orientation:landscape) min(80vh, 70vw), 100vw" fetchpriority="high">
 <link rel="stylesheet" href="../assets/site.css">
 <link rel="stylesheet" href="../assets/pages/ortopedia.css">
 <link rel="stylesheet" href="../assets/pages/alt.css">
@@ -153,28 +153,32 @@
 
 <main id="conteudo">
 
-<!-- ===== 1. CAPA (carvão): título, lead, chamadas, formação e a arte trat-exame (padrão dos sinais da home) ===== -->
+<!-- ===== 1. CAPA (carvão): a arte orto-capa fundida no carvão à direita (modelo da capa do /dr/), título, lead, chamadas, formação e linha do CFM ===== -->
 <section class="capa orto-capa" aria-labelledby="orto-titulo">
+  <figure class="orto-capa__foto">
+    <picture>
+      <source type="image/avif" srcset="../imagensnovas/series/orto-capa-720.avif 720w, ../imagensnovas/series/orto-capa.avif 1122w" sizes="(orientation:landscape) min(80vh, 70vw), 100vw">
+      <source type="image/webp" srcset="../imagensnovas/series/orto-capa-720.webp 720w, ../imagensnovas/series/orto-capa.webp 1122w" sizes="(orientation:landscape) min(80vh, 70vw), 100vw">
+      <img class="orto-capa__img arte-ia" src="../imagensnovas/series/orto-capa.webp" width="1122" height="1402" alt="Ilustração: as mãos do médico, de jaleco branco, examinam o joelho de um paciente, com os ossos do joelho acesos em dourado." fetchpriority="high" decoding="async">
+    </picture>
+    <figcaption class="orto-capa__legenda">Ilustração conceitual.</figcaption>
+  </figure>
   <div class="wrap capa__grade orto-capa__grade">
     <div class="capa__texto orto-capa__texto">
       <h1 class="orto-capa__titulo" id="orto-titulo">
         <span class="rise t-hero"><span>Ortopedia e traumatologia</span></span>
         <span class="rise orto-capa__funcao"><span>Dor nos ossos, nas articulações e&nbsp;nos músculos.</span></span>
       </h1>
-      <p class="t-lead abre" style="--atraso:380ms">Dor no ombro, nas costas, no joelho ou no pé, ou uma lesão depois de queda ou torção. A consulta procura a causa e indica o&nbsp;tratamento.</p>
-      <div class="acoes abre" style="--atraso:480ms">
-        <a class="btn btn--fantasma" href="#onde">Ver onde ele atende</a>
-        <a class="link" href="#mapa-corpo">Procurar pela região que dói</a>
+      <p class="t-lead abre">Dor no ombro, nas costas, no joelho ou no pé, ou uma lesão depois de queda ou torção. A&nbsp;consulta procura a causa e indica o&nbsp;tratamento.</p>
+      <div class="acoes abre">
+        <a class="link" href="#onde">Ver onde ele atende</a>
+        <a class="link" href="#mapa-corpo">Ver o mapa do corpo</a>
       </div>
-      <div class="orto-capa__base abre" style="--atraso:580ms">
-        <p class="orto-capa__formacao">Cirurgião da mão, com título em ortopedia e&nbsp;traumatologia (<span class="nobr">TEOT 17.744</span>)</p>
+      <div class="orto-capa__base abre">
+        <p class="orto-capa__cred">Cirurgião da mão, com título em ortopedia e&nbsp;traumatologia (<span class="nobr">TEOT 17.744</span>)</p>
         <p class="id-medico capa__id"><span>Dr. Pedro Sarzi · Médico</span><span class="id-medico__sep"> · </span><span>CRM-SP 183.332 · RQE 110447</span></p>
       </div>
     </div>
-    <figure class="capa__figura orto-capa__figura abre" style="--atraso:150ms">
-      <div class="orto-arte orto-capa__arte"><picture><source type="image/avif" srcset="../imagensnovas/series/orto-capa-720.avif 720w, ../imagensnovas/series/orto-capa.avif 1122w" sizes="(min-width:1100px) 500px, (min-width:600px) 42vw, calc(100vw - 32px)"><source type="image/webp" srcset="../imagensnovas/series/orto-capa-720.webp 720w, ../imagensnovas/series/orto-capa.webp 1122w" sizes="(min-width:1100px) 500px, (min-width:600px) 42vw, calc(100vw - 32px)"><img class="arte-ia" src="../imagensnovas/series/orto-capa-720.webp" width="1122" height="1402" alt="Ilustração: as mãos do médico, de jaleco branco, examinam o joelho de um paciente, com os ossos do joelho acesos em dourado." fetchpriority="high" decoding="async"></picture></div>
-      <figcaption class="orto-legenda">Ilustração conceitual.</figcaption>
-    </figure>
   </div>
 </section>
 
